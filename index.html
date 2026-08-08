@@ -41,7 +41,35 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 .detailContent{position:relative;z-index:1;max-width:650px}.detailContent h2{font-size:44px;letter-spacing:-1.5px;margin:0 0 10px}.detailContent p{line-height:1.55;color:#d2d2d2}
 .episodes{padding:22px 35px 34px}.seasons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.seasons button{border:1px solid #343439;background:#222326;color:#ddd;padding:8px 11px;border-radius:7px}.seasons button.active{background:#fff;color:#111}
 .ep{display:flex;gap:15px;padding:13px 0;border-top:1px solid #28282c;cursor:pointer}.epThumb{width:160px;aspect-ratio:16/9;flex:none;border-radius:7px;background:#222 center/cover no-repeat}.ep h4{margin:2px 0 5px}.ep p{margin:0;color:#999;font-size:13px;line-height:1.45}
-.playerWrap{width:min(1150px,97vw);background:#050505;border-radius:12px;overflow:hidden;position:relative}.playerWrap video{width:100%;max-height:78vh;display:block;background:#000}.playerTop{position:absolute;z-index:3;left:0;right:0;top:0;padding:14px 17px;display:flex;align-items:center;background:linear-gradient(#000e,transparent)}.playerTitle{font-weight:850;flex:1}.sourceBar{padding:12px;background:#111214;display:flex;gap:8px;flex-wrap:wrap}.sourceBar button{border:1px solid #36363b;background:#25262a;color:#fff;border-radius:7px;padding:8px 11px}.sourceBar button.active{background:#fff;color:#111}
+.playerWrap{width:min(1220px,98vw);max-height:95vh;background:#080809;border-radius:16px;overflow:hidden;position:relative;border:1px solid #29292e;box-shadow:0 30px 100px #000}
+.playerLayout{display:grid;grid-template-columns:minmax(0,1fr) 340px;min-height:620px}
+.playerStage{background:#000;position:relative;display:flex;flex-direction:column;min-width:0}
+.playerTop{position:absolute;z-index:8;left:0;right:0;top:0;padding:16px 18px 34px;display:flex;align-items:center;gap:12px;background:linear-gradient(#000e,transparent);pointer-events:none}
+.playerTop>*{pointer-events:auto}.playerTitle{font-weight:850;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.videoShell{position:relative;flex:1;display:flex;align-items:center;justify-content:center;background:#000;min-height:420px}
+.videoShell video{width:100%;height:100%;max-height:82vh;display:block;background:#000;object-fit:contain}
+.bigPlay{position:absolute;z-index:5;width:78px;height:78px;border:0;border-radius:50%;background:#fff;color:#080808;font-size:30px;display:grid;place-items:center;box-shadow:0 10px 40px #0008;transition:.18s}
+.bigPlay:hover{transform:scale(1.05)}.bigPlay.hidden{display:none!important}
+.playerControls{position:absolute;z-index:7;left:0;right:0;bottom:0;padding:38px 16px 14px;background:linear-gradient(transparent,#000e);opacity:0;transition:.2s}
+.videoShell:hover .playerControls,.playerControls.show{opacity:1}
+.seek{width:100%;accent-color:var(--accent);cursor:pointer}
+.controlRow{display:flex;align-items:center;gap:9px;margin-top:8px}.ctl{height:36px;min-width:36px;border:0;border-radius:7px;background:#ffffff12;color:#fff;padding:0 10px}.ctl:hover{background:#ffffff24}
+.time{font-size:12px;color:#ddd;white-space:nowrap}.volume{width:90px;accent-color:#fff}
+.spacer{flex:1}.speed{height:36px;border:1px solid #ffffff24;border-radius:7px;background:#111;color:#fff;padding:0 7px}
+.playerSide{background:#111214;border-left:1px solid #29292e;overflow:auto;max-height:95vh;padding:18px}
+.sourceHead{padding:2px 0 12px}.sourceHead h3{margin:0 0 4px;font-size:19px}.sourceHead p{margin:0;color:#8d8d94;font-size:12px;line-height:1.45}
+.addonTabs,.filterChips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:7px 0}.addonTabs::-webkit-scrollbar,.filterChips::-webkit-scrollbar{display:none}
+.addonTabs button,.filterChips button{flex:none;border:1px solid #34343a;background:#202024;color:#ddd;border-radius:999px;padding:8px 11px;font-weight:700;font-size:12px}
+.addonTabs button.active{background:#9d28d6;border-color:#b643f2;color:#fff}.filterChips button.active{background:#fff;color:#111;border-color:#fff}
+.sourceList{display:flex;flex-direction:column;gap:9px;margin-top:8px}.sourceCard{width:100%;text-align:left;border:1px solid #29292e;background:linear-gradient(135deg,#1b1b1f,#121214);color:#fff;border-radius:12px;padding:13px;transition:.16s}
+.sourceCard:hover{border-color:#494952;transform:translateY(-1px)}.sourceCard.active{border-color:#b643f2;box-shadow:0 0 0 1px #b643f255 inset}
+.sourceTop{display:flex;align-items:center;gap:8px}.sourceName{font-size:14px;font-weight:900;flex:1}.qualityPill{font-size:10px;font-weight:900;border-radius:5px;padding:3px 6px;background:#ffffff16;color:#eee}
+.sourceLines{font-size:12px;line-height:1.55;color:#a8a8af;margin-top:7px;white-space:pre-line}.sourceActions{display:flex;gap:7px;margin-top:10px}
+.sourceActions button{border:1px solid #38383f;background:#242429;color:#fff;border-radius:7px;padding:7px 9px;font-size:12px;font-weight:750}.sourceActions button:hover{background:#303036}.sourceActions .playSource{background:#fff;color:#111}.sourceActions .downloadSource[disabled]{opacity:.42;cursor:not-allowed}
+.sourceEmpty{padding:25px 8px;color:#8d8d94;font-size:13px;line-height:1.5}.downloadNote{font-size:11px;color:#72727a;margin-top:12px;line-height:1.45}
+.buffering{position:absolute;z-index:4;width:48px;height:48px;border:4px solid #ffffff2e;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}.buffering.show{display:block}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.playerWrap{width:100vw;height:100dvh;max-height:none;border-radius:0;border:0}.playerLayout{grid-template-columns:1fr;display:block;height:100%;overflow:auto}.playerStage{min-height:58dvh}.videoShell{min-height:58dvh}.playerSide{border-left:0;border-top:1px solid #29292e;max-height:none;padding:16px}.playerTop{position:absolute}.volume{display:none}}
+@media(max-width:560px){.controlRow{gap:5px}.ctl{min-width:32px;padding:0 7px}.time{font-size:11px}.playerSide{padding:14px}.sourceCard{padding:12px}.bigPlay{width:66px;height:66px;font-size:26px}.speed{max-width:75px}.ctl[data-hide-mobile="1"]{display:none}}
 .settings{width:min(650px,95vw);background:#121315;border:1px solid #303036;border-radius:14px;padding:25px}.settings h2{margin-top:0}.field{margin:15px 0}.field label{font-size:13px;color:#bbb}.field input,.field select{display:block;width:100%;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0}.hint{font-size:12px;color:#888;line-height:1.5}
 .toast{position:fixed;z-index:500;bottom:18px;right:18px;background:#25262a;border:1px solid #3a3b40;padding:12px 15px;border-radius:8px;display:none;box-shadow:0 10px 30px #000}.toast.show{display:block}
 @media(max-width:760px){
@@ -96,9 +124,44 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 
 <div class="modal" id="playerModal">
  <div class="playerWrap">
-  <div class="playerTop"><div class="playerTitle" id="playerTitle">Reprodução</div><button class="close" id="closePlayer">×</button></div>
-  <video id="video" controls playsinline></video>
-  <div class="sourceBar" id="sources"></div>
+  <div class="playerLayout">
+   <section class="playerStage">
+    <div class="playerTop"><div class="playerTitle" id="playerTitle">Reprodução</div><button class="close" id="closePlayer">×</button></div>
+    <div class="videoShell" id="videoShell">
+     <video id="video" playsinline preload="metadata"></video>
+     <div class="buffering" id="buffering"></div>
+     <button class="bigPlay" id="bigPlay" aria-label="Reproduzir">▶</button>
+     <div class="playerControls" id="playerControls">
+      <input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="Progresso">
+      <div class="controlRow">
+       <button class="ctl" id="playPause" title="Reproduzir/Pausar">▶</button>
+       <button class="ctl" id="back10" title="Voltar 10 segundos">↶ 10</button>
+       <button class="ctl" id="forward10" title="Avançar 10 segundos">10 ↷</button>
+       <button class="ctl" id="muteBtn" title="Som">🔊</button>
+       <input class="volume" id="volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+       <span class="time" id="timeText">0:00 / 0:00</span>
+       <span class="spacer"></span>
+       <select class="speed" id="speed" title="Velocidade">
+        <option value=".75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option>
+       </select>
+       <button class="ctl" id="pipBtn" data-hide-mobile="1" title="Picture-in-Picture">▣</button>
+       <button class="ctl" id="downloadCurrent" title="Baixar fonte selecionada">⇩</button>
+       <button class="ctl" id="fullBtn" title="Tela cheia">⛶</button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <aside class="playerSide">
+    <div class="sourceHead">
+     <h3>Escolha uma fonte</h3>
+     <p>Qualidade, idioma e provedor aparecem quando o addon informa esses dados.</p>
+    </div>
+    <div class="addonTabs" id="addonTabs"></div>
+    <div class="filterChips" id="qualityFilters"></div>
+    <div class="sourceList" id="sources"></div>
+    <div class="downloadNote">Download pelo navegador funciona apenas quando a fonte entrega um arquivo direto e permite acesso. HLS/M3U8, DRM e fontes sem URL direta não são convertidos nem contornados.</div>
+   </aside>
+  </div>
  </div>
 </div>
 
@@ -106,11 +169,11 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
  <div class="settings">
   <button class="close" id="closeSettings">×</button>
   <h2>Configurações</h2>
-  <div class="field"><label>FrostStream — manifesto</label><input id="frostUrl"></div>
+  <div class="field"><label>Addons de reprodução (um manifest por linha)</label><textarea id="frostUrl" style="display:block;width:100%;min-height:92px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
   <div class="field"><label>Catálogo / metadados</label><input id="metaUrl"></div>
   <div class="field"><label>Idioma preferido</label><select id="lang"><option value="pt-BR">Português (Brasil)</option><option value="pt">Português</option><option value="en">English</option></select></div>
   <div class="actions"><button class="btn primary" id="saveSettings">Salvar</button><button class="btn secondary" id="resetSettings">Restaurar padrão</button></div>
-  <p class="hint">O FrostStream informado por você expõe recursos <b>meta</b> e <b>stream</b> para filmes e séries. O site usa um manifesto separado para catálogo/metadados. Se o navegador bloquear as chamadas por CORS, será necessário um proxy seu; GitHub Pages sozinho não cria proxy.</p>
+  <p class="hint">O FrostStream fica configurado por padrão. Você pode adicionar outros addons compatíveis, um manifesto por linha, para aparecerem como abas no seletor de fontes. O site não contorna DRM, paywalls ou bloqueios de origem.</p>
  </div>
 </div>
 
@@ -127,7 +190,7 @@ const cfg={
  meta:localStorage.getItem("cf2_meta")||CFG_DEFAULT.meta,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,season:1};
+const S={hero:null,current:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -145,7 +208,10 @@ function metaURL(type,id){return api(cfg.meta,`meta/${type}/${encodeURIComponent
 function catalogURL(type,id="top",params=""){
  return api(cfg.meta,`catalog/${type}/${encodeURIComponent(id)}.json${params?("?"+params):""}`)
 }
-function streamURL(type,id){return api(cfg.frost,`stream/${type}/${encodeURIComponent(id)}.json`)}
+function streamURLFor(manifest,type,id){return api(manifest,`stream/${type}/${encodeURIComponent(id)}.json`)}
+function configuredStreamManifests(){
+ return String(cfg.frost||"").split(/[\n,]+/).map(x=>x.trim()).filter(Boolean);
+}
 
 function lists(){
  try{return JSON.parse(localStorage.getItem("cf2_list")||"[]")}catch{return[]}
@@ -184,7 +250,7 @@ function toggleListById(id){
    a.unshift(m||{id});
    toast("Adicionado à minha lista.")
  }
- saveList(a); renderCurrentPage();
+ saveList(a); if(S.currentPage==="list") page("list");
 }
 
 function row(title,items,sub=""){
@@ -197,6 +263,7 @@ async function safeCatalog(type,id="top",params=""){
 }
 
 async function home(){
+ S.currentPage="home";
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
@@ -264,28 +331,144 @@ function playFirst(m){
 function playEpisode(show,ep){
  const key=ep.id;playStream("series",key,`${show.name} — T${ep.season} E${ep.episode}`,{...show,...ep})
 }
+function formatTime(sec){
+ sec=Number(sec)||0;const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.floor(sec%60);
+ return h?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`;
+}
+function getQuality(s){
+ const text=[s.name,s.title,s.description,s.behaviorHints?.filename,s.url].filter(Boolean).join(" ");
+ const m=text.match(/\b(2160p?|4k|1440p?|1080p?|720p?|576p?|480p?|360p?)\b/i);
+ if(!m)return "Outro";
+ let q=m[1].toLowerCase();
+ if(q==="4k"||q.startsWith("2160"))return "4K";
+ if(q.startsWith("1440"))return "1440p";
+ if(q.startsWith("1080"))return "1080p";
+ if(q.startsWith("720"))return "720p";
+ if(q.startsWith("576"))return "576p";
+ if(q.startsWith("480"))return "480p";
+ if(q.startsWith("360"))return "360p";
+ return "Outro";
+}
+function qualityScore(q){return {"4K":6,"1440p":5,"1080p":4,"720p":3,"576p":2,"480p":1,"360p":0,"Outro":-1}[q]??-1}
+function streamLines(s){
+ const raw=[s.title,s.description].filter(Boolean).join("\n").replace(/<[^>]*>/g,"");
+ return raw.split(/\n+/).map(x=>x.trim()).filter(Boolean).slice(0,5);
+}
+function isDirectDownloadable(url){
+ if(!url||/^(magnet:|blob:)/i.test(url))return false;
+ try{
+  const p=new URL(url,location.href).pathname.toLowerCase();
+  return /\.(mp4|webm|mkv|mov|m4v|avi|mp3|m4a|aac|flac)(\.|$)/i.test(p) || !/\.m3u8(\.|$)/i.test(p);
+ }catch{return false}
+}
+function safeFilename(name,ext="mp4"){
+ const n=(name||"video").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w\- ]+/g,"").trim().replace(/\s+/g,"-").slice(0,90);
+ return `${n||"video"}.${ext}`;
+}
+function extensionFromUrl(url){
+ try{
+  const m=new URL(url,location.href).pathname.match(/\.([a-z0-9]{2,5})$/i);
+  return m?m[1].toLowerCase():"mp4";
+ }catch{return "mp4"}
+}
+function browserDownload(stream){
+ if(!stream?.url)return toast("Esta fonte não possui URL direta.");
+ if(!isDirectDownloadable(stream.url))return toast("Download direto indisponível para esta fonte (ex.: HLS/M3U8).");
+ const a=document.createElement("a");
+ a.href=stream.url;a.download=safeFilename(S.streamTitle,extensionFromUrl(stream.url));
+ a.target="_blank";a.rel="noopener noreferrer";document.body.appendChild(a);a.click();a.remove();
+ toast("O navegador recebeu o link de download. A fonte ainda pode decidir abrir o vídeo em vez de baixar.");
+}
+async function resolveAddonName(manifest,index){
+ try{
+  const d=await getJSON(manifest);
+  return d.name||`Fonte ${index+1}`;
+ }catch{
+  if(manifest.includes("froststream"))return "FrostStream";
+  return `Fonte ${index+1}`;
+ }
+}
+async function loadStreamsFromAddons(type,id){
+ const manifests=configuredStreamManifests();
+ const results=await Promise.allSettled(manifests.map(async (manifest,index)=>{
+  const [name,data]=await Promise.all([resolveAddonName(manifest,index),getJSON(streamURLFor(manifest,type,id))]);
+  return (data.streams||[]).filter(x=>x.url).map((s,i)=>({...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s)}));
+ }));
+ return results.flatMap(r=>r.status==="fulfilled"?r.value:[]).sort((a,b)=>qualityScore(b._quality)-qualityScore(a._quality));
+}
+function renderSourceUI(){
+ const streams=S.streams||[];
+ const addons=["all",...new Set(streams.map(s=>s._addon))];
+ $("#addonTabs").innerHTML=addons.map(a=>`<button class="${S.selectedAddon===a?"active":""}" data-addon="${esc(a)}">${a==="all"?"Todas":esc(a)}</button>`).join("");
+ $("#addonTabs").querySelectorAll("[data-addon]").forEach(b=>b.onclick=()=>{S.selectedAddon=b.dataset.addon;renderSourceUI()});
+ const qualities=["all",...new Set(streams.map(s=>s._quality))].sort((a,b)=>a==="all"?-1:b==="all"?1:qualityScore(b)-qualityScore(a));
+ $("#qualityFilters").innerHTML=qualities.map(q=>`<button class="${S.qualityFilter===q?"active":""}" data-q="${esc(q)}">${q==="all"?"Todas as qualidades":esc(q)}</button>`).join("");
+ $("#qualityFilters").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{S.qualityFilter=b.dataset.q;renderSourceUI()});
+ const filtered=streams.filter(s=>(S.selectedAddon==="all"||s._addon===S.selectedAddon)&&(S.qualityFilter==="all"||s._quality===S.qualityFilter));
+ if(!filtered.length){$("#sources").innerHTML='<div class="sourceEmpty">Nenhuma fonte corresponde aos filtros escolhidos.</div>';return}
+ $("#sources").innerHTML=filtered.map((s,i)=>{
+  const lines=streamLines(s);
+  const selected=S.selectedStream===s;
+  return `<article class="sourceCard ${selected?"active":""}" data-source-key="${esc(s._addon+"|"+s._idx)}">
+    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div><span class="qualityPill">${esc(s._quality)}</span></div>
+    <div class="sourceLines">${esc(lines.join("\n")||s._addon)}</div>
+    <div class="sourceActions">
+      <button class="playSource" data-play>▶ Assistir</button>
+      <button class="downloadSource" data-download ${isDirectDownloadable(s.url)?"":"disabled"}>⇩ Download</button>
+    </div>
+  </article>`;
+ }).join("");
+ $("#sources").querySelectorAll(".sourceCard").forEach(card=>{
+  const key=card.dataset.sourceKey;
+  const s=filtered.find(x=>`${x._addon}|${x._idx}`===key);
+  card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();selectStream(s,true)};
+  card.querySelector("[data-download]").onclick=e=>{e.stopPropagation();browserDownload(s)};
+  card.onclick=()=>selectStream(s,true);
+ });
+}
+function selectStream(stream,autoplay=true){
+ if(!stream)return;S.selectedStream=stream;renderSourceUI();loadVideo(stream.url,autoplay);
+}
 async function playStream(type,id,title,meta){
  $("#playerModal").classList.add("open");$("#playerTitle").textContent=title||"Reprodução";
- const v=$("#video");v.pause();v.removeAttribute("src");if(v._hls){v._hls.destroy();v._hls=null}v.load();
- $("#sources").innerHTML="<span class='hint'>Buscando fontes do FrostStream...</span>";
+ S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";
+ resetVideo();
+ $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
  try{
-  const d=await getJSON(streamURL(type,id));const streams=(d.streams||[]).filter(x=>x.url);
-  if(!streams.length){$("#sources").innerHTML="<span class='hint'>Nenhuma fonte foi retornada.</span>";return}
-  $("#sources").innerHTML="";
-  streams.forEach((s,i)=>{
-   const b=document.createElement("button");b.textContent=(s.name||s.title||`Fonte ${i+1}`)+(s.quality?` • ${s.quality}`:"");
-   b.onclick=()=>{document.querySelectorAll("#sources button").forEach(x=>x.classList.remove("active"));b.classList.add("active");loadVideo(s.url)};
-   $("#sources").appendChild(b)
-  });
-  const first=streams.find(x=>x.url);if(first){loadVideo(first.url);$("#sources button")?.classList?.add("active")}
-  addHistory(meta||{id,type,name:title},0);
- }catch(e){console.error(e);$("#sources").innerHTML="<span class='hint'>Falha ao consultar o FrostStream. Verifique CORS e o manifesto.</span>"}
+  const streams=await loadStreamsFromAddons(type,id);S.streams=streams;
+  if(!streams.length){$("#sources").innerHTML="<div class='sourceEmpty'>Nenhuma fonte foi retornada pelos addons configurados.</div>";return}
+  renderSourceUI();
+  selectStream(streams[0],false);
+  addHistory(S.streamMeta,0);
+ }catch(e){console.error(e);$("#sources").innerHTML="<div class='sourceEmpty'>Falha ao consultar as fontes. Verifique CORS, o manifesto e a disponibilidade do addon.</div>"}
 }
-function loadVideo(url){
- const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}
+function resetVideo(){
+ const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");v.load();
+ $("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";
+}
+function loadVideo(url,autoplay=true){
+ const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();
+ $("#buffering").classList.add("show");
  if(window.Hls&&Hls.isSupported()&&/\.m3u8($|\?)/i.test(url)){
-  v._hls=new Hls({enableWorker:true});v._hls.loadSource(url);v._hls.attachMedia(v);v._hls.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}))
- }else{v.src=url;v.play().catch(()=>{})}
+  v._hls=new Hls({enableWorker:true,lowLatencyMode:false});
+  v._hls.loadSource(url);v._hls.attachMedia(v);
+  v._hls.on(Hls.Events.MANIFEST_PARSED,()=>{if(autoplay)v.play().catch(()=>{});$("#buffering").classList.remove("show")});
+  v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)toast("Falha ao reproduzir esta fonte.")});
+ }else{
+  v.src=url;
+  v.addEventListener("loadedmetadata",()=>$("#buffering").classList.remove("show"),{once:true});
+  if(autoplay)v.play().catch(()=>{});
+ }
+}
+function togglePlayback(){const v=$("#video");if(!v.src&&!v._hls)return;if(v.paused)v.play().catch(()=>{});else v.pause()}
+function syncPlayer(){
+ const v=$("#video"),dur=isFinite(v.duration)?v.duration:0,cur=v.currentTime||0;
+ $("#seek").value=dur?Math.round(cur/dur*1000):0;$("#timeText").textContent=`${formatTime(cur)} / ${formatTime(dur)}`;
+ $("#playPause").textContent=v.paused?"▶":"❚❚";$("#bigPlay").classList.toggle("hidden",!v.paused);
+ if(dur&&S.streamMeta?.id){
+  const pct=Math.max(1,Math.min(100,cur/dur*100));
+  if(Math.floor(cur)%15===0)addHistory(S.streamMeta,pct);
+ }
 }
 function addHistory(m,progress){
  if(!m?.id)return;let a=history().filter(x=>x.id!==m.id);
@@ -294,6 +477,7 @@ function addHistory(m,progress){
 }
 
 async function page(type){
+ S.currentPage=type;
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  const titles={movies:"Filmes",series:"Séries",anime:"Animes",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
  if(type==="list"){const a=lists();$("#pageBody").innerHTML=a.length?`<div class="grid">${a.map(card).join("")}</div>`:'<div class="empty">Sua lista está vazia.</div>';bindCards($("#pageBody"));return}
@@ -310,6 +494,7 @@ async function page(type){
 }
 
 async function search(q){
+ S.currentPage="search";
  q=q.trim();if(!q)return;
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent=`Busca: ${q}`;
  $("#pageBody").innerHTML='<div class="loading">Pesquisando...</div>';
@@ -322,7 +507,24 @@ $("#heroDetails").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 $$("[data-page]").forEach(b=>b.onclick=()=>{ $$(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active"); if(b.dataset.page==="home")home();else page(b.dataset.page) });
 $("#search").addEventListener("keydown",e=>{if(e.key==="Enter")search(e.target.value)});
 $("#closeDetail").onclick=()=>$("#detailModal").classList.remove("open");
-$("#closePlayer").onclick=()=>{const v=$("#video");v.pause();if(v._hls)v._hls.destroy();$("#playerModal").classList.remove("open")};
+$("#closePlayer").onclick=()=>{resetVideo();$("#playerModal").classList.remove("open")};
+$("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
+$("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10)};
+$("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10)};
+$("#muteBtn").onclick=()=>{const v=$("#video");v.muted=!v.muted;$("#muteBtn").textContent=v.muted?"🔇":"🔊"};
+$("#volume").oninput=e=>{const v=$("#video");v.volume=Number(e.target.value);v.muted=v.volume===0;$("#muteBtn").textContent=v.muted?"🔇":"🔊"};
+$("#speed").onchange=e=>$("#video").playbackRate=Number(e.target.value);
+$("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v.currentTime=Number(e.target.value)/1000*v.duration};
+$("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()};
+$("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}};
+$("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
+$("#video").addEventListener("timeupdate",syncPlayer);$("#video").addEventListener("play",syncPlayer);$("#video").addEventListener("pause",syncPlayer);
+$("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
+$("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
+$("#videoShell").addEventListener("mousemove",()=>{$("#playerControls").classList.add("show");clearTimeout(S._ctlTimer);S._ctlTimer=setTimeout(()=>$("#playerControls").classList.remove("show"),2200)});
+document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains("open"))return;if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;
+ if(e.code==="Space"){e.preventDefault();togglePlayback()} if(e.key==="ArrowLeft")$("#back10").click();if(e.key==="ArrowRight")$("#forward10").click();if(e.key.toLowerCase()==="f")$("#fullBtn").click();if(e.key.toLowerCase()==="m")$("#muteBtn").click();
+});
 $("#detailModal").onclick=e=>{if(e.target.id==="detailModal")$("#detailModal").classList.remove("open")};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
 $("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
@@ -334,5 +536,6 @@ window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>
 const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
 home();
 </script>
+<!-- CasaFlix v3 — player avançado, seletor de fontes e download direto autorizado -->
 </body>
 </html>
