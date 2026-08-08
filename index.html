@@ -72,6 +72,18 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 @media(max-width:560px){.controlRow{gap:5px}.ctl{min-width:32px;padding:0 7px}.time{font-size:11px}.playerSide{padding:14px}.sourceCard{padding:12px}.bigPlay{width:66px;height:66px;font-size:26px}.speed{max-width:75px}.ctl[data-hide-mobile="1"]{display:none}}
 .settings{width:min(650px,95vw);background:#121315;border:1px solid #303036;border-radius:14px;padding:25px}.settings h2{margin-top:0}.field{margin:15px 0}.field label{font-size:13px;color:#bbb}.field input,.field select{display:block;width:100%;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0}.hint{font-size:12px;color:#888;line-height:1.5}
 .toast{position:fixed;z-index:500;bottom:18px;right:18px;background:#25262a;border:1px solid #3a3b40;padding:12px 15px;border-radius:8px;display:none;box-shadow:0 10px 30px #000}.toast.show{display:block}
+.searchTools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:-5px 0 22px}
+.searchTools input{flex:1;min-width:230px;background:#141416;border:1px solid #303036;color:#fff;border-radius:10px;padding:12px 14px;outline:none}
+.searchTools input:focus{border-color:#55555d}
+.searchTabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}.searchTabs::-webkit-scrollbar{display:none}
+.searchTabs button{flex:none;border:1px solid #35353b;background:#1b1b1f;color:#ccc;border-radius:999px;padding:9px 13px;font-weight:800;font-size:12px}
+.searchTabs button.active{background:#fff;color:#111;border-color:#fff}
+.searchMeta{font-size:12px;color:#85858d;margin:0 0 16px}
+.searchGroup{margin:0 0 34px}.searchGroup h3{font-size:19px;margin:0 0 12px}
+.searchLoading{display:flex;gap:10px;align-items:center;color:#aaa;padding:35px 0}.searchDot{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulse 1s infinite alternate}.searchDot:nth-child(2){animation-delay:.2s}.searchDot:nth-child(3){animation-delay:.4s}@keyframes pulse{to{opacity:.25;transform:scale(.7)}}
+.searchHint{font-size:13px;color:#8e8e96;line-height:1.5;padding:8px 0 20px}
+.sourceMark{font-size:10px;color:#a5a5ad;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 @media(max-width:760px){
  .top{padding:0 14px;height:58px;gap:12px}.nav{display:none}.search{width:40px;border:0;background:none;padding:0}.search input{display:none}.hero{height:560px;min-height:560px;padding:0 20px 65px}.hero h1{font-size:43px}.heroDesc{font-size:14px}.card{flex-basis:130px}main{padding:0 14px 45px}.page{padding:82px 14px 40px}.grid{grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:11px}.detailHero{min-height:480px;padding:24px}.detailContent h2{font-size:35px}.episodes{padding:18px 20px 28px}.epThumb{width:115px}
 }
@@ -170,10 +182,11 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
   <button class="close" id="closeSettings">×</button>
   <h2>Configurações</h2>
   <div class="field"><label>Addons de reprodução (um manifest por linha)</label><textarea id="frostUrl" style="display:block;width:100%;min-height:92px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
-  <div class="field"><label>Catálogo / metadados</label><input id="metaUrl"></div>
+  <div class="field"><label>Metadados principais</label><input id="metaUrl"></div>
+  <div class="field"><label>Fontes de catálogo e busca (um manifest por linha)</label><textarea id="catalogUrls" style="display:block;width:100%;min-height:105px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
   <div class="field"><label>Idioma preferido</label><select id="lang"><option value="pt-BR">Português (Brasil)</option><option value="pt">Português</option><option value="en">English</option></select></div>
   <div class="actions"><button class="btn primary" id="saveSettings">Salvar</button><button class="btn secondary" id="resetSettings">Restaurar padrão</button></div>
-  <p class="hint">O FrostStream fica configurado por padrão. Você pode adicionar outros addons compatíveis, um manifesto por linha, para aparecerem como abas no seletor de fontes. O site não contorna DRM, paywalls ou bloqueios de origem.</p>
+  <p class="hint">O FrostStream permanece como fonte de reprodução padrão. Para catálogo e busca, esta versão usa Cinemeta e Streaming Catalogs. Addons de catálogo são lidos pelo manifesto e pesquisados conforme os recursos declarados. O site não contorna DRM, paywalls ou bloqueios de origem.</p>
  </div>
 </div>
 
@@ -183,14 +196,19 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 const CFG_DEFAULT={
  frost:"https://froststream.cloutteam.com/manifest.json",
  meta:"https://v3-cinemeta.strem.io/manifest.json",
+ catalogs:[
+  "https://v3-cinemeta.strem.io/manifest.json",
+  "https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club/manifest.json"
+ ].join("\n"),
  lang:"pt-BR"
 };
 const cfg={
  frost:localStorage.getItem("cf2_frost")||CFG_DEFAULT.frost,
  meta:localStorage.getItem("cf2_meta")||CFG_DEFAULT.meta,
+ catalogs:localStorage.getItem("cf4_catalogs")||CFG_DEFAULT.catalogs,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null};
+const S={hero:null,current:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map()};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -205,12 +223,29 @@ async function getJSON(url){
  return r.json();
 }
 function metaURL(type,id){return api(cfg.meta,`meta/${type}/${encodeURIComponent(id)}.json`)}
-function catalogURL(type,id="top",params=""){
- return api(cfg.meta,`catalog/${type}/${encodeURIComponent(id)}.json${params?("?"+params):""}`)
+function normalizeExtra(params){
+ if(!params)return "";
+ if(typeof params==="string")return params.replace(/^\?/,"");
+ return Object.entries(params).filter(([,v])=>v!==undefined&&v!==null&&v!=="").map(([k,v])=>`${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
 }
+function catalogURLFor(manifest,type,id="top",params=""){
+ const extra=normalizeExtra(params);
+ return api(manifest,`catalog/${type}/${encodeURIComponent(id)}${extra?("/"+extra):""}.json`);
+}
+function catalogURL(type,id="top",params=""){return catalogURLFor(cfg.meta,type,id,params)}
 function streamURLFor(manifest,type,id){return api(manifest,`stream/${type}/${encodeURIComponent(id)}.json`)}
-function configuredStreamManifests(){
- return String(cfg.frost||"").split(/[\n,]+/).map(x=>x.trim()).filter(Boolean);
+function configuredStreamManifests(){return String(cfg.frost||"").split(/[\n,]+/).map(x=>x.trim()).filter(Boolean)}
+function configuredCatalogManifests(){return [...new Set(String(cfg.catalogs||CFG_DEFAULT.catalogs).split(/[\n,]+/).map(x=>x.trim()).filter(Boolean))]}
+async function getManifest(manifestUrl){
+ if(S.manifestCache.has(manifestUrl))return S.manifestCache.get(manifestUrl);
+ const p=getJSON(manifestUrl).catch(e=>{S.manifestCache.delete(manifestUrl);throw e});
+ S.manifestCache.set(manifestUrl,p);return p;
+}
+async function getCatalog(manifest,type,id,params=""){
+ const key=[manifest,type,id,normalizeExtra(params)].join("|");
+ if(S.catalogCache.has(key))return S.catalogCache.get(key);
+ const p=getJSON(catalogURLFor(manifest,type,id,params)).then(x=>x.metas||[]).catch(e=>{S.catalogCache.delete(key);throw e});
+ S.catalogCache.set(key,p);return p;
 }
 
 function lists(){
@@ -229,7 +264,7 @@ function card(m){
    <div class="poster" style="background-image:url('${esc(m.poster||"")}')"></div>
    ${m.imdbRating?`<div class="rating">★ ${esc(m.imdbRating)}</div>`:""}
    <button class="plus" data-plus="${esc(m.id)}">${saved?"✓":"+"}</button>
-   <div class="cardInfo"><div class="title">${esc(m.name||"Sem título")}</div><div class="sub">${esc(m.year||"")} ${m.type==="series"?"• Série":"• Filme"}</div></div>
+   <div class="cardInfo"><div class="title">${esc(m.name||"Sem título")}</div><div class="sub">${esc(m.year||"")} ${m.type==="series"?"• Série":"• Filme"}</div>${m._catalogSource?`<div class="sourceMark">${esc(m._catalogSource)}</div>`:""}</div>
    ${h?`<div class="bar"><i style="width:${Math.min(100,h.progress||12)}%"></i></div>`:""}
  </article>`
 }
@@ -258,8 +293,103 @@ function row(title,items,sub=""){
  return `<section class="section"><div class="sectionHead"><div class="sectionTitle">${esc(title)}</div><div class="sectionSub">${esc(sub||"")}</div></div><div class="row">${items.map(card).join("")}</div></section>`
 }
 
-async function safeCatalog(type,id="top",params=""){
- try{return (await getJSON(catalogURL(type,id,params))).metas||[]}catch(e){console.warn(e);return[]}
+async function safeCatalog(type,id="top",params="",manifest=cfg.meta){
+ try{return await getCatalog(manifest,type,id,params)}catch(e){console.warn("catalog",e);return[]}
+}
+function catalogSupportsSearch(c){
+ return Array.isArray(c?.extra)&&c.extra.some(x=>(typeof x==="string"?x:x?.name)==="search");
+}
+function catalogNeedsOtherRequiredExtra(c){
+ return Array.isArray(c?.extra)&&c.extra.some(x=>typeof x==="object"&&x?.isRequired===true&&x?.name!=="search");
+}
+function cleanMeta(m,sourceName){
+ if(!m||!m.id||!m.name)return null;
+ return {...m,type:m.type||"movie",_catalogSource:sourceName||m._catalogSource||""};
+}
+function dedupeMetas(items){
+ const map=new Map();
+ for(const raw of items){
+  const m=raw&&cleanMeta(raw,raw._catalogSource);if(!m)continue;
+  const key=`${m.type}|${m.id}`;
+  if(!map.has(key))map.set(key,m);
+  else{
+   const old=map.get(key);
+   map.set(key,{...old,...m,poster:m.poster||old.poster,background:m.background||old.background,description:m.description||old.description,_catalogSource:[old._catalogSource,m._catalogSource].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(" + ")});
+  }
+ }
+ return [...map.values()];
+}
+function normText(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim()}
+function searchScore(m,q){
+ const n=normText(m.name),x=normText(q);
+ if(n===x)return 1000;
+ if(n.startsWith(x))return 800;
+ if(n.split(/\s+/).some(w=>w.startsWith(x)))return 650;
+ if(n.includes(x))return 500;
+ const tokens=x.split(/\s+/).filter(Boolean);
+ const hits=tokens.filter(t=>n.includes(t)).length;
+ return hits*80+(Number(m.imdbRating)||0);
+}
+function isAnimeLike(m){
+ const g=(m.genres||[]).map(normText).join(" ");
+ return g.includes("anime")||g.includes("animation")||g.includes("animacao");
+}
+async function catalogDefinitions(){
+ const defs=[];
+ for(const manifestUrl of configuredCatalogManifests()){
+  try{
+   const mf=await getManifest(manifestUrl);
+   const name=mf.name||new URL(manifestUrl).hostname;
+   for(const c of (mf.catalogs||[])){
+    if(!["movie","series"].includes(c.type)||catalogNeedsOtherRequiredExtra(c))continue;
+    defs.push({manifestUrl,manifest:mf,sourceName:name,catalog:c});
+   }
+  }catch(e){console.warn("manifest",manifestUrl,e)}
+ }
+ // Fallback: Cinemeta top search, useful if its manifest is temporarily unavailable.
+ if(!defs.some(d=>d.manifestUrl===cfg.meta&&d.catalog.id==="top"&&d.catalog.type==="movie")){
+  defs.push({manifestUrl:cfg.meta,sourceName:"Cinemeta",catalog:{type:"movie",id:"top",extra:[{name:"search"}]}});
+ }
+ if(!defs.some(d=>d.manifestUrl===cfg.meta&&d.catalog.id==="top"&&d.catalog.type==="series")){
+  defs.push({manifestUrl:cfg.meta,sourceName:"Cinemeta",catalog:{type:"series",id:"top",extra:[{name:"search"}]}});
+ }
+ return defs;
+}
+async function searchAllCatalogs(q){
+ const defs=await catalogDefinitions();
+ // Limit each source to a sane number of catalogs so a typo does not fire dozens of requests.
+ const counts=new Map(),chosen=[];
+ for(const d of defs){
+  const n=counts.get(d.manifestUrl)||0;
+  if(n>=12)continue;
+  counts.set(d.manifestUrl,n+1);chosen.push(d);
+ }
+ const jobs=chosen.map(async d=>{
+  const c=d.catalog;
+  let metas=[];
+  if(catalogSupportsSearch(c)){
+   metas=await safeCatalog(c.type,c.id,{search:q},d.manifestUrl);
+  }else{
+   // Some catalog addons do not expose "search"; fetch their first page and filter locally.
+   metas=await safeCatalog(c.type,c.id,"",d.manifestUrl);
+   const x=normText(q);metas=metas.filter(m=>normText(m.name).includes(x));
+  }
+  return metas.map(m=>cleanMeta(m,d.sourceName)).filter(Boolean);
+ });
+ const settled=await Promise.allSettled(jobs);
+ const items=dedupeMetas(settled.flatMap(r=>r.status==="fulfilled"?r.value:[]));
+ return items.sort((a,b)=>searchScore(b,q)-searchScore(a,q));
+}
+async function externalCatalogRows(){
+ const defs=(await catalogDefinitions()).filter(d=>d.manifestUrl!==cfg.meta&&!catalogNeedsOtherRequiredExtra(d.catalog)).slice(0,5);
+ const rows=[];
+ for(const d of defs){
+  try{
+   const items=(await safeCatalog(d.catalog.type,d.catalog.id,"",d.manifestUrl)).slice(0,18).map(m=>cleanMeta(m,d.sourceName)).filter(Boolean);
+   if(items.length)rows.push({title:d.catalog.name||d.catalog.id||d.sourceName,sub:d.sourceName,items});
+  }catch{}
+ }
+ return rows;
 }
 
 async function home(){
@@ -267,12 +397,13 @@ async function home(){
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
-  const [movies,series,animeMovies,animeSeries,hist]=await Promise.all([
+  const [movies,series,animeMovies,animeSeries,hist,extraRows]=await Promise.all([
    safeCatalog("movie","top"),
    safeCatalog("series","top"),
-   safeCatalog("movie","top","genre=Animation"),
-   safeCatalog("series","top","genre=Animation"),
-   Promise.resolve(history())
+   safeCatalog("movie","top",{genre:"Animation"}),
+   safeCatalog("series","top",{genre:"Animation"}),
+   Promise.resolve(history()),
+   externalCatalogRows()
   ]);
   const continueItems=hist.map(x=>x.meta||x).filter(x=>x.poster);
   const featured=movies[0]||series[0];
@@ -282,6 +413,7 @@ async function home(){
    row("Filmes populares",movies,"Atualizado automaticamente"),
    row("Séries populares",series,"Atualizado automaticamente"),
    row("Animes",Array.from(new Map([...animeSeries,...animeMovies].map(x=>[x.id,x])).values()),"Animação"),
+   ...extraRows.map(r=>row(r.title,r.items,r.sub)),
    row("Mais filmes",movies.slice(8),""),
    row("Mais séries",series.slice(8),"")
   ].join("")||'<div class="empty">Nenhum catálogo retornado.</div>';
@@ -486,26 +618,61 @@ async function page(type){
  if(type==="movies")items=await safeCatalog("movie","top");
  if(type==="series")items=await safeCatalog("series","top");
  if(type==="anime"){
-  const [a,b]=await Promise.all([safeCatalog("series","top","genre=Animation"),safeCatalog("movie","top","genre=Animation")]);
+  const [a,b]=await Promise.all([safeCatalog("series","top",{genre:"Animation"}),safeCatalog("movie","top",{genre:"Animation"})]);
   items=Array.from(new Map([...a,...b].map(x=>[x.id,x])).values());
  }
  $("#pageBody").innerHTML=items.length?`<div class="grid">${items.map(card).join("")}</div>`:'<div class="empty">Nenhum título encontrado.</div>';
  bindCards($("#pageBody"));
 }
 
-async function search(q){
- S.currentPage="search";
- q=q.trim();if(!q)return;
- $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent=`Busca: ${q}`;
- $("#pageBody").innerHTML='<div class="loading">Pesquisando...</div>';
- const [m,s]=await Promise.all([safeCatalog("movie","top","search="+encodeURIComponent(q)),safeCatalog("series","top","search="+encodeURIComponent(q))]);
- const items=[...m,...s];$("#pageBody").innerHTML=items.length?`<div class="grid">${items.map(card).join("")}</div>`:'<div class="empty">Nenhum resultado.</div>';bindCards($("#pageBody"));
+function renderSearchResults(){
+ const q=S.searchQuery,all=S.searchItems||[];
+ const movies=all.filter(x=>x.type==="movie"),series=all.filter(x=>x.type==="series"),anime=all.filter(isAnimeLike);
+ let shown=all;
+ if(S.searchFilter==="movie")shown=movies;
+ if(S.searchFilter==="series")shown=series;
+ if(S.searchFilter==="anime")shown=anime;
+ const tabs=[
+  ["all",`Todos (${all.length})`],["movie",`Filmes (${movies.length})`],["series",`Séries (${series.length})`],["anime",`Animes (${anime.length})`]
+ ];
+ $("#pageTitle").textContent="Buscar";
+ $("#pageBody").innerHTML=`<div class="searchTools">
+   <input id="pageSearchInput" value="${esc(q)}" placeholder="Digite o nome de um filme, série ou anime" autocomplete="off">
+   <div class="searchTabs">${tabs.map(([k,t])=>`<button data-search-filter="${k}" class="${S.searchFilter===k?"active":""}">${t}</button>`).join("")}</div>
+  </div>
+  <div class="searchMeta">${q?`${shown.length} resultado(s) para “${esc(q)}” • pesquisa em Cinemeta + catálogos configurados`:"Digite pelo menos 2 caracteres para pesquisar."}</div>
+  ${shown.length?`<div class="grid">${shown.map(card).join("")}</div>`:`<div class="empty">${q?"Nenhum resultado encontrado. Tente o título original, parte do nome ou outra grafia.":"Comece digitando acima."}</div>`}`;
+ bindCards($("#pageBody"));
+ $("#pageBody").querySelectorAll("[data-search-filter]").forEach(b=>b.onclick=()=>{S.searchFilter=b.dataset.searchFilter;renderSearchResults()});
+ const inp=$("#pageSearchInput");if(inp){
+  inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);
+  let timer;inp.oninput=e=>{clearTimeout(timer);timer=setTimeout(()=>search(e.target.value,false),360)};
+  inp.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(timer);search(e.target.value,true)}};
+ }
+}
+async function search(q,force=false){
+ S.currentPage="search";q=q.trim();S.searchQuery=q;
+ $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
+ if(q.length<2){S.searchItems=[];renderSearchResults();return}
+ const token=++S.searchToken;
+ $("#pageTitle").textContent="Buscar";
+ $("#pageBody").innerHTML=`<div class="searchTools"><input id="pageSearchInput" value="${esc(q)}" placeholder="Digite o nome de um filme, série ou anime"></div><div class="searchLoading"><span>Pesquisando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
+ try{
+  const items=await searchAllCatalogs(q);
+  if(token!==S.searchToken)return;
+  S.searchItems=items;renderSearchResults();
+ }catch(e){
+  console.error(e);if(token!==S.searchToken)return;
+  S.searchItems=[];renderSearchResults();toast("A busca encontrou um erro em uma das fontes; os outros catálogos continuam disponíveis.");
+ }
 }
 
 $("#heroWatch").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 $("#heroDetails").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 $$("[data-page]").forEach(b=>b.onclick=()=>{ $$(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active"); if(b.dataset.page==="home")home();else page(b.dataset.page) });
-$("#search").addEventListener("keydown",e=>{if(e.key==="Enter")search(e.target.value)});
+let topSearchTimer;
+$("#search").addEventListener("input",e=>{clearTimeout(topSearchTimer);const q=e.target.value.trim();if(q.length>=2)topSearchTimer=setTimeout(()=>search(q,false),420)});
+$("#search").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(topSearchTimer);search(e.target.value,true)};if(e.key==="Escape"){e.target.value="";home()}});
 $("#closeDetail").onclick=()=>$("#detailModal").classList.remove("open");
 $("#closePlayer").onclick=()=>{resetVideo();$("#playerModal").classList.remove("open")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
@@ -527,15 +694,15 @@ document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains
 });
 $("#detailModal").onclick=e=>{if(e.target.id==="detailModal")$("#detailModal").classList.remove("open")};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
-$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
+$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
 $("#closeSettings").onclick=()=>$("#settingsModal").classList.remove("open");
-$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf2_lang",cfg.lang);$("#settingsModal").classList.remove("open");toast("Configurações salvas.");home()};
-$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#lang").value=CFG_DEFAULT.lang};
+$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");toast("Configurações salvas.");home()};
+$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#lang").value=CFG_DEFAULT.lang};
 window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
 
 const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
 home();
 </script>
-<!-- CasaFlix v3 — player avançado, seletor de fontes e download direto autorizado -->
+<!-- CasaFlix v4 — busca multi-catálogo com protocolo Stremio corrigido + Streaming Catalogs -->
 </body>
 </html>
