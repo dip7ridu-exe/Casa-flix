@@ -51,7 +51,7 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 .bigPlay{position:absolute;z-index:5;width:78px;height:78px;border:0;border-radius:50%;background:#fff;color:#080808;font-size:30px;display:grid;place-items:center;box-shadow:0 10px 40px #0008;transition:.18s}
 .bigPlay:hover{transform:scale(1.05)}.bigPlay.hidden{display:none!important}
 .playerControls{position:absolute;z-index:7;left:0;right:0;bottom:0;padding:38px 16px 14px;background:linear-gradient(transparent,#000e);opacity:0;transition:.2s}
-.videoShell:hover .playerControls,.playerControls.show{opacity:1}
+.playerControls.show{opacity:1}.videoShell.uiHidden{cursor:none}.playerTop{transition:opacity .25s}.playerStage.uiHidden .playerTop{opacity:0;pointer-events:none}
 .seek{width:100%;accent-color:var(--accent);cursor:pointer}
 .controlRow{display:flex;align-items:center;gap:9px;margin-top:8px}.ctl{height:36px;min-width:36px;border:0;border-radius:7px;background:#ffffff12;color:#fff;padding:0 10px}.ctl:hover{background:#ffffff24}
 .time{font-size:12px;color:#ddd;white-space:nowrap}.volume{width:90px;accent-color:#fff}
@@ -67,6 +67,16 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 .sourceLines{font-size:12px;line-height:1.55;color:#a8a8af;margin-top:7px;white-space:pre-line}.sourceActions{display:flex;gap:7px;margin-top:10px}
 .sourceActions button{border:1px solid #38383f;background:#242429;color:#fff;border-radius:7px;padding:7px 9px;font-size:12px;font-weight:750}.sourceActions button:hover{background:#303036}.sourceActions .playSource{background:#fff;color:#111}.sourceActions .downloadSource[disabled]{opacity:.42;cursor:not-allowed}
 .sourceEmpty{padding:25px 8px;color:#8d8d94;font-size:13px;line-height:1.5}.downloadNote{font-size:11px;color:#72727a;margin-top:12px;line-height:1.45}
+.playerMenu{position:absolute;z-index:12;right:14px;bottom:72px;width:min(330px,calc(100% - 28px));max-height:330px;overflow:auto;background:#151519;border:1px solid #38383f;border-radius:12px;box-shadow:0 16px 50px #000;padding:8px;display:none}
+.playerMenu.open{display:block}.playerMenuTitle{font-size:12px;font-weight:900;color:#aaa;padding:7px 9px 8px;text-transform:uppercase;letter-spacing:.7px}
+.menuItem{width:100%;border:0;background:transparent;color:#eee;text-align:left;padding:10px;border-radius:8px;display:flex;gap:10px;align-items:center}
+.menuItem:hover{background:#ffffff12}.menuItem.active{background:#ffffff18}.menuItem .check{width:18px;color:#fff}.menuItem .menuText{flex:1;min-width:0}.menuItem small{display:block;color:#85858d;margin-top:2px}
+.langBadge{font-size:10px;font-weight:900;background:#ffffff12;border:1px solid #ffffff18;border-radius:5px;padding:3px 6px}
+.sourceCard.external .playSource{background:#a8ff78;color:#0a1207}.sourceCard.external .downloadSource{display:none}
+.sourceOrigin{font-size:11px;color:#8d8d95;margin-top:4px}.legalMark{font-size:10px;padding:3px 6px;border-radius:5px;background:#17311b;color:#a8ff78;font-weight:900}
+.trackStatus{font-size:11px;color:#aaa;white-space:nowrap;max-width:145px;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:700px){.trackStatus{display:none}.playerMenu{right:8px;bottom:67px;width:calc(100% - 16px)}}
+
 .buffering{position:absolute;z-index:4;width:48px;height:48px;border:4px solid #ffffff2e;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}.buffering.show{display:block}@keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){.playerWrap{width:100vw;height:100dvh;max-height:none;border-radius:0;border:0}.playerLayout{grid-template-columns:1fr;display:block;height:100%;overflow:auto}.playerStage{min-height:58dvh}.videoShell{min-height:58dvh}.playerSide{border-left:0;border-top:1px solid #29292e;max-height:none;padding:16px}.playerTop{position:absolute}.volume{display:none}}
 @media(max-width:560px){.controlRow{gap:5px}.ctl{min-width:32px;padding:0 7px}.time{font-size:11px}.playerSide{padding:14px}.sourceCard{padding:12px}.bigPlay{width:66px;height:66px;font-size:26px}.speed{max-width:75px}.ctl[data-hide-mobile="1"]{display:none}}
@@ -153,6 +163,10 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
        <input class="volume" id="volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume">
        <span class="time" id="timeText">0:00 / 0:00</span>
        <span class="spacer"></span>
+       <span class="trackStatus" id="trackStatus">Áudio: auto • Legenda: auto</span>
+       <button class="ctl" id="nextBtn" title="Próximo episódio" style="display:none">Próx. ⏭</button>
+       <button class="ctl" id="audioBtn" title="Áudio">🎧</button>
+       <button class="ctl" id="subsBtn" title="Legendas">CC</button>
        <select class="speed" id="speed" title="Velocidade">
         <option value=".75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option>
        </select>
@@ -161,12 +175,13 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
        <button class="ctl" id="fullBtn" title="Tela cheia">⛶</button>
       </div>
      </div>
+     <div class="playerMenu" id="playerMenu"></div>
     </div>
    </section>
    <aside class="playerSide">
     <div class="sourceHead">
      <h3>Escolha uma fonte</h3>
-     <p>Qualidade, idioma e provedor aparecem quando o addon informa esses dados.</p>
+     <p>Escolha uma fonte. Provedores oficiais externos abrem em uma nova aba; streams diretos tocam no player.</p>
     </div>
     <div class="addonTabs" id="addonTabs"></div>
     <div class="filterChips" id="qualityFilters"></div>
@@ -184,9 +199,12 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
   <div class="field"><label>Addons de reprodução (um manifest por linha)</label><textarea id="frostUrl" style="display:block;width:100%;min-height:92px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
   <div class="field"><label>Metadados principais</label><input id="metaUrl"></div>
   <div class="field"><label>Fontes de catálogo e busca (um manifest por linha)</label><textarea id="catalogUrls" style="display:block;width:100%;min-height:105px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
-  <div class="field"><label>Idioma preferido</label><select id="lang"><option value="pt-BR">Português (Brasil)</option><option value="pt">Português</option><option value="en">English</option></select></div>
+  <div class="field"><label>Idioma da interface / catálogo</label><select id="lang"><option value="pt-BR">Português (Brasil)</option><option value="pt">Português</option><option value="en">English</option></select></div>
+  <div class="field"><label>Addon de legendas</label><input id="subtitleAddon"></div>
+  <div class="field"><label>Áudio preferido no player</label><select id="audioPref"><option value="auto">Automático</option><option value="jpn">Japonês</option><option value="por">Português</option><option value="eng">Inglês</option></select></div>
+  <div class="field"><label>Legenda preferida</label><select id="subtitlePref"><option value="pob">Português (Brasil)</option><option value="por">Português</option><option value="eng">Inglês</option><option value="off">Desativada</option><option value="auto">Automática</option></select></div>
   <div class="actions"><button class="btn primary" id="saveSettings">Salvar</button><button class="btn secondary" id="resetSettings">Restaurar padrão</button></div>
-  <p class="hint">O FrostStream permanece como fonte de reprodução padrão. Para catálogo e busca, esta versão usa Cinemeta e Streaming Catalogs. Addons de catálogo são lidos pelo manifesto e pesquisados conforme os recursos declarados. O site não contorna DRM, paywalls ou bloqueios de origem.</p>
+  <p class="hint">O player agora aceita múltiplas faixas de áudio HLS, legendas embutidas e legendas externas. O OpenSubtitles v3 oficial fica configurado por padrão. O WatchHub oficial também é adicionado como opção de “onde assistir” quando houver link de provedor. O site não contorna DRM, paywalls ou restrições de acesso.</p>
  </div>
 </div>
 
@@ -194,21 +212,35 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 
 <script>
 const CFG_DEFAULT={
- frost:"https://froststream.cloutteam.com/manifest.json",
+ frost:[
+  "https://froststream.cloutteam.com/manifest.json",
+  "https://watchhub.strem.io/manifest.json"
+ ].join("\n"),
  meta:"https://v3-cinemeta.strem.io/manifest.json",
  catalogs:[
   "https://v3-cinemeta.strem.io/manifest.json",
   "https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club/manifest.json"
  ].join("\n"),
+ subtitleAddon:"https://opensubtitles-v3.strem.io/manifest.json",
+ audioPref:"jpn",
+ subtitlePref:"pob",
  lang:"pt-BR"
 };
+let savedStreams=localStorage.getItem("cf2_frost")||CFG_DEFAULT.frost;
+if(!localStorage.getItem("cf5_watchhub_migrated")){
+ if(!savedStreams.includes("watchhub.strem.io"))savedStreams=savedStreams.trim()+"\nhttps://watchhub.strem.io/manifest.json";
+ localStorage.setItem("cf2_frost",savedStreams);localStorage.setItem("cf5_watchhub_migrated","1");
+}
 const cfg={
- frost:localStorage.getItem("cf2_frost")||CFG_DEFAULT.frost,
+ frost:savedStreams,
  meta:localStorage.getItem("cf2_meta")||CFG_DEFAULT.meta,
  catalogs:localStorage.getItem("cf4_catalogs")||CFG_DEFAULT.catalogs,
+ subtitleAddon:localStorage.getItem("cf5_subtitle_addon")||CFG_DEFAULT.subtitleAddon,
+ audioPref:localStorage.getItem("cf5_audio_pref")||CFG_DEFAULT.audioPref,
+ subtitlePref:localStorage.getItem("cf5_subtitle_pref")||CFG_DEFAULT.subtitlePref,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map()};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,_ctlTimer:null};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -236,6 +268,21 @@ function catalogURL(type,id="top",params=""){return catalogURLFor(cfg.meta,type,
 function streamURLFor(manifest,type,id){return api(manifest,`stream/${type}/${encodeURIComponent(id)}.json`)}
 function configuredStreamManifests(){return String(cfg.frost||"").split(/[\n,]+/).map(x=>x.trim()).filter(Boolean)}
 function configuredCatalogManifests(){return [...new Set(String(cfg.catalogs||CFG_DEFAULT.catalogs).split(/[\n,]+/).map(x=>x.trim()).filter(Boolean))]}
+function subtitleURLFor(manifest,type,id){return api(manifest,`subtitles/${type}/${encodeURIComponent(id)}.json`)}
+function normLang(x){return String(x||"").toLowerCase().replace("_","-")}
+function langFamily(x){
+ const l=normLang(x);
+ if(["ja","jpn","jp","japanese"].includes(l))return "jpn";
+ if(["pt-br","pob","pb","por-br","brazilian portuguese"].includes(l))return "pob";
+ if(["pt","por","portuguese"].includes(l))return "por";
+ if(["en","eng","english"].includes(l))return "eng";
+ return l||"und";
+}
+function langLabel(x){
+ const l=langFamily(x);
+ return ({jpn:"Japonês",pob:"Português (Brasil)",por:"Português",eng:"Inglês",und:"Desconhecido"})[l]||x||"Desconhecido";
+}
+
 async function getManifest(manifestUrl){
  if(S.manifestCache.has(manifestUrl))return S.manifestCache.get(manifestUrl);
  const p=getJSON(manifestUrl).catch(e=>{S.manifestCache.delete(manifestUrl);throw e});
@@ -461,6 +508,11 @@ function playFirst(m){
  else playStream("movie",m.id,m.name,m)
 }
 function playEpisode(show,ep){
+ S.currentShow=show;S.currentEpisode=ep;
+ const ordered=[...(show.videos||show.episodes||[])].sort((a,b)=>(Number(a.season||1)-Number(b.season||1))||(Number(a.episode||0)-Number(b.episode||0)));
+ const idx=ordered.findIndex(x=>String(x.id)===String(ep.id));
+ S.nextEpisode=idx>=0&&idx<ordered.length-1?ordered[idx+1]:null;
+ $("#nextBtn").style.display=S.nextEpisode?"":"none";
  const key=ep.id;playStream("series",key,`${show.name} — T${ep.season} E${ep.episode}`,{...show,...ep})
 }
 function formatTime(sec){
@@ -524,9 +576,10 @@ async function loadStreamsFromAddons(type,id){
  const manifests=configuredStreamManifests();
  const results=await Promise.allSettled(manifests.map(async (manifest,index)=>{
   const [name,data]=await Promise.all([resolveAddonName(manifest,index),getJSON(streamURLFor(manifest,type,id))]);
-  return (data.streams||[]).filter(x=>x.url).map((s,i)=>({...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s)}));
+  const officialLegal=/watchhub\.strem\.io/i.test(manifest);
+  return (data.streams||[]).filter(x=>x.url||x.externalUrl).map((s,i)=>({...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s),_external:!s.url&&!!s.externalUrl,_officialLegal:officialLegal}));
  }));
- return results.flatMap(r=>r.status==="fulfilled"?r.value:[]).sort((a,b)=>qualityScore(b._quality)-qualityScore(a._quality));
+ return results.flatMap(r=>r.status==="fulfilled"?r.value:[]).sort((a,b)=>(b._external?0:1)-(a._external?0:1)||qualityScore(b._quality)-qualityScore(a._quality));
 }
 function renderSourceUI(){
  const streams=S.streams||[];
@@ -541,68 +594,218 @@ function renderSourceUI(){
  $("#sources").innerHTML=filtered.map((s,i)=>{
   const lines=streamLines(s);
   const selected=S.selectedStream===s;
-  return `<article class="sourceCard ${selected?"active":""}" data-source-key="${esc(s._addon+"|"+s._idx)}">
-    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div><span class="qualityPill">${esc(s._quality)}</span></div>
+  return `<article class="sourceCard ${selected?"active":""} ${s._external?"external":""}" data-source-key="${esc(s._addon+"|"+s._idx)}">
+    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div>${s._officialLegal?'<span class="legalMark">OFICIAL</span>':`<span class="qualityPill">${esc(s._quality)}</span>`}</div>
     <div class="sourceLines">${esc(lines.join("\n")||s._addon)}</div>
+    <div class="sourceOrigin">${esc(s._external?"Abre no provedor oficial":"Reprodução no CasaFlix")}</div>
     <div class="sourceActions">
-      <button class="playSource" data-play>▶ Assistir</button>
-      <button class="downloadSource" data-download ${isDirectDownloadable(s.url)?"":"disabled"}>⇩ Download</button>
+      <button class="playSource" data-play>${s._external?"↗ Abrir provedor":"▶ Assistir"}</button>
+      <button class="downloadSource" data-download ${(!s._external&&isDirectDownloadable(s.url))?"":"disabled"}>⇩ Download</button>
     </div>
   </article>`;
  }).join("");
  $("#sources").querySelectorAll(".sourceCard").forEach(card=>{
   const key=card.dataset.sourceKey;
   const s=filtered.find(x=>`${x._addon}|${x._idx}`===key);
-  card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();selectStream(s,true)};
-  card.querySelector("[data-download]").onclick=e=>{e.stopPropagation();browserDownload(s)};
-  card.onclick=()=>selectStream(s,true);
+  card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();if(s._external){window.open(s.externalUrl,"_blank","noopener,noreferrer")}else selectStream(s,true)};
+  card.querySelector("[data-download]").onclick=e=>{e.stopPropagation();if(!s._external)browserDownload(s)};
+  card.onclick=()=>{if(s._external)window.open(s.externalUrl,"_blank","noopener,noreferrer");else selectStream(s,true)};
  });
 }
 function selectStream(stream,autoplay=true){
- if(!stream)return;S.selectedStream=stream;renderSourceUI();loadVideo(stream.url,autoplay);
+ if(!stream)return;
+ if(stream._external){window.open(stream.externalUrl,"_blank","noopener,noreferrer");return}
+ S.selectedStream=stream;renderSourceUI();loadVideo(stream.url,autoplay,stream);
+}
+async function fetchExternalSubtitles(type,id,stream){
+ S.externalSubtitles=[];
+ const manifest=cfg.subtitleAddon;
+ if(!manifest||cfg.subtitlePref==="off")return [];
+ try{
+  let extra="";
+  const bh=stream?.behaviorHints||{};
+  const parts=[];
+  if(bh.videoHash)parts.push(`videoHash=${encodeURIComponent(bh.videoHash)}`);
+  if(bh.videoSize)parts.push(`videoSize=${encodeURIComponent(bh.videoSize)}`);
+  if(bh.filename)parts.push(`filename=${encodeURIComponent(bh.filename)}`);
+  const root=base(manifest);
+  const url=root+`/subtitles/${type}/${encodeURIComponent(id)}${parts.length?("/"+parts.join("&")):""}.json`;
+  const d=await getJSON(url);
+  S.externalSubtitles=(d.subtitles||[]).map((x,i)=>({...x,_external:true,_idx:i}));
+ }catch(e){console.warn("legendas externas",e);S.externalSubtitles=[]}
+ return S.externalSubtitles;
+}
+function subtitleCandidates(){
+ const embedded=(S.selectedStream?.subtitles||[]).map((x,i)=>({...x,_streamEmbedded:true,_idx:i}));
+ return [...embedded,...(S.externalSubtitles||[])];
+}
+function srtToVtt(txt){
+ let s=String(txt||"").replace(/^\uFEFF/,"").replace(/\r+/g,"");
+ if(/^WEBVTT/.test(s.trim()))return s;
+ s=s.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g,"$1.$2");
+ return "WEBVTT\n\n"+s;
+}
+async function attachExternalSubtitle(sub){
+ const v=$("#video");
+ [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
+ if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
+ if(!sub)return;
+ try{
+  const r=await fetch(sub.url);
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const txt=await r.text();
+  const blob=new Blob([srtToVtt(txt)],{type:"text/vtt"});
+  S.externalSubtitleBlob=URL.createObjectURL(blob);
+  const track=document.createElement("track");track.dataset.casaflix="1";track.kind="subtitles";track.label=langLabel(sub.lang);track.srclang=langFamily(sub.lang);track.src=S.externalSubtitleBlob;track.default=true;v.appendChild(track);
+  track.addEventListener("load",()=>{for(const t of v.textTracks)t.mode=t===track.track?"showing":"disabled"});
+ }catch(e){
+  console.warn(e);toast("A legenda foi encontrada, mas o navegador não conseguiu carregá-la (CORS/formato).");
+ }
+}
+function collectAudioTracks(){
+ const h=$("#video")._hls;
+ if(h&&Array.isArray(h.audioTracks)&&h.audioTracks.length)return h.audioTracks.map((t,i)=>({index:i,name:t.name||t.lang||`Faixa ${i+1}`,lang:t.lang||t.name||"",_hls:true}));
+ const v=$("#video"),a=v.audioTracks;
+ if(a&&a.length)return Array.from(a).map((t,i)=>({index:i,name:t.label||t.language||`Faixa ${i+1}`,lang:t.language||t.label||"",_native:true}));
+ return [];
+}
+function collectEmbeddedSubtitleTracks(){
+ const h=$("#video")._hls;
+ if(h&&Array.isArray(h.subtitleTracks))return h.subtitleTracks.map((t,i)=>({index:i,name:t.name||t.lang||`Legenda ${i+1}`,lang:t.lang||t.name||"",_hls:true}));
+ return [];
+}
+function choosePreferredIndex(tracks,pref){
+ if(!tracks.length)return -1;
+ if(pref==="auto")return 0;
+ let i=tracks.findIndex(t=>langFamily(t.lang)===pref);
+ if(i<0&&pref==="pob")i=tracks.findIndex(t=>langFamily(t.lang)==="por");
+ return i>=0?i:0;
+}
+function applyPreferredAudio(){
+ const tracks=collectAudioTracks();if(!tracks.length){updateTrackStatus();return}
+ const idx=choosePreferredIndex(tracks,cfg.audioPref);
+ const h=$("#video")._hls;if(h&&tracks[idx]?._hls)h.audioTrack=tracks[idx].index;
+ else{
+  const a=$("#video").audioTracks;if(a)for(let i=0;i<a.length;i++)a[i].enabled=i===tracks[idx].index;
+ }
+ updateTrackStatus();
+}
+async function applyPreferredSubtitle(){
+ if(cfg.subtitlePref==="off"){disableSubtitles();return}
+ const hTracks=collectEmbeddedSubtitleTracks();
+ let idx=choosePreferredIndex(hTracks,cfg.subtitlePref);
+ if(hTracks.length&&idx>=0){
+  const h=$("#video")._hls;if(h){h.subtitleTrack=hTracks[idx].index;h.subtitleDisplay=true}
+  await attachExternalSubtitle(null);updateTrackStatus();return;
+ }
+ const ext=subtitleCandidates();
+ let eidx=choosePreferredIndex(ext,cfg.subtitlePref);
+ if(ext.length&&eidx>=0)await attachExternalSubtitle(ext[eidx]);
+ updateTrackStatus();
+}
+function disableSubtitles(){
+ const h=$("#video")._hls;if(h){h.subtitleTrack=-1;h.subtitleDisplay=false}
+ const v=$("#video");for(const t of v.textTracks)t.mode="disabled";attachExternalSubtitle(null);updateTrackStatus();
+}
+function currentAudioLabel(){
+ const tracks=collectAudioTracks(),h=$("#video")._hls;
+ if(h&&h.audioTrack>=0&&tracks[h.audioTrack])return langLabel(tracks[h.audioTrack].lang||tracks[h.audioTrack].name);
+ const a=$("#video").audioTracks;if(a)for(let i=0;i<a.length;i++)if(a[i].enabled)return langLabel(a[i].language||a[i].label);
+ return tracks.length?langLabel(tracks[0].lang||tracks[0].name):"Padrão";
+}
+function currentSubtitleLabel(){
+ const h=$("#video")._hls,ht=collectEmbeddedSubtitleTracks();
+ if(h&&h.subtitleTrack>=0&&ht[h.subtitleTrack])return langLabel(ht[h.subtitleTrack].lang||ht[h.subtitleTrack].name);
+ const v=$("#video");for(const t of v.textTracks)if(t.mode==="showing")return t.label||langLabel(t.language);
+ return "Desligada";
+}
+function updateTrackStatus(){$("#trackStatus").textContent=`Áudio: ${currentAudioLabel()} • Legenda: ${currentSubtitleLabel()}`}
+function openAudioMenu(){
+ const tracks=collectAudioTracks(),menu=$("#playerMenu");
+ menu.innerHTML=`<div class="playerMenuTitle">Faixas de áudio</div>`+(tracks.length?tracks.map((t,i)=>`<button class="menuItem" data-audio="${i}"><span class="check">${currentAudioLabel()===langLabel(t.lang||t.name)?"✓":""}</span><span class="menuText">${esc(t.name||langLabel(t.lang))}<small>${esc(langLabel(t.lang))}</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`).join(""):`<div class="sourceEmpty">Esta fonte não expõe múltiplas faixas de áudio ao navegador.</div>`);
+ menu.classList.add("open");
+ menu.querySelectorAll("[data-audio]").forEach(b=>b.onclick=()=>{
+  const t=tracks[Number(b.dataset.audio)],h=$("#video")._hls;
+  if(t?._hls&&h)h.audioTrack=t.index;
+  else if(t?._native&&$("#video").audioTracks)for(let i=0;i<$("#video").audioTracks.length;i++)$("#video").audioTracks[i].enabled=i===t.index;
+  menu.classList.remove("open");updateTrackStatus();showPlayerUI();
+ });
+}
+function openSubtitleMenu(){
+ const embedded=collectEmbeddedSubtitleTracks(),external=subtitleCandidates(),menu=$("#playerMenu");
+ const items=[
+  `<button class="menuItem" data-sub-off><span class="check">${currentSubtitleLabel()==="Desligada"?"✓":""}</span><span class="menuText">Desativada</span></button>`,
+  ...embedded.map((t,i)=>`<button class="menuItem" data-hsub="${i}"><span class="check"></span><span class="menuText">${esc(t.name||langLabel(t.lang))}<small>Embutida no stream</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`),
+  ...external.map((t,i)=>`<button class="menuItem" data-esub="${i}"><span class="check"></span><span class="menuText">${esc(langLabel(t.lang))}<small>OpenSubtitles / externa</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`)
+ ];
+ menu.innerHTML=`<div class="playerMenuTitle">Legendas</div>${items.join("")}`;
+ menu.classList.add("open");
+ menu.querySelector("[data-sub-off]").onclick=()=>{disableSubtitles();menu.classList.remove("open");showPlayerUI()};
+ menu.querySelectorAll("[data-hsub]").forEach(b=>b.onclick=async()=>{
+  const t=embedded[Number(b.dataset.hsub)],h=$("#video")._hls;if(h){h.subtitleTrack=t.index;h.subtitleDisplay=true}
+  await attachExternalSubtitle(null);menu.classList.remove("open");updateTrackStatus();showPlayerUI()
+ });
+ menu.querySelectorAll("[data-esub]").forEach(b=>b.onclick=async()=>{
+  const t=external[Number(b.dataset.esub)],h=$("#video")._hls;if(h){h.subtitleTrack=-1;h.subtitleDisplay=false}
+  await attachExternalSubtitle(t);menu.classList.remove("open");updateTrackStatus();showPlayerUI()
+ });
 }
 async function playStream(type,id,title,meta){
  $("#playerModal").classList.add("open");$("#playerTitle").textContent=title||"Reprodução";
- S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";
- resetVideo();
+ S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];
+ resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
  try{
   const streams=await loadStreamsFromAddons(type,id);S.streams=streams;
   if(!streams.length){$("#sources").innerHTML="<div class='sourceEmpty'>Nenhuma fonte foi retornada pelos addons configurados.</div>";return}
   renderSourceUI();
-  selectStream(streams[0],false);
+  const first=streams.find(x=>!x._external&&x.url);
+  if(first){S.selectedStream=first;renderSourceUI();loadVideo(first.url,false,first);await fetchExternalSubtitles(type,id,first)}
+  else $("#sources").insertAdjacentHTML("afterbegin","<div class='sourceEmpty'>As opções disponíveis abrem provedores externos; escolha uma delas na lista.</div>");
   addHistory(S.streamMeta,0);
  }catch(e){console.error(e);$("#sources").innerHTML="<div class='sourceEmpty'>Falha ao consultar as fontes. Verifique CORS, o manifesto e a disponibilidade do addon.</div>"}
 }
 function resetVideo(){
- const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");v.load();
- $("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";
+ const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");
+ [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
+ if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
+ v.load();$("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");
 }
-function loadVideo(url,autoplay=true){
- const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();
- $("#buffering").classList.add("show");
+function loadVideo(url,autoplay=true,stream=null){
+ const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();$("#buffering").classList.add("show");
+ const afterTracks=async()=>{applyPreferredAudio();if(S.playType&&S.playId){await fetchExternalSubtitles(S.playType,S.playId,stream||S.selectedStream);await applyPreferredSubtitle()}updateTrackStatus()};
  if(window.Hls&&Hls.isSupported()&&/\.m3u8($|\?)/i.test(url)){
   v._hls=new Hls({enableWorker:true,lowLatencyMode:false});
   v._hls.loadSource(url);v._hls.attachMedia(v);
-  v._hls.on(Hls.Events.MANIFEST_PARSED,()=>{if(autoplay)v.play().catch(()=>{});$("#buffering").classList.remove("show")});
+  v._hls.on(Hls.Events.MANIFEST_PARSED,async()=>{await afterTracks();if(autoplay)v.play().catch(()=>{});$("#buffering").classList.remove("show")});
+  if(Hls.Events.AUDIO_TRACKS_UPDATED)v._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED,()=>{applyPreferredAudio();updateTrackStatus()});
+  if(Hls.Events.SUBTITLE_TRACKS_UPDATED)v._hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED,()=>{applyPreferredSubtitle();updateTrackStatus()});
   v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)toast("Falha ao reproduzir esta fonte.")});
  }else{
   v.src=url;
-  v.addEventListener("loadedmetadata",()=>$("#buffering").classList.remove("show"),{once:true});
-  if(autoplay)v.play().catch(()=>{});
+  v.addEventListener("loadedmetadata",async()=>{$("#buffering").classList.remove("show");await afterTracks()},{once:true});
+  if(autoplay)v.play().catch(()=>{})
  }
 }
 function togglePlayback(){const v=$("#video");if(!v.src&&!v._hls)return;if(v.paused)v.play().catch(()=>{});else v.pause()}
+function hidePlayerUI(){
+ if($("#video").paused)return;
+ $("#playerControls").classList.remove("show");$("#videoShell").classList.add("uiHidden");$(".playerStage").classList.add("uiHidden");$("#playerMenu").classList.remove("open")
+}
+function showPlayerUI(sticky=false){
+ clearTimeout(S._ctlTimer);$("#playerControls").classList.add("show");$("#videoShell").classList.remove("uiHidden");$(".playerStage").classList.remove("uiHidden");
+ if(!sticky&&!$("#video").paused)S._ctlTimer=setTimeout(hidePlayerUI,10000)
+}
 function syncPlayer(){
  const v=$("#video"),dur=isFinite(v.duration)?v.duration:0,cur=v.currentTime||0;
  $("#seek").value=dur?Math.round(cur/dur*1000):0;$("#timeText").textContent=`${formatTime(cur)} / ${formatTime(dur)}`;
  $("#playPause").textContent=v.paused?"▶":"❚❚";$("#bigPlay").classList.toggle("hidden",!v.paused);
+ if(v.paused)showPlayerUI(true);
  if(dur&&S.streamMeta?.id){
   const pct=Math.max(1,Math.min(100,cur/dur*100));
-  if(Math.floor(cur)%15===0)addHistory(S.streamMeta,pct);
+  if(Math.floor(cur)%15===0)addHistory(S.streamMeta,pct)
  }
-}
-function addHistory(m,progress){
+}function addHistory(m,progress){
  if(!m?.id)return;let a=history().filter(x=>x.id!==m.id);
  a.unshift({id:m.id,type:m.type||"movie",name:m.name||m.title||"",poster:m.poster||"",background:m.background||"",year:m.year||"",progress:progress||7,meta:m});
  saveHistory(a)
@@ -674,35 +877,48 @@ let topSearchTimer;
 $("#search").addEventListener("input",e=>{clearTimeout(topSearchTimer);const q=e.target.value.trim();if(q.length>=2)topSearchTimer=setTimeout(()=>search(q,false),420)});
 $("#search").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(topSearchTimer);search(e.target.value,true)};if(e.key==="Escape"){e.target.value="";home()}});
 $("#closeDetail").onclick=()=>$("#detailModal").classList.remove("open");
-$("#closePlayer").onclick=()=>{resetVideo();$("#playerModal").classList.remove("open")};
+$("#closePlayer").onclick=()=>{clearTimeout(S._ctlTimer);resetVideo();$("#playerModal").classList.remove("open")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
-$("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10)};
-$("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10)};
-$("#muteBtn").onclick=()=>{const v=$("#video");v.muted=!v.muted;$("#muteBtn").textContent=v.muted?"🔇":"🔊"};
-$("#volume").oninput=e=>{const v=$("#video");v.volume=Number(e.target.value);v.muted=v.volume===0;$("#muteBtn").textContent=v.muted?"🔇":"🔊"};
-$("#speed").onchange=e=>$("#video").playbackRate=Number(e.target.value);
-$("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v.currentTime=Number(e.target.value)/1000*v.duration};
-$("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()};
-$("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}};
+$("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
+$("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
+$("#muteBtn").onclick=()=>{const v=$("#video");v.muted=!v.muted;$("#muteBtn").textContent=v.muted?"🔇":"🔊";showPlayerUI()};
+$("#volume").oninput=e=>{const v=$("#video");v.volume=Number(e.target.value);v.muted=v.volume===0;$("#muteBtn").textContent=v.muted?"🔇":"🔊";showPlayerUI()};
+$("#speed").onchange=e=>{$("#video").playbackRate=Number(e.target.value);showPlayerUI()};
+$("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v.currentTime=Number(e.target.value)/1000*v.duration;showPlayerUI()};
+$("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();showPlayerUI()};
+$("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}showPlayerUI()};
 $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
-$("#video").addEventListener("timeupdate",syncPlayer);$("#video").addEventListener("play",syncPlayer);$("#video").addEventListener("pause",syncPlayer);
+$("#audioBtn").onclick=e=>{e.stopPropagation();openAudioMenu();showPlayerUI()};
+$("#subsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu();showPlayerUI()};
+$("#nextBtn").onclick=()=>{if(S.currentShow&&S.nextEpisode)playEpisode(S.currentShow,S.nextEpisode)};
+$("#video").addEventListener("timeupdate",syncPlayer);
+$("#video").addEventListener("play",()=>{syncPlayer();showPlayerUI()});
+$("#video").addEventListener("pause",()=>{syncPlayer();showPlayerUI(true)});
+$("#video").addEventListener("ended",()=>{showPlayerUI(true);if(S.currentShow&&S.nextEpisode)$("#nextBtn").style.display=""});
 $("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
 $("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
-$("#videoShell").addEventListener("mousemove",()=>{$("#playerControls").classList.add("show");clearTimeout(S._ctlTimer);S._ctlTimer=setTimeout(()=>$("#playerControls").classList.remove("show"),2200)});
+$("#videoShell").addEventListener("mousemove",()=>showPlayerUI());
+$("#videoShell").addEventListener("pointerdown",()=>showPlayerUI());
+$("#videoShell").addEventListener("touchstart",()=>showPlayerUI(),{passive:true});
+$("#playerControls").addEventListener("mouseenter",()=>showPlayerUI(true));
+$("#playerControls").addEventListener("mouseleave",()=>showPlayerUI());
+$("#playerMenu").addEventListener("mouseenter",()=>showPlayerUI(true));
+$("#playerMenu").addEventListener("mouseleave",()=>showPlayerUI());
 document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains("open"))return;if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;
- if(e.code==="Space"){e.preventDefault();togglePlayback()} if(e.key==="ArrowLeft")$("#back10").click();if(e.key==="ArrowRight")$("#forward10").click();if(e.key.toLowerCase()==="f")$("#fullBtn").click();if(e.key.toLowerCase()==="m")$("#muteBtn").click();
+ showPlayerUI();
+ if(e.code==="Space"){e.preventDefault();togglePlayback()} if(e.key==="ArrowLeft")$("#back10").click();if(e.key==="ArrowRight")$("#forward10").click();if(e.key.toLowerCase()==="f")$("#fullBtn").click();if(e.key.toLowerCase()==="m")$("#muteBtn").click();if(e.key.toLowerCase()==="c")$("#subsBtn").click();if(e.key.toLowerCase()==="a")$("#audioBtn").click();
 });
 $("#detailModal").onclick=e=>{if(e.target.id==="detailModal")$("#detailModal").classList.remove("open")};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
-$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
+$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
 $("#closeSettings").onclick=()=>$("#settingsModal").classList.remove("open");
-$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");toast("Configurações salvas.");home()};
-$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#lang").value=CFG_DEFAULT.lang};
+$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");toast("Configurações salvas.");home()};
+$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#lang").value=CFG_DEFAULT.lang};
 window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
 
 const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
 home();
 </script>
-<!-- CasaFlix v4 — busca multi-catálogo com protocolo Stremio corrigido + Streaming Catalogs -->
+<!-- CasaFlix v5 — player auto-hide 10s, áudio multi-faixa, OpenSubtitles v3 e WatchHub oficial -->
 </body>
 </html>
