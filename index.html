@@ -2,9 +2,15 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CasaFlix — sua biblioteca</title>
 <meta name="theme-color" content="#070707">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CasaFlix">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <style>
 :root{
   --bg:#060606;--bg2:#0c0c0e;--card:#151518;--line:#27272b;
@@ -115,6 +121,585 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 @media(max-width:760px){
  .top{padding:0 14px;height:58px;gap:12px}.nav{display:none}.search{width:40px;border:0;background:none;padding:0}.search input{display:none}.hero{height:560px;min-height:560px;padding:0 20px 65px}.hero h1{font-size:43px}.heroDesc{font-size:14px}.card{flex-basis:130px}main{padding:0 14px 45px}.page{padding:82px 14px 40px}.grid{grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:11px}.detailHero{min-height:480px;padding:24px}.detailContent h2{font-size:35px}.episodes{padding:18px 20px 28px}.epThumb{width:115px}
 }
+
+/* =========================================================
+   CasaFlix v7 — Mobile App UI
+   ========================================================= */
+html,body{max-width:100%;overflow-x:hidden}
+body{padding-bottom:0;-webkit-tap-highlight-color:transparent}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mobileBottomNav,.mobileSearchPanel,.mobileSearchBtn{display:none}
+
+@media(max-width:760px){
+ :root{--mobile-nav-h:68px;--mobile-top-h:58px}
+ html{background:#060606}
+ body{
+  padding-bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom));
+  overscroll-behavior-y:none;
+ }
+ body.playerOpen{padding-bottom:0;overflow:hidden}
+ body.playerOpen .mobileBottomNav{display:none}
+
+ .top{
+  height:calc(var(--mobile-top-h) + env(safe-area-inset-top));
+  padding:env(safe-area-inset-top) 14px 0;
+  gap:8px;
+  background:linear-gradient(180deg,rgba(0,0,0,.96),rgba(0,0,0,.72),transparent);
+ }
+ .top.solid{background:rgba(6,6,6,.96)}
+ .logo{font-size:21px;letter-spacing:-.8px}
+ .nav{display:none}
+ .right{gap:7px}
+ .search{display:none}
+ .mobileSearchBtn{display:grid;place-items:center}
+ .iconbtn{
+  width:42px;height:42px;border-radius:12px;
+  background:#161619;border-color:#29292e;
+  font-size:18px;
+ }
+ .mobileSearchPanel{
+  position:fixed;z-index:160;
+  left:0;right:0;top:0;
+  padding:calc(env(safe-area-inset-top) + 8px) 12px 10px;
+  background:rgba(7,7,8,.98);
+  border-bottom:1px solid #242429;
+  transform:translateY(-120%);
+  opacity:0;
+  transition:transform .24s cubic-bezier(.2,.8,.2,1),opacity .2s;
+  display:block;
+ }
+ .mobileSearchPanel.open{transform:translateY(0);opacity:1}
+ .mobileSearchInner{
+  height:48px;display:flex;align-items:center;gap:8px;
+  border:1px solid #34343a;background:#161619;border-radius:14px;padding:0 8px 0 13px;
+ }
+ .mobileSearchIcon{color:#a5a5ad;font-size:20px}
+ .mobileSearchInner input{
+  min-width:0;flex:1;height:100%;border:0;outline:0;background:transparent;color:#fff;font-size:16px;
+ }
+ .mobileSearchInner button{
+  width:38px;height:38px;border:0;border-radius:10px;background:#25252a;color:#fff;
+ }
+
+ .mobileBottomNav{
+  position:fixed;z-index:150;
+  left:0;right:0;bottom:0;
+  height:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom));
+  padding:7px 7px env(safe-area-inset-bottom);
+  background:rgba(10,10,11,.96);
+  border-top:1px solid #28282d;
+  backdrop-filter:blur(16px);
+  display:grid;grid-template-columns:repeat(5,1fr);
+ }
+ .mobileBottomNav button{
+  min-width:0;border:0;background:transparent;color:#77777f;
+  border-radius:13px;padding:5px 2px 4px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  transition:background .18s,color .18s,transform .18s;
+ }
+ .mobileBottomNav button:active{transform:scale(.92)}
+ .mobileBottomNav button.active{color:#fff;background:#ffffff0d}
+ .mobileBottomNav span{font-size:21px;line-height:1}
+ .mobileBottomNav small{font-size:10px;font-weight:800;white-space:nowrap}
+
+ .hero{
+  height:auto;min-height:530px;
+  padding:calc(var(--mobile-top-h) + env(safe-area-inset-top) + 72px) 18px 56px;
+  align-items:flex-end;
+  background-position:64% center;
+ }
+ .hero:after{
+  background:
+   linear-gradient(0deg,var(--bg) 0%,rgba(6,6,6,.94) 16%,rgba(6,6,6,.42) 55%,rgba(0,0,0,.08) 78%),
+   linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.12));
+ }
+ .heroContent{max-width:92%;padding-bottom:5px}
+ .tag{font-size:10px;margin-bottom:8px}
+ .hero h1{
+  font-size:clamp(34px,11vw,48px);line-height:.98;letter-spacing:-1.8px;margin-bottom:11px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+ }
+ .heroMeta{font-size:12px;margin-bottom:10px}
+ .heroDesc{
+  font-size:13px;line-height:1.45;margin-bottom:16px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+ }
+ .actions{gap:8px}
+ .btn{min-height:44px;border-radius:11px;padding:10px 15px}
+ .hero .btn{flex:1}
+ .hero .actions{max-width:370px}
+
+ main{margin-top:-20px;padding:0 0 22px}
+ .section{margin-bottom:25px}
+ .sectionHead{padding:0 14px;margin-bottom:9px;align-items:center}
+ .sectionTitle{font-size:18px}
+ .sectionSub{display:none}
+ .row{
+  gap:10px;padding:3px 14px 12px;
+  scroll-snap-type:x proximity;
+  scroll-padding-left:14px;
+ }
+ .card{
+  flex-basis:128px;
+  border-radius:11px;
+  scroll-snap-align:start;
+  transform:none!important;
+  box-shadow:none!important;
+ }
+ .poster{border-radius:11px 11px 0 0}
+ .cardInfo{padding:7px 7px 9px}
+ .title{font-size:12px}
+ .sub,.sourceMark,.resumeSource{font-size:9px}
+ .rating{top:6px;left:6px;font-size:9px}
+ .plus{
+  opacity:1;right:6px;top:6px;width:31px;height:31px;font-size:18px;
+  border:1px solid #ffffff22;
+ }
+ .continueRemove{width:31px;height:31px;right:6px;bottom:52px}
+ .resumeBadge{left:6px;bottom:52px;font-size:9px}
+ .bar{margin:0 7px 7px}
+
+ .page{
+  padding:calc(var(--mobile-top-h) + env(safe-area-inset-top) + 20px) 12px 30px;
+  min-height:0;
+ }
+ .page h2{font-size:26px;margin-bottom:17px}
+ .grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+ }
+ .grid .card{width:100%;min-width:0}
+ .grid .card .poster{width:100%}
+ .searchTools{gap:9px;margin-bottom:16px}
+ .searchTools input{
+  min-width:100%;font-size:16px;min-height:46px;border-radius:12px;
+ }
+ .searchTabs{width:100%;padding-bottom:2px}
+ .searchTabs button{min-height:40px;padding:8px 12px}
+ .searchMeta{font-size:11px}
+
+ /* Details become a native-feeling full-screen sheet */
+ .modal{padding:0;align-items:stretch}
+ #detailModal{background:#09090b}
+ #detailModal .dialog{
+  width:100%;height:100%;max-height:none;border:0;border-radius:0;box-shadow:none;
+  padding-bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom));
+ }
+ #detailModal .close{
+  position:fixed;top:calc(env(safe-area-inset-top) + 10px);right:12px;
+  width:44px;height:44px;background:#111b;border:1px solid #ffffff1c;
+ }
+ .detailHero{
+  min-height:490px;padding:calc(env(safe-area-inset-top) + 75px) 18px 24px;
+  background-position:center top;
+ }
+ .detailHero:after{
+  background:linear-gradient(0deg,#111214 0%,rgba(17,18,20,.96) 20%,rgba(17,18,20,.35) 64%,rgba(17,18,20,.08)),
+             linear-gradient(90deg,rgba(17,18,20,.52),transparent);
+ }
+ .detailContent{max-width:100%}
+ .detailContent h2{font-size:34px;line-height:1.02;margin-bottom:9px}
+ .detailContent p{
+  font-size:13px;line-height:1.48;
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;
+ }
+ .detailContent .actions{display:grid;grid-template-columns:1fr 1fr}
+ .episodes{padding:15px 14px 30px}
+ .seasons{
+  overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;margin-bottom:12px;
+ }
+ .seasons::-webkit-scrollbar{display:none}
+ .seasons button{flex:none;min-height:40px}
+ .ep{gap:11px;padding:12px 0;align-items:center}
+ .epThumb{width:112px;border-radius:9px}
+ .ep h4{font-size:13px;margin:0 0 4px}
+ .ep p{font-size:11px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+ /* Player: video first, sources as app sheet below */
+ #playerModal{background:#000}
+ #playerModal .playerWrap{
+  width:100%;height:100%;max-height:none;border:0;border-radius:0;
+  overflow:auto;background:#080809;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
+ }
+ .playerLayout{display:block;min-height:0;height:auto}
+ .playerStage{min-height:0;height:auto;position:sticky;top:0;z-index:4;background:#000}
+ .videoShell{
+  min-height:0;height:auto;aspect-ratio:16/9;width:100%;
+  background:#000;
+ }
+ .videoShell video{width:100%;height:100%;max-height:none;object-fit:contain}
+ .playerTop{padding:10px 12px 28px}
+ .playerTitle{font-size:13px;padding-right:46px}
+ .playerTop .close{position:absolute;right:8px;top:6px;width:40px;height:40px}
+ .bigPlay{width:60px;height:60px;font-size:23px}
+ .playerControls{padding:28px 9px 8px}
+ .controlRow{gap:4px;flex-wrap:nowrap}
+ .ctl{height:38px;min-width:38px;padding:0 7px;border-radius:9px}
+ .time{font-size:10px;min-width:72px}
+ .volume,.trackStatus,#pipBtn,#downloadCurrent{display:none!important}
+ .speed{
+  height:38px;max-width:62px;font-size:11px;padding:0 4px;
+ }
+ #audioBtn,#subsBtn,#fullBtn{display:inline-flex;align-items:center;justify-content:center}
+ #back10,#forward10{font-size:11px}
+ #nextBtn{font-size:10px;max-width:64px;overflow:hidden}
+ .seek{height:24px;margin-bottom:-4px}
+ .playerSide{
+  border:0;border-top:1px solid #29292e;
+  max-height:none;padding:16px 12px calc(24px + env(safe-area-inset-bottom));
+  background:#0d0d0f;
+ }
+ .sourceHead{padding-bottom:8px}
+ .sourceHead h3{font-size:18px}
+ .sourceHead p{font-size:11px}
+ .addonTabs,.filterChips{
+  margin:0 -12px;padding:7px 12px;
+  scroll-padding-left:12px;scroll-snap-type:x proximity;
+ }
+ .addonTabs button,.filterChips button{min-height:39px;scroll-snap-align:start}
+ .sourceList{gap:10px}
+ .sourceCard{padding:13px;border-radius:13px}
+ .sourceActions button{min-height:42px;flex:1}
+ .sourceActions{display:flex}
+ .playerMenu{
+  position:fixed;z-index:260;left:8px;right:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);
+  width:auto;max-height:60%;border-radius:16px;padding:10px;
+ }
+ .menuItem{min-height:48px}
+ .downloadNote{padding-bottom:8px}
+
+ /* Settings as bottom sheet / app screen */
+ #settingsModal{
+  align-items:flex-end;background:#000a;
+  padding:0;
+ }
+ #settingsModal .settings{
+  width:100%;max-height:92%;overflow:auto;
+  border-radius:22px 22px 0 0;border-left:0;border-right:0;border-bottom:0;
+  padding:24px 16px calc(22px + env(safe-area-inset-bottom));
+  animation:mobileSheetIn .25s cubic-bezier(.2,.85,.2,1);
+ }
+ @keyframes mobileSheetIn{from{transform:translateY(35%);opacity:.4}to{transform:none;opacity:1}}
+ #settingsModal .settings .close{top:14px;right:12px}
+ .field input,.field select,.field textarea{font-size:16px!important;min-height:46px}
+ #settingsModal .actions{display:grid;grid-template-columns:1fr;gap:8px}
+ #settingsModal .btn{width:100%}
+
+ .toast{
+  left:12px;right:12px;bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom) + 10px);
+  text-align:center;font-size:13px;
+ }
+ body.playerOpen .toast{bottom:calc(env(safe-area-inset-bottom) + 12px)}
+
+ @media(max-width:360px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card{flex-basis:122px}
+  .hero{min-height:510px}
+  .heroContent{max-width:100%}
+  .hero h1{font-size:34px}
+  #audioBtn{display:none}
+  .time{min-width:62px;font-size:9px}
+ }
+}
+
+/* Desktop-only hover. Mobile never depends on hover. */
+@media(hover:hover) and (pointer:fine){
+ .card:hover{transform:scale(1.045);z-index:5;box-shadow:0 15px 35px #000}
+ .card:hover .plus{opacity:1}
+}
+@media(hover:none),(pointer:coarse){
+ .card:hover{transform:none;box-shadow:none}
+ .plus{opacity:1}
+}
+
+
+/* =========================================================
+   CasaFlix v8 — correções de celular / touch / busca / menus
+   ========================================================= */
+.playerControls{
+  pointer-events:none;
+  visibility:hidden;
+}
+.playerControls.show{
+  pointer-events:auto;
+  visibility:visible;
+}
+.playerStage.uiHidden .playerTop,
+.playerStage.uiHidden .playerTop *{
+  pointer-events:none!important;
+}
+.playerMenuBackdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:258;
+  background:rgba(0,0,0,.32);
+  backdrop-filter:blur(1px);
+}
+.playerMenuBackdrop.open{display:block}
+.playerMenu{z-index:259}
+.playerMenuHeader{
+  position:sticky;top:-8px;z-index:2;
+  display:flex;align-items:center;gap:10px;
+  padding:6px 4px 9px;
+  background:#151519;
+  border-bottom:1px solid #27272c;
+}
+.playerMenuHeader .playerMenuTitle{padding:5px;flex:1}
+.playerMenuClose{
+  width:40px;height:40px;border:0;border-radius:10px;
+  background:#27272c;color:#fff;font-size:19px;
+}
+.playerMenuClose:active{transform:scale(.94)}
+
+@media(max-width:760px){
+  /* Elementos fora da tela não podem capturar toque */
+  .mobileSearchPanel{pointer-events:none}
+  .mobileSearchPanel.open{pointer-events:auto}
+
+  /* Busca deixa de pular/recriar o teclado no celular */
+  .searchTools{
+    position:sticky;
+    top:calc(var(--mobile-top-h) + env(safe-area-inset-top));
+    z-index:20;
+    margin:0 -12px 14px;
+    padding:10px 12px 9px;
+    background:rgba(6,6,7,.96);
+    border-bottom:1px solid #242429;
+    backdrop-filter:blur(14px);
+  }
+  .searchTools input{
+    width:100%;
+    min-width:0!important;
+    min-height:48px;
+    padding:12px 14px;
+  }
+  .searchTabs{padding-top:8px}
+  .searchMeta{padding:0 2px}
+
+  /* Cards realmente legíveis em celulares */
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .grid .title{font-size:13px}
+  .grid .sub{font-size:10px}
+  .grid .cardInfo{padding:8px 8px 10px}
+  .grid .plus{width:34px;height:34px}
+
+  /* Player: só controles que realmente cabem */
+  .playerControls{padding:32px 8px 7px}
+  .controlRow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:3px;
+    width:100%;
+    min-width:0;
+  }
+  .controlRow .spacer{display:none}
+  #muteBtn,.speed{display:none!important}
+  .ctl{
+    flex:0 0 38px;
+    width:38px;
+    min-width:38px;
+    height:38px;
+    padding:0;
+    font-size:13px;
+  }
+  #back10,#forward10{font-size:10px}
+  #nextBtn{
+    flex-basis:40px!important;
+    width:40px;max-width:40px;min-width:40px;
+    overflow:hidden;
+    font-size:0!important;
+  }
+  #nextBtn::after{content:"⏭";font-size:17px}
+  .time{
+    position:absolute;
+    left:10px;
+    bottom:49px;
+    min-width:0;
+    font-size:10px;
+    padding:2px 5px;
+    border-radius:5px;
+    background:#0008;
+    pointer-events:none;
+  }
+
+  /* Audio e legenda abrem como bottom sheet que sempre fecha */
+  .playerMenuBackdrop{
+    background:rgba(0,0,0,.56);
+    backdrop-filter:blur(2px);
+  }
+  .playerMenu{
+    left:8px;right:8px;
+    bottom:calc(env(safe-area-inset-bottom) + 8px);
+    width:auto;
+    max-height:min(62%,440px);
+    overflow:auto;
+    border-radius:18px;
+    padding:8px 10px 12px;
+    box-shadow:0 -18px 60px #000c;
+    overscroll-behavior:contain;
+  }
+  .playerMenuHeader{
+    top:-8px;
+    padding-top:7px;
+  }
+  .menuItem{min-height:52px;padding:11px 10px}
+
+  /* Evita que overlays fechados ou invisíveis "roubem" toque */
+  .modal:not(.open){pointer-events:none}
+  .modal.open{pointer-events:auto}
+
+  /* Detalhes: conteúdo nunca fica atrás da barra inferior */
+  #detailModal .dialog{
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .episodes{padding-bottom:calc(36px + var(--mobile-nav-h) + env(safe-area-inset-bottom))}
+
+  /* Player: rolagem independente e suave */
+  #playerModal .playerWrap{
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+  }
+  .videoShell{
+    touch-action:manipulation;
+  }
+  .sourceCard,.sourceActions button,.addonTabs button,.filterChips button{
+    touch-action:manipulation;
+  }
+
+  /* Toast nunca bloqueia botões */
+  .toast{pointer-events:none}
+}
+@media(min-width:430px) and (max-width:760px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+
+@media(max-width:760px){
+ body.detailOpen,body.settingsOpen{overflow:hidden}
+ body.detailOpen .mobileBottomNav,body.settingsOpen .mobileBottomNav{display:none}
+}
+
+
+/* =========================================================
+   CasaFlix v9 — mobile estável + player externo + proporção
+   ========================================================= */
+.playerUtilities{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.playerUtilities button{
+  min-height:40px;border:1px solid #34343a;background:#202024;color:#fff;
+  border-radius:9px;padding:8px 11px;font-weight:800;font-size:12px
+}
+.playerUtilities button:active{transform:scale(.97)}
+.videoShell{aspect-ratio:16/9!important}
+.videoShell video{object-fit:contain}
+.videoShell[data-aspect="smart"] video{object-fit:contain}
+.videoShell[data-aspect="fit16"] video{object-fit:contain}
+.videoShell[data-aspect="force16"] video{object-fit:fill}
+.videoShell[data-aspect="cover16"] video{object-fit:cover}
+.videoShell[data-aspect="original"] video{object-fit:contain}
+.sourceActions .otherPlayerSource{background:#171a20;border-color:#454a55}
+.playerMenuNote{padding:8px 10px 12px;color:#8d8d95;font-size:11px;line-height:1.5}
+
+@media(max-width:760px){
+  /* Um único fluxo de busca: sem overlay flutuante */
+  .mobileSearchPanel{display:none!important;pointer-events:none!important}
+
+  html,body{overscroll-behavior-x:none}
+  body{touch-action:pan-y}
+  main,.page{touch-action:pan-y}
+  .row{
+    scroll-snap-type:none!important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    touch-action:pan-x pan-y;
+  }
+  .row .card,.grid .card{touch-action:manipulation}
+
+  .mobileBottomNav{
+    isolation:isolate;
+    pointer-events:auto;
+    transform:translateZ(0);
+  }
+  .mobileBottomNav button{pointer-events:auto}
+  .top{isolation:isolate;transform:translateZ(0)}
+
+  /* Busca não fica presa/sticky com teclado aberto */
+  .searchTools{
+    position:relative!important;
+    top:auto!important;
+    z-index:1!important;
+    margin:0 0 14px!important;
+    padding:0!important;
+    background:transparent!important;
+    border:0!important;
+    backdrop-filter:none!important;
+  }
+  #pageSearchInput{
+    position:relative;z-index:2;
+    width:100%;font-size:16px!important;
+  }
+
+  /* Moldura de vídeo previsível */
+  .videoShell{
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden;
+  }
+  .videoShell video{
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-position:center center;
+  }
+
+  .playerUtilities{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px
+  }
+  .playerUtilities button{min-height:44px;font-size:11px;padding:8px}
+
+  .sourceActions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+    gap:7px
+  }
+  .sourceActions .otherPlayerSource{
+    grid-column:1/-1;
+    min-height:42px
+  }
+
+  .playerMenuBackdrop{pointer-events:none}
+  .playerMenuBackdrop.open{pointer-events:auto}
+  .playerMenu{pointer-events:none}
+  .playerMenu.open{pointer-events:auto}
+
+  #playerModal:not(.open),#detailModal:not(.open),#settingsModal:not(.open){
+    visibility:hidden!important;
+    pointer-events:none!important;
+  }
+  #playerModal.open,#detailModal.open,#settingsModal.open{
+    visibility:visible!important;
+    pointer-events:auto!important;
+    isolation:isolate;
+  }
+
+  .card:active,.btn:active,.sourceCard:active{transform:none!important}
+  *{-webkit-tap-highlight-color:transparent}
+}
+@media(hover:none) and (pointer:coarse){
+  .plus,.continueRemove{opacity:1!important}
+}
+
 </style>
 </head>
 <body>
@@ -128,10 +713,19 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
   <button data-page="list">Minha lista</button>
  </nav>
  <div class="right">
-  <label class="search">⌕ <input id="search" placeholder="Buscar..."></label>
-  <button class="iconbtn" id="settingsBtn">⚙</button>
+  <label class="search" id="topSearch">⌕ <input id="search" placeholder="Buscar filmes, séries e animes..." autocomplete="off"></label>
+  <button class="iconbtn mobileSearchBtn" id="mobileSearchBtn" aria-label="Buscar">⌕</button>
+  <button class="iconbtn" id="settingsBtn" aria-label="Configurações">⚙</button>
  </div>
 </header>
+
+<div class="mobileSearchPanel" id="mobileSearchPanel">
+ <div class="mobileSearchInner">
+  <span class="mobileSearchIcon">⌕</span>
+  <input id="mobileSearchInput" placeholder="Buscar filmes, séries e animes..." autocomplete="off">
+  <button type="button" id="mobileSearchClose" aria-label="Fechar busca">✕</button>
+ </div>
+</div>
 
 <section class="hero" id="hero">
  <div class="heroContent">
@@ -193,13 +787,18 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
        <button class="ctl" id="fullBtn" title="Tela cheia">⛶</button>
       </div>
      </div>
+     <div class="playerMenuBackdrop" id="playerMenuBackdrop"></div>
      <div class="playerMenu" id="playerMenu"></div>
     </div>
    </section>
    <aside class="playerSide">
     <div class="sourceHead">
      <h3>Escolha uma fonte</h3>
-     <p>Escolha uma fonte. Provedores oficiais externos abrem em uma nova aba; streams diretos tocam no player.</p>
+     <p>Escolha uma fonte. Streams diretos podem tocar no CasaFlix ou ser enviados para outro player.</p>
+     <div class="playerUtilities">
+      <button type="button" id="otherPlayerBtn">↗ Outro player</button>
+      <button type="button" id="aspectBtn">▭ Proporção: Auto 16:9</button>
+     </div>
     </div>
     <div class="addonTabs" id="addonTabs"></div>
     <div class="filterChips" id="qualityFilters"></div>
@@ -221,10 +820,22 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
   <div class="field"><label>Addon de legendas</label><input id="subtitleAddon"></div>
   <div class="field"><label>Áudio preferido no player</label><select id="audioPref"><option value="auto">Automático</option><option value="jpn">Japonês</option><option value="por">Português</option><option value="eng">Inglês</option></select></div>
   <div class="field"><label>Legenda preferida</label><select id="subtitlePref"><option value="pob">Português (Brasil)</option><option value="por">Português</option><option value="eng">Inglês</option><option value="off">Desativada</option><option value="auto">Automática</option></select></div>
-  <div class="actions"><button class="btn primary" id="saveSettings">Salvar</button><button class="btn secondary" id="resetSettings">Restaurar padrão</button></div>
+  <div class="actions">
+   <button class="btn primary" id="saveSettings">Salvar</button>
+   <button class="btn secondary" id="installAppBtn" style="display:none">⬇ Instalar CasaFlix</button>
+   <button class="btn secondary" id="resetSettings">Restaurar padrão</button>
+  </div>
   <p class="hint">O player agora aceita múltiplas faixas de áudio HLS, legendas embutidas e legendas externas. O OpenSubtitles v3 oficial fica configurado por padrão. O WatchHub oficial também é adicionado como opção de “onde assistir” quando houver link de provedor. O site não contorna DRM, paywalls ou restrições de acesso.</p>
  </div>
 </div>
+
+<nav class="mobileBottomNav" id="mobileBottomNav" aria-label="Navegação principal">
+ <button type="button" class="active" data-mobile-page="home"><span>⌂</span><small>Início</small></button>
+ <button type="button" data-mobile-page="movies"><span>▣</span><small>Filmes</small></button>
+ <button type="button" data-mobile-page="series"><span>▤</span><small>Séries</small></button>
+ <button type="button" data-mobile-page="anime"><span>✦</span><small>Animes</small></button>
+ <button type="button" data-mobile-page="list"><span>＋</span><small>Minha lista</small></button>
+</nav>
 
 <div class="toast" id="toast"></div>
 
@@ -258,7 +869,7 @@ const cfg={
  subtitlePref:localStorage.getItem("cf5_subtitle_pref")||CFG_DEFAULT.subtitlePref,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -520,7 +1131,7 @@ async function externalCatalogRows(){
 }
 
 async function home(){
- S.currentPage="home";
+ S.currentPage="home";setActiveNav("home");
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
@@ -558,7 +1169,7 @@ function setHero(m){
  $("#hero").style.backgroundImage=`url('${m.background||m.poster||""}')`;
 }
 async function openDetails(type,id){
- $("#detailModal").classList.add("open");$("#detailTitle").textContent="Carregando...";$("#episodes").innerHTML="";
+ $("#detailModal").classList.add("open");document.body.classList.add("detailOpen");$("#detailTitle").textContent="Carregando...";$("#episodes").innerHTML="";
  try{
   const d=await getJSON(metaURL(type,id));const m=d.meta||d;S.current=m;
   $("#detailType").textContent=type==="series"?"SÉRIE":"FILME";
@@ -713,6 +1324,7 @@ function renderSourceUI(){
     <div class="sourceActions">
       <button class="playSource" data-play>${s._external?"↗ Abrir provedor":"▶ Assistir"}</button>
       <button class="downloadSource" data-download ${(!s._external&&isDirectDownloadable(s.url))?"":"disabled"}>⇩ Download</button>
+      ${s._external?"":'<button class="otherPlayerSource" data-other-player>↗ Abrir em outro player</button>'}
     </div>
   </article>`;
  }).join("");
@@ -721,6 +1333,8 @@ function renderSourceUI(){
   const s=filtered.find(x=>`${x._addon}|${x._idx}`===key);
   card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();if(s._external){window.open(s.externalUrl,"_blank","noopener,noreferrer")}else selectStream(s,true)};
   card.querySelector("[data-download]").onclick=e=>{e.stopPropagation();if(!s._external)browserDownload(s)};
+  const other=card.querySelector("[data-other-player]");
+  if(other)other.onclick=e=>{e.stopPropagation();S.selectedStream=s;renderSourceUI();openOtherPlayerMenu(s)};
   card.onclick=()=>{if(s._external)window.open(s.externalUrl,"_blank","noopener,noreferrer");else selectStream(s,true)};
  });
 }
@@ -847,38 +1461,195 @@ function currentSubtitleLabel(){
  return "Desligada";
 }
 function updateTrackStatus(){$("#trackStatus").textContent=`Áudio: ${currentAudioLabel()} • Legenda: ${currentSubtitleLabel()}`}
-function openAudioMenu(){
- const tracks=collectAudioTracks(),menu=$("#playerMenu");
- menu.innerHTML=`<div class="playerMenuTitle">Faixas de áudio</div>`+(tracks.length?tracks.map((t,i)=>`<button class="menuItem" data-audio="${i}"><span class="check">${currentAudioLabel()===langLabel(t.lang||t.name)?"✓":""}</span><span class="menuText">${esc(t.name||langLabel(t.lang))}<small>${esc(langLabel(t.lang))}</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`).join(""):`<div class="sourceEmpty">Esta fonte não expõe múltiplas faixas de áudio ao navegador.</div>`);
+function closePlayerMenu(){
+ const menu=$("#playerMenu"),backdrop=$("#playerMenuBackdrop");
+ menu.classList.remove("open");
+ backdrop.classList.remove("open");
+ S.playerMenuKind=null;
+ showPlayerUI();
+}
+function playerMenuHeader(title){
+ return `<div class="playerMenuHeader"><div class="playerMenuTitle">${esc(title)}</div><button type="button" class="playerMenuClose" data-close-player-menu aria-label="Fechar">✕</button></div>`;
+}
+function finishPlayerMenu(kind){
+ const menu=$("#playerMenu"),backdrop=$("#playerMenuBackdrop");
+ S.playerMenuKind=kind;
  menu.classList.add("open");
+ backdrop.classList.add("open");
+ const close=menu.querySelector("[data-close-player-menu]");
+ if(close)close.onclick=closePlayerMenu;
+ showPlayerUI(true);
+}
+function openAudioMenu(){
+ const menu=$("#playerMenu");
+ if(menu.classList.contains("open")&&S.playerMenuKind==="audio"){closePlayerMenu();return}
+ const tracks=collectAudioTracks();
+ menu.innerHTML=playerMenuHeader("Faixas de áudio")+
+   (tracks.length
+    ? tracks.map((t,i)=>`<button class="menuItem" data-audio="${i}"><span class="check">${currentAudioLabel()===langLabel(t.lang||t.name)?"✓":""}</span><span class="menuText">${esc(t.name||langLabel(t.lang))}<small>${esc(langLabel(t.lang))}</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`).join("")
+    : `<div class="sourceEmpty">Esta fonte não expõe múltiplas faixas de áudio ao navegador.</div>`);
+ finishPlayerMenu("audio");
  menu.querySelectorAll("[data-audio]").forEach(b=>b.onclick=()=>{
   const t=tracks[Number(b.dataset.audio)],h=$("#video")._hls;
   if(t?._hls&&h)h.audioTrack=t.index;
-  else if(t?._native&&$("#video").audioTracks)for(let i=0;i<$("#video").audioTracks.length;i++)$("#video").audioTracks[i].enabled=i===t.index;
-  menu.classList.remove("open");updateTrackStatus();showPlayerUI();
+  else if(t?._native&&$("#video").audioTracks){
+   for(let i=0;i<$("#video").audioTracks.length;i++)$("#video").audioTracks[i].enabled=i===t.index;
+  }
+  updateTrackStatus();
+  closePlayerMenu();
  });
 }
 function openSubtitleMenu(){
- const embedded=collectEmbeddedSubtitleTracks(),external=subtitleCandidates(),menu=$("#playerMenu");
+ const menu=$("#playerMenu");
+ if(menu.classList.contains("open")&&S.playerMenuKind==="subs"){closePlayerMenu();return}
+ const embedded=collectEmbeddedSubtitleTracks(),external=subtitleCandidates();
  const items=[
-  `<button class="menuItem" data-sub-off><span class="check">${currentSubtitleLabel()==="Desligada"?"✓":""}</span><span class="menuText">Desativada</span></button>`,
+  `<button class="menuItem" data-sub-off><span class="check">${currentSubtitleLabel()==="Desligada"?"✓":""}</span><span class="menuText">Desativada<small>Sem legendas</small></span></button>`,
   ...embedded.map((t,i)=>`<button class="menuItem" data-hsub="${i}"><span class="check"></span><span class="menuText">${esc(t.name||langLabel(t.lang))}<small>Embutida no stream</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`),
-  ...external.map((t,i)=>`<button class="menuItem" data-esub="${i}"><span class="check"></span><span class="menuText">${esc(langLabel(t.lang))}<small>OpenSubtitles / externa</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`)
+  ...external.map((t,i)=>`<button class="menuItem" data-esub="${i}"><span class="check"></span><span class="menuText">${esc(langLabel(t.lang))}<small>Legenda externa</small></span><span class="langBadge">${esc(langFamily(t.lang).toUpperCase())}</span></button>`)
  ];
- menu.innerHTML=`<div class="playerMenuTitle">Legendas</div>${items.join("")}`;
- menu.classList.add("open");
- menu.querySelector("[data-sub-off]").onclick=()=>{disableSubtitles();menu.classList.remove("open");showPlayerUI()};
+ menu.innerHTML=playerMenuHeader("Legendas")+items.join("");
+ finishPlayerMenu("subs");
+ const off=menu.querySelector("[data-sub-off]");
+ if(off)off.onclick=()=>{disableSubtitles();closePlayerMenu()};
  menu.querySelectorAll("[data-hsub]").forEach(b=>b.onclick=async()=>{
-  const t=embedded[Number(b.dataset.hsub)],h=$("#video")._hls;if(h){h.subtitleTrack=t.index;h.subtitleDisplay=true}
-  await attachExternalSubtitle(null);menu.classList.remove("open");updateTrackStatus();showPlayerUI()
+  const t=embedded[Number(b.dataset.hsub)],h=$("#video")._hls;
+  if(h){h.subtitleTrack=t.index;h.subtitleDisplay=true}
+  await attachExternalSubtitle(null);
+  updateTrackStatus();
+  closePlayerMenu();
  });
  menu.querySelectorAll("[data-esub]").forEach(b=>b.onclick=async()=>{
-  const t=external[Number(b.dataset.esub)],h=$("#video")._hls;if(h){h.subtitleTrack=-1;h.subtitleDisplay=false}
-  await attachExternalSubtitle(t);menu.classList.remove("open");updateTrackStatus();showPlayerUI()
+  const t=external[Number(b.dataset.esub)],h=$("#video")._hls;
+  if(h){h.subtitleTrack=-1;h.subtitleDisplay=false}
+  await attachExternalSubtitle(t);
+  updateTrackStatus();
+  closePlayerMenu();
+ });
+}
+
+async function copyTextSafe(text){
+ try{
+  if(navigator.clipboard&&window.isSecureContext){
+   await navigator.clipboard.writeText(text);return true;
+  }
+ }catch{}
+ try{
+  const ta=document.createElement("textarea");
+  ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.select();
+  const ok=document.execCommand("copy");ta.remove();return ok;
+ }catch{return false}
+}
+function openOtherPlayerMenu(stream=S.selectedStream){
+ if(!stream||stream._external||!stream.url){
+  toast("Escolha primeiro uma fonte de vídeo direta.");
+  return;
+ }
+ const menu=$("#playerMenu");
+ if(menu.classList.contains("open")&&S.playerMenuKind==="other"){closePlayerMenu();return}
+ menu.innerHTML=playerMenuHeader("Abrir em outro player")+`
+   <button class="menuItem" data-other-share>
+    <span class="check">↗</span><span class="menuText">Compartilhar com outro app<small>No celular, escolha VLC ou outro player compatível se ele aparecer.</small></span>
+   </button>
+   <button class="menuItem" data-other-tab>
+    <span class="check">▣</span><span class="menuText">Abrir em nova aba<small>O navegador tenta reproduzir a URL diretamente.</small></span>
+   </button>
+   <button class="menuItem" data-other-copy>
+    <span class="check">⧉</span><span class="menuText">Copiar link da fonte<small>Cole a URL no player de sua preferência.</small></span>
+   </button>
+   <div class="playerMenuNote">A lista de aplicativos depende do seu celular e dos players instalados. Nem todo player aceita todas as fontes HLS/M3U8.</div>`;
+ finishPlayerMenu("other");
+
+ menu.querySelector("[data-other-share]").onclick=async()=>{
+  try{
+   if(navigator.share){
+    await navigator.share({title:S.streamTitle||"CasaFlix",text:"Abrir esta fonte em outro player",url:stream.url});
+    closePlayerMenu();
+   }else{
+    const ok=await copyTextSafe(stream.url);
+    toast(ok?"Link copiado. Cole no player externo.":"Compartilhamento indisponível.");
+    closePlayerMenu();
+   }
+  }catch(e){
+   if(e?.name!=="AbortError")toast("Não foi possível abrir o compartilhamento.");
+  }
+ };
+ menu.querySelector("[data-other-tab]").onclick=()=>{
+  window.open(stream.url,"_blank","noopener,noreferrer");
+  closePlayerMenu();
+ };
+ menu.querySelector("[data-other-copy]").onclick=async()=>{
+  const ok=await copyTextSafe(stream.url);
+  toast(ok?"Link da fonte copiado.":"Não foi possível copiar o link.");
+  closePlayerMenu();
+ };
+}
+function aspectLabel(mode){
+ return ({
+  smart:"Auto 16:9",
+  fit16:"16:9 sem distorcer",
+  force16:"Forçar 16:9",
+  cover16:"Preencher 16:9",
+  original:"Original"
+ })[mode]||"Auto 16:9";
+}
+function updateAspectButton(){
+ const b=$("#aspectBtn");
+ if(b)b.textContent=`▭ Proporção: ${aspectLabel(S.aspectMode)}`;
+}
+function applyAspectMode(mode=S.aspectMode,notify=false){
+ const shell=$("#videoShell"),video=$("#video");
+ if(!shell||!video)return;
+ S.aspectMode=mode;
+ shell.dataset.aspect=mode;
+ shell.style.aspectRatio="16 / 9";
+ video.style.objectPosition="center center";
+
+ const vw=Number(video.videoWidth||0),vh=Number(video.videoHeight||0);
+ const ratio=vw&&vh?vw/vh:16/9;
+
+ if(mode==="original"){
+  if(vw&&vh)shell.style.aspectRatio=`${vw} / ${vh}`;
+  video.style.objectFit="contain";
+ }else if(mode==="force16"){
+  video.style.objectFit="fill";
+ }else if(mode==="cover16"){
+  video.style.objectFit="cover";
+ }else if(mode==="fit16"){
+  video.style.objectFit="contain";
+ }else{
+  shell.style.aspectRatio="16 / 9";
+  // Detecta fontes claramente verticais/3:4 e corrige automaticamente.
+  video.style.objectFit=(ratio<1.1)?"fill":"contain";
+ }
+ localStorage.setItem("cf9_aspect",mode);
+ updateAspectButton();
+ if(notify)toast(`Proporção: ${aspectLabel(mode)}.`);
+}
+function openAspectMenu(){
+ const menu=$("#playerMenu");
+ if(menu.classList.contains("open")&&S.playerMenuKind==="aspect"){closePlayerMenu();return}
+ const options=[
+  ["smart","Auto 16:9","Corrige automaticamente fontes que chegam em 3:4 ou vertical."],
+  ["fit16","16:9 sem distorcer","Preserva a imagem e usa barras quando necessário."],
+  ["force16","Forçar 16:9","Estica a imagem para ocupar exatamente 16:9."],
+  ["cover16","Preencher 16:9","Preenche a tela e pode cortar as bordas."],
+  ["original","Original","Usa a proporção informada pelo arquivo."]
+ ];
+ menu.innerHTML=playerMenuHeader("Proporção da imagem")+
+   options.map(([key,name,desc])=>`<button class="menuItem ${S.aspectMode===key?"active":""}" data-aspect="${key}">
+    <span class="check">${S.aspectMode===key?"✓":""}</span>
+    <span class="menuText">${name}<small>${desc}</small></span>
+   </button>`).join("");
+ finishPlayerMenu("aspect");
+ menu.querySelectorAll("[data-aspect]").forEach(b=>b.onclick=()=>{
+  applyAspectMode(b.dataset.aspect,true);
+  closePlayerMenu();
  });
 }
 async function playStream(type,id,title,meta,resumeEntry=null){
- $("#playerModal").classList.add("open");$("#playerTitle").textContent=title||"Reprodução";
+ $("#playerModal").classList.add("open");document.body.classList.add("playerOpen");$("#playerTitle").textContent=title||"Reprodução";
  S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S._lastProgressSave=0;
  resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
@@ -900,7 +1671,7 @@ function resetVideo(){
  const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");
  [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
  if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
- v.load();S.resumeEntry=null;S.resumeApplied=false;$("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");
+ v.load();S.resumeEntry=null;S.resumeApplied=false;applyAspectMode(S.aspectMode,false);$("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;
 }
 function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
  const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();$("#buffering").classList.add("show");
@@ -914,7 +1685,7 @@ function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
   }else S.resumeApplied=true;
  };
  const afterTracks=async()=>{applyPreferredAudio();if(S.playType&&S.playId){await fetchExternalSubtitles(S.playType,S.playId,stream||S.selectedStream);await applyPreferredSubtitle()}updateTrackStatus()};
- v.addEventListener("loadedmetadata",async()=>{applyResume();await afterTracks();$("#buffering").classList.remove("show");if(autoplay)v.play().catch(()=>{})},{once:true});
+ v.addEventListener("loadedmetadata",async()=>{applyAspectMode(S.aspectMode,false);applyResume();await afterTracks();$("#buffering").classList.remove("show");if(autoplay)v.play().catch(()=>{})},{once:true});
  if(window.Hls&&Hls.isSupported()&&/\.m3u8($|\?)/i.test(url)){
   v._hls=new Hls({enableWorker:true,lowLatencyMode:false});
   v._hls.loadSource(url);v._hls.attachMedia(v);
@@ -928,8 +1699,10 @@ function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
 }
 function togglePlayback(){const v=$("#video");if(!v.src&&!v._hls)return;if(v.paused)v.play().catch(()=>{});else v.pause()}
 function hidePlayerUI(){
- if($("#video").paused)return;
- $("#playerControls").classList.remove("show");$("#videoShell").classList.add("uiHidden");$(".playerStage").classList.add("uiHidden");$("#playerMenu").classList.remove("open")
+ if($("#video").paused||S.playerMenuKind)return;
+ $("#playerControls").classList.remove("show");
+ $("#videoShell").classList.add("uiHidden");
+ $(".playerStage").classList.add("uiHidden");
 }
 function showPlayerUI(sticky=false){
  clearTimeout(S._ctlTimer);$("#playerControls").classList.add("show");$("#videoShell").classList.remove("uiHidden");$(".playerStage").classList.remove("uiHidden");
@@ -990,7 +1763,7 @@ function addHistory(m,progress){
 }
 
 async function page(type){
- S.currentPage=type;
+ S.currentPage=type;setActiveNav(type);
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  const titles={movies:"Filmes",series:"Séries",anime:"Animes",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
  if(type==="list"){const a=lists();$("#pageBody").innerHTML=a.length?`<div class="grid">${a.map(card).join("")}</div>`:'<div class="empty">Sua lista está vazia.</div>';bindCards($("#pageBody"));return}
@@ -1006,56 +1779,163 @@ async function page(type){
  bindCards($("#pageBody"));
 }
 
-function renderSearchResults(){
- const q=S.searchQuery,all=S.searchItems||[];
- const movies=all.filter(x=>x.type==="movie"),series=all.filter(x=>x.type==="series"),anime=all.filter(isAnimeLike);
- let shown=all;
- if(S.searchFilter==="movie")shown=movies;
- if(S.searchFilter==="series")shown=series;
- if(S.searchFilter==="anime")shown=anime;
- const tabs=[
-  ["all",`Todos (${all.length})`],["movie",`Filmes (${movies.length})`],["series",`Séries (${series.length})`],["anime",`Animes (${anime.length})`]
- ];
+function searchCounts(){
+ const all=S.searchItems||[];
+ return {
+  all,
+  movie:all.filter(x=>x.type==="movie"),
+  series:all.filter(x=>x.type==="series"),
+  anime:all.filter(isAnimeLike)
+ };
+}
+function ensureSearchShell(){
  $("#pageTitle").textContent="Buscar";
- $("#pageBody").innerHTML=`<div class="searchTools">
-   <input id="pageSearchInput" value="${esc(q)}" placeholder="Digite o nome de um filme, série ou anime" autocomplete="off">
-   <div class="searchTabs">${tabs.map(([k,t])=>`<button data-search-filter="${k}" class="${S.searchFilter===k?"active":""}">${t}</button>`).join("")}</div>
-  </div>
-  <div class="searchMeta">${q?`${shown.length} resultado(s) para “${esc(q)}” • pesquisa em Cinemeta + catálogos configurados`:"Digite pelo menos 2 caracteres para pesquisar."}</div>
-  ${shown.length?`<div class="grid">${shown.map(card).join("")}</div>`:`<div class="empty">${q?"Nenhum resultado encontrado. Tente o título original, parte do nome ou outra grafia.":"Comece digitando acima."}</div>`}`;
- bindCards($("#pageBody"));
- $("#pageBody").querySelectorAll("[data-search-filter]").forEach(b=>b.onclick=()=>{S.searchFilter=b.dataset.searchFilter;renderSearchResults()});
- const inp=$("#pageSearchInput");if(inp){
-  inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);
-  let timer;inp.oninput=e=>{clearTimeout(timer);timer=setTimeout(()=>search(e.target.value,false),360)};
-  inp.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(timer);search(e.target.value,true)}};
- }
+ let shell=$("#searchShell");
+ if(shell)return shell;
+ $("#pageBody").innerHTML=`<div id="searchShell">
+   <div class="searchTools">
+    <input id="pageSearchInput" placeholder="Digite o nome de um filme, série ou anime" autocomplete="off" inputmode="search">
+    <div class="searchTabs" id="searchTabs"></div>
+   </div>
+   <div class="searchMeta" id="searchMeta"></div>
+   <div id="searchResultsArea"></div>
+  </div>`;
+ const inp=$("#pageSearchInput");
+ inp.value=S.searchQuery||"";
+ let timer;
+ inp.addEventListener("input",e=>{
+  clearTimeout(timer);
+  const value=e.target.value;
+  timer=setTimeout(()=>search(value,false),420);
+ });
+ inp.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+   clearTimeout(timer);
+   e.preventDefault();
+   search(e.target.value,true);
+   e.target.blur();
+  }
+ });
+ return $("#searchShell");
+}
+function renderSearchResults(){
+ ensureSearchShell();
+ const groups=searchCounts();
+ const shown=S.searchFilter==="movie"?groups.movie:S.searchFilter==="series"?groups.series:S.searchFilter==="anime"?groups.anime:groups.all;
+ const tabs=[
+  ["all",`Todos (${groups.all.length})`],
+  ["movie",`Filmes (${groups.movie.length})`],
+  ["series",`Séries (${groups.series.length})`],
+  ["anime",`Animes (${groups.anime.length})`]
+ ];
+ $("#searchTabs").innerHTML=tabs.map(([k,t])=>`<button type="button" data-search-filter="${k}" class="${S.searchFilter===k?"active":""}">${t}</button>`).join("");
+ $("#searchTabs").querySelectorAll("[data-search-filter]").forEach(b=>b.onclick=()=>{
+  S.searchFilter=b.dataset.searchFilter;
+  renderSearchResults();
+ });
+ const q=S.searchQuery;
+ $("#searchMeta").textContent=q?`${shown.length} resultado(s) para “${q}”`:"Digite pelo menos 2 caracteres para pesquisar.";
+ $("#searchResultsArea").innerHTML=shown.length
+  ? `<div class="grid">${shown.map(card).join("")}</div>`
+  : `<div class="empty">${q?"Nenhum resultado encontrado. Tente parte do nome ou o título original.":"Comece digitando acima."}</div>`;
+ bindCards($("#searchResultsArea"));
+ const inp=$("#pageSearchInput");
+ if(inp&&inp.value!==q)inp.value=q;
+}
+function renderSearchLoading(){
+ ensureSearchShell();
+ const inp=$("#pageSearchInput");
+ if(inp&&inp.value!==S.searchQuery)inp.value=S.searchQuery;
+ $("#searchMeta").textContent=`Pesquisando “${S.searchQuery}”...`;
+ $("#searchResultsArea").innerHTML=`<div class="searchLoading"><span>Buscando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
 }
 async function search(q,force=false){
- S.currentPage="search";q=q.trim();S.searchQuery=q;
- $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
- if(q.length<2){S.searchItems=[];renderSearchResults();return}
+ S.currentPage="search";
+ q=String(q||"").trim();
+ S.searchQuery=q;
+ $("#hero").classList.add("hidden");
+ $("#main").classList.add("hidden");
+ $("#page").classList.remove("hidden");
+ setActiveNav("");
+ ensureSearchShell();
+
+ if(q.length<2){
+  ++S.searchToken;
+  S.searchItems=[];
+  renderSearchResults();
+  return;
+ }
  const token=++S.searchToken;
- $("#pageTitle").textContent="Buscar";
- $("#pageBody").innerHTML=`<div class="searchTools"><input id="pageSearchInput" value="${esc(q)}" placeholder="Digite o nome de um filme, série ou anime"></div><div class="searchLoading"><span>Pesquisando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
+ renderSearchLoading();
  try{
   const items=await searchAllCatalogs(q);
   if(token!==S.searchToken)return;
-  S.searchItems=items;renderSearchResults();
+  S.searchItems=items;
+  renderSearchResults();
  }catch(e){
-  console.error(e);if(token!==S.searchToken)return;
-  S.searchItems=[];renderSearchResults();toast("A busca encontrou um erro em uma das fontes; os outros catálogos continuam disponíveis.");
+  console.error(e);
+  if(token!==S.searchToken)return;
+  S.searchItems=[];
+  renderSearchResults();
+  toast("Uma fonte de busca falhou, mas o CasaFlix continuou com as demais.");
  }
 }
 
 $("#heroWatch").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 $("#heroDetails").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
-$$("[data-page]").forEach(b=>b.onclick=()=>{ $$(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active"); if(b.dataset.page==="home")home();else page(b.dataset.page) });
+function repairTouchState(){
+ const body=document.body;
+ if(!$("#playerModal").classList.contains("open"))body.classList.remove("playerOpen");
+ if(!$("#detailModal").classList.contains("open"))body.classList.remove("detailOpen");
+ if(!$("#settingsModal").classList.contains("open"))body.classList.remove("settingsOpen");
+ if(!$("#playerMenu").classList.contains("open")){
+  $("#playerMenuBackdrop").classList.remove("open");
+  S.playerMenuKind=null;
+ }
+}
+function closeTransientUI(){
+ $("#playerMenu").classList.remove("open");
+ $("#playerMenuBackdrop").classList.remove("open");
+ S.playerMenuKind=null;
+ closeMobileSearch();
+ repairTouchState();
+}
+function setActiveNav(target){
+ $$(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===target));
+ $$("[data-mobile-page]").forEach(x=>x.classList.toggle("active",x.dataset.mobilePage===target));
+}
+$$("[data-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.page);if(b.dataset.page==="home")home();else page(b.dataset.page)});
+$$("[data-mobile-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.mobilePage);if(b.dataset.mobilePage==="home")home();else page(b.dataset.mobilePage)});
 let topSearchTimer;
 $("#search").addEventListener("input",e=>{clearTimeout(topSearchTimer);const q=e.target.value.trim();if(q.length>=2)topSearchTimer=setTimeout(()=>search(q,false),420)});
 $("#search").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(topSearchTimer);search(e.target.value,true)};if(e.key==="Escape"){e.target.value="";home()}});
-$("#closeDetail").onclick=()=>$("#detailModal").classList.remove("open");
-$("#closePlayer").onclick=()=>{persistPlaybackProgress(true);clearTimeout(S._ctlTimer);resetVideo();$("#playerModal").classList.remove("open")};
+const mobileSearchPanel=$("#mobileSearchPanel"),mobileSearchInput=$("#mobileSearchInput");
+function openMobileSearch(){
+ repairTouchState();
+ search(S.searchQuery||"",false);
+ requestAnimationFrame(()=>{
+  const input=$("#pageSearchInput");
+  if(input){
+   try{input.focus({preventScroll:true})}catch{input.focus()}
+   const n=input.value.length;
+   try{input.setSelectionRange(n,n)}catch{}
+  }
+ });
+}
+function closeMobileSearch(){mobileSearchPanel.classList.remove("open");mobileSearchInput.blur()}
+$("#mobileSearchBtn").onclick=openMobileSearch;
+$("#mobileSearchClose").onclick=closeMobileSearch;
+let mobileSearchTimer;
+mobileSearchInput.addEventListener("keydown",e=>{
+ if(e.key==="Enter"){
+  e.preventDefault();
+  search(e.target.value,true);
+  closeMobileSearch();
+ }
+ if(e.key==="Escape")closeMobileSearch();
+});
+$("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen")};
+$("#closePlayer").onclick=()=>{persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
@@ -1066,8 +1946,11 @@ $("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v
 $("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();showPlayerUI()};
 $("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}showPlayerUI()};
 $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
-$("#audioBtn").onclick=e=>{e.stopPropagation();openAudioMenu();showPlayerUI()};
-$("#subsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu();showPlayerUI()};
+$("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
+$("#aspectBtn").onclick=openAspectMenu;
+updateAspectButton();
+$("#audioBtn").onclick=e=>{e.stopPropagation();openAudioMenu()};
+$("#subsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu()};
 $("#nextBtn").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode)playEpisode(S.currentShow,S.nextEpisode,null)};
 $("#video").addEventListener("timeupdate",syncPlayer);
 $("#video").addEventListener("play",()=>{syncPlayer();showPlayerUI()});
@@ -1081,24 +1964,46 @@ $("#videoShell").addEventListener("touchstart",()=>showPlayerUI(),{passive:true}
 $("#playerControls").addEventListener("mouseenter",()=>showPlayerUI(true));
 $("#playerControls").addEventListener("mouseleave",()=>showPlayerUI());
 $("#playerMenu").addEventListener("mouseenter",()=>showPlayerUI(true));
-$("#playerMenu").addEventListener("mouseleave",()=>showPlayerUI());
+$("#playerMenu").addEventListener("mouseleave",()=>{if(!S.playerMenuKind)showPlayerUI()});
+$("#playerMenuBackdrop").onclick=closePlayerMenu;
 document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains("open"))return;if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;
  showPlayerUI();
  if(e.code==="Space"){e.preventDefault();togglePlayback()} if(e.key==="ArrowLeft")$("#back10").click();if(e.key==="ArrowRight")$("#forward10").click();if(e.key.toLowerCase()==="f")$("#fullBtn").click();if(e.key.toLowerCase()==="m")$("#muteBtn").click();if(e.key.toLowerCase()==="c")$("#subsBtn").click();if(e.key.toLowerCase()==="a")$("#audioBtn").click();
 });
-$("#detailModal").onclick=e=>{if(e.target.id==="detailModal")$("#detailModal").classList.remove("open")};
+$("#detailModal").onclick=e=>{if(e.target.id==="detailModal"){$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen")}};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
-$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open")};
-$("#closeSettings").onclick=()=>$("#settingsModal").classList.remove("open");
-$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");toast("Configurações salvas.");home()};
+$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open");document.body.classList.add("settingsOpen")};
+$("#closeSettings").onclick=()=>{$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen")};
+$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");toast("Configurações salvas.");home()};
 $("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#lang").value=CFG_DEFAULT.lang};
 window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
 window.addEventListener("beforeunload",()=>persistPlaybackProgress(true));
+window.addEventListener("pageshow",()=>setTimeout(repairTouchState,0));
+window.addEventListener("orientationchange",()=>setTimeout(()=>{repairTouchState();applyAspectMode(S.aspectMode,false)},180));
+window.addEventListener("resize",()=>{if(innerWidth<=760)repairTouchState()});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)persistPlaybackProgress(true)});
 
 const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
+let deferredInstallPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{
+ e.preventDefault();deferredInstallPrompt=e;
+ const b=$("#installAppBtn");if(b)b.style.display="";
+});
+$("#installAppBtn").onclick=async()=>{
+ if(!deferredInstallPrompt){
+  toast("No Android, abra o menu do navegador e escolha “Adicionar à tela inicial”. No iPhone, use Compartilhar → Adicionar à Tela de Início.");
+  return;
+ }
+ deferredInstallPrompt.prompt();
+ try{await deferredInstallPrompt.userChoice}catch{}
+ deferredInstallPrompt=null;$("#installAppBtn").style.display="none";
+};
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;$("#installAppBtn").style.display="none";toast("CasaFlix instalado como aplicativo.")});
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.warn("Service Worker",e)));
+}
 home();
 </script>
-<!-- CasaFlix v6 — Minha Lista animada + Continuar Assistindo removível + resume exato + última fonte/addon -->
+<!-- CasaFlix v9 Mobile Stable — toque simplificado, busca sem overlay, outro player e Auto 16:9 -->
 </body>
 </html>
