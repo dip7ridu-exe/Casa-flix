@@ -802,6 +802,41 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
  }
 }
 
+
+/* =========================================================
+   CasaFlix v11 — fontes inteligentes + abertura adaptativa
+   ========================================================= */
+.sourceCard.testing{border-color:#d9a72a;box-shadow:0 0 0 1px #d9a72a55 inset}
+.sourceCard.working{border-color:#49ba6f;box-shadow:0 0 0 1px #49ba6f55 inset}
+.sourceCard.failed{border-color:#74313a;opacity:.67}
+.sourceHealth{
+  flex:none;font-size:9px;font-weight:900;padding:3px 6px;border-radius:5px;
+  background:#ffffff10;color:#aaa
+}
+.sourceCard.testing .sourceHealth{background:#d9a72a22;color:#ffd66b}
+.sourceCard.working .sourceHealth{background:#49ba6f22;color:#9cf0b5}
+.sourceCard.failed .sourceHealth{background:#d84a5b1c;color:#e98591}
+.providerPill{
+  display:inline-flex;margin-top:7px;padding:3px 7px;border-radius:999px;
+  border:1px solid #ffffff18;background:#ffffff0c;color:#bdbdc5;
+  font-size:10px;font-weight:800
+}
+.autoFallbackNotice{
+  margin:8px 0 0;padding:8px 10px;border-radius:9px;
+  background:#121a14;border:1px solid #28452f;color:#9bd2a8;font-size:11px;line-height:1.45
+}
+.skipIntroBtn.learned:after{content:" • aprendido";font-size:9px;color:#9cf0b5;margin-left:4px}
+.playerUtilities button.on{border-color:#49ba6f;color:#a7efba;background:#142119}
+.playerUtilities button.off{border-color:#603139;color:#e99aa4;background:#211316}
+.introProfileInfo{
+  margin:8px 10px 10px;padding:9px 10px;border-radius:9px;
+  background:#ffffff08;color:#bcbcc4;font-size:11px;line-height:1.45
+}
+@media(max-width:760px){
+  .playerUtilities{grid-template-columns:1fr 1fr!important}
+  .sourceCard.failed{opacity:.78}
+}
+
 </style>
 </head>
 <body>
@@ -901,6 +936,8 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
      <div class="playerUtilities">
       <button type="button" id="otherPlayerBtn">↗ Outro player</button>
       <button type="button" id="aspectBtn">▭ Proporção: Auto 16:9</button>
+      <button type="button" id="autoFallbackBtn">⚡ Troca automática: ON</button>
+      <button type="button" id="introSetupBtn">⏭ Ajustar abertura</button>
      </div>
     </div>
     <div class="addonTabs" id="addonTabs"></div>
@@ -972,7 +1009,7 @@ const cfg={
  subtitlePref:localStorage.getItem("cf5_subtitle_pref")||CFG_DEFAULT.subtitlePref,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -1050,6 +1087,7 @@ function streamIdentity(s){
   title:s.title||"",
   quality:s._quality||getQuality(s),
   index:Number.isInteger(s._idx)?s._idx:null,
+  provider:detectProvider(s),
   url:s.url||""
  };
 }
@@ -1061,6 +1099,124 @@ function compactMeta(m){
   season:m.season,episode:m.episode
  };
 }
+function sourceStats(){
+ try{return JSON.parse(localStorage.getItem("cf11_source_stats")||"{}")}catch{return{}}
+}
+function saveSourceStats(x){localStorage.setItem("cf11_source_stats",JSON.stringify(x))}
+function seriesSourcePrefs(){
+ try{return JSON.parse(localStorage.getItem("cf11_series_source_prefs")||"{}")}catch{return{}}
+}
+function saveSeriesSourcePrefs(x){localStorage.setItem("cf11_series_source_prefs",JSON.stringify(x))}
+function introProfiles(){
+ try{return JSON.parse(localStorage.getItem("cf11_intro_profiles")||"{}")}catch{return{}}
+}
+function saveIntroProfiles(x){localStorage.setItem("cf11_intro_profiles",JSON.stringify(x))}
+function currentSeasonNumber(){
+ return Number(S.currentEpisode?.season??S.streamMeta?.season??0)||0;
+}
+function sourcePrefKey(rootId=S.currentShow?.id||S.rootId,season=currentSeasonNumber()){
+ return `${rootId||"unknown"}|${season||0}`;
+}
+function introProfileKey(rootId=S.currentShow?.id||S.rootId,season=currentSeasonNumber()){
+ return `${rootId||"unknown"}|${season||0}`;
+}
+function getIntroProfile(){
+ return introProfiles()[introProfileKey()]||null;
+}
+function saveIntroProfile(profile){
+ const all=introProfiles(),key=introProfileKey();
+ all[key]={...profile,updatedAt:Date.now()};
+ saveIntroProfiles(all);
+ return all[key];
+}
+function forgetIntroProfile(){
+ const all=introProfiles(),key=introProfileKey();
+ delete all[key];saveIntroProfiles(all);
+}
+function detectProvider(s){
+ const text=[s?.name,s?.title,s?.description,...streamLines(s||{})].filter(Boolean).join(" ").toLowerCase();
+ const known=[
+  ["RedeFlix",/(rede\s*flix|redeflix|redflix)/i],
+  ["CDMovieDB",/(cd\s*movie\s*db|cdmoviedb)/i],
+  ["MyEmbed",/my\s*embed|myembed/i],
+  ["Tomato",/\btomato\b/i],
+  ["AniZone",/anizone|ani\s*zone/i],
+  ["SvenTank",/sventank|sven\s*tank/i],
+  ["HJA",/\bhja\b/i],
+  ["IPTV",/\biptv\b/i]
+ ];
+ for(const [name,re] of known)if(re.test(text))return name;
+ return s?._addon||"Fonte";
+}
+function sourceKey(s){
+ return `${s?._manifest||""}|${s?._idx??""}|${s?._quality||""}|${detectProvider(s)}|${s?.name||s?.title||""}`;
+}
+function sourceStatKey(s){
+ return `${s?._manifest||""}|${detectProvider(s)}|${s?._quality||"Outro"}`;
+}
+function healthOf(s){return S.sourceHealth.get(sourceKey(s))||""}
+function setHealth(s,status,reason=""){
+ if(!s)return;
+ S.sourceHealth.set(sourceKey(s),{status,reason,at:Date.now()});
+ renderSourceUI();
+}
+function getHealthStatus(s){return healthOf(s)?.status||""}
+function rememberSourceResult(s,ok,reason=""){
+ if(!s)return;
+ const stats=sourceStats(),key=sourceStatKey(s),old=stats[key]||{};
+ stats[key]={
+  success:Number(old.success||0)+(ok?1:0),
+  fail:Number(old.fail||0)+(ok?0:1),
+  lastSuccess:ok?Date.now():Number(old.lastSuccess||0),
+  lastFail:ok?Number(old.lastFail||0):Date.now(),
+  reason:ok?"":reason
+ };
+ saveSourceStats(stats);
+ if(ok&&S.playType==="series"){
+  const prefs=seriesSourcePrefs();
+  const identity={...streamIdentity(s),provider:detectProvider(s),lastSuccess:Date.now()};
+  prefs[sourcePrefKey()]=identity;
+  // Também salva uma preferência geral da série, útil quando muda de temporada.
+  prefs[`${S.currentShow?.id||S.rootId}|0`]=identity;
+  saveSeriesSourcePrefs(prefs);
+ }
+}
+function preferredSeriesSource(){
+ const prefs=seriesSourcePrefs();
+ return prefs[sourcePrefKey()]||prefs[`${S.currentShow?.id||S.rootId}|0`]||null;
+}
+function sourceReliabilityScore(s,resumeEntry=null){
+ let score=qualityScore(s._quality)*12;
+ const provider=detectProvider(s);
+ const pref=preferredSeriesSource();
+ const carry=resumeEntry?.stream||null;
+ const stats=sourceStats()[sourceStatKey(s)]||{};
+ const now=Date.now();
+
+ if(carry){
+  if(carry.url&&carry.url===s.url)score+=220;
+  if(carry.manifest&&carry.manifest===s._manifest)score+=45;
+  if(carry.provider&&carry.provider===provider)score+=120;
+  if(carry.index===s._idx)score+=35;
+  if(carry.quality&&carry.quality===s._quality)score+=30;
+ }
+ if(pref){
+  if(pref.provider===provider)score+=150;
+  if(pref.manifest===s._manifest)score+=40;
+  if(pref.quality===s._quality)score+=28;
+  if(pref.index===s._idx)score+=16;
+ }
+ score+=Math.min(70,Number(stats.success||0)*14);
+ if(stats.lastSuccess&&now-stats.lastSuccess<7*864e5)score+=45;
+ if(stats.lastFail&&now-stats.lastFail<6*3600e3)score-=90;
+ score-=Math.min(100,Number(stats.fail||0)*18);
+ if(s._external)score-=500;
+ return score;
+}
+function rankedPlayableStreams(streams,resumeEntry=null){
+ return streams.filter(s=>!s._external&&s.url).slice().sort((a,b)=>sourceReliabilityScore(b,resumeEntry)-sourceReliabilityScore(a,resumeEntry));
+}
+
 
 function card(m){
  const key=historyKey(m.type||"movie",m._rootId||m.id);
@@ -1404,7 +1560,7 @@ async function loadStreamsFromAddons(type,id){
  const results=await Promise.allSettled(manifests.map(async (manifest,index)=>{
   const [name,data]=await Promise.all([resolveAddonName(manifest,index),getJSON(streamURLFor(manifest,type,id))]);
   const officialLegal=/watchhub\.strem\.io/i.test(manifest);
-  return (data.streams||[]).filter(x=>x.url||x.externalUrl).map((s,i)=>({...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s),_external:!s.url&&!!s.externalUrl,_officialLegal:officialLegal}));
+  return (data.streams||[]).filter(x=>x.url||x.externalUrl).map((s,i)=>{const x={...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s),_external:!s.url&&!!s.externalUrl,_officialLegal:officialLegal};x._provider=detectProvider(x);return x});
  }));
  return results.flatMap(r=>r.status==="fulfilled"?r.value:[]).sort((a,b)=>(b._external?0:1)-(a._external?0:1)||qualityScore(b._quality)-qualityScore(a._quality));
 }
@@ -1421,8 +1577,9 @@ function renderSourceUI(){
  $("#sources").innerHTML=filtered.map((s,i)=>{
   const lines=streamLines(s);
   const selected=S.selectedStream===s;
-  return `<article class="sourceCard ${selected?"active":""} ${s._external?"external":""}" data-source-key="${esc(s._addon+"|"+s._idx)}">
-    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div>${s._officialLegal?'<span class="legalMark">OFICIAL</span>':`<span class="qualityPill">${esc(s._quality)}</span>`}</div>
+  const hs=getHealthStatus(s);return `<article class="sourceCard ${selected?"active":""} ${s._external?"external":""} ${hs}" data-source-key="${esc(s._addon+"|"+s._idx)}">
+    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div>${s._officialLegal?'<span class="legalMark">OFICIAL</span>':`<span class="qualityPill">${esc(s._quality)}</span>`}<span class="sourceHealth">${hs==="testing"?"TESTANDO":hs==="working"?"FUNCIONA":hs==="failed"?"FALHOU":"—"}</span></div>
+    <div class="providerPill">${esc(detectProvider(s))}</div>
     <div class="sourceLines">${esc(lines.join("\n")||s._addon)}</div>
     <div class="sourceOrigin">${esc(s._external?"Abre no provedor oficial":"Reprodução no CasaFlix")}</div>
     <div class="sourceActions">
@@ -1443,25 +1600,100 @@ function renderSourceUI(){
  });
 }
 function rememberedStreamMatch(streams,entry){
- const last=entry?.stream;if(!last)return null;
- const playable=streams.filter(s=>!s._external&&s.url);
- return playable.find(s=>last.url&&s.url===last.url)||
-        playable.find(s=>last.manifest&&s._manifest===last.manifest&&Number.isInteger(last.index)&&s._idx===last.index&&(!last.quality||s._quality===last.quality))||
-        playable.find(s=>last.manifest&&s._manifest===last.manifest&&last.name&&(s.name||s.title||"")===last.name)||
-        playable.find(s=>last.manifest&&s._manifest===last.manifest&&last.quality&&s._quality===last.quality)||
-        playable.find(s=>last.addon&&s._addon===last.addon&&last.quality&&s._quality===last.quality)||
-        playable.find(s=>last.addon&&s._addon===last.addon)||
-        null;
+ const ranked=rankedPlayableStreams(streams,entry);
+ return ranked[0]||null;
 }
-function selectStream(stream,autoplay=true,resumeEntry=null){
+function stopSourceAttempt(){
+ clearTimeout(S._sourceTimer);
+ S.sourceAttemptToken++;
+}
+function waitForSourceReady(stream,token,timeoutMs=14000){
+ const v=$("#video");
+ return new Promise(resolve=>{
+  let done=false;
+  const finish=(ok,reason="")=>{
+   if(done||token!==S.sourceAttemptToken)return;
+   done=true;clearTimeout(S._sourceTimer);
+   v.removeEventListener("canplay",onReady);
+   v.removeEventListener("playing",onReady);
+   v.removeEventListener("error",onError);
+   if(v._hls&&window.Hls)try{v._hls.off(Hls.Events.ERROR,onHlsError)}catch{}
+   resolve({ok,reason});
+  };
+  const onReady=()=>finish(true,"");
+  const onError=()=>finish(false,"media-error");
+  const onHlsError=(_,data)=>{if(data?.fatal)finish(false,`hls-${data.type||"fatal"}`)};
+  v.addEventListener("canplay",onReady,{once:true});
+  v.addEventListener("playing",onReady,{once:true});
+  v.addEventListener("error",onError,{once:true});
+  if(v._hls&&window.Hls)try{v._hls.on(Hls.Events.ERROR,onHlsError)}catch{}
+  S._sourceTimer=setTimeout(()=>finish(false,"timeout"),timeoutMs);
+ });
+}
+async function attemptSource(stream,autoplay=true,resumeEntry=null){
+ if(!stream||stream._external||!stream.url)return false;
+ stopSourceAttempt();
+ const token=S.sourceAttemptToken;
+ S.selectedStream=stream;
+ S.attemptedSourceKeys.add(sourceKey(stream));
+ setHealth(stream,"testing");
+ renderSourceUI();
+
+ loadVideo(stream.url,autoplay,stream,resumeEntry);
+ // loadVideo cria HLS de forma síncrona; agora conseguimos observar erro fatal/canplay.
+ const result=await waitForSourceReady(stream,token,14000);
+ if(token!==S.sourceAttemptToken)return false;
+ if(result.ok){
+  setHealth(stream,"working");
+  rememberSourceResult(stream,true);
+  if(S.playType==="series")toast(`Fonte funcionando: ${detectProvider(stream)} • ${stream._quality}.`);
+  return true;
+ }
+ setHealth(stream,"failed",result.reason);
+ rememberSourceResult(stream,false,result.reason);
+ return false;
+}
+async function trySourcesInOrder(candidates,autoplay=true,resumeEntry=null,announce=true){
+ const list=candidates.filter(s=>!S.attemptedSourceKeys.has(sourceKey(s)));
+ for(let i=0;i<list.length;i++){
+  const s=list[i];
+  if(announce&&i===0)toast(`Testando ${detectProvider(s)} • ${s._quality}...`);
+  const ok=await attemptSource(s,autoplay,resumeEntry);
+  if(ok)return s;
+  if(!S.autoFallback)break;
+  if(i<list.length-1)toast(`Essa fonte falhou. Tentando ${detectProvider(list[i+1])} • ${list[i+1]._quality}...`);
+ }
+ return null;
+}
+async function autoChooseWorkingSource(resumeEntry=null,autoplay=true){
+ S.attemptedSourceKeys.clear();
+ const ranked=rankedPlayableStreams(S.streams,resumeEntry);
+ if(!ranked.length)return null;
+ const found=await trySourcesInOrder(ranked,autoplay,resumeEntry,true);
+ if(!found){
+  toast("Nenhuma das fontes testadas iniciou. Escolha outra manualmente na lista.");
+  renderSourceUI();
+ }
+ return found;
+}
+async function selectStream(stream,autoplay=true,resumeEntry=null){
  if(!stream)return;
  if(stream._external){window.open(stream.externalUrl,"_blank","noopener,noreferrer");return}
- // Antes de trocar de fonte, salva a posição e a fonte anterior.
  const v=$("#video");
- const liveResume=resumeEntry||((v.currentTime||0)>3?{currentTime:v.currentTime,duration:v.duration||0}:null);
+ const liveResume=resumeEntry||((v.currentTime||0)>3?{currentTime:v.currentTime,duration:v.duration||0,stream:streamIdentity(stream)}:null);
  if((v.currentTime||0)>1)persistPlaybackProgress(true);
- S.selectedStream=stream;renderSourceUI();
- loadVideo(stream.url,autoplay,stream,liveResume);
+ S.attemptedSourceKeys.clear();
+
+ const ok=await attemptSource(stream,autoplay,liveResume);
+ if(ok)return;
+ if(!S.autoFallback){
+  toast("Essa fonte não iniciou. Selecione outra fonte.");
+  return;
+ }
+ toast("Essa fonte falhou. Procurando automaticamente outra opção...");
+ const ranked=rankedPlayableStreams(S.streams,liveResume).filter(s=>sourceKey(s)!==sourceKey(stream));
+ const found=await trySourcesInOrder(ranked,autoplay,liveResume,false);
+ if(!found)toast("Não encontrei outra fonte funcional automaticamente.");
 }
 async function fetchExternalSubtitles(type,id,stream){
  S.externalSubtitles=[];
@@ -1757,53 +1989,121 @@ function openAspectMenu(){
 function shouldOfferSkipIntro(){
  return S.playType==="series" && !S.introSkipped;
 }
+function introDiscoveryEnd(){
+ const v=$("#video"),dur=Number(v.duration||0);
+ // Primeira descoberta: cobre cold opens longos e aberturas próximas do meio.
+ // Depois que o CasaFlix aprende o horário, a janela volta a ser curta e precisa.
+ if(dur>0)return Math.min(dur*.60,30*60);
+ return 30*60;
+}
 function updateSkipIntroButton(){
  const b=$("#skipIntroBtn"),v=$("#video");
  if(!b||!v)return;
- const t=Number(v.currentTime||0);
- const show=shouldOfferSkipIntro() && !v.ended && t>=1 && t<=150;
+ const t=Number(v.currentTime||0),profile=getIntroProfile();
+ let show=false;
+
+ if(shouldOfferSkipIntro()&&!v.ended){
+  if(profile&&Number.isFinite(Number(profile.start))){
+   const start=Number(profile.start),len=Math.max(20,Number(profile.length||S.introSkipSeconds||90));
+   // Abre 20s antes do horário aprendido e permanece até 45s após o começo esperado.
+   show=t>=Math.max(1,start-20)&&t<=start+45;
+   b.classList.toggle("learned",show);
+   if(show)b.textContent=`Pular abertura ⏭`;
+  }else{
+   // Sem perfil: deixa disponível até 60% do episódio (máximo 30 min).
+   // Assim séries com cold open ou abertura no meio continuam funcionando.
+   show=t>=5&&t<=introDiscoveryEnd();
+   b.classList.remove("learned");
+   if(show)b.textContent="Pular abertura ⏭";
+  }
+ }
  b.classList.toggle("show",show);
 }
 function skipIntro(){
  const v=$("#video");
  if(!shouldOfferSkipIntro()||!v)return;
- const jump=Math.max(1,Number(S.introSkipSeconds||90));
- const target=Math.min((isFinite(v.duration)&&v.duration>0)?Math.max(0,v.duration-2):Infinity,(v.currentTime||0)+jump);
- if(isFinite(target))v.currentTime=target;
+ const now=Number(v.currentTime||0),profile=getIntroProfile();
+ let target,learned=false;
+
+ if(profile&&Number.isFinite(Number(profile.start))){
+  const start=Number(profile.start),len=Math.max(20,Number(profile.length||S.introSkipSeconds||90));
+  target=start+len;
+ }else{
+  const len=Math.max(20,Number(S.introSkipSeconds||90));
+  // A primeira vez que o usuário clica ensina a posição real da abertura
+  // para esta série + temporada.
+  saveIntroProfile({start:now,length:len,samples:1});
+  target=now+len;learned=true;
+ }
+ const max=(isFinite(v.duration)&&v.duration>0)?Math.max(0,v.duration-2):Infinity;
+ target=Math.min(max,target);
+ if(isFinite(target))v.currentTime=Math.max(now+1,target);
  S.introSkipped=true;
  $("#skipIntroBtn").classList.remove("show");
  persistPlaybackProgress(true);
  showPlayerUI();
- toast(`Abertura pulada (+${jump}s).`);
+ toast(learned?`Abertura aprendida em ${formatTime(now)} para esta temporada.`:`Abertura pulada para ${formatTime(target)}.`);
+}
+function openIntroSetupMenu(){
+ const menu=$("#playerMenu"),v=$("#video"),profile=getIntroProfile(),now=Number(v.currentTime||0);
+ if(menu.classList.contains("open")&&S.playerMenuKind==="intro"){closePlayerMenu();return}
+ const start=profile?.start;
+ const len=Number(profile?.length||S.introSkipSeconds||90);
+ menu.innerHTML=playerMenuHeader("Ajustar abertura")+`
+  <div class="introProfileInfo">${profile?`Aprendido para esta temporada: início em <b>${formatTime(start)}</b>, duração <b>${len}s</b>.`:"Ainda não existe um horário aprendido para esta temporada."}</div>
+  <button class="menuItem" data-intro-mark><span class="check">⌖</span><span class="menuText">A abertura começa aqui<small>Salvar ${formatTime(now)} como início da abertura desta temporada.</small></span></button>
+  <button class="menuItem" data-intro-60><span class="check"></span><span class="menuText">Duração: 60 segundos</span></button>
+  <button class="menuItem" data-intro-90><span class="check">${len===90?"✓":""}</span><span class="menuText">Duração: 90 segundos</span></button>
+  <button class="menuItem" data-intro-120><span class="check">${len===120?"✓":""}</span><span class="menuText">Duração: 120 segundos</span></button>
+  <button class="menuItem" data-intro-forget><span class="check">↺</span><span class="menuText">Esquecer abertura aprendida<small>O botão volta ao modo de descoberta ampla.</small></span></button>`;
+ finishPlayerMenu("intro");
+
+ menu.querySelector("[data-intro-mark]").onclick=()=>{
+  saveIntroProfile({start:now,length:len,samples:Number(profile?.samples||0)+1});
+  toast(`Início da abertura salvo em ${formatTime(now)}.`);
+  closePlayerMenu();updateSkipIntroButton();
+ };
+ for(const seconds of [60,90,120]){
+  menu.querySelector(`[data-intro-${seconds}]`).onclick=()=>{
+   const p=getIntroProfile()||{start:now,samples:0};
+   saveIntroProfile({...p,length:seconds});
+   S.introSkipSeconds=seconds;
+   toast(`Duração da abertura: ${seconds}s.`);
+   closePlayerMenu();updateSkipIntroButton();
+  };
+ }
+ menu.querySelector("[data-intro-forget]").onclick=()=>{
+  forgetIntroProfile();toast("Abertura aprendida removida.");closePlayerMenu();updateSkipIntroButton();
+ };
 }
 function nextEpisodeCarry(){
+ const identity=streamIdentity(S.selectedStream);
  return {
   currentTime:0,
   duration:0,
   rootId:S.currentShow?.id||S.rootId||null,
-  stream:streamIdentity(S.selectedStream)
+  stream:identity?{...identity,provider:detectProvider(S.selectedStream)}:null
  };
 }
 async function playStream(type,id,title,meta,resumeEntry=null){
  $("#playerModal").classList.add("open");document.body.classList.add("playerOpen");$("#playerTitle").textContent=title||"Reprodução";
- S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.introSkipped=false;$("#skipIntroBtn").classList.remove("show");S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S._lastProgressSave=0;
+ S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.introSkipped=false;$("#skipIntroBtn").classList.remove("show");S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S.sourceHealth.clear();S.attemptedSourceKeys.clear();S._lastProgressSave=0;
  resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
  try{
   const streams=await loadStreamsFromAddons(type,id);S.streams=streams;
   if(!streams.length){$("#sources").innerHTML="<div class='sourceEmpty'>Nenhuma fonte foi retornada pelos addons configurados.</div>";return}
   renderSourceUI();
-  const remembered=rememberedStreamMatch(streams,resumeEntry);
-  const first=remembered||streams.find(x=>!x._external&&x.url);
-  if(first){
-   S.selectedStream=first;renderSourceUI();
-   loadVideo(first.url,!!resumeEntry,first,resumeEntry);
-   await fetchExternalSubtitles(type,id,first);
-   if(remembered)toast(`Retomando com ${remembered._addon}${remembered._quality?` • ${remembered._quality}`:""}.`);
+  const playable=rankedPlayableStreams(streams,resumeEntry);
+  if(playable.length){
+   if(resumeEntry?.stream?.provider)toast(`Procurando novamente ${resumeEntry.stream.provider} para este episódio...`);
+   const found=await autoChooseWorkingSource(resumeEntry,!!resumeEntry);
+   if(found)await fetchExternalSubtitles(type,id,found);
   } else $("#sources").insertAdjacentHTML("afterbegin","<div class='sourceEmpty'>As opções disponíveis abrem provedores externos; escolha uma delas na lista.</div>");
  }catch(e){console.error(e);$("#sources").innerHTML="<div class='sourceEmpty'>Falha ao consultar as fontes. Verifique CORS, o manifesto e a disponibilidade do addon.</div>"}
 }
 function resetVideo(){
+ stopSourceAttempt();
  const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");
  [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
  if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
@@ -1828,7 +2128,7 @@ function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
   v._hls.on(Hls.Events.MANIFEST_PARSED,async()=>{await afterTracks();$("#buffering").classList.remove("show")});
   if(Hls.Events.AUDIO_TRACKS_UPDATED)v._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED,()=>{applyPreferredAudio();updateTrackStatus()});
   if(Hls.Events.SUBTITLE_TRACKS_UPDATED)v._hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED,()=>{applyPreferredSubtitle();updateTrackStatus()});
-  v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)toast("Falha ao reproduzir esta fonte.")});
+  v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)console.warn("Fonte HLS falhou",data)});
  }else{
   v.src=url;
  }
@@ -2087,7 +2387,7 @@ mobileSearchInput.addEventListener("keydown",e=>{
  if(e.key==="Escape")closeMobileSearch();
 });
 $("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
-$("#closePlayer").onclick=()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
+$("#closePlayer").onclick=()=>{$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
@@ -2101,7 +2401,19 @@ $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStr
 $("#skipIntroBtn").onclick=skipIntro;
 $("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
 $("#aspectBtn").onclick=openAspectMenu;
-updateAspectButton();
+$("#introSetupBtn").onclick=openIntroSetupMenu;
+$("#autoFallbackBtn").onclick=()=>{
+ S.autoFallback=!S.autoFallback;
+ localStorage.setItem("cf11_auto_fallback",S.autoFallback?"1":"0");
+ updateAutoFallbackButton();
+ toast(S.autoFallback?"Troca automática ativada.":"Troca automática desativada.");
+};
+function updateAutoFallbackButton(){
+ const b=$("#autoFallbackBtn");if(!b)return;
+ b.textContent=`⚡ Troca automática: ${S.autoFallback?"ON":"OFF"}`;
+ b.classList.toggle("on",S.autoFallback);b.classList.toggle("off",!S.autoFallback);
+}
+updateAspectButton();updateAutoFallbackButton();
 $("#audioBtn").onclick=e=>{e.stopPropagation();openAudioMenu()};
 $("#subsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu()};
 $("#nextBtn").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode){const carry=nextEpisodeCarry();playEpisode(S.currentShow,S.nextEpisode,carry)}};
@@ -2157,6 +2469,7 @@ if("serviceWorker" in navigator){
 }
 home();
 </script>
-<!-- CasaFlix v10 Mobile Tested — scroll mobile validado + pular abertura + próximo episódio reutiliza fonte -->
+<!-- CasaFlix v11 — fontes com failover automático + preferência por provedor + abertura aprendida
+     Baseada na v10 Mobile Tested — scroll mobile validado + pular abertura + próximo episódio reutiliza fonte -->
 </body>
 </html>

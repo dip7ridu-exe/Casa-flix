@@ -1,29 +1,50 @@
-# CasaFlix V10 — Mobile Tested
+# CasaFlix V11 — Smart Sources
 
-## Pular abertura
-- Em séries/animes, aparece `Pular abertura ⏭` durante os primeiros 150 segundos.
-- Ao tocar, avança 90 segundos a partir da posição atual.
-- O botão some depois de ser usado naquele episódio.
+## Fontes que falham em alguns episódios
+A V11 não assume mais que a maior resolução é a melhor fonte.
 
-## Próximo episódio
-Ao tocar em Próximo episódio, a V10 leva para o episódio seguinte:
-1. o addon/fonte atual,
-2. o nome da fonte quando ainda existir,
-3. a qualidade usada,
-4. fallback para a melhor fonte disponível.
+Quando abre um episódio:
+1. prioriza a fonte/provedor que funcionou anteriormente;
+2. testa a fonte;
+3. espera o vídeo realmente chegar em `canplay/playing`;
+4. se der erro fatal ou ficar 14s sem iniciar, marca a fonte como falha;
+5. tenta automaticamente a próxima;
+6. quando encontra uma que funciona, salva o provedor para os próximos episódios.
 
-O episódio seguinte começa automaticamente. A posição do episódio anterior é salva antes da troca.
+O histórico de sucesso/falha influencia a ordem das fontes futuras.
 
-## Mobile / Minha Lista
-A rolagem vertical foi refeita para depender do documento normal, não de containers internos.
-- `html`, `body`, `#page` e `#pageBody` não ficam presos em altura fixa.
-- Minha Lista usa 2 colunas em celulares e pode crescer indefinidamente para baixo.
-- detalhes/configurações não deixam `overflow:hidden` preso no body.
-- backdrop-filter foi removido da navegação mobile para reduzir glitches de composição/touch.
-- o scroll horizontal dos carrosséis continua funcionando sem bloquear o gesto vertical.
+### Exemplo usado no teste
+The Big Bang Theory — temporada 3, episódio 21:
+- 1080p simulada como indisponível;
+- outra 1080p simulada como indisponível;
+- RedeFlix 720p simulada como funcional.
 
-## Testes
-A versão foi preparada para teste em viewport mobile com dezenas de itens na Minha Lista.
+Resultado esperado: CasaFlix abandona as fontes quebradas e inicia RedeFlix 720p automaticamente.
+No episódio seguinte, RedeFlix recebe prioridade.
+
+## Pular abertura adaptativo
+Sem um horário aprendido:
+- o botão pode aparecer do começo até 60% do episódio, limitado a 30 minutos;
+- isso cobre séries que têm cold open ou abertura perto do meio.
+
+Na primeira vez que você usa `Pular abertura`, o CasaFlix aprende:
+- série;
+- temporada;
+- horário aproximado em que a abertura começou;
+- duração da abertura.
+
+Nos episódios seguintes, o botão aparece perto daquele horário aprendido.
+
+`Ajustar abertura` permite:
+- marcar a posição atual como início;
+- escolher 60/90/120s;
+- esquecer o perfil aprendido.
+
+## Troca automática
+Pode ser ligada/desligada no player por `⚡ Troca automática`.
+
+## Mobile
+Mantém as correções de scroll/touch da V10.
 
 ## PWA
-Cache: `casaflix-shell-v10`. Envie todos os arquivos ao GitHub Pages.
+Cache: `casaflix-shell-v11`.
