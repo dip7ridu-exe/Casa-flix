@@ -1,37 +1,29 @@
-# CasaFlix V9 — Mobile Stable
+# CasaFlix V10 — Mobile Tested
 
-## O que mudou no celular
-- A busca não abre mais uma camada fixa sobre o site.
-- O botão 🔎 abre diretamente a página de pesquisa.
-- Scroll horizontal dos cards foi simplificado.
-- Menos overlays e menos elementos invisíveis capturando toque.
-- Estado de modais/touch é reparado ao voltar para a página, girar o aparelho ou redimensionar.
-- Menus fechados usam `pointer-events: none`.
+## Pular abertura
+- Em séries/animes, aparece `Pular abertura ⏭` durante os primeiros 150 segundos.
+- Ao tocar, avança 90 segundos a partir da posição atual.
+- O botão some depois de ser usado naquele episódio.
 
-## Outro player
-O botão `Outro player` aparece no player e em cada fonte direta.
+## Próximo episódio
+Ao tocar em Próximo episódio, a V10 leva para o episódio seguinte:
+1. o addon/fonte atual,
+2. o nome da fonte quando ainda existir,
+3. a qualidade usada,
+4. fallback para a melhor fonte disponível.
 
-Ele oferece:
-1. Compartilhar a URL com outro app do celular.
-2. Abrir a fonte em nova aba.
-3. Copiar a URL da fonte para colar em VLC/outro player.
+O episódio seguinte começa automaticamente. A posição do episódio anterior é salva antes da troca.
 
-## Proporção
-O player usa moldura 16:9 e agora tem menu de proporção:
-- Auto 16:9 (padrão)
-- 16:9 sem distorcer
-- Forçar 16:9
-- Preencher 16:9
-- Original
+## Mobile / Minha Lista
+A rolagem vertical foi refeita para depender do documento normal, não de containers internos.
+- `html`, `body`, `#page` e `#pageBody` não ficam presos em altura fixa.
+- Minha Lista usa 2 colunas em celulares e pode crescer indefinidamente para baixo.
+- detalhes/configurações não deixam `overflow:hidden` preso no body.
+- backdrop-filter foi removido da navegação mobile para reduzir glitches de composição/touch.
+- o scroll horizontal dos carrosséis continua funcionando sem bloquear o gesto vertical.
 
-No modo Auto, fontes claramente verticais/3:4 são corrigidas automaticamente.
-Se uma fonte continuar errada, selecione `Forçar 16:9`.
+## Testes
+A versão foi preparada para teste em viewport mobile com dezenas de itens na Minha Lista.
 
 ## PWA
-Cache atualizado para `casaflix-shell-v9`.
-
-Envie todos os arquivos ao GitHub Pages:
-- index.html
-- manifest.webmanifest
-- service-worker.js
-- icons/
+Cache: `casaflix-shell-v10`. Envie todos os arquivos ao GitHub Pages.

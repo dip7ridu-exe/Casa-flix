@@ -700,6 +700,108 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .plus,.continueRemove{opacity:1!important}
 }
 
+
+/* =========================================================
+   CasaFlix v10 — mobile realmente rolável + skip intro
+   ========================================================= */
+.skipIntroBtn{
+ position:absolute;z-index:8;right:18px;bottom:82px;
+ min-height:42px;border:1px solid #ffffff34;border-radius:9px;
+ padding:9px 14px;background:#101014e8;color:#fff;font-weight:900;
+ box-shadow:0 8px 28px #0009;display:none
+}
+.skipIntroBtn.show{display:block;animation:skipIntroIn .22s ease both}
+.skipIntroBtn:active{transform:scale(.96)}
+@keyframes skipIntroIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media(max-width:760px){
+ /* O documento é sempre o responsável pelo scroll vertical. */
+ html{
+   height:auto!important;
+   min-height:100%!important;
+   overflow-x:hidden!important;
+   overflow-y:auto!important;
+   overscroll-behavior-y:auto!important;
+ }
+ body{
+   position:static!important;
+   width:100%!important;
+   height:auto!important;
+   min-height:100%!important;
+   overflow-x:hidden!important;
+   overflow-y:auto!important;
+   overscroll-behavior-y:auto!important;
+   touch-action:pan-y pinch-zoom!important;
+   -webkit-overflow-scrolling:touch;
+ }
+ body.detailOpen,body.settingsOpen{
+   overflow-y:auto!important;
+   position:static!important;
+   height:auto!important;
+ }
+ .app,#main,#page,#pageBody{
+   height:auto!important;
+   max-height:none!important;
+   overflow:visible!important;
+   touch-action:pan-y pinch-zoom!important;
+ }
+ #page{
+   min-height:calc(100svh - var(--mobile-top-h))!important;
+   padding-bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom) + 34px)!important;
+ }
+ #pageBody .grid{
+   height:auto!important;
+   max-height:none!important;
+   overflow:visible!important;
+   align-items:start;
+ }
+ main{
+   min-height:1px;
+   padding-bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom) + 26px)!important;
+ }
+ .hero,.section,.sectionHead,.cardInfo,.poster{
+   touch-action:pan-y pinch-zoom;
+ }
+ .row{
+   touch-action:pan-x pan-y pinch-zoom!important;
+ }
+ .card{
+   touch-action:pan-y manipulation!important;
+ }
+ .row .card{
+   touch-action:pan-x pan-y manipulation!important;
+ }
+ .mobileBottomNav button,.top button,.plus,.continueRemove,.btn,.ep,.sourceCard,.sourceActions button{
+   touch-action:manipulation!important;
+ }
+
+ /* Sem backdrop-filter no mobile para evitar glitches de composição/touch. */
+ .top,.mobileBottomNav,.toast,.resumeBadge{
+   backdrop-filter:none!important;
+   -webkit-backdrop-filter:none!important;
+ }
+ .mobileBottomNav{background:#0a0a0bf2!important}
+
+ /* Modais têm seu próprio scroll; a tela normal nunca é travada por eles. */
+ #detailModal.open,#settingsModal.open,#playerModal.open{
+   overscroll-behavior:contain;
+ }
+ #detailModal .dialog,#settingsModal .settings,#playerModal .playerWrap{
+   -webkit-overflow-scrolling:touch;
+   overscroll-behavior:contain;
+ }
+
+ /* Minha Lista: 2 colunas e espaço suficiente até o fim. */
+ #pageBody .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+ #pageBody .grid .card{width:100%!important;min-width:0!important}
+ #pageBody .grid .poster{width:100%!important}
+ @media(min-width:520px){#pageBody .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+
+ .skipIntroBtn{
+   right:10px;bottom:58px;min-height:40px;padding:8px 11px;font-size:12px;border-radius:9px
+ }
+}
+
 </style>
 </head>
 <body>
@@ -765,6 +867,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
      <video id="video" playsinline preload="metadata"></video>
      <div class="buffering" id="buffering"></div>
      <button class="bigPlay" id="bigPlay" aria-label="Reproduzir">▶</button>
+     <button type="button" class="skipIntroBtn" id="skipIntroBtn">Pular abertura ⏭</button>
      <div class="playerControls" id="playerControls">
       <input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="Progresso">
       <div class="controlRow">
@@ -869,7 +972,7 @@ const cfg={
  subtitlePref:localStorage.getItem("cf5_subtitle_pref")||CFG_DEFAULT.subtitlePref,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -946,6 +1049,7 @@ function streamIdentity(s){
   name:s.name||s.title||"",
   title:s.title||"",
   quality:s._quality||getQuality(s),
+  index:Number.isInteger(s._idx)?s._idx:null,
   url:s.url||""
  };
 }
@@ -1131,7 +1235,7 @@ async function externalCatalogRows(){
 }
 
 async function home(){
- S.currentPage="home";setActiveNav("home");
+ S.currentPage="home";setActiveNav("home");unlockMobileDocument();scrollPageTop();
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
@@ -1342,6 +1446,7 @@ function rememberedStreamMatch(streams,entry){
  const last=entry?.stream;if(!last)return null;
  const playable=streams.filter(s=>!s._external&&s.url);
  return playable.find(s=>last.url&&s.url===last.url)||
+        playable.find(s=>last.manifest&&s._manifest===last.manifest&&Number.isInteger(last.index)&&s._idx===last.index&&(!last.quality||s._quality===last.quality))||
         playable.find(s=>last.manifest&&s._manifest===last.manifest&&last.name&&(s.name||s.title||"")===last.name)||
         playable.find(s=>last.manifest&&s._manifest===last.manifest&&last.quality&&s._quality===last.quality)||
         playable.find(s=>last.addon&&s._addon===last.addon&&last.quality&&s._quality===last.quality)||
@@ -1648,9 +1753,40 @@ function openAspectMenu(){
   closePlayerMenu();
  });
 }
+
+function shouldOfferSkipIntro(){
+ return S.playType==="series" && !S.introSkipped;
+}
+function updateSkipIntroButton(){
+ const b=$("#skipIntroBtn"),v=$("#video");
+ if(!b||!v)return;
+ const t=Number(v.currentTime||0);
+ const show=shouldOfferSkipIntro() && !v.ended && t>=1 && t<=150;
+ b.classList.toggle("show",show);
+}
+function skipIntro(){
+ const v=$("#video");
+ if(!shouldOfferSkipIntro()||!v)return;
+ const jump=Math.max(1,Number(S.introSkipSeconds||90));
+ const target=Math.min((isFinite(v.duration)&&v.duration>0)?Math.max(0,v.duration-2):Infinity,(v.currentTime||0)+jump);
+ if(isFinite(target))v.currentTime=target;
+ S.introSkipped=true;
+ $("#skipIntroBtn").classList.remove("show");
+ persistPlaybackProgress(true);
+ showPlayerUI();
+ toast(`Abertura pulada (+${jump}s).`);
+}
+function nextEpisodeCarry(){
+ return {
+  currentTime:0,
+  duration:0,
+  rootId:S.currentShow?.id||S.rootId||null,
+  stream:streamIdentity(S.selectedStream)
+ };
+}
 async function playStream(type,id,title,meta,resumeEntry=null){
  $("#playerModal").classList.add("open");document.body.classList.add("playerOpen");$("#playerTitle").textContent=title||"Reprodução";
- S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S._lastProgressSave=0;
+ S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.introSkipped=false;$("#skipIntroBtn").classList.remove("show");S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S._lastProgressSave=0;
  resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
  try{
@@ -1763,7 +1899,7 @@ function addHistory(m,progress){
 }
 
 async function page(type){
- S.currentPage=type;setActiveNav(type);
+ S.currentPage=type;setActiveNav(type);unlockMobileDocument();scrollPageTop();
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  const titles={movies:"Filmes",series:"Séries",anime:"Animes",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
  if(type==="list"){const a=lists();$("#pageBody").innerHTML=a.length?`<div class="grid">${a.map(card).join("")}</div>`:'<div class="empty">Sua lista está vazia.</div>';bindCards($("#pageBody"));return}
@@ -1883,6 +2019,21 @@ async function search(q,force=false){
 
 $("#heroWatch").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 $("#heroDetails").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
+
+function unlockMobileDocument(){
+ if(innerWidth>760)return;
+ const body=document.body,doc=document.documentElement;
+ if(!$("#playerModal").classList.contains("open")){
+  body.style.removeProperty("overflow");
+  body.style.removeProperty("position");
+  body.style.removeProperty("height");
+  doc.style.removeProperty("overflow");
+  doc.style.removeProperty("height");
+ }
+}
+function scrollPageTop(){
+ requestAnimationFrame(()=>{try{window.scrollTo({top:0,left:0,behavior:"auto"})}catch{window.scrollTo(0,0)}});
+}
 function repairTouchState(){
  const body=document.body;
  if(!$("#playerModal").classList.contains("open"))body.classList.remove("playerOpen");
@@ -1892,6 +2043,7 @@ function repairTouchState(){
   $("#playerMenuBackdrop").classList.remove("open");
   S.playerMenuKind=null;
  }
+ unlockMobileDocument();
 }
 function closeTransientUI(){
  $("#playerMenu").classList.remove("open");
@@ -1934,8 +2086,8 @@ mobileSearchInput.addEventListener("keydown",e=>{
  }
  if(e.key==="Escape")closeMobileSearch();
 });
-$("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen")};
-$("#closePlayer").onclick=()=>{persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
+$("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
+$("#closePlayer").onclick=()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
@@ -1946,16 +2098,17 @@ $("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v
 $("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();showPlayerUI()};
 $("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}showPlayerUI()};
 $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
+$("#skipIntroBtn").onclick=skipIntro;
 $("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
 $("#aspectBtn").onclick=openAspectMenu;
 updateAspectButton();
 $("#audioBtn").onclick=e=>{e.stopPropagation();openAudioMenu()};
 $("#subsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu()};
-$("#nextBtn").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode)playEpisode(S.currentShow,S.nextEpisode,null)};
-$("#video").addEventListener("timeupdate",syncPlayer);
+$("#nextBtn").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode){const carry=nextEpisodeCarry();playEpisode(S.currentShow,S.nextEpisode,carry)}};
+$("#video").addEventListener("timeupdate",()=>{syncPlayer();updateSkipIntroButton()});
 $("#video").addEventListener("play",()=>{syncPlayer();showPlayerUI()});
 $("#video").addEventListener("pause",()=>{syncPlayer();persistPlaybackProgress(true);showPlayerUI(true)});
-$("#video").addEventListener("ended",()=>{persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode)$("#nextBtn").style.display=""});
+$("#video").addEventListener("ended",()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode)$("#nextBtn").style.display=""});
 $("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
 $("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
 $("#videoShell").addEventListener("mousemove",()=>showPlayerUI());
@@ -1973,7 +2126,7 @@ document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains
 $("#detailModal").onclick=e=>{if(e.target.id==="detailModal"){$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen")}};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
 $("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open");document.body.classList.add("settingsOpen")};
-$("#closeSettings").onclick=()=>{$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen")};
+$("#closeSettings").onclick=()=>{$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");unlockMobileDocument()};
 $("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");toast("Configurações salvas.");home()};
 $("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#lang").value=CFG_DEFAULT.lang};
 window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
@@ -2004,6 +2157,6 @@ if("serviceWorker" in navigator){
 }
 home();
 </script>
-<!-- CasaFlix v9 Mobile Stable — toque simplificado, busca sem overlay, outro player e Auto 16:9 -->
+<!-- CasaFlix v10 Mobile Tested — scroll mobile validado + pular abertura + próximo episódio reutiliza fonte -->
 </body>
 </html>
