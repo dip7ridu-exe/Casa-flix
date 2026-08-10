@@ -1,7 +1,7 @@
 {
-  "name": "CasaFlix",
-  "short_name": "CasaFlix",
-  "description": "Sua biblioteca pessoal de filmes, séries e animes.",
+  "name": "ResenhaFlix",
+  "short_name": "ResenhaFlix",
+  "description": "Filmes, séries, animes e mangás em uma interface pessoal.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

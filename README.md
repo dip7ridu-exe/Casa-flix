@@ -1,50 +1,44 @@
-# CasaFlix V11 — Smart Sources
+# ResenhaFlix V14 — Native Manga Reader
 
-## Fontes que falham em alguns episódios
-A V11 não assume mais que a maior resolução é a melhor fonte.
+## Leitor nativo
+A leitura não usa mais iframe/site original como fluxo principal.
 
-Quando abre um episódio:
-1. prioriza a fonte/provedor que funcionou anteriormente;
-2. testa a fonte;
-3. espera o vídeo realmente chegar em `canplay/playing`;
-4. se der erro fatal ou ficar 14s sem iniciar, marca a fonte como falha;
-5. tenta automaticamente a próxima;
-6. quando encontra uma que funciona, salva o provedor para os próximos episódios.
+Recursos:
+- Vertical / Webtoon
+- Página esquerda → direita
+- Página direita → esquerda
+- ajuste à largura / página inteira / tamanho original
+- espaçamento 0 / 8 / 16 px
+- controle de brilho
+- trocar capítulo sem sair do leitor
+- capítulo anterior / próximo
+- progresso salvo por capítulo
+- restauração da página/posição
+- biblioteca de mangás
+- busca diretamente nas fontes instaladas
 
-O histórico de sucesso/falha influencia a ordem das fontes futuras.
+## Fontes Keiyoushi
+As extensões Keiyoushi continuam sendo a loja/lista de fontes.
+O navegador não executa os APK/JAR Kotlin das extensões.
 
-### Exemplo usado no teste
-The Big Bang Theory — temporada 3, episódio 21:
-- 1080p simulada como indisponível;
-- outra 1080p simulada como indisponível;
-- RedeFlix 720p simulada como funcional.
+Para transformar fontes web compatíveis em:
+busca → mangá → capítulos → páginas,
+a V14 inclui `manga-bridge/`.
 
-Resultado esperado: CasaFlix abandona as fontes quebradas e inicia RedeFlix 720p automaticamente.
-No episódio seguinte, RedeFlix recebe prioridade.
+O frontend tenta acesso direto primeiro quando CORS permite. Quando não permite, usa o Manga Bridge configurado em:
+Configurações → Manga Bridge.
 
-## Pular abertura adaptativo
-Sem um horário aprendido:
-- o botão pode aparecer do começo até 60% do episódio, limitado a 30 minutos;
-- isso cobre séries que têm cold open ou abertura perto do meio.
+## Manga Bridge
+Pasta:
+`manga-bridge/`
 
-Na primeira vez que você usa `Pular abertura`, o CasaFlix aprende:
-- série;
-- temporada;
-- horário aproximado em que a abertura começou;
-- duração da abertura.
+Inclui FastAPI, proxy seguro de imagens com assinatura e parser genérico para layouts web comuns.
 
-Nos episódios seguintes, o botão aparece perto daquele horário aprendido.
+## GitHub Pages
+Continue hospedando o frontend no GitHub Pages.
+O bridge precisa rodar em um serviço que execute Python, como Render/Railway/Fly/etc.
 
-`Ajustar abertura` permite:
-- marcar a posição atual como início;
-- escolher 60/90/120s;
-- esquecer o perfil aprendido.
-
-## Troca automática
-Pode ser ligada/desligada no player por `⚡ Troca automática`.
-
-## Mobile
-Mantém as correções de scroll/touch da V10.
+Depois, coloque a URL do bridge nas configurações do ResenhaFlix.
 
 ## PWA
-Cache: `casaflix-shell-v11`.
+Cache: resenhaflix-shell-v14

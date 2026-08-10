@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CasaFlix — sua biblioteca</title>
+<title>ResenhaFlix — sua biblioteca</title>
 <meta name="theme-color" content="#070707">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="CasaFlix">
+<meta name="apple-mobile-web-app-title" content="ResenhaFlix">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <style>
@@ -123,7 +123,7 @@ main{position:relative;z-index:2;margin-top:-25px;padding:0 3vw 60px}.section{ma
 }
 
 /* =========================================================
-   CasaFlix v7 — Mobile App UI
+   ResenhaFlix v7 — Mobile App UI
    ========================================================= */
 html,body{max-width:100%;overflow-x:hidden}
 body{padding-bottom:0;-webkit-tap-highlight-color:transparent}
@@ -416,7 +416,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
 
 /* =========================================================
-   CasaFlix v8 — correções de celular / touch / busca / menus
+   ResenhaFlix v8 — correções de celular / touch / busca / menus
    ========================================================= */
 .playerControls{
   pointer-events:none;
@@ -587,7 +587,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
 
 /* =========================================================
-   CasaFlix v9 — mobile estável + player externo + proporção
+   ResenhaFlix v9 — mobile estável + player externo + proporção
    ========================================================= */
 .playerUtilities{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .playerUtilities button{
@@ -702,7 +702,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
 
 /* =========================================================
-   CasaFlix v10 — mobile realmente rolável + skip intro
+   ResenhaFlix v10 — mobile realmente rolável + skip intro
    ========================================================= */
 .skipIntroBtn{
  position:absolute;z-index:8;right:18px;bottom:82px;
@@ -804,7 +804,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
 
 /* =========================================================
-   CasaFlix v11 — fontes inteligentes + abertura adaptativa
+   ResenhaFlix v11 — fontes inteligentes + abertura adaptativa
    ========================================================= */
 .sourceCard.testing{border-color:#d9a72a;box-shadow:0 0 0 1px #d9a72a55 inset}
 .sourceCard.working{border-color:#49ba6f;box-shadow:0 0 0 1px #49ba6f55 inset}
@@ -837,6 +837,218 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .sourceCard.failed{opacity:.78}
 }
 
+
+/* ResenhaFlix v12 — Mangás + busca de fontes rápida */
+.mangaShell{max-width:1280px;margin:0 auto}
+.mangaHero{border:1px solid #25252a;border-radius:17px;padding:22px;background:linear-gradient(135deg,#17171b,#0d0d0f);margin-bottom:18px}
+.mangaHero h3{font-size:24px;margin:0 0 7px}.mangaHero p{margin:0;color:#a7a7ae;line-height:1.5;max-width:840px}
+.mangaTabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px}.mangaTabs::-webkit-scrollbar{display:none}
+.mangaTabs button{flex:none;min-height:42px;border:1px solid #34343a;background:#1b1b1f;color:#ccc;border-radius:999px;padding:8px 14px;font-weight:850}
+.mangaTabs button.active{background:#fff;color:#111;border-color:#fff}
+.mangaToolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.mangaToolbar input,.mangaToolbar select{min-height:44px;border:1px solid #33333a;background:#141416;color:#fff;border-radius:10px;padding:9px 12px;outline:none}
+.mangaToolbar input{min-width:250px;flex:1}.mangaToolbar button{min-height:44px;border:1px solid #38383f;background:#232328;color:#fff;border-radius:10px;padding:9px 13px;font-weight:800}
+.mangaRepoStatus{margin:0 0 15px;padding:10px 12px;border:1px solid #2d2d33;background:#121215;border-radius:10px;color:#a4a4ac;font-size:12px;line-height:1.5}
+.mangaRepoStatus.ok{border-color:#285033;color:#a9d9b4;background:#111a13}.mangaRepoStatus.warn{border-color:#5d5124;color:#e4cf86;background:#1c190f}
+.mangaExtGrid,.mangaSourceGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.mangaExtCard,.mangaSourceCard{min-width:0;border:1px solid #2b2b31;background:#131316;border-radius:14px;padding:14px}
+.mangaExtHead{display:flex;gap:11px;align-items:center}.mangaExtIcon{width:48px;height:48px;flex:none;border-radius:11px;background:#26262a center/cover no-repeat;display:grid;place-items:center;font-weight:950;color:#999}
+.mangaExtInfo{min-width:0;flex:1}.mangaExtName{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mangaExtMeta{font-size:11px;color:#898991;margin-top:4px}
+.mangaExtSources{font-size:11px;color:#b0b0b8;margin-top:10px;line-height:1.45}.mangaExtActions{display:flex;gap:7px;margin-top:12px}
+.mangaExtActions button,.mangaSourceCard button{min-height:40px;border:1px solid #38383f;background:#232328;color:#fff;border-radius:9px;padding:8px 11px;font-weight:800}
+.mangaExtActions .installed{background:#fff;color:#111}.mangaWarning{display:inline-flex;margin-left:6px;font-size:9px;font-weight:900;padding:3px 6px;border-radius:5px;background:#5f4d1522;color:#e1c86e}
+.mangaSourceCard h4{margin:0 0 5px;font-size:16px}.mangaSourceCard p{margin:0 0 10px;color:#8f8f97;font-size:12px;line-height:1.45}
+.mangaSourceUrl{font-size:10px;color:#777780;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:11px}
+.mangaEmpty{padding:45px 12px;text-align:center;color:#818188}.mangaCount{font-size:12px;color:#8e8e95;margin-bottom:11px}
+.mangaReaderWrap{width:min(1200px,98vw);height:min(92vh,900px);background:#0b0b0d;border:1px solid #2b2b30;border-radius:15px;overflow:hidden;display:flex;flex-direction:column}
+.mangaReaderTop{min-height:58px;display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #27272c;background:#111114}
+.mangaReaderBack,.mangaReaderExternal{min-height:40px;border:1px solid #34343a;background:#202024;color:#fff;border-radius:9px;padding:7px 11px}
+.mangaReaderBack{width:42px;font-size:27px;padding:0}.mangaReaderTitle{font-weight:900;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fastSourceBadge{display:inline-flex;align-items:center;gap:5px;margin-left:7px;font-size:10px;color:#88d99f}.fastSourceBadge:before{content:"⚡"}
+@media(max-width:760px){
+ .mobileBottomNav{grid-template-columns:repeat(6,1fr)!important}.mobileBottomNav small{font-size:9px!important}.mobileBottomNav span{font-size:19px!important}
+ .mangaHero{border-radius:13px;padding:16px}.mangaHero h3{font-size:21px}
+ .mangaToolbar{display:grid;grid-template-columns:1fr 110px}.mangaToolbar input{min-width:0;grid-column:1/-1;width:100%;font-size:16px}.mangaToolbar button{grid-column:1/-1}
+ .mangaExtGrid,.mangaSourceGrid{grid-template-columns:1fr}.mangaExtActions{display:grid;grid-template-columns:1fr 1fr}
+ #mangaReaderModal{padding:0}#mangaReaderModal .mangaReaderWrap{width:100%;height:100%;max-height:none;border:0;border-radius:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+ body.mangaReaderOpen{overflow:hidden!important}body.mangaReaderOpen .mobileBottomNav{display:none!important}
+}
+
+
+/* =========================================================
+   ResenhaFlix v13 — Mangás de verdade na tela Explorar
+   ========================================================= */
+.mangaPriority{
+  display:inline-flex;align-items:center;gap:6px;border:1px solid #26583a;
+  background:#112017;color:#9fe2b4;border-radius:999px;padding:6px 10px;
+  font-size:11px;font-weight:850;margin-top:12px
+}
+.mangaPriority:before{content:"🇧🇷"}
+.mangaExploreHead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.mangaExploreHead input{
+  min-width:250px;flex:1;min-height:46px;border:1px solid #35353b;background:#141416;color:#fff;
+  border-radius:11px;padding:10px 13px;font-size:15px;outline:none
+}
+.mangaExploreHead button{
+  min-height:46px;border:1px solid #38383f;background:#222227;color:#fff;border-radius:11px;
+  padding:9px 13px;font-weight:850
+}
+.mangaExploreInfo{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px;color:#8f8f97;font-size:12px
+}
+.mangaExploreInfo .ptCount{color:#9de3b1}
+.mangaMediaGrid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px
+}
+.mangaMediaCard{
+  min-width:0;border:1px solid #2c2c31;background:#121215;border-radius:14px;overflow:hidden;
+  transition:transform .16s,border-color .16s
+}
+.mangaMediaCard:hover{transform:translateY(-2px);border-color:#46464d}
+.mangaMediaCover{aspect-ratio:2/3;background:#222 center/cover no-repeat;position:relative}
+.mangaMediaScore{
+  position:absolute;left:7px;top:7px;background:#000c;color:#fff;border-radius:6px;
+  padding:4px 6px;font-size:10px;font-weight:900
+}
+.mangaMediaBody{padding:10px}
+.mangaMediaTitle{
+  font-size:13px;font-weight:900;line-height:1.25;min-height:32px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.mangaMediaMeta{font-size:10px;color:#85858d;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mangaMediaSourceHint{font-size:10px;color:#8bc99c;margin-top:7px;line-height:1.35}
+.mangaMediaActions{display:grid;grid-template-columns:1fr 42px;gap:7px;margin-top:10px}
+.mangaMediaActions button{
+  min-height:40px;border:1px solid #38383f;background:#242429;color:#fff;border-radius:9px;font-weight:850
+}
+.mangaMediaActions .mangaRead{background:#fff;color:#111}
+.mangaMediaActions .mangaFav.saved{background:#fff;color:#111}
+.mangaSourcePicker{
+  width:min(760px,95vw);max-height:88vh;overflow:auto;background:#101013;border:1px solid #2d2d33;
+  border-radius:16px;padding:16px;box-shadow:0 25px 80px #000
+}
+.mangaSourcePickerTop{display:flex;align-items:center;gap:12px}
+.mangaSourcePickerTop>div{flex:1}.mangaSourcePickerEyebrow{font-size:10px;color:#8e8e96;text-transform:uppercase;letter-spacing:1px}
+.mangaSourcePickerTop h3{margin:3px 0 0;font-size:23px}
+.mangaSourcePickerMedia{
+  display:flex;gap:12px;align-items:center;margin:14px 0;padding:11px;border:1px solid #28282e;
+  background:#151518;border-radius:12px
+}
+.mangaPickerCover{width:58px;aspect-ratio:2/3;border-radius:8px;background:#242428 center/cover no-repeat;flex:none}
+.mangaPickerTitle{font-weight:900}.mangaPickerAlt{font-size:11px;color:#8e8e95;margin-top:4px}
+.mangaSourcePickerNote{font-size:11px;color:#94949c;line-height:1.45;margin-bottom:11px}
+.mangaSourcePickerList{display:flex;flex-direction:column;gap:8px}
+.mangaPickerSource{
+  display:flex;gap:10px;align-items:center;border:1px solid #2c2c32;background:#151518;border-radius:12px;padding:11px
+}
+.mangaPickerSource.pt{border-color:#295038;background:#111a14}
+.mangaPickerSourceInfo{min-width:0;flex:1}
+.mangaPickerSourceName{font-weight:900}
+.mangaPickerSourceMeta{font-size:10px;color:#8e8e95;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mangaPickerSource button{
+  flex:none;min-height:40px;border:1px solid #3a3a40;background:#25252a;color:#fff;border-radius:9px;padding:8px 11px;font-weight:850
+}
+.mangaPickerSource.pt button{background:#fff;color:#111}
+.mangaPtBadge{
+  display:inline-flex;padding:3px 6px;border-radius:5px;background:#1d4029;color:#a7e7b8;
+  font-size:9px;font-weight:900;margin-left:6px
+}
+.mangaLibraryEmpty{padding:45px 15px;text-align:center;color:#898991}
+.mangaExtCard.ptFirst{border-color:#2a5238;background:#111815}
+.mangaExtCard.ptFirst:before{
+  content:"PT-BR PRIORIDADE";display:inline-flex;margin-bottom:9px;padding:3px 6px;border-radius:5px;
+  background:#1b3e28;color:#a3e6b6;font-size:9px;font-weight:900
+}
+.mangaExtActions{grid-template-columns:1fr!important}
+.mangaExtActions [data-manga-open]{display:none!important}
+
+@media(max-width:760px){
+ .mangaMediaGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .mangaMediaBody{padding:8px}.mangaMediaTitle{font-size:12px}
+ .mangaExploreHead{display:block}.mangaExploreHead input{width:100%;min-width:0;font-size:16px}
+ .mangaExploreHead button{width:100%;margin-top:8px}
+ #mangaSourceModal{padding:0;align-items:flex-end}
+ #mangaSourceModal .mangaSourcePicker{
+   width:100%;max-height:86vh;border-radius:22px 22px 0 0;border-left:0;border-right:0;border-bottom:0;
+   padding:17px 13px calc(16px + env(safe-area-inset-bottom))
+ }
+ .mangaPickerSource{align-items:flex-start;flex-wrap:wrap}
+ .mangaPickerSource button{width:100%}
+ body.mangaSourceOpen{overflow:hidden!important}
+ body.mangaSourceOpen .mobileBottomNav{display:none!important}
+}
+
+
+/* =========================================================
+   ResenhaFlix v14 — leitor nativo de mangá
+   ========================================================= */
+.mangaNativeResultGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px}
+.mangaNativeResultCard{border:1px solid #2b2b31;background:#121215;border-radius:14px;overflow:hidden;min-width:0}
+.mangaNativeResultCover{aspect-ratio:2/3;background:#222 center/cover no-repeat;position:relative}
+.mangaNativeResultSource{position:absolute;left:7px;right:7px;bottom:7px;background:#000d;color:#b6efc4;border:1px solid #315d3c;border-radius:6px;padding:4px 6px;font-size:9px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mangaNativeResultBody{padding:9px}.mangaNativeResultTitle{font-size:12px;font-weight:900;line-height:1.3;min-height:31px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mangaNativeResultMeta{font-size:9px;color:#8b8b93;margin-top:5px}.mangaNativeResultCard button{width:100%;min-height:39px;margin-top:9px;border:0;border-radius:8px;background:#fff;color:#111;font-weight:900}
+.mangaSourceSearchStatus{padding:10px 12px;border:1px solid #2c2c32;background:#121215;border-radius:10px;color:#9b9ba3;font-size:11px;margin-bottom:13px}
+.mangaSourceSearchStatus.ok{border-color:#285036;color:#9fe1b2}.mangaSourceSearchStatus.warn{border-color:#594d24;color:#e1ca7a}
+.mangaNativeDetail{width:min(980px,96vw);max-height:92vh;overflow:auto;background:#101013;border:1px solid #2e2e34;border-radius:17px;position:relative}
+.mangaNativeDetail>.close{position:sticky;top:10px;float:right;margin:10px 10px -52px 0;z-index:5}
+.mangaNativeDetailHero{display:flex;gap:20px;padding:24px;border-bottom:1px solid #28282e;background:linear-gradient(135deg,#18181c,#101013)}
+.mangaNativeDetailCover{width:170px;aspect-ratio:2/3;flex:none;border-radius:12px;background:#242429 center/cover no-repeat;box-shadow:0 15px 40px #000}
+.mangaNativeDetailInfo{min-width:0;padding-top:8px}.mangaNativeDetailSource{font-size:10px;color:#95d5a7;text-transform:uppercase;letter-spacing:.8px;font-weight:900}
+.mangaNativeDetailInfo h2{font-size:30px;line-height:1.05;margin:7px 0 10px}.mangaNativeDetailInfo p{font-size:12px;color:#9f9fa7;line-height:1.55;max-width:650px}
+.mangaNativeDetailActions{display:flex;gap:8px;margin-top:15px}
+.mangaChapterToolbar{display:flex;gap:8px;padding:14px 16px;border-bottom:1px solid #25252b}
+.mangaChapterToolbar input{min-width:0;flex:1;min-height:42px;border:1px solid #33333a;background:#151518;color:#fff;border-radius:10px;padding:9px 12px;outline:none}
+.mangaChapterToolbar button{min-height:42px;border:1px solid #36363c;background:#222226;color:#fff;border-radius:10px;padding:8px 11px}
+.mangaChapterList{padding:0 16px 22px}.mangaChapterItem{display:flex;align-items:center;gap:10px;width:100%;border:0;border-bottom:1px solid #242429;background:transparent;color:#fff;text-align:left;padding:13px 4px}
+.mangaChapterItem:hover{background:#ffffff07}.mangaChapterText{min-width:0;flex:1}.mangaChapterName{font-weight:850;font-size:13px}.mangaChapterMeta{font-size:10px;color:#7f7f87;margin-top:4px}
+.mangaChapterProgress{width:72px;text-align:right;font-size:10px;color:#98d7a9}.mangaChapterItem.read .mangaChapterName{color:#8b8b92}
+.mangaBridgePill{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;border:1px solid #285037;background:#102016;color:#9fe2b4;font-size:10px;font-weight:900}
+.mangaBridgePill.off{border-color:#5b4d26;background:#201b10;color:#dcc779}
+
+.nativeMangaReader{position:fixed;inset:0;background:#080809;display:flex;flex-direction:column;z-index:300;overflow:hidden}
+.nativeReaderTop{height:58px;flex:none;display:flex;align-items:center;gap:10px;padding:7px 10px;border-bottom:1px solid #26262b;background:#0d0d10e8;backdrop-filter:blur(12px);z-index:8;transition:transform .22s}
+.nativeReaderTop.hidden{transform:translateY(-105%)}
+.nativeReaderIcon{width:42px;height:42px;border:1px solid #33333a;background:#1d1d21;color:#fff;border-radius:11px;font-size:22px}
+.nativeReaderHeading{min-width:0;flex:1}.nativeReaderTitle{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nativeReaderChapter{font-size:10px;color:#85858d;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nativeReaderProgress{height:3px;flex:none;background:#19191c;z-index:9}.nativeReaderProgress i{display:block;height:100%;width:0;background:#fff;transition:width .12s}
+.nativeReaderCanvas{position:relative;flex:1;min-height:0;overflow:auto;background:#050506;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.nativeReaderPages{min-height:100%;display:flex;align-items:center}
+.nativeReaderCanvas.vertical .nativeReaderPages{display:flex;flex-direction:column;justify-content:flex-start}
+.nativeReaderCanvas.vertical .mangaPageImg{display:block;max-width:100%;height:auto;margin:0 auto}
+.nativeReaderCanvas.paged-ltr,.nativeReaderCanvas.paged-rtl{overflow:hidden}
+.nativeReaderCanvas.paged-ltr .nativeReaderPages,.nativeReaderCanvas.paged-rtl .nativeReaderPages{width:100%;height:100%;justify-content:center}
+.nativeReaderCanvas.paged-ltr .mangaPageImg,.nativeReaderCanvas.paged-rtl .mangaPageImg{display:none;max-width:100%;max-height:100%;object-fit:contain}
+.nativeReaderCanvas.paged-ltr .mangaPageImg.active,.nativeReaderCanvas.paged-rtl .mangaPageImg.active{display:block}
+.nativeReaderLoading{position:absolute;z-index:5;inset:0;display:grid;place-items:center;color:#aaa;background:#080809}.nativeReaderLoading.hidden{display:none}
+.nativeReaderHud{position:absolute;z-index:9;left:50%;bottom:68px;transform:translateX(-50%);display:none;align-items:center;gap:8px;background:#111d;border:1px solid #33333a;border-radius:999px;padding:5px 7px;backdrop-filter:blur(10px)}
+.nativeReaderHud.show{display:flex}.nativeReaderHud button{width:38px;height:38px;border:0;border-radius:50%;background:#27272c;color:#fff;font-size:20px}.nativeReaderHud span{font-size:11px;min-width:66px;text-align:center}
+.nativeReaderBottom{height:58px;flex:none;display:grid;grid-template-columns:120px 1fr 120px;gap:7px;padding:7px 9px;border-top:1px solid #26262b;background:#0d0d10;z-index:8;transition:transform .22s}
+.nativeReaderBottom.hidden{transform:translateY(105%)}
+.nativeReaderBottom button,.nativeReaderBottom select{min-width:0;border:1px solid #34343a;background:#1e1e22;color:#fff;border-radius:10px;padding:7px 9px;font-weight:800;font-size:11px}
+.nativeReaderSettings{position:absolute;z-index:20;right:10px;top:66px;width:min(340px,calc(100% - 20px));background:#151518;border:1px solid #37373e;border-radius:14px;padding:12px;box-shadow:0 20px 70px #000;display:none}
+.nativeReaderSettings.open{display:block}.nativeReaderSettingsHead{display:flex;align-items:center;margin-bottom:10px}.nativeReaderSettingsHead b{flex:1}.nativeReaderSettingsHead button{width:36px;height:36px;border:0;border-radius:9px;background:#29292e;color:#fff}
+.nativeReaderSettings label{display:block;font-size:11px;color:#9d9da5;margin:11px 0}.nativeReaderSettings select,.nativeReaderSettings input[type=range]{display:block;width:100%;margin-top:6px}
+.nativeReaderSettings select{min-height:40px;background:#222226;color:#fff;border:1px solid #38383e;border-radius:9px;padding:7px}
+.nativeReaderSecondary{width:100%;min-height:42px;border:1px solid #39393f;background:#222226;color:#fff;border-radius:9px;font-weight:800}
+.mangaPageError{min-height:180px;width:min(100%,780px);display:grid;place-items:center;text-align:center;color:#a5a5ad;background:#151518;border:1px solid #303037;padding:20px}
+.mangaPageImg.fit-width{width:min(100%,980px)!important}.mangaPageImg.fit-contain{max-width:100%!important;max-height:100%!important}.mangaPageImg.fit-original{width:auto!important;max-width:none!important}
+.nativeReaderTapZone{position:absolute;z-index:6;top:0;bottom:0;width:34%;display:none}.nativeReaderCanvas.paged-ltr .nativeReaderTapZone,.nativeReaderCanvas.paged-rtl .nativeReaderTapZone{display:block}
+#readerTapLeft{left:0}#readerTapRight{right:0}
+
+@media(max-width:760px){
+ #mangaDetailModal{padding:0;align-items:stretch}.mangaNativeDetail{width:100%;height:100%;max-height:none;border:0;border-radius:0;padding-bottom:env(safe-area-inset-bottom)}
+ .mangaNativeDetailHero{padding:calc(env(safe-area-inset-top) + 58px) 14px 17px;gap:13px}.mangaNativeDetailCover{width:115px}.mangaNativeDetailInfo h2{font-size:23px}.mangaNativeDetailInfo p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+ .mangaNativeDetailActions{display:grid;grid-template-columns:1fr 1fr}.mangaChapterToolbar{position:sticky;top:0;z-index:4;background:#101013;padding:10px 12px}.mangaChapterList{padding:0 12px calc(28px + env(safe-area-inset-bottom))}
+ body.mangaDetailOpen{overflow:hidden!important}body.mangaDetailOpen .mobileBottomNav{display:none!important}
+ .nativeReaderTop{padding-top:calc(7px + env(safe-area-inset-top));height:calc(58px + env(safe-area-inset-top))}
+ .nativeReaderBottom{padding-bottom:calc(7px + env(safe-area-inset-bottom));height:calc(58px + env(safe-area-inset-bottom));grid-template-columns:84px 1fr 84px}
+ .nativeReaderBottom button{font-size:10px;padding:5px}.nativeReaderBottom select{font-size:10px}
+ .nativeReaderHud{bottom:calc(68px + env(safe-area-inset-bottom))}
+ .nativeReaderSettings{top:calc(66px + env(safe-area-inset-top))}
+ .mangaNativeResultGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+}
+
 </style>
 </head>
 <body>
@@ -847,6 +1059,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   <button data-page="movies">Filmes</button>
   <button data-page="series">Séries</button>
   <button data-page="anime">Animes</button>
+  <button data-page="manga">Mangás</button>
   <button data-page="list">Minha lista</button>
  </nav>
  <div class="right">
@@ -867,7 +1080,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 <section class="hero" id="hero">
  <div class="heroContent">
   <div class="tag">SUA BIBLIOTECA FAMILIAR</div>
-  <h1 id="heroTitle">CasaFlix</h1>
+  <h1 id="heroTitle">ResenhaFlix</h1>
   <div class="heroMeta" id="heroMeta"></div>
   <p class="heroDesc" id="heroDesc">Carregando filmes e séries...</p>
   <div class="actions"><button class="btn primary" id="heroWatch">▶ Assistir</button><button class="btn secondary" id="heroDetails">ⓘ Detalhes</button></div>
@@ -932,7 +1145,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
    <aside class="playerSide">
     <div class="sourceHead">
      <h3>Escolha uma fonte</h3>
-     <p>Escolha uma fonte. Streams diretos podem tocar no CasaFlix ou ser enviados para outro player.</p>
+     <p>Escolha uma fonte. Streams diretos podem tocar no ResenhaFlix ou ser enviados para outro player.</p>
      <div class="playerUtilities">
       <button type="button" id="otherPlayerBtn">↗ Outro player</button>
       <button type="button" id="aspectBtn">▭ Proporção: Auto 16:9</button>
@@ -949,6 +1162,105 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
  </div>
 </div>
 
+<div class="modal" id="mangaReaderModal">
+ <div class="nativeMangaReader">
+  <div class="nativeReaderTop" id="nativeReaderTop">
+   <button type="button" class="nativeReaderIcon" id="closeMangaReader" aria-label="Voltar">‹</button>
+   <div class="nativeReaderHeading">
+    <div class="nativeReaderTitle" id="mangaReaderTitle">Mangá</div>
+    <div class="nativeReaderChapter" id="mangaReaderChapterTitle">Capítulo</div>
+   </div>
+   <button type="button" class="nativeReaderIcon" id="mangaReaderSettingsBtn" aria-label="Configurações">⚙</button>
+  </div>
+
+  <div class="nativeReaderProgress"><i id="mangaReaderProgressBar"></i></div>
+
+  <div class="nativeReaderCanvas vertical" id="mangaReaderCanvas">
+   <div class="nativeReaderLoading" id="mangaReaderLoading">Carregando páginas…</div>
+   <div class="nativeReaderPages" id="mangaReaderPages"></div>
+  </div>
+
+  <div class="nativeReaderHud" id="mangaReaderHud">
+   <button type="button" id="mangaPrevPage">‹</button>
+   <span id="mangaPageCounter">0 / 0</span>
+   <button type="button" id="mangaNextPage">›</button>
+  </div>
+
+  <div class="nativeReaderBottom" id="nativeReaderBottom">
+   <button type="button" id="mangaPrevChapter">‹ Capítulo</button>
+   <select id="mangaChapterSelect" title="Capítulo"></select>
+   <button type="button" id="mangaNextChapter">Capítulo ›</button>
+  </div>
+
+  <div class="nativeReaderSettings" id="nativeReaderSettings">
+   <div class="nativeReaderSettingsHead"><b>Leitor</b><button type="button" id="closeMangaReaderSettings">×</button></div>
+   <label>Modo de leitura
+    <select id="mangaReaderMode">
+     <option value="vertical">Vertical / Webtoon</option>
+     <option value="paged-ltr">Página — esquerda → direita</option>
+     <option value="paged-rtl">Página — direita → esquerda</option>
+    </select>
+   </label>
+   <label>Ajuste da imagem
+    <select id="mangaReaderFit">
+     <option value="width">Ajustar à largura</option>
+     <option value="contain">Página inteira</option>
+     <option value="original">Tamanho original</option>
+    </select>
+   </label>
+   <label>Espaço entre páginas
+    <select id="mangaReaderGap">
+     <option value="0">Sem espaço</option>
+     <option value="8">8 px</option>
+     <option value="16">16 px</option>
+    </select>
+   </label>
+   <label>Brilho <span id="mangaBrightnessLabel">100%</span>
+    <input type="range" id="mangaReaderBrightness" min="35" max="120" value="100">
+   </label>
+   <button type="button" class="nativeReaderSecondary" id="mangaReaderRestart">↺ Voltar ao início do capítulo</button>
+  </div>
+ </div>
+</div>
+
+<div class="modal" id="mangaDetailModal">
+ <div class="mangaNativeDetail">
+  <button type="button" class="close" id="closeMangaDetail">×</button>
+  <div class="mangaNativeDetailHero" id="mangaNativeDetailHero">
+   <div class="mangaNativeDetailCover" id="mangaNativeDetailCover"></div>
+   <div class="mangaNativeDetailInfo">
+    <div class="mangaNativeDetailSource" id="mangaNativeDetailSource">Fonte</div>
+    <h2 id="mangaNativeDetailTitle">Mangá</h2>
+    <p id="mangaNativeDetailDesc"></p>
+    <div class="mangaNativeDetailActions">
+     <button type="button" class="btn primary" id="mangaContinueRead">▶ Começar a ler</button>
+     <button type="button" class="btn secondary" id="mangaSaveNative">＋ Biblioteca</button>
+    </div>
+   </div>
+  </div>
+  <div class="mangaChapterToolbar">
+   <input id="mangaChapterFilter" placeholder="Buscar capítulo…" autocomplete="off">
+   <button type="button" id="mangaChapterOrder">↓ Mais novos</button>
+  </div>
+  <div class="mangaChapterList" id="mangaChapterList"></div>
+ </div>
+</div>
+
+<div class="modal" id="mangaSourceModal">
+ <div class="mangaSourcePicker">
+  <div class="mangaSourcePickerTop">
+   <div>
+    <div class="mangaSourcePickerEyebrow">Ler mangá</div>
+    <h3 id="mangaSourcePickerTitle">Escolha uma fonte</h3>
+   </div>
+   <button type="button" class="close" id="closeMangaSourcePicker">×</button>
+  </div>
+  <div class="mangaSourcePickerMedia" id="mangaSourcePickerMedia"></div>
+  <div class="mangaSourcePickerNote">Fontes em Português aparecem primeiro. O ResenhaFlix tenta abrir a busca dessa obra na fonte instalada.</div>
+  <div class="mangaSourcePickerList" id="mangaSourcePickerList"></div>
+ </div>
+</div>
+
 <div class="modal" id="settingsModal">
  <div class="settings">
   <button class="close" id="closeSettings">×</button>
@@ -956,13 +1268,16 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   <div class="field"><label>Addons de reprodução (um manifest por linha)</label><textarea id="frostUrl" style="display:block;width:100%;min-height:92px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
   <div class="field"><label>Metadados principais</label><input id="metaUrl"></div>
   <div class="field"><label>Fontes de catálogo e busca (um manifest por linha)</label><textarea id="catalogUrls" style="display:block;width:100%;min-height:105px;margin-top:7px;padding:11px;background:#08090a;border:1px solid #33363b;border-radius:7px;color:#fff;outline:0;resize:vertical"></textarea></div>
+  <div class="field"><label>Repositório de extensões de mangá</label><input id="mangaRepoUrl" value="https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"></div>
+  <div class="field"><label>Manga Bridge — URL do backend</label><input id="mangaBridgeUrl" placeholder="https://seu-manga-bridge.onrender.com"></div>
+  <p class="hint" style="margin-top:-7px">O leitor nativo tenta acesso direto quando a fonte permite CORS. Para fontes comuns que bloqueiam o navegador, configure o Manga Bridge incluído no ZIP. Ele busca catálogo, capítulos e páginas para o ResenhaFlix sem abrir o site original.</p>
   <div class="field"><label>Idioma da interface / catálogo</label><select id="lang"><option value="pt-BR">Português (Brasil)</option><option value="pt">Português</option><option value="en">English</option></select></div>
   <div class="field"><label>Addon de legendas</label><input id="subtitleAddon"></div>
   <div class="field"><label>Áudio preferido no player</label><select id="audioPref"><option value="auto">Automático</option><option value="jpn">Japonês</option><option value="por">Português</option><option value="eng">Inglês</option></select></div>
   <div class="field"><label>Legenda preferida</label><select id="subtitlePref"><option value="pob">Português (Brasil)</option><option value="por">Português</option><option value="eng">Inglês</option><option value="off">Desativada</option><option value="auto">Automática</option></select></div>
   <div class="actions">
    <button class="btn primary" id="saveSettings">Salvar</button>
-   <button class="btn secondary" id="installAppBtn" style="display:none">⬇ Instalar CasaFlix</button>
+   <button class="btn secondary" id="installAppBtn" style="display:none">⬇ Instalar ResenhaFlix</button>
    <button class="btn secondary" id="resetSettings">Restaurar padrão</button>
   </div>
   <p class="hint">O player agora aceita múltiplas faixas de áudio HLS, legendas embutidas e legendas externas. O OpenSubtitles v3 oficial fica configurado por padrão. O WatchHub oficial também é adicionado como opção de “onde assistir” quando houver link de provedor. O site não contorna DRM, paywalls ou restrições de acesso.</p>
@@ -974,7 +1289,8 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
  <button type="button" data-mobile-page="movies"><span>▣</span><small>Filmes</small></button>
  <button type="button" data-mobile-page="series"><span>▤</span><small>Séries</small></button>
  <button type="button" data-mobile-page="anime"><span>✦</span><small>Animes</small></button>
- <button type="button" data-mobile-page="list"><span>＋</span><small>Minha lista</small></button>
+ <button type="button" data-mobile-page="manga"><span>▥</span><small>Mangás</small></button>
+ <button type="button" data-mobile-page="list"><span>＋</span><small>Lista</small></button>
 </nav>
 
 <div class="toast" id="toast"></div>
@@ -993,6 +1309,8 @@ const CFG_DEFAULT={
  subtitleAddon:"https://opensubtitles-v3.strem.io/manifest.json",
  audioPref:"jpn",
  subtitlePref:"pob",
+ mangaRepo:"https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json",
+ mangaBridge:"",
  lang:"pt-BR"
 };
 let savedStreams=localStorage.getItem("cf2_frost")||CFG_DEFAULT.frost;
@@ -1007,9 +1325,11 @@ const cfg={
  subtitleAddon:localStorage.getItem("cf5_subtitle_addon")||CFG_DEFAULT.subtitleAddon,
  audioPref:localStorage.getItem("cf5_audio_pref")||CFG_DEFAULT.audioPref,
  subtitlePref:localStorage.getItem("cf5_subtitle_pref")||CFG_DEFAULT.subtitlePref,
+ mangaRepo:localStorage.getItem("cf12_manga_repo")||CFG_DEFAULT.mangaRepo,
+ mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -1022,6 +1342,14 @@ async function getJSON(url){
  const r=await fetch(url,{headers:{Accept:"application/json"}});
  if(!r.ok)throw Error("HTTP "+r.status+" — "+url);
  return r.json();
+}
+async function getJSONTimeout(url,timeoutMs=6500){
+ const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),timeoutMs);
+ try{
+  const r=await fetch(url,{headers:{Accept:"application/json"},signal:ctl.signal,cache:"no-store"});
+  if(!r.ok)throw Error("HTTP "+r.status+" — "+url);
+  return await r.json();
+ }finally{clearTimeout(timer)}
 }
 function metaURL(type,id){return api(cfg.meta,`meta/${type}/${encodeURIComponent(id)}.json`)}
 function normalizeExtra(params){
@@ -1423,7 +1751,7 @@ async function home(){
  }catch(e){$("#main").innerHTML='<div class="loading">Não foi possível carregar o catálogo.</div>'}
 }
 function setHero(m){
- S.hero=m;$("#heroTitle").textContent=m.name||"CasaFlix";
+ S.hero=m;$("#heroTitle").textContent=m.name||"ResenhaFlix";
  $("#heroMeta").textContent=[m.year,m.imdbRating?`★ ${m.imdbRating}`:"",m.runtime].filter(Boolean).join(" • ");
  $("#heroDesc").textContent=m.description||"Escolha um título para assistir.";
  $("#hero").style.backgroundImage=`url('${m.background||m.poster||""}')`;
@@ -1546,23 +1874,76 @@ function browserDownload(stream){
  a.target="_blank";a.rel="noopener noreferrer";document.body.appendChild(a);a.click();a.remove();
  toast("O navegador recebeu o link de download. A fonte ainda pode decidir abrir o vídeo em vez de baixar.");
 }
-async function resolveAddonName(manifest,index){
- try{
-  const d=await getJSON(manifest);
-  return d.name||`Fonte ${index+1}`;
- }catch{
-  if(manifest.includes("froststream"))return "FrostStream";
-  return `Fonte ${index+1}`;
+function quickAddonName(manifest,index){
+ if(S.addonNameCache.has(manifest))return S.addonNameCache.get(manifest);
+ const low=String(manifest).toLowerCase();let name="";
+ if(low.includes("froststream"))name="FrostStream";
+ else if(low.includes("watchhub"))name="WatchHub";
+ else{
+  try{name=new URL(manifest).hostname.replace(/^www\./,"").split(".")[0]||`Fonte ${index+1}`}catch{name=`Fonte ${index+1}`}
+  name=name.charAt(0).toUpperCase()+name.slice(1);
  }
+ S.addonNameCache.set(manifest,name);
+ getManifest(manifest).then(m=>{if(m?.name)S.addonNameCache.set(manifest,m.name)}).catch(()=>{});
+ return name;
 }
-async function loadStreamsFromAddons(type,id){
- const manifests=configuredStreamManifests();
- const results=await Promise.allSettled(manifests.map(async (manifest,index)=>{
-  const [name,data]=await Promise.all([resolveAddonName(manifest,index),getJSON(streamURLFor(manifest,type,id))]);
-  const officialLegal=/watchhub\.strem\.io/i.test(manifest);
-  return (data.streams||[]).filter(x=>x.url||x.externalUrl).map((s,i)=>{const x={...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s),_external:!s.url&&!!s.externalUrl,_officialLegal:officialLegal};x._provider=detectProvider(x);return x});
- }));
- return results.flatMap(r=>r.status==="fulfilled"?r.value:[]).sort((a,b)=>(b._external?0:1)-(a._external?0:1)||qualityScore(b._quality)-qualityScore(a._quality));
+async function resolveAddonName(manifest,index){return quickAddonName(manifest,index)}
+function streamCacheKey(manifest,type,id){return `${manifest}|${type}|${id}`}
+function getCachedStreamBatch(manifest,type,id){
+ const x=S.streamCache.get(streamCacheKey(manifest,type,id));
+ if(!x)return null;
+ if(Date.now()-x.at>120000){S.streamCache.delete(streamCacheKey(manifest,type,id));return null}
+ return x.streams;
+}
+function saveStreamBatch(manifest,type,id,streams){S.streamCache.set(streamCacheKey(manifest,type,id),{at:Date.now(),streams})}
+function preferredManifestForEpisode(){
+ const pref=typeof preferredSeriesSource==="function"?preferredSeriesSource():null;
+ return pref?.manifest||S.resumeEntry?.stream?.manifest||"";
+}
+function sortStreamManifests(manifests){
+ const pref=preferredManifestForEpisode();
+ return manifests.slice().sort((a,b)=>{
+  const sa=(a===pref?100:0)+(a.includes("froststream")?50:0)-(a.includes("watchhub")?20:0);
+  const sb=(b===pref?100:0)+(b.includes("froststream")?50:0)-(b.includes("watchhub")?20:0);
+  return sb-sa;
+ });
+}
+async function fetchStreamBatch(manifest,type,id,index,{fresh=false}={}){
+ if(!fresh){const cached=getCachedStreamBatch(manifest,type,id);if(cached)return cached}
+ const name=quickAddonName(manifest,index);
+ const data=await getJSONTimeout(streamURLFor(manifest,type,id),6500);
+ const officialLegal=/watchhub\.strem\.io/i.test(manifest);
+ const streams=(data.streams||[]).filter(x=>x.url||x.externalUrl).map((s,i)=>{
+  const x={...s,_addon:name,_manifest:manifest,_idx:i,_quality:getQuality(s),_external:!s.url&&!!s.externalUrl,_officialLegal:officialLegal};
+  x._provider=detectProvider(x);return x;
+ });
+ saveStreamBatch(manifest,type,id,streams);return streams;
+}
+function mergeStreamBatches(current,batch){
+ const map=new Map();
+ for(const s of [...current,...batch]){
+  const key=[s._manifest,s._idx,s.url||s.externalUrl,s.name||s.title].join("|");
+  if(!map.has(key))map.set(key,s);
+ }
+ return [...map.values()].sort((a,b)=>(b._external?0:1)-(a._external?0:1)||sourceReliabilityScore(b,S.resumeEntry)-sourceReliabilityScore(a,S.resumeEntry));
+}
+async function loadStreamsFromAddons(type,id,onBatch=null){
+ const manifests=sortStreamManifests(configuredStreamManifests());
+ const jobs=manifests.map((manifest,index)=>fetchStreamBatch(manifest,type,id,index)
+  .then(batch=>{if(onBatch)onBatch(batch,manifest);return batch})
+  .catch(e=>{console.warn("Addon lento/indisponível",manifest,e);return []}));
+ const results=await Promise.all(jobs);
+ return results.flat();
+}
+function prefetchStreams(type,id){
+ if(!type||!id)return;
+ sortStreamManifests(configuredStreamManifests()).forEach((manifest,index)=>{
+  if(getCachedStreamBatch(manifest,type,id))return;
+  fetchStreamBatch(manifest,type,id,index).catch(()=>{});
+ });
+}
+function prefetchNextEpisodeSources(){
+ if(S.playType==="series"&&S.nextEpisode?.id)prefetchStreams("series",S.nextEpisode.id);
 }
 function renderSourceUI(){
  const streams=S.streams||[];
@@ -1581,7 +1962,7 @@ function renderSourceUI(){
     <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div>${s._officialLegal?'<span class="legalMark">OFICIAL</span>':`<span class="qualityPill">${esc(s._quality)}</span>`}<span class="sourceHealth">${hs==="testing"?"TESTANDO":hs==="working"?"FUNCIONA":hs==="failed"?"FALHOU":"—"}</span></div>
     <div class="providerPill">${esc(detectProvider(s))}</div>
     <div class="sourceLines">${esc(lines.join("\n")||s._addon)}</div>
-    <div class="sourceOrigin">${esc(s._external?"Abre no provedor oficial":"Reprodução no CasaFlix")}</div>
+    <div class="sourceOrigin">${esc(s._external?"Abre no provedor oficial":"Reprodução no ResenhaFlix")}${getCachedStreamBatch(s._manifest,S.playType,S.playId)?'<span class="fastSourceBadge">cache</span>':""}</div>
     <div class="sourceActions">
       <button class="playSource" data-play>${s._external?"↗ Abrir provedor":"▶ Assistir"}</button>
       <button class="downloadSource" data-download ${(!s._external&&isDirectDownloadable(s.url))?"":"disabled"}>⇩ Download</button>
@@ -1646,6 +2027,7 @@ async function attemptSource(stream,autoplay=true,resumeEntry=null){
  if(result.ok){
   setHealth(stream,"working");
   rememberSourceResult(stream,true);
+  prefetchNextEpisodeSources();
   if(S.playType==="series")toast(`Fonte funcionando: ${detectProvider(stream)} • ${stream._quality}.`);
   return true;
  }
@@ -1901,7 +2283,7 @@ function openOtherPlayerMenu(stream=S.selectedStream){
  menu.querySelector("[data-other-share]").onclick=async()=>{
   try{
    if(navigator.share){
-    await navigator.share({title:S.streamTitle||"CasaFlix",text:"Abrir esta fonte em outro player",url:stream.url});
+    await navigator.share({title:S.streamTitle||"ResenhaFlix",text:"Abrir esta fonte em outro player",url:stream.url});
     closePlayerMenu();
    }else{
     const ok=await copyTextSafe(stream.url);
@@ -1992,7 +2374,7 @@ function shouldOfferSkipIntro(){
 function introDiscoveryEnd(){
  const v=$("#video"),dur=Number(v.duration||0);
  // Primeira descoberta: cobre cold opens longos e aberturas próximas do meio.
- // Depois que o CasaFlix aprende o horário, a janela volta a ser curta e precisa.
+ // Depois que o ResenhaFlix aprende o horário, a janela volta a ser curta e precisa.
  if(dur>0)return Math.min(dur*.60,30*60);
  return 30*60;
 }
@@ -2091,15 +2473,27 @@ async function playStream(type,id,title,meta,resumeEntry=null){
  resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
  try{
-  const streams=await loadStreamsFromAddons(type,id);S.streams=streams;
-  if(!streams.length){$("#sources").innerHTML="<div class='sourceEmpty'>Nenhuma fonte foi retornada pelos addons configurados.</div>";return}
-  renderSourceUI();
-  const playable=rankedPlayableStreams(streams,resumeEntry);
-  if(playable.length){
-   if(resumeEntry?.stream?.provider)toast(`Procurando novamente ${resumeEntry.stream.provider} para este episódio...`);
-   const found=await autoChooseWorkingSource(resumeEntry,!!resumeEntry);
+  const loadToken=++S.streamLoadToken;let autoStarted=false,autoPromise=null,receivedAny=false;
+  const allPromise=loadStreamsFromAddons(type,id,(batch)=>{
+   if(loadToken!==S.streamLoadToken||!batch?.length)return;
+   receivedAny=true;S.streams=mergeStreamBatches(S.streams,batch);renderSourceUI();
+   if(!autoStarted&&rankedPlayableStreams(S.streams,resumeEntry).length){
+    autoStarted=true;
+    if(resumeEntry?.stream?.provider)toast(`Procurando novamente ${resumeEntry.stream.provider}…`);
+    autoPromise=autoChooseWorkingSource(resumeEntry,!!resumeEntry).then(async found=>{if(found)await fetchExternalSubtitles(type,id,found);return found});
+   }
+  });
+  const streams=await allPromise;if(loadToken!==S.streamLoadToken)return;
+  S.streams=mergeStreamBatches(S.streams,streams);if(S.streams.length)renderSourceUI();
+  let found=autoPromise?await autoPromise:null;
+  // Se o primeiro addon chegou rápido mas todas as fontes dele falharam,
+  // tenta novamente após os addons mais lentos terminarem de chegar.
+  if(!found&&rankedPlayableStreams(S.streams,resumeEntry).length){
+   found=await autoChooseWorkingSource(resumeEntry,!!resumeEntry);
    if(found)await fetchExternalSubtitles(type,id,found);
-  } else $("#sources").insertAdjacentHTML("afterbegin","<div class='sourceEmpty'>As opções disponíveis abrem provedores externos; escolha uma delas na lista.</div>");
+  }
+  if(!receivedAny&&!S.streams.length){$("#sources").innerHTML="<div class='sourceEmpty'>Nenhuma fonte foi retornada pelos addons configurados.</div>";return}
+  if(!rankedPlayableStreams(S.streams,resumeEntry).length&&S.streams.length)$("#sources").insertAdjacentHTML("afterbegin","<div class='sourceEmpty'>As opções disponíveis abrem provedores externos; escolha uma delas na lista.</div>");
  }catch(e){console.error(e);$("#sources").innerHTML="<div class='sourceEmpty'>Falha ao consultar as fontes. Verifique CORS, o manifesto e a disponibilidade do addon.</div>"}
 }
 function resetVideo(){
@@ -2198,10 +2592,372 @@ function addHistory(m,progress){
  persistPlaybackProgress(true);
 }
 
+
+
+
+const ANILIST_API="https://graphql.anilist.co";
+function mangaInstalled(){try{return JSON.parse(localStorage.getItem("cf12_manga_installed")||"[]")}catch{return[]}}
+function saveMangaInstalled(a){localStorage.setItem("cf12_manga_installed",JSON.stringify(a))}
+function mangaLibrary(){try{return JSON.parse(localStorage.getItem("rf13_manga_library")||"[]")}catch{return[]}}
+function saveMangaLibrary(a){localStorage.setItem("rf13_manga_library",JSON.stringify(a))}
+function mangaProgress(){try{return JSON.parse(localStorage.getItem("rf14_manga_progress")||"{}")}catch{return{}}}
+function saveMangaProgressMap(x){localStorage.setItem("rf14_manga_progress",JSON.stringify(x))}
+function mangaReaderPrefs(){
+ try{return JSON.parse(localStorage.getItem("rf14_reader_prefs")||'{"mode":"vertical","fit":"width","gap":"0","brightness":100}')}catch{return{mode:"vertical",fit:"width",gap:"0",brightness:100}}
+}
+function saveMangaReaderPrefs(p){localStorage.setItem("rf14_reader_prefs",JSON.stringify(p))}
+function isMangaInstalled(pkg){return mangaInstalled().some(x=>x.pkg===pkg)}
+function isPortugueseLang(lang){const l=String(lang||"").toLowerCase();return l==="pt"||l==="pt-br"||l==="pt_br"||l==="por"||l==="pob"||l.startsWith("pt-")}
+function mangaLangScore(lang){const l=String(lang||"").toLowerCase();if(l==="pt-br"||l==="pt_br"||l==="pob")return 100;if(l==="pt"||l==="por"||l.startsWith("pt-"))return 90;if(l==="all")return 60;if(l==="en")return 30;return 10}
+function sortMangaSourcesPtFirst(sources){return sources.slice().sort((a,b)=>mangaLangScore(b.lang)-mangaLangScore(a.lang)||(a.name||"").localeCompare(b.name||""))}
+function extensionPortugueseScore(e){return Math.max(0,...(e.sources||[]).map(s=>mangaLangScore(s.lang)))}
+function normalizeMangaRepo(data){
+ let raw=[];if(Array.isArray(data))raw=data;else if(Array.isArray(data?.extensionList?.extensions))raw=data.extensionList.extensions;
+ return raw.map((e,i)=>{
+  const sources=sortMangaSourcesPtFirst((e.sources||[]).map(s=>({id:String(s.id||""),name:s.name||e.name||"Fonte",lang:s.language||s.lang||e.lang||"all",homeUrl:s.homeUrl||s.baseUrl||""})).filter(s=>s.homeUrl));
+  return {name:e.name||`Extensão ${i+1}`,pkg:e.packageName||e.pkg||`repo-${i}`,version:e.versionName||e.version||"",lang:e.lang||sources[0]?.lang||"all",icon:e.resources?.iconUrl||"",apk:e.resources?.apkUrl||e.apk||"",warning:e.contentWarning||((Number(e.nsfw||0)>0)?"CONTENT_WARNING_NSFW":""),sources};
+ }).filter(x=>x.sources.length).sort((a,b)=>extensionPortugueseScore(b)-extensionPortugueseScore(a)||(a.name||"").localeCompare(b.name||""));
+}
+function mangaRepoFallbackUrl(url){try{const u=new URL(url);if(/index\.min\.json$/i.test(u.pathname))u.pathname=u.pathname.replace(/index\.min\.json$/i,"index.json");return u.toString()}catch{return"https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json"}}
+async function loadMangaRepo(force=false){
+ if(!force&&S.mangaRepoItems.length&&Date.now()-S.mangaRepoLoadedAt<1800000)return S.mangaRepoItems;
+ const status=$("#mangaRepoStatus");if(status){status.className="mangaRepoStatus";status.textContent="Atualizando o repositório…"}
+ try{
+  let data=await getJSONTimeout(cfg.mangaRepo||CFG_DEFAULT.mangaRepo,9000),items=normalizeMangaRepo(data),fallback=false;
+  if(items.length<10){data=await getJSONTimeout(mangaRepoFallbackUrl(cfg.mangaRepo||CFG_DEFAULT.mangaRepo),12000);items=normalizeMangaRepo(data);fallback=true}
+  items=items.filter(x=>!String(x.warning||"").includes("NSFW"));S.mangaRepoItems=items;S.mangaRepoLoadedAt=Date.now();
+  if(status){const pt=items.filter(e=>extensionPortugueseScore(e)>=90).length;status.className="mangaRepoStatus "+(fallback?"warn":"ok");status.textContent=`${items.length} extensões carregadas • ${pt} com Português priorizado.`}
+  return items;
+ }catch(e){console.error(e);if(status){status.className="mangaRepoStatus warn";status.textContent="Não foi possível carregar o repositório."}return S.mangaRepoItems}
+}
+function filteredMangaExtensions(){
+ const q=normText(S.mangaQuery),lang=S.mangaLang;
+ return S.mangaRepoItems.filter(e=>{
+  const text=normText([e.name,e.pkg,...e.sources.map(s=>`${s.name} ${s.homeUrl}`)].join(" "));
+  return (!q||text.includes(q))&&(lang==="all"||e.sources.some(s=>lang==="pt"?isPortugueseLang(s.lang):s.lang===lang));
+ }).sort((a,b)=>extensionPortugueseScore(b)-extensionPortugueseScore(a)||(a.name||"").localeCompare(b.name||""));
+}
+function mangaExtCard(e){
+ const installed=isMangaInstalled(e.pkg),pt=extensionPortugueseScore(e)>=90;
+ const langs=[...new Set(e.sources.map(s=>s.lang))].slice(0,5).join(" • "),names=e.sources.slice(0,4).map(s=>s.name).join(", ");
+ return `<article class="mangaExtCard ${pt?"ptFirst":""}" data-manga-pkg="${esc(e.pkg)}"><div class="mangaExtHead"><div class="mangaExtIcon" ${e.icon?`style="background-image:url('${esc(e.icon)}')"`:""}>${e.icon?"":esc((e.name||"?").slice(0,2).toUpperCase())}</div><div class="mangaExtInfo"><div class="mangaExtName">${esc(e.name)}${pt?'<span class="mangaPtBadge">PT</span>':""}</div><div class="mangaExtMeta">${esc(e.version||"")} • ${esc(langs||"all")}</div></div></div><div class="mangaExtSources">${esc(names||"Sem fontes web")}${e.sources.length>4?` +${e.sources.length-4}`:""}</div><div class="mangaExtActions"><button type="button" data-manga-install class="${installed?"installed":""}">${installed?"✓ Instalada":"＋ Instalar"}</button></div></article>`;
+}
+function toggleMangaExtension(pkg){
+ const e=S.mangaRepoItems.find(x=>x.pkg===pkg)||mangaInstalled().find(x=>x.pkg===pkg);if(!e)return;
+ let a=mangaInstalled(),i=a.findIndex(x=>x.pkg===pkg);
+ if(i>=0){a.splice(i,1);toast("Fonte removida.")}else{a.unshift(e);toast(extensionPortugueseScore(e)>=90?"Fonte em Português instalada.":"Fonte instalada.")}
+ saveMangaInstalled(a);renderMangaCurrentTab();
+}
+function mangaSourcesFromInstalled(){return sortMangaSourcesPtFirst(mangaInstalled().flatMap(e=>(e.sources||[]).map(s=>({...s,extension:e.name,pkg:e.pkg,icon:e.icon||""}))))}
+function portugueseInstalledSources(){return mangaSourcesFromInstalled().filter(s=>isPortugueseLang(s.lang))}
+function bindMangaExtensionCards(container){container.querySelectorAll("[data-manga-install]").forEach(b=>b.onclick=()=>toggleMangaExtension(b.closest("[data-manga-pkg]").dataset.mangaPkg))}
+function renderMangaExtensions(){
+ const items=filteredMangaExtensions(),shown=items.slice(0,120);
+ $("#mangaContent").innerHTML=`<div class="mangaToolbar"><input id="mangaExtSearch" value="${esc(S.mangaQuery)}" placeholder="Buscar extensão ou fonte…" autocomplete="off"><select id="mangaLangFilter"><option value="pt" ${S.mangaLang==="pt"?"selected":""}>🇧🇷 Português</option><option value="all" ${S.mangaLang==="all"?"selected":""}>Todos</option><option value="en" ${S.mangaLang==="en"?"selected":""}>English</option><option value="es" ${S.mangaLang==="es"?"selected":""}>Español</option></select><button type="button" id="refreshMangaRepo">↻ Atualizar</button></div><div class="mangaCount">${items.length} extensão(ões)</div><div class="mangaExtGrid">${shown.map(mangaExtCard).join("")||'<div class="mangaEmpty">Nenhuma extensão encontrada.</div>'}</div>`;
+ let t;$("#mangaExtSearch").oninput=e=>{clearTimeout(t);t=setTimeout(()=>{S.mangaQuery=e.target.value;renderMangaExtensions()},260)};
+ $("#mangaLangFilter").onchange=e=>{S.mangaLang=e.target.value;renderMangaExtensions()};$("#refreshMangaRepo").onclick=async()=>{await loadMangaRepo(true);renderMangaExtensions()};bindMangaExtensionCards($("#mangaContent"));
+}
+
+async function aniListManga(query="",page=1){
+ const gql=`query($page:Int,$search:String){Page(page:$page,perPage:24){pageInfo{hasNextPage}media(type:MANGA,search:$search,sort:${query?"SEARCH_MATCH":"TRENDING_DESC"}){id title{romaji english native}coverImage{large extraLarge}format status averageScore chapters volumes description(asHtml:false)countryOfOrigin genres}}}`;
+ const vars={page};if(query)vars.search=query;const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),9000);
+ try{const r=await fetch(ANILIST_API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({query:gql,variables:vars}),signal:ctl.signal});if(!r.ok)throw Error("AniList "+r.status);const d=await r.json();return d.data?.Page||{media:[],pageInfo:{hasNextPage:false}}}finally{clearTimeout(timer)}
+}
+function mangaDisplayTitle(m){return m?.title?.english||m?.title?.romaji||m?.title?.native||m?.title||"Mangá"}
+function mangaAltTitle(m){const main=mangaDisplayTitle(m);return [m?.title?.romaji,m?.title?.english,m?.title?.native].filter(Boolean).find(x=>x!==main)||""}
+function normalizeAniMedia(m){return {...m,_rfTitle:mangaDisplayTitle(m),_rfAlt:mangaAltTitle(m),_rfCover:m.coverImage?.extraLarge||m.coverImage?.large||""}}
+function mangaIsSaved(id){return mangaLibrary().some(x=>String(x.id||x.url)===String(id))}
+function toggleMangaLibrary(media){
+ const key=String(media.id||media.url),a=mangaLibrary(),i=a.findIndex(x=>String(x.id||x.url)===key);
+ if(i>=0){a.splice(i,1);toast("Mangá removido da biblioteca.")}else{a.unshift(media._nativeSource?media:normalizeAniMedia(media));toast("Mangá adicionado à biblioteca.")}
+ saveMangaLibrary(a);renderMangaCurrentTab();
+}
+function bridgeBase(){return String(cfg.mangaBridge||"").trim().replace(/\/+$/,"")}
+async function mangaBridgeRequest(path,payload,timeout=14000){
+ const base=bridgeBase();if(!base)throw Object.assign(Error("bridge-not-configured"),{code:"NO_BRIDGE"});
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),timeout);
+ try{
+  const r=await fetch(base+path,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload),signal:ctl.signal});
+  if(!r.ok)throw Error(`Bridge ${r.status}`);
+  return await r.json();
+ }finally{clearTimeout(timer)}
+}
+async function testMangaBridge(){
+ const base=bridgeBase();if(!base)return false;
+ try{const r=await fetch(base+"/api/health",{cache:"no-store"});return r.ok}catch{return false}
+}
+function sourcePayload(s){return {id:s.id||"",name:s.name||"Fonte",lang:s.lang||"all",homeUrl:s.homeUrl||"",extension:s.extension||""}}
+function absUrl(base,href){try{return new URL(href,base).toString()}catch{return href||""}}
+function parseDirectCards(doc,base,source){
+ const selectors=[".c-tabs-item__content",".page-item-detail",".row.c-tabs-item__content",".bs .bsx",".listupd .bs",".manga__item","article"];
+ const out=[],seen=new Set();
+ for(const sel of selectors){
+  for(const el of doc.querySelectorAll(sel)){
+   const a=el.querySelector("a[href]"),img=el.querySelector("img"),title=(el.querySelector("h3,h4,.post-title,.tab-summary,.tt")?.textContent||a?.getAttribute("title")||img?.getAttribute("alt")||"").trim();
+   const url=absUrl(base,a?.getAttribute("href")||"");if(!title||!url||seen.has(url))continue;
+   seen.add(url);out.push({title,url,thumbnail:absUrl(base,img?.getAttribute("data-src")||img?.getAttribute("data-lazy-src")||img?.getAttribute("src")||""),source:sourcePayload(source)});
+  }
+  if(out.length>=20)break;
+ }
+ return out.slice(0,20);
+}
+async function directSourceSearch(source,query,popular=false){
+ const base=String(source.homeUrl||"").replace(/\/+$/,"");
+ const q=encodeURIComponent(query||"");
+ const urls=popular?[base]:[`${base}/?s=${q}&post_type=wp-manga`,`${base}/?s=${q}`,`${base}/search?q=${q}`];
+ let last;
+ for(const url of urls){
+  try{
+   const r=await fetch(url,{headers:{Accept:"text/html"}});if(!r.ok)throw Error("HTTP "+r.status);
+   const text=await r.text(),doc=new DOMParser().parseFromString(text,"text/html"),items=parseDirectCards(doc,url,source);
+   if(items.length)return items;
+  }catch(e){last=e}
+ }
+ throw last||Error("direct-source-failed");
+}
+async function searchOneInstalledSource(source,query,popular=false){
+ try{
+  const data=await mangaBridgeRequest(popular?"/api/popular":"/api/search",{source:sourcePayload(source),query});
+  return (data.items||[]).map(x=>({...x,source:sourcePayload(source),_nativeSource:true}));
+ }catch(e){
+  if(e.code!=="NO_BRIDGE")console.warn("bridge source",source.name,e);
+  try{return (await directSourceSearch(source,query,popular)).map(x=>({...x,_nativeSource:true}))}catch{return[]}
+ }
+}
+async function searchInstalledSources(query="",popular=false){
+ const sources=mangaSourcesFromInstalled();
+ if(!sources.length)return [];
+ const prioritized=sortMangaSourcesPtFirst(sources).slice(0,8);
+ const jobs=prioritized.map(s=>searchOneInstalledSource(s,query,popular));
+ const settled=await Promise.allSettled(jobs),all=settled.flatMap(x=>x.status==="fulfilled"?x.value:[]);
+ const seen=new Set();return all.filter(x=>{const k=normText(x.title)+"|"+x.source?.homeUrl;if(seen.has(k))return false;seen.add(k);return true}).slice(0,80);
+}
+function nativeMangaCard(m){
+ const saved=mangaIsSaved(m.id||m.url),src=m.source||{},cover=m.thumbnail||m._rfCover||"",title=m.title||m._rfTitle||mangaDisplayTitle(m);
+ return `<article class="mangaNativeResultCard" data-native-url="${esc(m.url||"")}" data-native-id="${esc(String(m.id||""))}">
+  <div class="mangaNativeResultCover" style="background-image:url('${esc(cover)}')">${m.url?`<div class="mangaNativeResultSource">${esc(src.name||src.extension||"Fonte")} ${isPortugueseLang(src.lang)?"• PT":""}</div>`:""}</div>
+  <div class="mangaNativeResultBody"><div class="mangaNativeResultTitle">${esc(title)}</div><div class="mangaNativeResultMeta">${m.url?esc(src.lang||"all"):esc(m.format||"Catálogo")}</div><button type="button" data-native-open>${m.url?"▶ Abrir capítulos":"Escolher fonte"}</button></div>
+ </article>`;
+}
+function bindNativeMangaCards(container,items){
+ container.querySelectorAll(".mangaNativeResultCard").forEach(card=>{
+  const m=items.find(x=>(card.dataset.nativeUrl&&x.url===card.dataset.nativeUrl)||(!card.dataset.nativeUrl&&String(x.id||"")===card.dataset.nativeId));if(!m)return;
+  card.querySelector("[data-native-open]").onclick=()=>m.url?openNativeMangaDetails(m):openMangaSourcePicker(m);
+ });
+}
+async function loadMangaExplore(query=""){
+ const token=++S.mangaSearchToken,area=$("#mangaExploreResults");if(!area)return;
+ const sources=mangaSourcesFromInstalled();
+ if(sources.length){
+  area.innerHTML=`<div class="mangaSourceSearchStatus">Buscando ${query?`“${esc(query)}”`:"destaques"} nas suas fontes instaladas…</div>`;
+  const native=await searchInstalledSources(query,!query);if(token!==S.mangaSearchToken)return;
+  S.mangaNativeResults=native;
+  let catalog=[];
+  try{const page=await aniListManga(query,1);catalog=(page.media||[]).map(normalizeAniMedia)}catch{}
+  if(token!==S.mangaSearchToken)return;S.mangaCatalog=catalog;
+  area.innerHTML=`<div class="mangaSourceSearchStatus ${native.length?"ok":"warn"}">${native.length?`${native.length} resultado(s) encontrados diretamente nas fontes instaladas.`:`As fontes instaladas não retornaram resultados no navegador${bridgeBase()?" através do Bridge.":". Configure o Manga Bridge para fontes que bloqueiam CORS."}`}</div>
+   ${native.length?`<h3 style="margin:16px 0 10px">Nas suas fontes</h3><div class="mangaNativeResultGrid" id="nativeSourceResults">${native.map(nativeMangaCard).join("")}</div>`:""}
+   ${catalog.length?`<h3 style="margin:24px 0 10px">Descobrir</h3><div class="mangaNativeResultGrid" id="catalogMangaResults">${catalog.map(nativeMangaCard).join("")}</div>`:""}`;
+  if(native.length)bindNativeMangaCards($("#nativeSourceResults"),native);
+  if(catalog.length)bindNativeMangaCards($("#catalogMangaResults"),catalog);
+ }else{
+  try{
+   const page=await aniListManga(query,1);if(token!==S.mangaSearchToken)return;S.mangaCatalog=(page.media||[]).map(normalizeAniMedia);
+   area.innerHTML=`<div class="mangaSourceSearchStatus warn">Instale pelo menos uma fonte em Mangás → Extensões. Enquanto isso, estes títulos são apenas catálogo.</div><div class="mangaNativeResultGrid" id="catalogMangaResults">${S.mangaCatalog.map(nativeMangaCard).join("")}</div>`;
+   bindNativeMangaCards($("#catalogMangaResults"),S.mangaCatalog);
+  }catch{area.innerHTML='<div class="mangaEmpty">Não foi possível carregar o catálogo.</div>'}
+ }
+}
+function renderMangaExplore(){
+ const sources=mangaSourcesFromInstalled(),pt=portugueseInstalledSources().length;
+ $("#mangaContent").innerHTML=`<div class="mangaExploreHead"><input id="mangaTitleSearch" placeholder="Pesquisar mangá nas fontes instaladas…" autocomplete="off" value="${esc(S.mangaQuery)}"><button type="button" id="mangaSearchBtn">Buscar</button></div>
+ <div class="mangaExploreInfo"><span class="mangaBridgePill ${bridgeBase()?"":"off"}">${bridgeBase()?"Manga Bridge configurado":"Modo direto / sem Bridge"}</span><span class="ptCount">${pt} fonte(s) PT</span><span>• ${sources.length} fonte(s) instaladas</span></div><div id="mangaExploreResults"><div class="loading">Carregando…</div></div>`;
+ const inp=$("#mangaTitleSearch");let t;const go=()=>{S.mangaQuery=inp.value.trim();loadMangaExplore(S.mangaQuery)};
+ inp.oninput=()=>{clearTimeout(t);t=setTimeout(go,520)};inp.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(t);go();inp.blur()}};$("#mangaSearchBtn").onclick=go;loadMangaExplore(S.mangaQuery);
+}
+function renderMangaLibrary(){
+ const items=mangaLibrary();
+ $("#mangaContent").innerHTML=items.length?`<div class="mangaCount">${items.length} mangá(s) salvo(s).</div><div class="mangaNativeResultGrid" id="libraryMangaResults">${items.map(nativeMangaCard).join("")}</div>`:'<div class="mangaLibraryEmpty">Sua biblioteca está vazia.</div>';
+ if(items.length)bindNativeMangaCards($("#libraryMangaResults"),items);
+}
+async function openMangaSourcePicker(media){
+ S.mangaPickerMedia=media._rfTitle?media:normalizeAniMedia(media);const sources=mangaSourcesFromInstalled();
+ $("#mangaSourcePickerTitle").textContent=S.mangaPickerMedia._rfTitle||mangaDisplayTitle(S.mangaPickerMedia);
+ $("#mangaSourcePickerMedia").innerHTML=`<div class="mangaPickerCover" style="background-image:url('${esc(S.mangaPickerMedia._rfCover||"")}')"></div><div><div class="mangaPickerTitle">${esc(S.mangaPickerMedia._rfTitle||mangaDisplayTitle(S.mangaPickerMedia))}</div><div class="mangaPickerAlt">${esc(S.mangaPickerMedia._rfAlt||"")}</div></div>`;
+ if(!sources.length)$("#mangaSourcePickerList").innerHTML='<div class="mangaEmpty">Instale uma fonte primeiro.</div>';
+ else{
+  $("#mangaSourcePickerList").innerHTML=sources.map((s,i)=>`<div class="mangaPickerSource ${isPortugueseLang(s.lang)?"pt":""}"><div class="mangaPickerSourceInfo"><div class="mangaPickerSourceName">${esc(s.name)}${isPortugueseLang(s.lang)?'<span class="mangaPtBadge">PT</span>':""}</div><div class="mangaPickerSourceMeta">${esc(s.extension)} • ${esc(s.lang||"all")}</div></div><button type="button" data-picker-index="${i}">Pesquisar</button></div>`).join("");
+  $("#mangaSourcePickerList").querySelectorAll("[data-picker-index]").forEach(b=>b.onclick=async()=>{
+   const s=sources[Number(b.dataset.pickerIndex)],title=S.mangaPickerMedia._rfTitle||mangaDisplayTitle(S.mangaPickerMedia);b.disabled=true;b.textContent="Buscando…";
+   const found=await searchOneInstalledSource(s,title,false);b.disabled=false;b.textContent="Pesquisar";
+   if(!found.length)return toast("Essa fonte não encontrou o mangá.");
+   closeMangaSourcePicker();
+   if(found.length===1)return openNativeMangaDetails(found[0]);
+   S.mangaNativeResults=found;
+   S.mangaQuery=title;S.mangaTab="explore";renderMangaExplore();
+  });
+ }
+ $("#mangaSourceModal").classList.add("open");document.body.classList.add("mangaSourceOpen");
+}
+function closeMangaSourcePicker(){$("#mangaSourceModal").classList.remove("open");document.body.classList.remove("mangaSourceOpen")}
+async function fetchNativeMangaDetails(item){
+ if(!item?.source||!item?.url)throw Error("Fonte inválida");
+ try{return await mangaBridgeRequest("/api/manga",{source:sourcePayload(item.source),url:item.url})}
+ catch(e){
+  if(e.code!=="NO_BRIDGE")console.warn(e);
+  return directMangaDetails(item);
+ }
+}
+async function directMangaDetails(item){
+ const r=await fetch(item.url,{headers:{Accept:"text/html"}});if(!r.ok)throw Error("HTTP "+r.status);const text=await r.text(),doc=new DOMParser().parseFromString(text,"text/html");
+ const title=(doc.querySelector("h1,.post-title h1,.manga-title h1")?.textContent||item.title||"Mangá").trim();
+ const cover=absUrl(item.url,doc.querySelector(".summary_image img,.manga-thumb img,.tab-summary img")?.getAttribute("data-src")||doc.querySelector(".summary_image img,.manga-thumb img,.tab-summary img")?.getAttribute("src")||item.thumbnail||"");
+ const desc=(doc.querySelector(".summary__content,.description-summary,.manga-excerpt,.description")?.textContent||"").trim();
+ const chapters=[],seen=new Set();
+ for(const a of doc.querySelectorAll(".wp-manga-chapter a,.chapter-link-item a,.chapter-name a,a[href*='/capitulo'],a[href*='/chapter']")){
+  const url=absUrl(item.url,a.getAttribute("href")||""),name=(a.textContent||"").trim();if(!url||!name||seen.has(url))continue;seen.add(url);chapters.push({name,url,number:chapterNumber(name)});
+ }
+ if(!chapters.length)throw Error("Nenhum capítulo encontrado no modo direto");
+ chapters.sort((a,b)=>(a.number??-1)-(b.number??-1));
+ return {title,cover,description:desc,chapters,url:item.url,source:item.source};
+}
+function chapterNumber(name){const m=String(name||"").replace(",",".").match(/(?:cap(?:ítulo|itulo|\.?)?|chapter|ch\.?)\s*#?\s*(\d+(?:\.\d+)?)/i)||String(name||"").match(/(\d+(?:\.\d+)?)/);return m?Number(m[1]):null}
+async function openNativeMangaDetails(item){
+ $("#mangaDetailModal").classList.add("open");document.body.classList.add("mangaDetailOpen");
+ $("#mangaNativeDetailTitle").textContent=item.title||"Carregando…";$("#mangaNativeDetailSource").textContent=item.source?.name||"Fonte";$("#mangaChapterList").innerHTML='<div class="loading">Carregando capítulos…</div>';
+ try{
+  const d=await fetchNativeMangaDetails(item);S.mangaDetail={...item,...d,_nativeSource:true,source:item.source||d.source};S.mangaDetailSource=S.mangaDetail.source;S.mangaChapters=(d.chapters||[]).map((c,i)=>({...c,_index:i}));
+  $("#mangaNativeDetailTitle").textContent=d.title||item.title||"Mangá";$("#mangaNativeDetailSource").textContent=`${S.mangaDetailSource?.name||"Fonte"} • ${S.mangaDetailSource?.lang||"all"}`;$("#mangaNativeDetailCover").style.backgroundImage=`url('${d.cover||item.thumbnail||""}')`;$("#mangaNativeDetailDesc").textContent=d.description||"";
+  updateNativeMangaSaveButton();renderMangaChapterList();
+ }catch(e){console.error(e);$("#mangaChapterList").innerHTML=`<div class="mangaEmpty">Não consegui carregar os capítulos. ${!bridgeBase()?"Essa fonte pode exigir o Manga Bridge.":""}</div>`}
+}
+function closeMangaDetail(){$("#mangaDetailModal").classList.remove("open");document.body.classList.remove("mangaDetailOpen")}
+function nativeMangaSaved(){return S.mangaDetail&&mangaLibrary().some(x=>x.url===S.mangaDetail.url)}
+function updateNativeMangaSaveButton(){if(!S.mangaDetail)return;const saved=nativeMangaSaved();$("#mangaSaveNative").textContent=saved?"✓ Na biblioteca":"＋ Biblioteca"}
+function toggleNativeMangaSave(){if(!S.mangaDetail)return;let a=mangaLibrary(),i=a.findIndex(x=>x.url===S.mangaDetail.url);if(i>=0)a.splice(i,1);else a.unshift(S.mangaDetail);saveMangaLibrary(a);updateNativeMangaSaveButton();toast(i>=0?"Removido da biblioteca.":"Adicionado à biblioteca.")}
+function chapterProgressKey(ch){return `${S.mangaDetailSource?.homeUrl||""}|${S.mangaDetail?.url||""}|${ch?.url||""}`}
+function getChapterProgress(ch){return mangaProgress()[chapterProgressKey(ch)]||null}
+function setChapterProgress(ch,data){const p=mangaProgress();p[chapterProgressKey(ch)]={...p[chapterProgressKey(ch)],...data,updatedAt:Date.now()};saveMangaProgressMap(p)}
+function renderMangaChapterList(){
+ const filter=normText($("#mangaChapterFilter")?.value||"");let chapters=S.mangaChapters.slice();
+ if(S.mangaChapterOrder==="desc")chapters.reverse();if(filter)chapters=chapters.filter(c=>normText(c.name).includes(filter));
+ $("#mangaChapterOrder").textContent=S.mangaChapterOrder==="desc"?"↓ Mais novos":"↑ Mais antigos";
+ $("#mangaChapterList").innerHTML=chapters.length?chapters.map(c=>{const pr=getChapterProgress(c),pct=pr?.completed?100:Math.round(pr?.percent||0);return `<button type="button" class="mangaChapterItem ${pr?.completed?"read":""}" data-chapter-url="${esc(c.url)}"><div class="mangaChapterText"><div class="mangaChapterName">${esc(c.name)}</div><div class="mangaChapterMeta">${Number.isFinite(c.number)?`Capítulo ${c.number}`:""}</div></div><div class="mangaChapterProgress">${pr?.completed?"Lido":pct?`${pct}%`:""}</div></button>`}).join(""):'<div class="mangaEmpty">Nenhum capítulo.</div>';
+ $("#mangaChapterList").querySelectorAll("[data-chapter-url]").forEach(b=>b.onclick=()=>{const ch=S.mangaChapters.find(x=>x.url===b.dataset.chapterUrl);if(ch)openNativeChapter(ch)});
+}
+async function fetchChapterPages(chapter){
+ try{return await mangaBridgeRequest("/api/chapter",{source:sourcePayload(S.mangaDetailSource),url:chapter.url})}
+ catch(e){
+  if(e.code!=="NO_BRIDGE")console.warn(e);
+  return directChapterPages(chapter);
+ }
+}
+async function directChapterPages(chapter){
+ const r=await fetch(chapter.url,{headers:{Accept:"text/html"}});if(!r.ok)throw Error("HTTP "+r.status);const text=await r.text(),doc=new DOMParser().parseFromString(text,"text/html"),pages=[],seen=new Set();
+ for(const img of doc.querySelectorAll(".reading-content img,.page-break img,.reader-area img,.chapter-content img,.reading-content .page-break img")){
+  const u=absUrl(chapter.url,img.getAttribute("data-src")||img.getAttribute("data-lazy-src")||img.getAttribute("data-original")||img.getAttribute("src")||"");if(!u||seen.has(u))continue;seen.add(u);pages.push({image:u});
+ }
+ if(!pages.length)throw Error("Nenhuma página encontrada");
+ return {pages};
+}
+function readerChapterIndex(){return S.mangaChapters.findIndex(x=>x.url===S.mangaReaderChapter?.url)}
+async function openNativeChapter(chapter){
+ S.mangaReaderManga=S.mangaDetail;S.mangaReaderSource=S.mangaDetailSource;S.mangaReaderChapter=chapter;S.mangaReaderPages=[];S.mangaReaderPageIndex=0;
+ closeMangaDetail();$("#mangaReaderModal").classList.add("open");document.body.classList.add("mangaReaderOpen");
+ $("#mangaReaderTitle").textContent=S.mangaDetail?.title||"Mangá";$("#mangaReaderChapterTitle").textContent=chapter.name||"Capítulo";$("#mangaReaderLoading").classList.remove("hidden");$("#mangaReaderPages").innerHTML="";renderReaderChapterSelect();
+ try{
+  const d=await fetchChapterPages(chapter);S.mangaReaderPages=(d.pages||[]).map((p,i)=>({index:i,image:p.image||p.url||""}));if(!S.mangaReaderPages.length)throw Error("Sem páginas");
+  renderNativeReaderPages();restoreNativeReaderProgress();
+ }catch(e){console.error(e);$("#mangaReaderLoading").classList.add("hidden");$("#mangaReaderPages").innerHTML=`<div class="mangaPageError">Não consegui carregar as páginas.${!bridgeBase()?" Configure o Manga Bridge para essa fonte.":""}</div>`}
+}
+function renderReaderChapterSelect(){
+ const sel=$("#mangaChapterSelect");sel.innerHTML=S.mangaChapters.map(c=>`<option value="${esc(c.url)}" ${c.url===S.mangaReaderChapter?.url?"selected":""}>${esc(c.name)}</option>`).join("");
+ sel.onchange=()=>{const ch=S.mangaChapters.find(x=>x.url===sel.value);if(ch)openNativeChapter(ch)};
+ const i=readerChapterIndex();$("#mangaPrevChapter").disabled=i<=0;$("#mangaNextChapter").disabled=i<0||i>=S.mangaChapters.length-1;
+}
+function readerPrefs(){return mangaReaderPrefs()}
+function applyNativeReaderPrefs(){
+ const p=readerPrefs(),canvas=$("#mangaReaderCanvas"),pages=$("#mangaReaderPages");
+ canvas.classList.remove("vertical","paged-ltr","paged-rtl");canvas.classList.add(p.mode);
+ pages.style.gap=`${Number(p.gap||0)}px`;pages.style.filter=`brightness(${Number(p.brightness||100)}%)`;
+ $$(".mangaPageImg",pages).forEach(img=>{img.classList.remove("fit-width","fit-contain","fit-original");img.classList.add(`fit-${p.fit}`)});
+ $("#mangaReaderMode").value=p.mode;$("#mangaReaderFit").value=p.fit;$("#mangaReaderGap").value=String(p.gap);$("#mangaReaderBrightness").value=Number(p.brightness||100);$("#mangaBrightnessLabel").textContent=`${Number(p.brightness||100)}%`;
+ $("#mangaReaderHud").classList.toggle("show",p.mode!=="vertical");
+ updatePagedReader();
+}
+function renderNativeReaderPages(){
+ if(S.mangaReaderObserver){S.mangaReaderObserver.disconnect();S.mangaReaderObserver=null}
+ const pages=$("#mangaReaderPages");pages.innerHTML=S.mangaReaderPages.map(p=>`<img class="mangaPageImg" data-page="${p.index}" loading="${p.index<3?"eager":"lazy"}" src="${esc(p.image)}" alt="Página ${p.index+1}">`).join("")+'<div class="nativeReaderTapZone" id="readerTapLeft"></div><div class="nativeReaderTapZone" id="readerTapRight"></div>';
+ $$(".mangaPageImg",pages).forEach(img=>img.onerror=()=>{img.outerHTML=`<div class="mangaPageError">Falha ao carregar a página ${Number(img.dataset.page)+1}</div>`});
+ $("#mangaReaderLoading").classList.add("hidden");applyNativeReaderPrefs();bindReaderTapZones();
+ const p=readerPrefs();if(p.mode==="vertical")observeVerticalPages();
+}
+function observeVerticalPages(){
+ const canvas=$("#mangaReaderCanvas"),imgs=$$(".mangaPageImg",$("#mangaReaderPages"));if(!imgs.length)return;
+ S.mangaReaderObserver=new IntersectionObserver(entries=>{
+  let best=null;for(const e of entries)if(e.isIntersecting&&(!best||e.intersectionRatio>best.intersectionRatio))best=e;
+  if(best){S.mangaReaderPageIndex=Number(best.target.dataset.page);updateReaderProgress();saveNativeReaderProgress()}
+ },{root:canvas,threshold:[.15,.35,.55,.75]});
+ imgs.forEach(i=>S.mangaReaderObserver.observe(i));
+ canvas.onscroll=()=>{showReaderUi(false);saveNativeReaderProgressDebounced()};
+}
+let mangaProgressTimer;
+function saveNativeReaderProgressDebounced(){clearTimeout(mangaProgressTimer);mangaProgressTimer=setTimeout(saveNativeReaderProgress,700)}
+function saveNativeReaderProgress(){
+ const ch=S.mangaReaderChapter;if(!ch||!S.mangaReaderPages.length)return;
+ const p=readerPrefs(),canvas=$("#mangaReaderCanvas"),pct=p.mode==="vertical"&&canvas.scrollHeight>canvas.clientHeight?canvas.scrollTop/(canvas.scrollHeight-canvas.clientHeight):S.mangaReaderPageIndex/Math.max(1,S.mangaReaderPages.length-1);
+ setChapterProgress(ch,{page:S.mangaReaderPageIndex,percent:Math.max(0,Math.min(100,pct*100)),completed:S.mangaReaderPageIndex>=S.mangaReaderPages.length-1&&pct>.92,scrollTop:canvas.scrollTop,mode:p.mode});
+}
+function restoreNativeReaderProgress(){
+ const pr=getChapterProgress(S.mangaReaderChapter),p=readerPrefs(),canvas=$("#mangaReaderCanvas");
+ if(!pr){S.mangaReaderPageIndex=0;updateReaderProgress();return}
+ S.mangaReaderPageIndex=Math.min(S.mangaReaderPages.length-1,Number(pr.page||0));updatePagedReader();updateReaderProgress();
+ requestAnimationFrame(()=>{if(p.mode==="vertical"){if(Number(pr.scrollTop)>0)canvas.scrollTop=Number(pr.scrollTop);else document.querySelector(`.mangaPageImg[data-page="${S.mangaReaderPageIndex}"]`)?.scrollIntoView({block:"start"})}});
+}
+function updateReaderProgress(){
+ const total=S.mangaReaderPages.length,idx=Math.min(total-1,Math.max(0,S.mangaReaderPageIndex));$("#mangaPageCounter").textContent=total?`${idx+1} / ${total}`:"0 / 0";$("#mangaReaderProgressBar").style.width=total?`${((idx+1)/total)*100}%`:"0%";
+}
+function updatePagedReader(){
+ const p=readerPrefs();if(p.mode==="vertical"){updateReaderProgress();return}
+ $$(".mangaPageImg",$("#mangaReaderPages")).forEach(img=>img.classList.toggle("active",Number(img.dataset.page)===S.mangaReaderPageIndex));updateReaderProgress();saveNativeReaderProgress()
+}
+function readerNextPage(delta=1){
+ const p=readerPrefs();if(p.mode==="vertical")return;
+ const ni=S.mangaReaderPageIndex+delta;if(ni>=0&&ni<S.mangaReaderPages.length){S.mangaReaderPageIndex=ni;updatePagedReader();showReaderUi()}
+ else if(ni>=S.mangaReaderPages.length)nextNativeChapter(1);
+}
+function bindReaderTapZones(){
+ const l=$("#readerTapLeft"),r=$("#readerTapRight");if(!l||!r)return;
+ l.onclick=()=>readerNextPage(readerPrefs().mode==="paged-rtl"?1:-1);r.onclick=()=>readerNextPage(readerPrefs().mode==="paged-rtl"?-1:1)
+}
+function nextNativeChapter(delta){
+ const i=readerChapterIndex(),ch=S.mangaChapters[i+delta];if(ch){saveNativeReaderProgress();openNativeChapter(ch)}
+ else toast(delta>0?"Você chegou ao último capítulo.":"Você está no primeiro capítulo.")
+}
+function showReaderUi(sticky=false){
+ clearTimeout(S.mangaReaderUiTimer);$("#nativeReaderTop").classList.remove("hidden");$("#nativeReaderBottom").classList.remove("hidden");
+ if(!sticky)S.mangaReaderUiTimer=setTimeout(()=>{$("#nativeReaderTop").classList.add("hidden");$("#nativeReaderBottom").classList.add("hidden")},4500)
+}
+function closeMangaReader(){
+ saveNativeReaderProgress();if(S.mangaReaderObserver){S.mangaReaderObserver.disconnect();S.mangaReaderObserver=null}
+ clearTimeout(S.mangaReaderUiTimer);$("#mangaReaderModal").classList.remove("open");document.body.classList.remove("mangaReaderOpen");$("#mangaReaderPages").innerHTML="";S.mangaReaderPages=[]
+}
+function renderMangaCurrentTab(){
+ if(S.mangaTab==="extensions"){if(!S.mangaRepoItems.length)return loadMangaRepo(false).then(renderMangaExtensions);renderMangaExtensions()}
+ else if(S.mangaTab==="explore")renderMangaExplore();else renderMangaLibrary();
+ $$("#mangaTabs button").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab));
+}
+async function mangaPage(){
+ S.currentPage="manga";setActiveNav("manga");unlockMobileDocument();scrollPageTop();$("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Mangás";
+ const sources=mangaSourcesFromInstalled(),pt=portugueseInstalledSources().length;if(!sources.length)S.mangaTab="extensions";
+ $("#pageBody").innerHTML=`<div class="mangaShell"><div class="mangaHero"><h3>ResenhaFlix Mangás</h3><p>Instale fontes e leia sem sair do ResenhaFlix. O modo Vertical / Webtoon é o padrão, com troca de capítulo, progresso salvo e modos paginados.</p><div class="mangaPriority">${pt?`${pt} fonte(s) em Português instalada(s)`:"Português é prioridade"}</div></div><div class="mangaTabs" id="mangaTabs"><button type="button" data-manga-tab="library">Biblioteca</button><button type="button" data-manga-tab="explore">Explorar</button><button type="button" data-manga-tab="extensions">Extensões</button></div><div class="mangaRepoStatus" id="mangaRepoStatus">Leitor nativo: ${bridgeBase()?"Manga Bridge configurado":"modo direto; Bridge recomendado"}</div><div id="mangaContent"><div class="loading">Carregando…</div></div></div>`;
+ $$("#mangaTabs button").forEach(b=>b.onclick=()=>{S.mangaTab=b.dataset.mangaTab;S.mangaQuery="";renderMangaCurrentTab()});await renderMangaCurrentTab()
+}
 async function page(type){
+ if(type==="manga")return mangaPage();
  S.currentPage=type;setActiveNav(type);unlockMobileDocument();scrollPageTop();
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
- const titles={movies:"Filmes",series:"Séries",anime:"Animes",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
+ const titles={movies:"Filmes",series:"Séries",anime:"Animes",manga:"Mangás",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
  if(type==="list"){const a=lists();$("#pageBody").innerHTML=a.length?`<div class="grid">${a.map(card).join("")}</div>`:'<div class="empty">Sua lista está vazia.</div>';bindCards($("#pageBody"));return}
  $("#pageBody").innerHTML='<div class="loading">Carregando...</div>';
  let items=[];
@@ -2313,7 +3069,7 @@ async function search(q,force=false){
   if(token!==S.searchToken)return;
   S.searchItems=[];
   renderSearchResults();
-  toast("Uma fonte de busca falhou, mas o CasaFlix continuou com as demais.");
+  toast("Uma fonte de busca falhou, mas o ResenhaFlix continuou com as demais.");
  }
 }
 
@@ -2339,6 +3095,7 @@ function repairTouchState(){
  if(!$("#playerModal").classList.contains("open"))body.classList.remove("playerOpen");
  if(!$("#detailModal").classList.contains("open"))body.classList.remove("detailOpen");
  if(!$("#settingsModal").classList.contains("open"))body.classList.remove("settingsOpen");
+ if(!$("#mangaReaderModal").classList.contains("open"))body.classList.remove("mangaReaderOpen");if(!$("#mangaDetailModal").classList.contains("open"))body.classList.remove("mangaDetailOpen");if(!$("#mangaSourceModal").classList.contains("open"))body.classList.remove("mangaSourceOpen");
  if(!$("#playerMenu").classList.contains("open")){
   $("#playerMenuBackdrop").classList.remove("open");
   S.playerMenuKind=null;
@@ -2386,6 +3143,26 @@ mobileSearchInput.addEventListener("keydown",e=>{
  }
  if(e.key==="Escape")closeMobileSearch();
 });
+$("#closeMangaReader").onclick=closeMangaReader;
+$("#closeMangaDetail").onclick=closeMangaDetail;
+$("#mangaDetailModal").onclick=e=>{if(e.target.id==="mangaDetailModal")closeMangaDetail()};
+$("#mangaContinueRead").onclick=()=>{if(!S.mangaChapters.length)return;const last=S.mangaChapters.slice().reverse().find(c=>getChapterProgress(c)?.percent>0&&!getChapterProgress(c)?.completed);openNativeChapter(last||S.mangaChapters[0])};
+$("#mangaSaveNative").onclick=toggleNativeMangaSave;
+$("#mangaChapterFilter").oninput=renderMangaChapterList;
+$("#mangaChapterOrder").onclick=()=>{S.mangaChapterOrder=S.mangaChapterOrder==="desc"?"asc":"desc";renderMangaChapterList()};
+$("#mangaReaderSettingsBtn").onclick=()=>{$("#nativeReaderSettings").classList.toggle("open");showReaderUi(true)};
+$("#closeMangaReaderSettings").onclick=()=>{$("#nativeReaderSettings").classList.remove("open");showReaderUi()};
+$("#mangaReaderMode").onchange=e=>{const p=readerPrefs();p.mode=e.target.value;saveMangaReaderPrefs(p);applyNativeReaderPrefs();if(p.mode==="vertical")observeVerticalPages()};
+$("#mangaReaderFit").onchange=e=>{const p=readerPrefs();p.fit=e.target.value;saveMangaReaderPrefs(p);applyNativeReaderPrefs()};
+$("#mangaReaderGap").onchange=e=>{const p=readerPrefs();p.gap=e.target.value;saveMangaReaderPrefs(p);applyNativeReaderPrefs()};
+$("#mangaReaderBrightness").oninput=e=>{const p=readerPrefs();p.brightness=Number(e.target.value);saveMangaReaderPrefs(p);applyNativeReaderPrefs()};
+$("#mangaReaderRestart").onclick=()=>{S.mangaReaderPageIndex=0;$("#mangaReaderCanvas").scrollTop=0;updatePagedReader();showReaderUi()};
+$("#mangaPrevPage").onclick=()=>readerNextPage(-1);$("#mangaNextPage").onclick=()=>readerNextPage(1);
+$("#mangaPrevChapter").onclick=()=>nextNativeChapter(-1);$("#mangaNextChapter").onclick=()=>nextNativeChapter(1);
+$("#mangaReaderCanvas").onclick=e=>{if(e.target.closest(".nativeReaderTapZone"))return;showReaderUi()};
+$("#closeMangaSourcePicker").onclick=closeMangaSourcePicker;
+$("#mangaSourceModal").onclick=e=>{if(e.target.id==="mangaSourceModal")closeMangaSourcePicker()};
+$("#mangaReaderModal").onclick=e=>{if(e.target.id==="mangaReaderModal")closeMangaReader()};
 $("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
 $("#closePlayer").onclick=()=>{$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
@@ -2437,10 +3214,10 @@ document.addEventListener("keydown",e=>{if(!$("#playerModal").classList.contains
 });
 $("#detailModal").onclick=e=>{if(e.target.id==="detailModal"){$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen")}};
 $("#playerModal").onclick=e=>{if(e.target.id==="playerModal")$("#closePlayer").click()};
-$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open");document.body.classList.add("settingsOpen")};
+$("#settingsBtn").onclick=()=>{$("#frostUrl").value=cfg.frost;$("#metaUrl").value=cfg.meta;$("#catalogUrls").value=cfg.catalogs;$("#subtitleAddon").value=cfg.subtitleAddon;$("#audioPref").value=cfg.audioPref;$("#subtitlePref").value=cfg.subtitlePref;$("#mangaRepoUrl").value=cfg.mangaRepo;$("#mangaBridgeUrl").value=cfg.mangaBridge;$("#lang").value=cfg.lang;$("#settingsModal").classList.add("open");document.body.classList.add("settingsOpen")};
 $("#closeSettings").onclick=()=>{$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");unlockMobileDocument()};
-$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");toast("Configurações salvas.");home()};
-$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#lang").value=CFG_DEFAULT.lang};
+$("#saveSettings").onclick=()=>{cfg.frost=$("#frostUrl").value.trim()||CFG_DEFAULT.frost;cfg.meta=$("#metaUrl").value.trim()||CFG_DEFAULT.meta;cfg.catalogs=$("#catalogUrls").value.trim()||CFG_DEFAULT.catalogs;cfg.subtitleAddon=$("#subtitleAddon").value.trim()||CFG_DEFAULT.subtitleAddon;cfg.audioPref=$("#audioPref").value;cfg.subtitlePref=$("#subtitlePref").value;cfg.mangaRepo=$("#mangaRepoUrl").value.trim()||CFG_DEFAULT.mangaRepo;cfg.mangaBridge=$("#mangaBridgeUrl").value.trim();cfg.lang=$("#lang").value;localStorage.setItem("cf2_frost",cfg.frost);localStorage.setItem("cf2_meta",cfg.meta);localStorage.setItem("cf4_catalogs",cfg.catalogs);localStorage.setItem("cf5_subtitle_addon",cfg.subtitleAddon);localStorage.setItem("cf5_audio_pref",cfg.audioPref);localStorage.setItem("cf5_subtitle_pref",cfg.subtitlePref);localStorage.setItem("cf12_manga_repo",cfg.mangaRepo);localStorage.setItem("rf14_manga_bridge",cfg.mangaBridge);localStorage.setItem("cf2_lang",cfg.lang);S.manifestCache.clear();S.catalogCache.clear();$("#settingsModal").classList.remove("open");document.body.classList.remove("settingsOpen");toast("Configurações salvas.");home()};
+$("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#mangaRepoUrl").value=CFG_DEFAULT.mangaRepo;$("#mangaBridgeUrl").value=CFG_DEFAULT.mangaBridge;$("#lang").value=CFG_DEFAULT.lang};
 window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
 window.addEventListener("beforeunload",()=>persistPlaybackProgress(true));
 window.addEventListener("pageshow",()=>setTimeout(repairTouchState,0));
@@ -2463,13 +3240,12 @@ $("#installAppBtn").onclick=async()=>{
  try{await deferredInstallPrompt.userChoice}catch{}
  deferredInstallPrompt=null;$("#installAppBtn").style.display="none";
 };
-window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;$("#installAppBtn").style.display="none";toast("CasaFlix instalado como aplicativo.")});
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;$("#installAppBtn").style.display="none";toast("ResenhaFlix instalado como aplicativo.")});
 if("serviceWorker" in navigator){
  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.warn("Service Worker",e)));
 }
 home();
 </script>
-<!-- CasaFlix v11 — fontes com failover automático + preferência por provedor + abertura aprendida
-     Baseada na v10 Mobile Tested — scroll mobile validado + pular abertura + próximo episódio reutiliza fonte -->
+<!-- ResenhaFlix v12 — fontes progressivas/cache + tela Mangás/Keiyoushi -->
 </body>
 </html>
