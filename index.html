@@ -1252,6 +1252,61 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
  .logo span{display:none}
 }
 
+
+/* =========================================================
+   ResenhaFlix v17 — Discover UI / fonte dinâmica
+   Inspirado em plataformas de anime: carvão + laranja, cards planos
+   ========================================================= */
+:root{
+ --bg:#0b0b0f;--bg2:#121318;--card:#15161c;--line:#292b32;
+ --text:#f7f7f8;--muted:#a0a1a8;--accent:#f47521;--accent2:#ff9a52;
+ --orange-soft:#2a170d;--nav:#202127;
+}
+body{background:radial-gradient(circle at 75% 0,#17121b 0,transparent 32%),var(--bg)}
+.top{
+ height:64px;padding:0 3vw;background:rgba(31,32,38,.96)!important;
+ border-bottom:1px solid #ffffff09;box-shadow:0 4px 24px #0004;backdrop-filter:blur(16px)
+}
+.top.solid{background:rgba(31,32,38,.985)!important}
+.logo img{border-radius:9px!important;box-shadow:none!important}.logo b{color:var(--accent)!important}
+.nav{gap:5px;height:100%;align-items:center}.nav button{height:100%;padding:0 13px;position:relative;color:#c1c2c7;font-size:13px;font-weight:750}
+.nav button:hover{background:#ffffff08;color:#fff}.nav button.active{color:#fff}.nav button.active:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;background:var(--accent)}
+.search{background:#111217;border-color:#35363e;border-radius:4px}.search:focus-within{border-color:var(--accent)}.iconbtn{border-radius:4px;background:#111217;border-color:#35363e}
+.hero{height:575px;min-height:575px;padding:0 5vw 92px;background-color:#111218}
+.hero:after{background:linear-gradient(90deg,rgba(8,8,12,.98) 0%,rgba(8,8,12,.82) 35%,rgba(8,8,12,.26) 72%,rgba(8,8,12,.08)),linear-gradient(0deg,var(--bg) 0%,rgba(11,11,15,.76) 10%,transparent 45%),linear-gradient(180deg,rgba(0,0,0,.22),transparent 35%)}
+.heroContent{max-width:700px}.tag{color:var(--accent);font-weight:950;letter-spacing:1.8px}.hero h1{font-size:clamp(38px,5.2vw,72px);line-height:.98;letter-spacing:-2.2px}.heroDesc{color:#cacbd0;max-width:650px}.heroMeta{color:#e0e0e3}
+.btn{border-radius:4px;padding:12px 19px;text-transform:none}.btn.primary,.primary{background:var(--accent)!important;color:#17110c!important}.btn.primary:hover{background:var(--accent2)!important;filter:none}.btn.secondary{background:#ffffff12;border:1px solid #ffffff20}.btn.secondary:hover{background:#ffffff1d}
+main{margin-top:-40px;padding:0 3vw 70px}.section{margin-bottom:38px}.sectionHead{align-items:center;margin-bottom:13px}.sectionTitle{font-size:22px;letter-spacing:-.35px;display:flex;align-items:center;gap:9px}.sectionTitle:before{content:"";width:4px;height:22px;background:var(--accent);display:block}.sectionSub{color:#7f8088}
+.row{gap:14px;padding-bottom:16px}.card{flex-basis:166px;background:transparent;border-radius:3px;overflow:visible;box-shadow:none!important}.poster{border-radius:4px;overflow:hidden;box-shadow:0 7px 24px #0007;transition:transform .2s,filter .2s}.card:hover{transform:none}.card:hover .poster{transform:translateY(-5px);filter:brightness(1.06)}.cardInfo{padding:10px 1px 8px}.title{font-size:13px;font-weight:850}.sub{font-size:11px;color:#8d8e96}.plus{top:8px;right:8px;background:#18191ee8;border:1px solid #ffffff24}.card:hover .plus{opacity:1}.plus.saved{background:var(--accent)!important;color:#111!important}.rating{border-radius:3px;background:#101116e8}.bar{margin:0 1px 8px;background:#303139}.bar i{background:var(--accent)}
+.page{padding-top:94px}.page h2{font-size:32px}.grid{gap:18px 14px}
+.mobileBottomNav button.active,.mobileBottomNav button:hover{color:var(--accent)!important}
+.searchTabs button.active{background:var(--accent)!important;color:#17110c!important;border-color:var(--accent)!important}.searchTools input:focus{border-color:var(--accent)!important}
+
+/* Player */
+.playerWrap{width:min(1340px,98vw);max-height:96vh;border-radius:11px;border-color:#31323a;background:#08090b;box-shadow:0 35px 110px #000}
+.playerLayout{grid-template-columns:minmax(0,1fr) 390px;min-height:640px}
+.playerSide{padding:0!important;background:#15161b!important;border-left:1px solid #2b2c33!important;display:flex;flex-direction:column;overflow:hidden!important;max-height:96vh!important}
+.sourceDrawerHandle{display:none}
+.sourceHead{padding:18px 18px 10px!important;flex:none}.sourceHeadTop{display:flex;gap:12px;align-items:flex-start}.sourceHeadTop>div{flex:1;min-width:0}.sourceEyebrow{font-size:9px;letter-spacing:1.5px;font-weight:950;color:var(--accent);margin-bottom:5px}.sourceHead h3{font-size:20px!important;letter-spacing:-.4px;margin:0!important}.sourceHead p{font-size:11px!important;margin-top:5px!important;color:#868790!important}.sourceToolsToggle{width:38px;height:38px;border-radius:7px;border:1px solid #34363e;background:#202127;color:#bbb}.sourceToolsToggle.active{border-color:var(--accent);color:var(--accent)}
+.sourceQuickBar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:14px}.preferredSourceField{display:flex;align-items:center;gap:8px;min-width:0;border:1px solid #30323a;background:#101116;border-radius:7px;padding:7px 9px}.preferredSourceField span{font-size:9px;color:#7d7e86;text-transform:uppercase;font-weight:900;white-space:nowrap}.preferredSourceField select{min-width:0;width:100%;background:transparent;color:#fff;border:0;outline:0;font-size:11px;font-weight:800}.preferredSourceField option{background:#15161b}.autoFallbackCompact{border:1px solid #304e3a;background:#132018;color:#8ee7a7;border-radius:7px;padding:0 10px;font-size:10px;font-weight:950}.autoFallbackCompact.off{border-color:#533239!important;background:#211418!important;color:#e797a3!important}
+.sourceTools{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:7px!important;margin-top:8px!important;max-height:0;overflow:hidden;opacity:0;transition:max-height .2s,opacity .2s,margin .2s}.sourceTools.open{max-height:60px;opacity:1;margin-top:10px!important}.sourceTools button{min-height:36px!important;border-radius:6px!important;padding:6px!important;font-size:10px!important;background:#202127!important;border-color:#34363e!important}
+.sourceFilters{padding:0 18px 7px;flex:none}.addonTabs,.filterChips{padding:5px 0!important;gap:7px!important}.addonTabs button,.filterChips button{border-radius:5px!important;padding:7px 9px!important;background:#202127!important;border-color:#30323a!important;font-size:10px!important}.addonTabs button.active,.filterChips button.active{background:var(--accent)!important;color:#16100c!important;border-color:var(--accent)!important}
+.sourceRecommend{padding:0 18px 9px;flex:none}.recommendCard{width:100%;border:1px solid #4c3729;background:linear-gradient(100deg,#24170f,#17171c 68%);color:#fff;border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;text-align:left}.recommendIcon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#21130b;font-size:13px}.recommendText{flex:1;min-width:0}.recommendText small{display:block;color:#e5a77c;font-size:8px;font-weight:950;letter-spacing:.7px}.recommendText b{display:block;font-size:12px;margin-top:2px}.recommendText span{display:block;font-size:9px;color:#8e8f97;margin-top:2px}.recommendUse{font-size:10px;font-weight:950;color:var(--accent)}
+.sourceList{flex:1;min-height:0;overflow-y:auto!important;padding:0 12px 12px;margin:0!important;gap:5px!important;scrollbar-width:thin;scrollbar-color:#3a3b42 transparent}.sourceCard.compact{display:flex;align-items:center;gap:9px;padding:9px 10px!important;border-radius:7px!important;background:#111217!important;border:1px solid transparent!important;min-height:67px;transform:none!important}.sourceCard.compact:hover{background:#1b1c22!important;border-color:#34363d!important}.sourceCard.compact.active{background:#21170f!important;border-color:var(--accent)!important;box-shadow:0 0 0 1px #f4752125 inset!important}.sourceCard.compact.failed{opacity:.55}.sourceStatus{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:10px;font-weight:950;background:#282930;color:#aaa}.sourceStatus.working{background:#15351f;color:#82e59e}.sourceStatus.testing{background:#3c3114;color:#f4cd65;animation:pulseSource 1s infinite alternate}.sourceStatus.failed{background:#35181e;color:#e98896}.sourceStatus.external{background:#20263a;color:#a9c2ff}@keyframes pulseSource{to{opacity:.55}}
+.sourceCompactMain{min-width:0;flex:1}.sourceCompactTitle{display:flex;align-items:center;gap:6px;min-width:0}.sourceCompactTitle b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.primarySourceBadge{font-size:7px;padding:2px 4px;border-radius:3px;background:var(--accent);color:#21130b;font-weight:950}.sourceCompactSub{font-size:9px;color:#81828a;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sourceCompactBadges{display:flex;gap:4px;align-items:center;margin-top:5px;overflow:hidden}.sourceCompactBadges span{flex:none;font-size:8px;padding:2px 4px;border-radius:3px;background:#24252b;color:#b8b9bf}.sourceQuickPlay{width:34px;height:34px;flex:none;border-radius:6px;border:1px solid #393b43;background:#24252b;color:#fff;font-size:11px}.sourceCard.active .sourceQuickPlay{background:var(--accent);color:#19100a;border-color:var(--accent)}
+.sourceSelectedBar{flex:none;min-height:72px;border-top:1px solid #2b2c33;background:#1a1b20;padding:10px 12px;display:flex;align-items:center;gap:9px;box-shadow:0 -10px 24px #0004}.sourceSelectedEmpty{font-size:10px;color:#777880;margin:auto}.selectedSourceInfo{min-width:0;flex:1}.selectedSourceInfo small{display:block;font-size:7px;color:#73747d;letter-spacing:.8px;font-weight:950}.selectedSourceInfo b{display:block;font-size:11px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.selectedSourceInfo span{display:block;font-size:8px;color:#86878f;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.selectedSourceActions{display:flex;gap:5px}.selectedSourceActions button{height:38px;border-radius:6px;border:1px solid #363841;background:#24252b;color:#fff;font-weight:900;font-size:10px}.selectedSourceActions .selectedSecondary{width:38px}.selectedSourceActions .selectedPlay{min-width:88px;padding:0 12px;background:var(--accent);color:#1c1009;border-color:var(--accent)}.selectedSourceActions button[disabled]{opacity:.35}.downloadNote{display:none!important}
+
+@media(max-width:900px){
+ .playerWrap{width:100vw!important;height:100dvh!important;max-height:none!important;border:0!important;border-radius:0!important}.playerLayout{display:block!important;height:100%;overflow:hidden!important}.playerStage{height:100dvh!important;min-height:0!important}.videoShell{height:100%!important;min-height:0!important}
+ .playerSide{position:fixed!important;z-index:40!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:min(74dvh,680px)!important;max-height:74dvh!important;border:0!important;border-radius:20px 20px 0 0!important;box-shadow:0 -22px 70px #000b;transform:translateY(calc(100% - 64px));transition:transform .25s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom)!important}
+ .playerSide.drawerOpen{transform:translateY(0)}.sourceDrawerHandle{display:flex;height:64px;min-height:64px;border:0;background:#1c1d23;color:#fff;align-items:center;gap:10px;padding:7px 16px;position:relative}.sourceDrawerGrip{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:40px;height:4px;border-radius:99px;background:#4b4c54}.sourceDrawerLabel{flex:1;text-align:left;font-size:12px;font-weight:900;padding-top:8px}.sourceDrawerChevron{padding-top:8px;color:var(--accent);transition:transform .2s}.playerSide.drawerOpen .sourceDrawerChevron{transform:rotate(180deg)}
+ .sourceHead{padding:10px 14px 8px!important}.sourceFilters{padding:0 14px 6px}.sourceRecommend{padding:0 14px 8px}.sourceList{padding:0 9px 10px}.sourceSelectedBar{padding:9px 10px calc(9px + env(safe-area-inset-bottom))}.sourceQuickBar{grid-template-columns:minmax(0,1fr) auto}.sourceTools.open{max-height:70px}.sourceTools button{font-size:9px!important}.sourceHeadTop h3{font-size:18px!important}
+ .sourceCard.compact{min-height:62px}.selectedSourceActions .selectedPlay{min-width:82px}
+}
+@media(max-width:760px){
+ .top{height:58px!important;padding:0 13px!important}.hero{height:530px!important;min-height:530px!important;padding:0 18px 64px!important}.hero h1{font-size:42px!important}.heroDesc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card{flex-basis:132px!important}.sectionTitle{font-size:18px!important}.sectionTitle:before{height:18px}.mobileBottomNav{background:#202127ee!important;border-top:1px solid #34353c!important;backdrop-filter:blur(16px)}
+}
+
 </style>
 </head>
 <body>
@@ -1345,21 +1400,43 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
      <div class="playerMenu" id="playerMenu"></div>
     </div>
    </section>
-   <aside class="playerSide">
+   <aside class="playerSide" id="playerSide">
+    <button type="button" class="sourceDrawerHandle" id="sourceDrawerHandle" aria-label="Abrir fontes">
+     <span class="sourceDrawerGrip"></span>
+     <span class="sourceDrawerLabel" id="sourceDrawerLabel">Fontes</span>
+     <span class="sourceDrawerChevron">⌃</span>
+    </button>
+
     <div class="sourceHead">
-     <h3>Escolha uma fonte</h3>
-     <p>Escolha uma fonte. Streams diretos podem tocar no ResenhaFlix ou ser enviados para outro player.</p>
-     <div class="playerUtilities">
+     <div class="sourceHeadTop">
+      <div>
+       <div class="sourceEyebrow">REPRODUÇÃO</div>
+       <h3>Fontes disponíveis</h3>
+      </div>
+      <button type="button" class="sourceToolsToggle" id="sourceToolsToggle" aria-label="Mais opções">⚙</button>
+     </div>
+     <p id="sourceCountText">Procurando a melhor opção…</p>
+     <div class="sourceQuickBar">
+      <label class="preferredSourceField">
+       <span>Fonte principal</span>
+       <select id="preferredSourceSelect"><option value="">Automática</option></select>
+      </label>
+      <button type="button" class="autoFallbackCompact" id="autoFallbackBtn">⚡ Auto ON</button>
+     </div>
+     <div class="playerUtilities sourceTools" id="sourceTools">
       <button type="button" id="otherPlayerBtn">↗ Outro player</button>
-      <button type="button" id="aspectBtn">▭ Proporção: Auto 16:9</button>
-      <button type="button" id="autoFallbackBtn">⚡ Troca automática: ON</button>
-      <button type="button" id="introSetupBtn">⏭ Ajustar abertura</button>
+      <button type="button" id="aspectBtn">▭ Auto 16:9</button>
+      <button type="button" id="introSetupBtn">⏭ Abertura</button>
      </div>
     </div>
-    <div class="addonTabs" id="addonTabs"></div>
-    <div class="filterChips" id="qualityFilters"></div>
+
+    <div class="sourceFilters">
+     <div class="addonTabs" id="addonTabs"></div>
+     <div class="filterChips" id="qualityFilters"></div>
+    </div>
+    <div class="sourceRecommend" id="sourceRecommend"></div>
     <div class="sourceList" id="sources"></div>
-    <div class="downloadNote">Download pelo navegador funciona apenas quando a fonte entrega um arquivo direto e permite acesso. HLS/M3U8, DRM e fontes sem URL direta não são convertidos nem contornados.</div>
+    <div class="sourceSelectedBar" id="sourceSelectedBar"></div>
    </aside>
   </div>
  </div>
@@ -1586,7 +1663,7 @@ const cfg={
  mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -1795,6 +1872,7 @@ function sourceReliabilityScore(s,resumeEntry=null){
  if(stats.lastSuccess&&now-stats.lastSuccess<7*864e5)score+=45;
  if(stats.lastFail&&now-stats.lastFail<6*3600e3)score-=90;
  score-=Math.min(100,Number(stats.fail||0)*18);
+ if(S.primaryManifest&&s._manifest===S.primaryManifest)score+=190;
  if(s._external)score-=500;
  return score;
 }
@@ -2158,10 +2236,10 @@ function preferredManifestForEpisode(){
  return pref?.manifest||S.resumeEntry?.stream?.manifest||"";
 }
 function sortStreamManifests(manifests){
- const pref=preferredManifestForEpisode();
+ const pref=preferredManifestForEpisode(),primary=S.primaryManifest;
  return manifests.slice().sort((a,b)=>{
-  const sa=(a===pref?100:0)+(a.includes("froststream")?50:0)-(a.includes("watchhub")?20:0);
-  const sb=(b===pref?100:0)+(b.includes("froststream")?50:0)-(b.includes("watchhub")?20:0);
+  const sa=(a===primary?180:0)+(a===pref?100:0)+(a.includes("froststream")?50:0)-(a.includes("watchhub")?20:0);
+  const sb=(b===primary?180:0)+(b===pref?100:0)+(b.includes("froststream")?50:0)-(b.includes("watchhub")?20:0);
   return sb-sa;
  });
 }
@@ -2202,40 +2280,93 @@ function prefetchStreams(type,id){
 function prefetchNextEpisodeSources(){
  if(S.playType==="series"&&S.nextEpisode?.id)prefetchStreams("series",S.nextEpisode.id);
 }
+function sourceHealthRank(s){
+ const h=getHealthStatus(s);
+ return h==="working"?0:h==="testing"?1:h==="failed"?4:s._external?3:2;
+}
+function sourceBadgeList(s){
+ const txt=[s.name,s.title,s.description,...streamLines(s)].filter(Boolean).join(" ").toLowerCase();
+ const out=[];
+ if(/dublado|dubbed|pt[- ]?br/.test(txt))out.push("PT-BR");
+ else if(/portugu[eê]s|\bpt\b/.test(txt))out.push("PT");
+ if(/legendado|subbed|subtitle/.test(txt))out.push("LEG");
+ if(/dual/.test(txt))out.push("DUAL");
+ if(/\b4k\b|2160p/.test(txt))out.push("4K");
+ return [...new Set(out)].slice(0,3);
+}
+function sourceStatusLabel(s){
+ const h=getHealthStatus(s);
+ return h==="working"?"Funcionando":h==="testing"?"Testando…":h==="failed"?"Falhou":s._external?"Externo":"Disponível";
+}
+function sourceStatusIcon(s){
+ const h=getHealthStatus(s);
+ return h==="working"?"✓":h==="testing"?"◌":h==="failed"?"!":s._external?"↗":"•";
+}
+function sourceSortedFiltered(streams){
+ return streams.slice().sort((a,b)=>sourceHealthRank(a)-sourceHealthRank(b)||sourceReliabilityScore(b,S.resumeEntry)-sourceReliabilityScore(a,S.resumeEntry));
+}
+function renderSourceSelectedBar(){
+ const bar=$("#sourceSelectedBar"),s=S.selectedStream;
+ if(!bar)return;
+ if(!s){bar.innerHTML='<div class="sourceSelectedEmpty">Escolha uma fonte para ver as ações.</div>';return}
+ const provider=detectProvider(s),external=!!s._external;
+ bar.innerHTML=`<div class="selectedSourceInfo"><small>SELECIONADA</small><b>${esc(provider)}</b><span>${esc(s._addon||"")} • ${esc(s._quality||"Outro")}</span></div>
+  <div class="selectedSourceActions">
+   <button type="button" class="selectedSecondary" data-selected-other ${external?"style='display:none'":""}>↗</button>
+   <button type="button" class="selectedSecondary" data-selected-download ${(!external&&isDirectDownloadable(s.url))?"":"disabled"}>⇩</button>
+   <button type="button" class="selectedPlay" data-selected-play>${external?"Abrir provedor":"▶ Assistir"}</button>
+  </div>`;
+ bar.querySelector("[data-selected-play]").onclick=()=>external?window.open(s.externalUrl,"_blank","noopener,noreferrer"):selectStream(s,true);
+ const other=bar.querySelector("[data-selected-other]");if(other)other.onclick=()=>openOtherPlayerMenu(s);
+ const dl=bar.querySelector("[data-selected-download]");if(dl)dl.onclick=()=>{if(!external)browserDownload(s)};
+}
 function renderSourceUI(){
  const streams=S.streams||[];
+ const manifests=[...new Map(streams.map(s=>[s._manifest,s._addon||"Fonte"])).entries()];
  const addons=["all",...new Set(streams.map(s=>s._addon))];
+ const prefSel=$("#preferredSourceSelect");
+ if(prefSel){
+  const current=S.primaryManifest;
+  prefSel.innerHTML='<option value="">Automática</option>'+manifests.map(([m,n])=>`<option value="${esc(m)}" ${current===m?"selected":""}>${esc(n)}</option>`).join("");
+  prefSel.onchange=()=>{S.primaryManifest=prefSel.value;localStorage.setItem("rf17_primary_manifest",S.primaryManifest);renderSourceUI();};
+ }
+ const count=$("#sourceCountText");if(count)count.textContent=streams.length?`${streams.length} opção(ões) • ${addons.length-1} addon(s) • ordenação inteligente`:"Procurando fontes…";
+ const drawerLabel=$("#sourceDrawerLabel");if(drawerLabel)drawerLabel.textContent=streams.length?`Fontes • ${streams.length}`:"Fontes";
+
  $("#addonTabs").innerHTML=addons.map(a=>`<button class="${S.selectedAddon===a?"active":""}" data-addon="${esc(a)}">${a==="all"?"Todas":esc(a)}</button>`).join("");
  $("#addonTabs").querySelectorAll("[data-addon]").forEach(b=>b.onclick=()=>{S.selectedAddon=b.dataset.addon;renderSourceUI()});
  const qualities=["all",...new Set(streams.map(s=>s._quality))].sort((a,b)=>a==="all"?-1:b==="all"?1:qualityScore(b)-qualityScore(a));
- $("#qualityFilters").innerHTML=qualities.map(q=>`<button class="${S.qualityFilter===q?"active":""}" data-q="${esc(q)}">${q==="all"?"Todas as qualidades":esc(q)}</button>`).join("");
+ $("#qualityFilters").innerHTML=qualities.map(q=>`<button class="${S.qualityFilter===q?"active":""}" data-q="${esc(q)}">${q==="all"?"Qualidade":esc(q)}</button>`).join("");
  $("#qualityFilters").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{S.qualityFilter=b.dataset.q;renderSourceUI()});
- const filtered=streams.filter(s=>(S.selectedAddon==="all"||s._addon===S.selectedAddon)&&(S.qualityFilter==="all"||s._quality===S.qualityFilter));
- if(!filtered.length){$("#sources").innerHTML='<div class="sourceEmpty">Nenhuma fonte corresponde aos filtros escolhidos.</div>';return}
+
+ const filtered=sourceSortedFiltered(streams.filter(s=>(S.selectedAddon==="all"||s._addon===S.selectedAddon)&&(S.qualityFilter==="all"||s._quality===S.qualityFilter)));
+ const rec=filtered.find(s=>!s._external&&getHealthStatus(s)!=="failed")||filtered[0];
+ const recommend=$("#sourceRecommend");
+ if(recommend){
+  recommend.innerHTML=rec?`<button type="button" class="recommendCard"><span class="recommendIcon">★</span><span class="recommendText"><small>RECOMENDADA AGORA</small><b>${esc(detectProvider(rec))}</b><span>${esc(rec._addon)} • ${esc(rec._quality)}</span></span><span class="recommendUse">Usar</span></button>`:"";
+  if(rec)recommend.querySelector("button").onclick=()=>{S.selectedStream=rec;renderSourceUI();if(rec._external)window.open(rec.externalUrl,"_blank","noopener,noreferrer");else selectStream(rec,true);if(innerWidth<=900)$("#playerSide")?.classList.remove("drawerOpen")};
+ }
+ if(!filtered.length){$("#sources").innerHTML='<div class="sourceEmpty">Nenhuma fonte corresponde aos filtros escolhidos.</div>';renderSourceSelectedBar();return}
+
  $("#sources").innerHTML=filtered.map((s,i)=>{
-  const lines=streamLines(s);
-  const selected=S.selectedStream===s;
-  const hs=getHealthStatus(s);return `<article class="sourceCard ${selected?"active":""} ${s._external?"external":""} ${hs}" data-source-key="${esc(s._addon+"|"+s._idx)}">
-    <div class="sourceTop"><div class="sourceName">${esc(s.name||`${s._addon} ${s._quality}`)}</div>${s._officialLegal?'<span class="legalMark">OFICIAL</span>':`<span class="qualityPill">${esc(s._quality)}</span>`}<span class="sourceHealth">${hs==="testing"?"TESTANDO":hs==="working"?"FUNCIONA":hs==="failed"?"FALHOU":"—"}</span></div>
-    <div class="providerPill">${esc(detectProvider(s))}</div>
-    <div class="sourceLines">${esc(lines.join("\n")||s._addon)}</div>
-    <div class="sourceOrigin">${esc(s._external?"Abre no provedor oficial":"Reprodução no ResenhaFlix")}${getCachedStreamBatch(s._manifest,S.playType,S.playId)?'<span class="fastSourceBadge">cache</span>':""}</div>
-    <div class="sourceActions">
-      <button class="playSource" data-play>${s._external?"↗ Abrir provedor":"▶ Assistir"}</button>
-      <button class="downloadSource" data-download ${(!s._external&&isDirectDownloadable(s.url))?"":"disabled"}>⇩ Download</button>
-      ${s._external?"":'<button class="otherPlayerSource" data-other-player>↗ Abrir em outro player</button>'}
-    </div>
+  const selected=S.selectedStream===s,provider=detectProvider(s),badges=sourceBadgeList(s),status=getHealthStatus(s);
+  return `<article class="sourceCard compact ${selected?"active":""} ${s._external?"external":""} ${status}" data-source-key="${esc(s._manifest+"|"+s._idx)}">
+   <div class="sourceStatus ${status||"idle"}">${sourceStatusIcon(s)}</div>
+   <div class="sourceCompactMain">
+    <div class="sourceCompactTitle"><b>${esc(provider)}</b>${S.primaryManifest&&S.primaryManifest===s._manifest?'<span class="primarySourceBadge">PRINCIPAL</span>':""}</div>
+    <div class="sourceCompactSub">${esc(s._addon||"Fonte")} • ${esc(sourceStatusLabel(s))}</div>
+    <div class="sourceCompactBadges"><span>${esc(s._quality||"Outro")}</span>${badges.map(x=>`<span>${esc(x)}</span>`).join("")}${getCachedStreamBatch(s._manifest,S.playType,S.playId)?'<span>⚡ cache</span>':""}</div>
+   </div>
+   <button type="button" class="sourceQuickPlay" data-play aria-label="Reproduzir">${s._external?"↗":"▶"}</button>
   </article>`;
  }).join("");
+
  $("#sources").querySelectorAll(".sourceCard").forEach(card=>{
-  const key=card.dataset.sourceKey;
-  const s=filtered.find(x=>`${x._addon}|${x._idx}`===key);
-  card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();if(s._external){window.open(s.externalUrl,"_blank","noopener,noreferrer")}else selectStream(s,true)};
-  card.querySelector("[data-download]").onclick=e=>{e.stopPropagation();if(!s._external)browserDownload(s)};
-  const other=card.querySelector("[data-other-player]");
-  if(other)other.onclick=e=>{e.stopPropagation();S.selectedStream=s;renderSourceUI();openOtherPlayerMenu(s)};
-  card.onclick=()=>{if(s._external)window.open(s.externalUrl,"_blank","noopener,noreferrer");else selectStream(s,true)};
+  const s=filtered.find(x=>`${x._manifest}|${x._idx}`===card.dataset.sourceKey);if(!s)return;
+  card.onclick=e=>{if(e.target.closest("[data-play]"))return;S.selectedStream=s;renderSourceUI()};
+  card.querySelector("[data-play]").onclick=e=>{e.stopPropagation();S.selectedStream=s;renderSourceSelectedBar();if(s._external)window.open(s.externalUrl,"_blank","noopener,noreferrer");else selectStream(s,true)};
  });
+ renderSourceSelectedBar();
 }
 function rememberedStreamMatch(streams,entry){
  const ranked=rankedPlayableStreams(streams,entry);
@@ -3443,7 +3574,7 @@ $("#mangaPrevChapter").onclick=()=>nextNativeChapter(-1);$("#mangaNextChapter").
 $("#mangaReaderCanvas").onclick=e=>{if(e.target.closest(".nativeReaderTapZone"))return;showReaderUi()};
 $("#mangaReaderModal").onclick=e=>{if(e.target.id==="mangaReaderModal")closeMangaReader()};
 $("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
-$("#closePlayer").onclick=()=>{$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
+$("#closePlayer").onclick=()=>{$("#playerSide")?.classList.remove("drawerOpen");$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
@@ -3455,6 +3586,8 @@ $("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElem
 $("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}showPlayerUI()};
 $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
 $("#skipIntroBtn").onclick=skipIntro;
+$("#sourceToolsToggle").onclick=()=>{S.sourceToolsOpen=!S.sourceToolsOpen;$("#sourceTools").classList.toggle("open",S.sourceToolsOpen);$("#sourceToolsToggle").classList.toggle("active",S.sourceToolsOpen)};
+$("#sourceDrawerHandle").onclick=()=>{$("#playerSide").classList.toggle("drawerOpen")};
 $("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
 $("#aspectBtn").onclick=openAspectMenu;
 $("#introSetupBtn").onclick=openIntroSetupMenu;
@@ -3466,7 +3599,7 @@ $("#autoFallbackBtn").onclick=()=>{
 };
 function updateAutoFallbackButton(){
  const b=$("#autoFallbackBtn");if(!b)return;
- b.textContent=`⚡ Troca automática: ${S.autoFallback?"ON":"OFF"}`;
+ b.textContent=`⚡ Auto ${S.autoFallback?"ON":"OFF"}`;
  b.classList.toggle("on",S.autoFallback);b.classList.toggle("off",!S.autoFallback);
 }
 updateAspectButton();updateAutoFallbackButton();

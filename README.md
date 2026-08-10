@@ -1,22 +1,20 @@
-# ResenhaFlix V16 — Manga Reader
+# ResenhaFlix V17 — Discover UI
 
-Principais mudanças:
+## Visual
+- Nova linguagem visual inspirada em plataformas modernas de anime: fundo carvão/navy, destaque laranja, navegação compacta, hero mais limpo e cards planos.
+- Mantém a logo e os ícones da V16.
 
-- Logo antiga CASAFLIX removida da barra superior.
-- A imagem enviada pelo usuário agora é a logo do site e também os ícones da PWA.
-- Configurações reorganizadas em Geral / Player / Mangás / Avançado.
-- Configurações possuem scroll próprio e tela cheia no mobile.
-- Pesquisa de mangá permite PT + EN, somente Português ou somente English.
-- Fontes são filtradas pelo idioma escolhido.
-- A busca tenta até 3 variações de título (digitado, inglês/romaji quando disponíveis).
-- Manga Bridge atualizado com adaptador Madara e adaptador específico de Saikai Scan.
-- Ler Mangas é reconhecido como Madara.
-- Mango Toons é marcado no Bridge como fonte que exige login.
-- Leitor vertical, capítulos, progresso e biblioteca continuam.
+## Novo seletor de fontes
+- Painel mais limpo; ações repetidas foram removidas dos cards.
+- Cards compactos com provedor, addon, qualidade, idioma/status e botão de play.
+- Fonte recomendada automaticamente com base em qualidade, histórico de sucesso/falha e preferência.
+- Barra fixa da fonte selecionada com Assistir, Outro player e Download quando aplicável.
+- Filtro por addon e qualidade.
+- Campo “Fonte principal”: qualquer addon já configurado pode ser fixado e ganha prioridade na pesquisa e no próximo episódio.
+- Em celular, o seletor vira um bottom sheet recolhível para não ocupar a tela inteira.
 
-## Manga Bridge
-Para fontes que bloqueiam CORS no navegador, o Bridge continua necessário.
-Pasta: `manga-bridge/`.
+## Compatibilidade
+A V17 preserva os manifests/addons já salvos em localStorage e todas as funções anteriores (histórico, continuar assistindo, próximo episódio, legendas, áudio, mangás e PWA).
 
 ## PWA
-Cache: `resenhaflix-shell-v16`
+Cache: resenhaflix-shell-v17
