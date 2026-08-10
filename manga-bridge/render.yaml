@@ -7,5 +7,3 @@ services:
     envVars:
       - key: ALLOWED_ORIGIN
         value: https://SEU-USUARIO.github.io
-      - key: BRIDGE_SECRET
-        generateValue: true

@@ -1,0 +1,14 @@
+ResenhaFlix V15 — validação
+
+[PASS] JavaScript
+[PASS] Dois repositórios padrão
+[PASS] Filtro animeextension
+[PASS] Explorar cache rápido
+[PASS] Busca progressiva
+[PASS] Título nos cards
+[PASS] Biblioteca nos cards
+[PASS] Busca global nas fontes
+[PASS] Leitor nativo mantido
+[PASS] Bridge batch
+[PASS] Bridge Python
+[PASS] PWA v15

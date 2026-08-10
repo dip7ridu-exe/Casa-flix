@@ -1,44 +1,68 @@
-# ResenhaFlix V14 — Native Manga Reader
+# ResenhaFlix V15 — Manga Stable
 
-## Leitor nativo
-A leitura não usa mais iframe/site original como fluxo principal.
+## O que foi corrigido
 
-Recursos:
-- Vertical / Webtoon
-- Página esquerda → direita
-- Página direita → esquerda
-- ajuste à largura / página inteira / tamanho original
-- espaçamento 0 / 8 / 16 px
-- controle de brilho
-- trocar capítulo sem sair do leitor
-- capítulo anterior / próximo
-- progresso salvo por capítulo
-- restauração da página/posição
-- biblioteca de mangás
-- busca diretamente nas fontes instaladas
+### Explorar abre rápido
+A tela Explorar não consulta todas as fontes ao abrir.
+Ela carrega destaques pelo catálogo/cache e só pesquisa as fontes quando:
+- você digita um título;
+- toca em `Buscar nas fontes`;
+- escolhe uma fonte rápida.
 
-## Fontes Keiyoushi
-As extensões Keiyoushi continuam sendo a loja/lista de fontes.
-O navegador não executa os APK/JAR Kotlin das extensões.
+### Busca progressiva
+Ao pesquisar um título:
+1. fontes PT-BR/PT são consultadas primeiro;
+2. as quatro primeiras são consultadas em paralelo;
+3. resultados aparecem assim que cada fonte responde;
+4. fontes secundárias continuam em background;
+5. fontes que falham recentemente perdem prioridade por alguns minutos.
 
-Para transformar fontes web compatíveis em:
-busca → mangá → capítulos → páginas,
-a V14 inclui `manga-bridge/`.
+### Cards corrigidos
+Todos os cards têm:
+- título;
+- capa;
+- botão principal;
+- botão `＋` / `✓` da Biblioteca.
 
-O frontend tenta acesso direto primeiro quando CORS permite. Quando não permite, usa o Manga Bridge configurado em:
-Configurações → Manga Bridge.
+Resultado vindo da fonte:
+`▶ Ler capítulos`
 
-## Manga Bridge
-Pasta:
-`manga-bridge/`
+Resultado apenas do catálogo:
+`🔎 Buscar nas fontes`
 
-Inclui FastAPI, proxy seguro de imagens com assinatura e parser genérico para layouts web comuns.
+### Biblioteca
+A biblioteca aceita:
+- títulos do catálogo;
+- resultados reais de fontes.
 
-## GitHub Pages
-Continue hospedando o frontend no GitHub Pages.
-O bridge precisa rodar em um serviço que execute Python, como Render/Railway/Fly/etc.
+Um título salvo apenas pelo catálogo continua pesquisável nas fontes quando você tocar para ler.
 
-Depois, coloque a URL do bridge nas configurações do ResenhaFlix.
+### Repositórios
+Padrões:
+1. Keiyoushi:
+   https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json
+2. Aniyomi secundário:
+   https://raw.githubusercontent.com/aniyomiorg/aniyomi-extensions/repo/index.min.json
+
+O ResenhaFlix detecta extensões `animeextension` e não mistura essas extensões na tela de mangás.
+O Keiyoushi `index.min.json` ainda possui fallback automático para `index.json`.
+
+### Manga Bridge
+Continua incluído em `manga-bridge/`.
+
+A V15 também adiciona:
+`POST /api/batch/search`
+
+para permitir busca paralela de até 8 fontes no backend.
+
+## Observação importante
+As extensões Android do Mihon/Keiyoushi contêm lógica Kotlin própria.
+O ResenhaFlix não executa os APK/JAR no GitHub Pages.
+
+O modo direto funciona apenas em sites que permitem CORS e layouts compatíveis.
+Para uma experiência consistente de:
+busca → detalhes → capítulos → páginas → leitor vertical,
+configure o Manga Bridge.
 
 ## PWA
-Cache: resenhaflix-shell-v14
+Cache: resenhaflix-shell-v15

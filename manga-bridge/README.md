@@ -1,31 +1,23 @@
-# ResenhaFlix Manga Bridge
+# Manga Bridge V15
 
-O GitHub Pages é estático e não consegue fazer requisições para muitos sites de mangá por causa de CORS, cookies e proteção de hotlink.
+Backend opcional para fontes que bloqueiam CORS.
 
-Este bridge:
-- valida a fonte contra o repositório Keiyoushi;
-- pesquisa mangás em fontes web compatíveis;
-- lê detalhes e capítulos;
-- extrai páginas;
-- faz proxy das imagens com URL assinada;
-- nunca executa o APK/JAR Android da extensão;
-- não tenta quebrar DRM, login, paywall ou desafio anti-bot.
-
-## Rodar local
-
+## Local
 ```bash
 pip install -r requirements.txt
-uvicorn server:app --reload --port 8787
+uvicorn server:app --port 8787
 ```
 
-No ResenhaFlix:
+Depois configure no ResenhaFlix:
 `Configurações → Manga Bridge → http://localhost:8787`
 
-## Render
+## Endpoints
+- GET /api/health
+- POST /api/search
+- POST /api/batch/search
+- POST /api/popular
+- POST /api/manga
+- POST /api/chapter
+- GET /api/image
 
-Há um `render.yaml`. Crie um Web Service usando esta pasta/repositório e depois coloque a URL pública no ResenhaFlix.
-
-## Compatibilidade
-
-O parser genérico cobre layouts web comuns, especialmente sites com estruturas equivalentes a Madara/WordPress e leitores HTML tradicionais.
-Fontes Keiyoushi que usam APIs próprias, GraphQL específico, WebView, tokens ou lógica Kotlin personalizada precisam de um adaptador específico no bridge para funcionar 100%.
+O parser é genérico. Fontes com API própria, WebView, captcha, login, paywall ou lógica Kotlin específica podem precisar de um adaptador próprio.
