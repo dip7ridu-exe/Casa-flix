@@ -1,23 +1,24 @@
-# Manga Bridge V15
+# ResenhaFlix Manga Bridge V16
 
-Backend opcional para fontes que bloqueiam CORS.
+O Bridge é recomendado para conseguir ler dentro do ResenhaFlix quando as fontes bloqueiam CORS.
 
-## Local
+Adaptadores incluídos:
+- Madara / WordPress (inclui busca AJAX, capítulos AJAX e leitor de páginas);
+- Saikai Scan (API usada pela extensão atual);
+- parser HTML genérico.
+
+Fontes que exigem login, captcha, WebView ou lógica Kotlin específica podem continuar incompatíveis até receberem um adaptador próprio.
+
+## Rodar local
+
 ```bash
 pip install -r requirements.txt
 uvicorn server:app --port 8787
 ```
 
-Depois configure no ResenhaFlix:
-`Configurações → Manga Bridge → http://localhost:8787`
+Depois coloque `http://localhost:8787` em:
+ResenhaFlix → Configurações → Mangás → Manga Bridge.
 
-## Endpoints
-- GET /api/health
-- POST /api/search
-- POST /api/batch/search
-- POST /api/popular
-- POST /api/manga
-- POST /api/chapter
-- GET /api/image
+## Render
 
-O parser é genérico. Fontes com API própria, WebView, captcha, login, paywall ou lógica Kotlin específica podem precisar de um adaptador próprio.
+O `render.yaml` já está preparado. Após publicar, use a URL HTTPS do serviço no campo Manga Bridge.

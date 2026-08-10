@@ -1,7 +1,7 @@
 {
   "name": "ResenhaFlix",
   "short_name": "ResenhaFlix",
-  "description": "Filmes, séries, animes e mangás em uma interface pessoal.",
+  "description": "Filmes, séries, animes e mangás.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
