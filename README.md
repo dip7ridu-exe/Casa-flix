@@ -1,34 +1,46 @@
-# ResenhaFlix V19 — Category Mega Menu + Manga Modern
+# ResenhaFlix V20 — Manga Fallback + Source Priority
 
-## Categorias
-O seletor de categorias saiu da fileira de chips e virou um mega-menu inspirado no padrão visual mostrado nas referências:
-- botão `Categorias` na navegação;
-- coluna Explorar;
-- grade de gêneros;
-- gênero selecionado em laranja;
-- página de gênero com título, ícone, descrição, Populares e Novidades.
+## Fontes de vídeo
+A ordem configurada em Configurações → Avançado → Fontes de vídeo passou a definir prioridade.
+A primeira linha vale mais, depois a segunda e assim por diante.
 
-No mobile, o menu vira um painel em duas colunas.
+O sistema ainda considera:
+- fonte principal escolhida no player;
+- fonte que funcionou no episódio anterior;
+- histórico de sucesso/falha;
+- qualidade.
+
+Os padrões distribuídos continuam FrostStream + WatchHub. Fontes adicionais já salvas pelo usuário são preservadas.
 
 ## Mangás
-A página de Mangás foi limpa e redesenhada:
-- cabeçalho compacto;
-- abas Explorar / Biblioteca / Extensões;
-- pesquisa em português e inglês;
-- Em alta em carrossel;
-- Descobrir agora em cards compactos;
-- Extensões com visual mais discreto;
-- menos avisos técnicos na tela principal.
+A V20 mantém o leitor nativo, mas adiciona um caminho que não depende dele funcionar.
 
-## Detalhes do mangá
-Visual inspirado na referência MangaFire:
-- capa grande à esquerda;
-- título e badges;
-- botão Começar a ler;
-- botão Seguir;
-- capítulos em lista limpa;
-- idioma visível;
-- interface toda em português.
+### Modo site dentro do ResenhaFlix
+Na página Explorar sempre aparece `Abrir uma fonte diretamente`.
+
+As extensões instaladas aparecem Português primeiro.
+Ao tocar em uma fonte, o site da fonte abre dentro de uma janela do próprio ResenhaFlix.
+
+Se houver uma pesquisa, o ResenhaFlix tenta URLs comuns de busca.
+O botão `Outra busca` alterna entre formatos de busca.
+
+### Fallback automático
+Se detalhes/capítulos não carregarem:
+`Abrir este mangá no modo site`.
+
+Se as páginas do capítulo não carregarem:
+`Ler no modo site`.
+
+### Extensões
+Cada extensão tem novamente:
+- Instalar / Instalada
+- Abrir fonte
+
+`Abrir fonte` usa o modo site interno.
+
+## Limite do modo site
+Alguns sites bloqueiam iframe via CSP/X-Frame-Options. A V20 não contorna essa proteção.
+Nesses casos há `Abrir fora`.
 
 ## PWA
-Cache: `resenhaflix-shell-v19`
+Cache: resenhaflix-shell-v20
