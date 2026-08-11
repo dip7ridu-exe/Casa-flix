@@ -1,39 +1,47 @@
-# ResenhaFlix V27 — Smart Manga + Internal SoundCloud + dLivros Finder
+# ResenhaFlix V28 — Manga Fast + Books PT-BR + Netflix Details
 
 ## Mangás
-A busca agora considera:
-- título inglês;
-- romaji;
-- título nativo;
-- synonyms do AniList;
-- tradução automática inglês → PT-BR via MyMemory;
-- heurísticas de nomes comuns;
-- aliases aprendidos de resultados anteriores.
+Correções principais:
+- selecionar `5 fontes` agora pesquisa exatamente 5;
+- não existe mais busca escondida em 15 fontes;
+- aliases PT-BR são calculados uma vez por busca;
+- cada fonte tenta no máximo 3 nomes prioritários;
+- endpoints de busca da fonte são tentados em paralelo;
+- timeout foi reduzido;
+- links `/series/<slug>` inventados foram removidos.
 
-Exemplo:
-`The Infinite Mage` também tenta `Mago do Infinito` e `Mago Infinito`.
+URLs diretas só aparecem quando:
+1. a própria busca da fonte devolveu a URL; ou
+2. existe um mapeamento explicitamente validado.
 
-Quando um resultado traduzido é encontrado, o nome é salvo localmente para buscas futuras.
-
-Para LycanToons existe ainda um atalho inteligente usando:
-`https://lycantoons.com/series/<slug-do-alias>`
-
-Ele é mostrado como `Atalho provável` quando não foi possível confirmar via CORS.
-
-## Música / SoundCloud
-- faixas SoundCloud são reproduzidas dentro do ResenhaFlix com o Widget oficial;
-- cards SoundCloud mostram apenas `Ouvir inteira`;
-- o player inferior não mostra botão para sair do ResenhaFlix quando a origem é SoundCloud;
-- colar uma URL pública SoundCloud continua tocando dentro do site;
-- pesquisa por nome no SoundCloud dentro do ResenhaFlix usa o Worker opcional incluído no ZIP;
-- sem Worker, Audius/iTunes continuam como fallback, sem botão de pesquisa externa SoundCloud.
+Exemplo validado:
+`The Infinite Mage` → `Mago do Infinito`
+LycanToons:
+`https://lycantoons.com/series/mago-do-infinito`
 
 ## Livros
-Cada livro agora possui:
-`🔎 Achar no dLivros`
+- Open Library exige `language:por`;
+- `lang=pt` é enviado para priorizar edição em português;
+- quando existe edição portuguesa no resultado, o título dessa edição é usado;
+- Gutendex agora usa somente `languages=pt`;
+- dLivros não recebe mais slugs inventados.
 
-O botão tenta montar a URL provável do livro usando título + autor.
-O ResenhaFlix não importa nem automatiza downloads vindos do dLivros.
+O botão `Procurar no dLivros` faz uma pesquisa restrita ao domínio `dlivros.com/livro`, evitando os erros 404 causados por URLs adivinhadas.
+
+## Filmes / Séries / Animes
+Tela de detalhes redesenhada inspirada no fluxo visual da Netflix:
+- backdrop grande;
+- gradientes cinematográficos;
+- título em destaque;
+- botão Assistir / Continuar;
+- Minha Lista circular;
+- Gostei;
+- metadados e HD;
+- sinopse em coluna;
+- elenco / gêneros;
+- episódios para séries;
+- Títulos semelhantes;
+- layout desktop e mobile separados.
 
 ## PWA
-Cache: `resenhaflix-shell-v27`
+Cache: `resenhaflix-shell-v28`.
