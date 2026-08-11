@@ -1,49 +1,58 @@
-# ResenhaFlix V23 — Stable Playback
+# ResenhaFlix V24 — Manga Sources + Música + Livros
 
-## Botão Fontes
-- O botão `Trocar fonte` ganhou espaço próprio.
-- Foi movido visualmente para a esquerda.
-- Existe uma pequena divisória antes do botão X.
-- No mobile o espaçamento é menor, mas os dois botões não se sobrepõem.
+## Mangás
+A área de Mangás foi simplificada para somente:
+- Explorar
+- Biblioteca
 
-## Reprodução mais estável
-A V23 diferencia:
-1. fonte que não inicia;
-2. fonte que inicia, mas fica travando durante o filme/episódio.
+Não existe mais leitura de mangá dentro do ResenhaFlix.
 
-### Monitor de buffering
-Durante a reprodução o ResenhaFlix observa:
-- `waiting`;
-- `stalled`;
-- tempo contínuo sem buffer suficiente;
-- travamentos repetidos em uma janela de 90 segundos.
+Ao tocar em `Buscar fontes`, o site lê o repositório Keiyoushi, seleciona somente fontes PT/PT-BR e consulta entre 5 e 15 fontes (10 por padrão). Resultados confirmados aparecem primeiro. Se CORS impedir a confirmação, o botão abre a busca no site original e não afirma que o título foi encontrado.
 
-Quando uma fonte fica instável:
-- salva a posição atual;
-- penaliza essa fonte no ranking;
-- tenta outra fonte automaticamente;
-- continua aproximadamente do mesmo segundo;
-- se nenhuma alternativa funcionar, tenta voltar para a fonte anterior.
+## Música
+Nova página com:
+- Faixas
+- Álbuns
+- Artistas
+- iTunes Search API como padrão
+- prévia de áudio quando fornecida pela API
+- URLs JSON adicionais
+- importação de `.json`
 
-### Aprendizado
-O histórico de fontes agora também salva:
-- quantidade de travamentos;
-- travamentos graves;
-- último travamento;
-- duração do último travamento.
+O ResenhaFlix não cria download de música.
 
-Isso reduz a chance de um episódio futuro escolher novamente uma fonte que iniciou normalmente, mas travou muito.
+## Livros
+Nova página com:
+- Todos
+- Grátis
+- Minha estante
 
-## HLS
-- `loadVideo()` agora é aguardado antes do teste da fonte.
-- Buffer máximo aumentado.
-- HLS adaptativo usa margem mais conservadora ao subir qualidade.
-- Uma falha de rede recebe uma tentativa de `startLoad()`.
-- Uma falha de mídia recebe uma tentativa de `recoverMediaError()`.
-- Depois disso entra a troca automática de fonte.
+Fontes:
+- Open Library para busca geral
+- Gutendex / Project Gutenberg para obras gratuitas
 
-## Arquivos diretos
-O elemento `<video>` passa para `preload=auto` durante a reprodução para permitir que o navegador faça buffer à frente.
+Downloads e leitor interno só aparecem em itens marcados como domínio público/liberados.
+
+Formatos:
+- EPUB
+- HTML
+- TXT
+- PDF
+
+EPUB usa epub.js carregado somente quando necessário.
+
+## APIs / URLs / JSON
+Nas páginas Música ou Livros, toque em `⚙ Fontes`.
+
+Você pode:
+- trocar a API principal;
+- adicionar URLs JSON;
+- usar `{query}` na URL;
+- importar arquivo `.json`.
+
+Exemplos:
+- `examples/music-source.example.json`
+- `examples/books-source.example.json`
 
 ## PWA
-Cache: `resenhaflix-shell-v23`.
+Cache: `resenhaflix-shell-v24`

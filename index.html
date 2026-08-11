@@ -1993,6 +1993,87 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  .primeSourceOnly::after{right:-8px;top:7px;bottom:7px}
 }
 
+
+/* =========================================================
+   ResenhaFlix v24 — Manga Sources + Música + Livros
+   ========================================================= */
+.m24Shell{max-width:1280px;margin:0 auto}
+.m24Header{display:flex;gap:14px;align-items:flex-end;margin:0 0 18px}
+.m24HeaderText{flex:1;min-width:0}.m24Eyebrow{font-size:10px;color:var(--accent);font-weight:950;letter-spacing:1.3px}
+.m24Header h2{margin:4px 0 4px;font-size:30px;color:#fff;letter-spacing:-.8px}.m24Header p{margin:0;color:#858790;font-size:11px;line-height:1.5}
+.m24Tabs{display:flex;gap:5px;background:#15161a;border:1px solid #292b31;border-radius:8px;padding:4px}
+.m24Tabs button{min-height:36px;border:0;border-radius:5px;background:transparent;color:#91929a;padding:7px 12px;font-size:10px;font-weight:900}
+.m24Tabs button.active{background:#282a31;color:#fff}
+.m24Search{display:grid;grid-template-columns:minmax(220px,1fr) 145px 110px;gap:8px;margin-bottom:11px}
+.m24Search input,.m24Search select{min-height:44px;border:1px solid #303139;background:#15161b;color:#fff;border-radius:7px;padding:9px 11px;outline:0}
+.m24Search input:focus,.m24Search select:focus{border-color:var(--accent)}.m24Search button{min-height:44px;border:0;border-radius:7px;background:var(--accent);color:#1d120b;font-weight:950}
+.m24Hint{font-size:10px;color:#777982;line-height:1.5;margin:0 0 17px}
+.m24ShelfHead{display:flex;align-items:end;gap:10px;margin:19px 0 10px}.m24ShelfHead h3{margin:0;font-size:19px;color:#fff}.m24ShelfHead small{font-size:9px;color:#777983;letter-spacing:1px;text-transform:uppercase}
+.m24Grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:17px 13px}
+.m24Card{min-width:0}.m24Cover{position:relative;aspect-ratio:2/3;background:#202126 center/cover no-repeat;border-radius:7px;overflow:hidden;border:1px solid #2d2e34}
+.m24Cover:after{content:"";position:absolute;inset:auto 0 0;height:36%;background:linear-gradient(transparent,#0009);pointer-events:none}
+.m24CardTitle{margin-top:8px;font-size:12px;color:#f0f0f2;font-weight:900;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:31px}
+.m24CardMeta{font-size:9px;color:#7d7f87;margin-top:3px}.m24Actions{display:grid;grid-template-columns:1fr 38px;gap:6px;margin-top:8px}
+.m24Actions button{min-height:36px;border-radius:6px;border:1px solid #34363d;background:#1c1e24;color:#ddd;font-size:9px;font-weight:900;padding:6px 8px}
+.m24Actions .find{background:var(--accent);border-color:var(--accent);color:#20130a}.m24Actions .saved{background:#fff;color:#111;border-color:#fff}
+.m24LibraryEmpty{padding:50px 12px;text-align:center;color:#83858d}.m24LibraryEmpty b{display:block;color:#ddd;font-size:17px;margin-bottom:5px}
+.m24SourceStatus{padding:10px;border:1px solid #2d3038;background:#14161b;border-radius:8px;color:#9698a0;font-size:10px;line-height:1.45}
+.m24SourceGrid{display:flex;flex-direction:column;gap:8px;margin-top:9px}
+.m24SourceCard{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid #2b2e36;background:#15171c;border-radius:9px}
+.m24SourceCard.confirmed{border-color:#28513a;background:#111a15}.m24SourceIcon{width:42px;height:42px;border-radius:8px;background:#24262c center/cover no-repeat;display:grid;place-items:center;font-size:11px;font-weight:950}
+.m24SourceName{font-size:11px;font-weight:900;color:#eee}.m24SourceMeta{font-size:9px;color:#81848d;margin-top:3px}.m24SourceResult{font-size:9px;color:#a2d9b1;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m24SourceCard button{min-height:36px;border:1px solid #38404a;background:#1c222b;color:#fff;border-radius:6px;padding:7px 10px;font-size:9px;font-weight:900}
+.m24SourceCard.confirmed button{background:#fff;color:#111;border-color:#fff}
+.m24SourceProgress{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:9px 0 2px}.m24SourceProgress::-webkit-scrollbar{display:none}
+.m24SourceProgress span{flex:none;padding:5px 7px;border-radius:999px;border:1px solid #343740;background:#1a1c22;color:#8e9199;font-size:8.5px}
+.m24SourceProgress span.ok{border-color:#2b583e;color:#9adeae;background:#112018}.m24SourceProgress span.fail{color:#b47c83;border-color:#4c3036}.m24SourceProgress span.loading:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;border:1px solid #777;border-top-color:#fff;margin-right:5px;animation:spin .65s linear infinite}
+
+/* Hub genérico */
+.mediaHub{max-width:1280px;margin:0 auto}.mediaHubHero{display:flex;align-items:flex-end;gap:14px;margin-bottom:16px}
+.mediaHubTitle{flex:1}.mediaHubTitle small{font-size:10px;color:var(--accent);letter-spacing:1.2px;font-weight:950}.mediaHubTitle h2{font-size:31px;margin:4px 0;color:#fff;letter-spacing:-.8px}.mediaHubTitle p{font-size:11px;color:#81838b;margin:0;line-height:1.45}
+.mediaSourcesBtn{min-height:41px;border:1px solid #383a42;background:#1b1d23;color:#ddd;border-radius:7px;padding:7px 11px;font-size:10px;font-weight:900}
+.mediaSearchBar{display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:8px;margin:13px 0 10px}
+.mediaSearchBar input{min-height:46px;border:1px solid #33363d;background:#16181d;color:#fff;border-radius:7px;padding:10px 12px;font-size:14px;outline:0}.mediaSearchBar input:focus{border-color:var(--accent)}
+.mediaSearchBar button{min-height:46px;border:0;background:var(--accent);color:#21150d;border-radius:7px;padding:9px 16px;font-weight:950}
+.mediaTabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 12px}.mediaTabs::-webkit-scrollbar{display:none}.mediaTabs button{flex:none;min-height:36px;border:1px solid #34363d;background:#181a1f;color:#92949b;border-radius:999px;padding:7px 12px;font-size:10px;font-weight:900}.mediaTabs button.active{background:#fff;color:#111;border-color:#fff}
+.mediaQuick{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 0 14px}.mediaQuick::-webkit-scrollbar{display:none}.mediaQuick button{flex:none;min-height:32px;border:1px solid #30323a;background:#15171c;color:#999ba3;border-radius:6px;padding:5px 9px;font-size:9px}
+.mediaResultMeta{font-size:10px;color:#777982;margin:4px 0 11px}.mediaEmpty{padding:44px 10px;text-align:center;color:#7f8189}.mediaEmpty b{display:block;color:#ddd;font-size:16px;margin-bottom:6px}
+
+/* Música */
+.musicTrackList{display:flex;flex-direction:column;gap:7px}.musicTrack{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px;border:1px solid #292b31;background:#15171b;border-radius:8px}
+.musicTrackCover{width:58px;height:58px;border-radius:6px;background:#24262c center/cover no-repeat}.musicTrackTitle{font-size:11px;color:#eee;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.musicTrackArtist{font-size:9px;color:#8c8e96;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.musicTrackActions{display:flex;gap:5px}.musicTrackActions button{min-height:34px;border:1px solid #363943;background:#1d2026;color:#ddd;border-radius:6px;padding:6px 9px;font-size:9px;font-weight:900}.musicTrackActions .preview{background:var(--accent);color:#21140c;border-color:var(--accent)}
+.musicAlbumGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px 12px}.musicAlbumCover{aspect-ratio:1/1;background:#22242a center/cover no-repeat;border-radius:8px;border:1px solid #2e3037}.musicAlbumTitle{font-size:11px;color:#eee;font-weight:900;margin-top:7px;line-height:1.3}.musicAlbumArtist{font-size:9px;color:#81838b;margin-top:3px}.musicAlbum button{margin-top:7px;min-height:32px;border:1px solid #34363e;background:#1a1c22;color:#ddd;border-radius:6px;padding:5px 8px;font-size:9px;font-weight:850}
+.musicArtistGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:13px}.musicArtist{padding:15px;border:1px solid #292c33;background:#15171c;border-radius:9px;text-align:center}.musicArtistAvatar{width:78px;height:78px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(135deg,#ef7d32,#512c6c);display:grid;place-items:center;font-size:24px;font-weight:950;color:#fff}.musicArtistName{font-size:12px;font-weight:900;color:#eee}.musicArtistGenre{font-size:9px;color:#81838b;margin-top:4px}.musicArtist button{margin-top:10px;min-height:32px;border:1px solid #363943;background:#1e2027;color:#ddd;border-radius:6px;padding:5px 8px;font-size:9px}
+.musicMiniPlayer{position:fixed;left:50%;bottom:18px;z-index:160;transform:translate(-50%,calc(100% + 50px));opacity:0;pointer-events:none;width:min(780px,calc(100vw - 24px));display:grid;grid-template-columns:46px minmax(110px,1fr) minmax(220px,2fr) auto 34px;gap:9px;align-items:center;padding:8px;border:1px solid #34363e;background:#15171cf5;border-radius:10px;box-shadow:0 14px 45px #000b;transition:.2s}
+.musicMiniPlayer.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}.musicMiniCover{width:46px;height:46px;border-radius:5px;background:#24262c center/cover no-repeat}.musicMiniInfo{min-width:0}.musicMiniInfo b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.musicMiniInfo small{display:block;font-size:8.5px;color:#858791;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.musicMiniPlayer audio{width:100%;height:35px}.musicMiniPlayer button{min-height:33px;border:1px solid #383b44;background:#202229;color:#ddd;border-radius:6px;padding:5px 8px;font-size:9px;font-weight:850}.musicMiniPlayer #musicMiniClose{width:34px;padding:0;font-size:17px}
+
+/* Livros */
+.bookGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}.bookCard{display:grid;grid-template-columns:94px minmax(0,1fr);gap:11px;padding:10px;border:1px solid #292c34;background:#14171d;border-radius:9px;min-height:150px}.bookCover{width:94px;aspect-ratio:2/3;border-radius:6px;background:#24262d center/cover no-repeat}.bookInfo{display:flex;flex-direction:column;min-width:0}.bookTitle{font-size:12px;font-weight:900;color:#eee;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.bookAuthor{font-size:9px;color:#858892;margin-top:4px}.bookBadges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.bookBadges span{padding:4px 6px;border-radius:4px;border:1px solid #30343d;background:#1b1e25;color:#92959d;font-size:8px}.bookBadges .free{color:#99dfad;border-color:#2c553b;background:#112019}.bookActions{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto;padding-top:9px}.bookActions button{min-height:32px;border:1px solid #363a44;background:#1d2027;color:#ddd;border-radius:5px;padding:5px 8px;font-size:8.5px;font-weight:900}.bookActions .read{background:var(--accent);color:#21140c;border-color:var(--accent)}.bookActions .saved{background:#fff;color:#111;border-color:#fff}
+.bookReader{width:min(1160px,98vw);height:min(94dvh,900px);display:flex;flex-direction:column;background:#101319;border:1px solid #2b3039;border-radius:12px;overflow:hidden}.bookReaderTop{flex:none;display:flex;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #292e38;background:#171a21}.bookReaderHeading{flex:1;min-width:0}.bookReaderHeading>div{font-size:12px;color:#eee;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bookReaderHeading small{font-size:8.5px;color:#7f8590}.bookReaderIcon,.bookReaderAction{min-height:38px;border:1px solid #343945;background:#20242d;color:#ddd;border-radius:6px;padding:6px 9px;font-size:9px;font-weight:900}.bookReaderIcon{width:38px;padding:0;font-size:20px}
+.bookReaderViewport{position:relative;flex:1;min-height:0;background:#f4f0e8;overflow:auto}.bookReaderLoading{position:absolute;inset:0;display:grid;place-items:center;color:#555;z-index:3;background:#f4f0e8}.bookReaderLoading.hidden{display:none}.bookEpubArea,#bookHtmlFrame,#bookTextReader{display:none;width:100%;height:100%;border:0}.bookEpubArea.active,#bookHtmlFrame.active,#bookTextReader.active{display:block}.bookEpubArea{height:100%}#bookTextReader{box-sizing:border-box;overflow:auto;margin:0;padding:30px max(24px,9vw);white-space:pre-wrap;color:#1d1d1d;background:#f7f3e9;font:17px/1.75 Georgia,serif}.bookReaderBottom{flex:none;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#171a21;border-top:1px solid #292e38}.bookReaderBottom span{flex:1;text-align:center;color:#878d98;font-size:9px}.bookReaderBottom button{min-height:36px;border:1px solid #343945;background:#20242d;color:#ddd;border-radius:6px;padding:6px 10px;font-size:9px;font-weight:900}
+
+/* Fontes mídia */
+.mediaSourcesPanel{width:min(760px,96vw);max-height:90dvh;display:flex;flex-direction:column;overflow:hidden;background:#11141a;border:1px solid #2c313b;border-radius:12px}.mediaSourcesHead{display:flex;gap:10px;align-items:center;padding:15px;border-bottom:1px solid #292e38}.mediaSourcesHead>div{flex:1}.mediaSourcesHead small{font-size:9px;color:#818793;letter-spacing:1.1px;font-weight:900}.mediaSourcesHead h3{margin:3px 0 0;color:#eee;font-size:19px}.mediaSourcesTabs{display:flex;gap:5px;padding:8px 12px;border-bottom:1px solid #292e38;background:#141820}.mediaSourcesTabs button{min-height:35px;border:1px solid #303642;background:#1a1e27;color:#9299a5;border-radius:6px;padding:6px 10px;font-size:9px;font-weight:900}.mediaSourcesTabs button.active{background:#fff;color:#111;border-color:#fff}
+.mediaSourcesBody{flex:1;min-height:0;overflow-y:auto;padding:12px}.mediaSourcePane{display:none}.mediaSourcePane.active{display:block}.mediaSourceInfo{padding:9px 10px;border:1px solid #29313d;background:#151b24;border-radius:7px;color:#8c95a2;font-size:9.5px;line-height:1.5;margin-bottom:10px}.mediaField{display:block;margin:11px 0}.mediaField span{display:block;color:#a7adb7;font-size:9px;font-weight:900;margin-bottom:5px}.mediaField input,.mediaField textarea{width:100%;box-sizing:border-box;border:1px solid #323844;background:#0d1117;color:#fff;border-radius:7px;padding:9px;outline:0}.mediaField input:focus,.mediaField textarea:focus{border-color:var(--accent)}.jsonFileDrop{display:block;border:1px dashed #39414e;background:#121821;border-radius:8px;padding:13px;cursor:pointer;text-align:center}.jsonFileDrop b{display:block;color:#dbe1e9;font-size:10px}.jsonFileDrop small{display:block;color:#788291;font-size:8.5px;margin-top:4px}.jsonFileDrop input{display:none}.mediaImportStatus{font-size:9px;color:#84d39e;margin-top:6px}.mediaSourcesFooter{flex:none;display:flex;gap:8px;justify-content:flex-end;padding:10px 12px;border-top:1px solid #292e38;background:#141820}
+
+@media(max-width:760px){
+ #page.musicPageModern,#page.booksPageModern,#page.mangaPageV24{padding-top:72px!important}
+ #page.musicPageModern>h2,#page.booksPageModern>h2,#page.mangaPageV24>h2{display:none}
+ .m24Header{display:block}.m24Header h2,.mediaHubTitle h2{font-size:26px}.m24Tabs{margin-top:10px;width:100%}.m24Tabs button{flex:1}
+ .m24Search{grid-template-columns:1fr 108px}.m24Search input{grid-column:1/-1;font-size:16px}.m24Search button{grid-column:2/3}
+ .m24Grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 10px}.m24SourceCard{grid-template-columns:38px minmax(0,1fr);gap:8px}.m24SourceIcon{width:38px;height:38px}.m24SourceCard button{grid-column:1/-1;width:100%}
+ .mediaHubHero{align-items:flex-start}.mediaHubHero .mediaSourcesBtn{flex:none}.mediaSearchBar{grid-template-columns:1fr 88px}.mediaSearchBar input{font-size:16px}.mediaSearchBar button{padding:7px}
+ .musicTrack{grid-template-columns:52px minmax(0,1fr)}.musicTrackCover{width:52px;height:52px}.musicTrackActions{grid-column:1/-1}.musicTrackActions button{flex:1}
+ .musicAlbumGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 9px}.musicArtistGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .musicMiniPlayer{bottom:calc(74px + env(safe-area-inset-bottom));grid-template-columns:40px minmax(0,1fr) 32px;padding:7px}.musicMiniCover{width:40px;height:40px}.musicMiniPlayer audio{grid-column:1/-1;grid-row:2}.musicMiniPlayer #musicMiniStore{grid-column:1/3;grid-row:3}.musicMiniInfo{grid-column:2/3}.musicMiniPlayer #musicMiniClose{grid-column:3/4;grid-row:1}
+ .bookGrid{grid-template-columns:1fr}.bookCard{grid-template-columns:86px minmax(0,1fr)}.bookCover{width:86px}
+ #bookReaderModal{padding:0;align-items:stretch}.bookReader{width:100%;height:100dvh;max-height:none;border:0;border-radius:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}.bookReaderAction{font-size:0;width:38px;padding:0}.bookReaderAction:after{content:"↗";font-size:16px}#bookTextReader{padding:22px 18px;font-size:16px}
+ #mediaSourcesModal{padding:0;align-items:flex-end}.mediaSourcesPanel{width:100%;max-height:92dvh;border-radius:18px 18px 0 0;border-left:0;border-right:0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
+ .mobileBottomNav{padding-left:5px!important;padding-right:5px!important;scroll-snap-type:x proximity}.mobileBottomNav button{scroll-snap-align:center}
+ body.mediaSourcesOpen,body.bookReaderOpen{overflow:hidden!important;touch-action:none}#mediaSourcesModal .mediaSourcesBody,#bookReaderModal .bookReaderViewport{touch-action:pan-y}
+}
+
 </style>
 </head>
 <body>
@@ -2006,6 +2087,8 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
   <button data-page="series">Séries</button>
   <button data-page="anime">Animes</button>
   <button data-page="manga">Mangás</button>
+  <button data-page="music">Música</button>
+  <button data-page="books">Livros</button>
   <button data-page="list">Minha lista</button>
  </nav>
  <div class="right">
@@ -2024,6 +2107,9 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
    <button type="button" data-category-page="movies">Filmes</button>
    <button type="button" data-category-page="series">Séries</button>
    <button type="button" data-category-page="anime">Animes</button>
+   <button type="button" data-category-page="manga">Mangás</button>
+   <button type="button" data-category-page="music">Música</button>
+   <button type="button" data-category-page="books">Livros</button>
    <button type="button" data-category-page="list">Minha lista</button>
   </aside>
   <section class="categoryMegaGenres">
@@ -2333,6 +2419,80 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  </div>
 </div>
 
+
+<div class="modal" id="mediaSourcesModal">
+ <div class="mediaSourcesPanel">
+  <div class="mediaSourcesHead">
+   <div>
+    <small>FONTES GRATUITAS</small>
+    <h3>APIs, URLs e arquivos JSON</h3>
+   </div>
+   <button type="button" class="close" id="closeMediaSources">×</button>
+  </div>
+  <div class="mediaSourcesTabs">
+   <button type="button" class="active" data-media-source-tab="music">Música</button>
+   <button type="button" data-media-source-tab="books">Livros</button>
+  </div>
+  <div class="mediaSourcesBody">
+   <section class="mediaSourcePane active" data-media-source-pane="music">
+    <div class="mediaSourceInfo">A fonte padrão de música usa a API de busca da iTunes. Você também pode adicionar endpoints JSON próprios ou importar um arquivo <b>.json</b>.</div>
+    <label class="mediaField"><span>API principal</span><input id="musicApiUrl" spellcheck="false"></label>
+    <label class="mediaField"><span>URLs JSON adicionais — uma por linha</span><textarea id="musicJsonUrls" rows="5" spellcheck="false" placeholder="https://exemplo.com/musicas.json&#10;https://api.exemplo.com/search?q={query}"></textarea></label>
+    <label class="jsonFileDrop" for="musicJsonFile"><b>＋ Importar músicas.json</b><small>Array JSON ou objeto com results/items. Máx. 1,5 MB.</small><input type="file" id="musicJsonFile" accept=".json,application/json"></label>
+    <div class="mediaImportStatus" id="musicImportStatus"></div>
+   </section>
+   <section class="mediaSourcePane" data-media-source-pane="books">
+    <div class="mediaSourceInfo">A busca geral usa Open Library. Livros gratuitos usam Gutendex/Project Gutenberg. Downloads só aparecem para itens marcados como domínio público ou explicitamente liberados.</div>
+    <label class="mediaField"><span>Open Library — busca geral</span><input id="booksOpenLibraryUrl" spellcheck="false"></label>
+    <label class="mediaField"><span>Gutendex — livros gratuitos</span><input id="booksGutendexUrl" spellcheck="false"></label>
+    <label class="mediaField"><span>URLs JSON adicionais — uma por linha</span><textarea id="booksJsonUrls" rows="5" spellcheck="false" placeholder="https://exemplo.com/livros.json&#10;https://api.exemplo.com/search?q={query}"></textarea></label>
+    <label class="jsonFileDrop" for="booksJsonFile"><b>＋ Importar livros.json</b><small>Array JSON ou objeto com results/items. Máx. 1,5 MB.</small><input type="file" id="booksJsonFile" accept=".json,application/json"></label>
+    <div class="mediaImportStatus" id="booksImportStatus"></div>
+   </section>
+  </div>
+  <div class="mediaSourcesFooter">
+   <button type="button" class="btn secondary" id="resetMediaSources">Restaurar padrão</button>
+   <button type="button" class="btn primary" id="saveMediaSources">Salvar fontes</button>
+  </div>
+ </div>
+</div>
+
+<div class="modal" id="bookReaderModal">
+ <div class="bookReader">
+  <div class="bookReaderTop">
+   <button type="button" class="bookReaderIcon" id="closeBookReader">‹</button>
+   <div class="bookReaderHeading">
+    <div id="bookReaderTitle">Livro</div>
+    <small id="bookReaderMeta">Leitor ResenhaFlix</small>
+   </div>
+   <button type="button" class="bookReaderAction" id="bookReaderExternal">↗ Abrir original</button>
+   <button type="button" class="bookReaderIcon" id="bookReaderCloseX">×</button>
+  </div>
+  <div class="bookReaderViewport" id="bookReaderViewport">
+   <div class="bookReaderLoading" id="bookReaderLoading">Preparando livro…</div>
+   <div class="bookEpubArea" id="bookEpubArea"></div>
+   <iframe id="bookHtmlFrame" title="Leitor de livro"></iframe>
+   <pre id="bookTextReader"></pre>
+  </div>
+  <div class="bookReaderBottom">
+   <button type="button" id="bookPrevPage">‹ Anterior</button>
+   <span id="bookReaderStatus">Leitura</span>
+   <button type="button" id="bookNextPage">Próxima ›</button>
+  </div>
+ </div>
+</div>
+
+<div class="musicMiniPlayer" id="musicMiniPlayer">
+ <div class="musicMiniCover" id="musicMiniCover"></div>
+ <div class="musicMiniInfo">
+  <b id="musicMiniTitle">Prévia</b>
+  <small id="musicMiniArtist">Cortesia da iTunes</small>
+ </div>
+ <audio id="musicPreviewAudio" controls preload="none"></audio>
+ <button type="button" id="musicMiniStore">Abrir na Apple</button>
+ <button type="button" id="musicMiniClose">×</button>
+</div>
+
 <div class="modal" id="settingsModal">
  <div class="settings settingsV16">
   <div class="settingsHeader">
@@ -2399,6 +2559,8 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  <button type="button" data-mobile-page="series"><span>▤</span><small>Séries</small></button>
  <button type="button" data-mobile-page="anime"><span>✦</span><small>Animes</small></button>
  <button type="button" data-mobile-page="manga"><span>▥</span><small>Mangás</small></button>
+ <button type="button" data-mobile-page="music"><span>♪</span><small>Música</small></button>
+ <button type="button" data-mobile-page="books"><span>▧</span><small>Livros</small></button>
  <button type="button" data-mobile-page="list"><span>＋</span><small>Lista</small></button>
 </nav>
 
@@ -2441,7 +2603,7 @@ const cfg={
  mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0,_stallTimer:null,_stallStartedAt:0,_stallEvents:[],_stallRecovery:false,_stallCooldownUntil:0,_lastStablePlaybackAt:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0,_stallTimer:null,_stallStartedAt:0,_stallEvents:[],_stallRecovery:false,_stallCooldownUntil:0,_lastStablePlaybackAt:0,mangaSourceLimit:Number(localStorage.getItem("rf24_manga_source_limit")||10),mangaRepoV24:null,musicTab:"tracks",musicQuery:"",musicResults:[],booksTab:"all",booksQuery:"",bookResults:[],bookReaderBook:null,bookReaderRendition:null,bookReaderEpub:null,mediaSourceTab:"music"};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -2449,6 +2611,27 @@ const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&
 const base=u=>u.replace(/\/manifest\.json.*$/,"").replace(/\/$/,"");
 const api=(b,p)=>base(b)+"/"+p.replace(/^\/+/,"");
 
+
+const MEDIA_DEFAULT={
+ musicApi:"https://itunes.apple.com/search",
+ musicJsonUrls:"",
+ booksOpenLibrary:"https://openlibrary.org/search.json",
+ booksGutendex:"https://gutendex.com/books",
+ booksJsonUrls:""
+};
+const mediaCfg={
+ musicApi:localStorage.getItem("rf24_music_api")||MEDIA_DEFAULT.musicApi,
+ musicJsonUrls:localStorage.getItem("rf24_music_json_urls")||"",
+ booksOpenLibrary:localStorage.getItem("rf24_books_openlibrary")||MEDIA_DEFAULT.booksOpenLibrary,
+ booksGutendex:localStorage.getItem("rf24_books_gutendex")||MEDIA_DEFAULT.booksGutendex,
+ booksJsonUrls:localStorage.getItem("rf24_books_json_urls")||""
+};
+function safeHttpUrl(url){try{const u=new URL(String(url||""));return /^https?:$/.test(u.protocol)?u.toString():""}catch{return""}}
+function mediaImported(kind){try{return JSON.parse(localStorage.getItem(kind==="music"?"rf24_music_imported":"rf24_books_imported")||"[]")}catch{return[]}}
+function saveMediaImported(kind,data){const key=kind==="music"?"rf24_music_imported":"rf24_books_imported";try{localStorage.setItem(key,JSON.stringify((Array.isArray(data)?data:[]).slice(0,500)))}catch{toast("Arquivo JSON grande demais para salvar neste dispositivo.")}}
+function genericJsonItems(data){if(Array.isArray(data))return data;if(Array.isArray(data?.results))return data.results;if(Array.isArray(data?.items))return data.items;if(Array.isArray(data?.data))return data.data;return[]}
+function localMatch(items,q){const n=normText(q);if(!n)return items;return items.filter(x=>normText(JSON.stringify(x)).includes(n))}
+async function fetchCustomJson(url,query,timeout=5500){let target=String(url||"").trim();if(!target)return[];if(target.includes("{query}"))target=target.replaceAll("{query}",encodeURIComponent(query||""));const u=safeHttpUrl(target);if(!u)return[];const data=await getJSONTimeout(u,timeout);return localMatch(genericJsonItems(data),query)}
 function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),3200)}
 async function getJSON(url){
  const r=await fetch(url,{headers:{Accept:"application/json"}});
@@ -4497,6 +4680,66 @@ async function mangaPage(){
  syncMangaTabs();await renderMangaCurrentTab()
 }
 
+/* Manga V24 */
+const MANGA_REPO_V24="https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json";
+async function loadMangaRepoV24(force=false){
+ if(!force&&S.mangaRepoV24&&Date.now()-Number(S.mangaRepoV24.at||0)<30*60e3)return S.mangaRepoV24.items;
+ try{
+  let data=await getJSONTimeout(MANGA_REPO_V24,7000),items=normalizeMangaRepo(data,MANGA_REPO_V24).filter(x=>x._kind==="manga"&&!String(x.warning||"").includes("NSFW"));
+  if(items.length<10){data=await getJSONTimeout("https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json",10000);items=normalizeMangaRepo(data,MANGA_REPO_V24).filter(x=>x._kind==="manga"&&!String(x.warning||"").includes("NSFW"))}
+  S.mangaRepoV24={at:Date.now(),items};return items
+ }catch(e){console.warn("Keiyoushi",e);return S.mangaRepoV24?.items||[]}
+}
+async function mangaPortugueseSourcesV24(){
+ const exts=await loadMangaRepoV24(false),all=[];
+ for(const e of exts)for(const s of (e.sources||[]))if(isPortugueseLang(s.lang))all.push({...s,extension:e.name,pkg:e.pkg,icon:e.icon||"",warning:e.warning||""});
+ const byHost=new Map();
+ for(const s of sortMangaSourcesPtFirst(all)){let h=s.homeUrl;try{h=new URL(s.homeUrl).hostname.replace(/^www\./,"")}catch{}if(!byHost.has(h))byHost.set(h,s)}
+ return[...byHost.values()]
+}
+function mangaV24Title(m){return m?._rfTitle||mangaDisplayTitle(m)||"Mangá"}
+function mangaV24Cover(m){return m?._rfCover||m?.coverImage?.extraLarge||m?.coverImage?.large||m?.thumbnail||""}
+function mangaV24Saved(m){return mangaIsSavedItem(m)}
+function mangaV24Card(m){
+ const saved=mangaV24Saved(m),key=mangaItemKey(m),title=mangaV24Title(m);
+ return`<article class="m24Card" data-m24-key="${esc(key)}"><div class="m24Cover" style="background-image:url('${esc(mangaV24Cover(m))}')"></div><div class="m24CardTitle">${esc(title)}</div><div class="m24CardMeta">${esc(m.format||m.status||"Mangá")} ${m.chapters?`• ${esc(m.chapters)} cap.`:""}</div><div class="m24Actions"><button type="button" class="find" data-m24-find>Buscar fontes</button><button type="button" class="${saved?"saved":""}" data-m24-save>${saved?"✓":"＋"}</button></div></article>`
+}
+function bindMangaV24Cards(root,items){
+ root.querySelectorAll("[data-m24-key]").forEach(card=>{const m=items.find(x=>mangaItemKey(x)===card.dataset.m24Key);if(!m)return;card.querySelector("[data-m24-find]").onclick=()=>findMangaAcrossSourcesV24(m);card.querySelector("[data-m24-save]").onclick=()=>{toggleMangaLibrary(m);const b=card.querySelector("[data-m24-save]"),saved=mangaV24Saved(m);b.classList.toggle("saved",saved);b.textContent=saved?"✓":"＋";if(S.mangaTab==="library"&&!saved)renderMangaLibrary()}})
+}
+function renderMangaCurrentTab(){if(S.mangaTab==="extensions")S.mangaTab="explore";if(S.mangaTab==="library")renderMangaLibrary();else renderMangaExplore();$$("[data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))}
+async function renderMangaExplore(){
+ const area=$("#mangaContent");if(!area)return;const q=String(S.mangaQuery||"").trim(),token=++S.mangaSearchToken;area.innerHTML='<div class="loading">Carregando mangás…</div>';
+ try{const page=await aniListManga(q,1);if(token!==S.mangaSearchToken)return;const items=(page.media||[]).map(normalizeAniMedia);S.mangaCatalog=items;area.innerHTML=`<div class="m24ShelfHead"><h3>${q?`Resultados para “${esc(q)}”`:"Em alta"}</h3><small>${items.length} títulos</small></div><div class="m24Grid" id="m24ExploreGrid">${items.map(mangaV24Card).join("")||'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'}</div>`;bindMangaV24Cards($("#m24ExploreGrid"),items)}catch(e){console.error(e);area.innerHTML='<div class="mediaEmpty"><b>Não consegui carregar os mangás.</b>Tente novamente em alguns segundos.</div>'}
+}
+function renderMangaLibrary(){const area=$("#mangaContent");if(!area)return;const items=mangaLibrary();area.innerHTML=items.length?`<div class="m24ShelfHead"><h3>Biblioteca</h3><small>${items.length} salvos</small></div><div class="m24Grid" id="m24LibraryGrid">${items.map(mangaV24Card).join("")}</div>`:'<div class="m24LibraryEmpty"><b>Sua biblioteca está vazia.</b>Adicione mangás pelo Explorar para encontrá-los rapidamente depois.</div>';if(items.length)bindMangaV24Cards($("#m24LibraryGrid"),items)}
+function m24SourceSearchUrl(source,title){const candidates=mangaWebSearchCandidates(source,title);return candidates.find(safeHttpUrl)||safeHttpUrl(source.homeUrl)}
+function m24SourceChip(source,status){return`<span class="${status}">${esc(source.name||source.extension||"Fonte")}</span>`}
+function m24SourceCard(source,result=null){
+ const exact=result?.url&&safeHttpUrl(result.url),target=exact||m24SourceSearchUrl(source,S.mangaMatchMedia?mangaV24Title(S.mangaMatchMedia):S.mangaQuery),confirmed=!!exact;
+ return`<article class="m24SourceCard ${confirmed?"confirmed":""}"><div class="m24SourceIcon" ${source.icon?`style="background-image:url('${esc(source.icon)}')"`:""}>${source.icon?"":esc((source.name||"?").slice(0,2).toUpperCase())}</div><div><div class="m24SourceName">${esc(source.name||source.extension||"Fonte")}</div><div class="m24SourceMeta">🇧🇷 Português • ${esc(source.extension||"Keiyoushi")}</div><div class="m24SourceResult">${confirmed?`✓ Encontrado: ${esc(result.title||mangaV24Title(S.mangaMatchMedia))}`:"Pesquisar diretamente no site original"}</div></div><button type="button" data-m24-open="${esc(target||source.homeUrl)}">${confirmed?"Abrir mangá":"Pesquisar na fonte"} ↗</button></article>`
+}
+function bindM24SourceOpen(root){root.querySelectorAll("[data-m24-open]").forEach(b=>b.onclick=()=>{const u=safeHttpUrl(b.dataset.m24Open);if(u)window.open(u,"_blank","noopener,noreferrer")})}
+async function findMangaAcrossSourcesV24(media){
+ const title=mangaV24Title(media),token=++S.mangaMatchToken,limit=Math.max(5,Math.min(15,Number(S.mangaSourceLimit||10)));S.mangaMatchMedia=media;S.mangaMatchResults=[];
+ $("#mangaMatchModal").classList.add("open");document.body.classList.add("mangaMatchOpen");$("#mangaMatchTitle").textContent=title;$("#mangaMatchStatus").innerHTML="Carregando fontes brasileiras…";$("#mangaMatchProgress").innerHTML="";$("#mangaMatchList").innerHTML='<div class="loading">Preparando a busca…</div>';
+ const all=await mangaPortugueseSourcesV24();if(token!==S.mangaMatchToken)return;const sources=all.slice(0,limit);
+ if(!sources.length){$("#mangaMatchStatus").textContent="O repositório não retornou fontes em português agora.";$("#mangaMatchList").innerHTML='<div class="mangaEmpty">Tente novamente mais tarde.</div>';return}
+ $("#mangaMatchStatus").innerHTML=`Buscando em <b>${sources.length}</b> fontes em português. Resultados confirmados aparecem primeiro; quando o navegador não consegue verificar uma fonte, você ainda pode abrir a pesquisa no site original.`;
+ const results=new Map(),states=new Map(sources.map(s=>[s.homeUrl,"loading"]));
+ const render=()=>{if(token!==S.mangaMatchToken)return;$("#mangaMatchProgress").innerHTML=`<div class="m24SourceProgress">${sources.map(s=>m24SourceChip(s,states.get(s.homeUrl)||"loading")).join("")}</div>`;const ordered=[...sources].sort((a,b)=>(results.has(b.homeUrl)?1:0)-(results.has(a.homeUrl)?1:0));$("#mangaMatchList").innerHTML=`<div class="m24SourceGrid">${ordered.map(s=>m24SourceCard(s,results.get(s.homeUrl)||null)).join("")}</div>`;bindM24SourceOpen($("#mangaMatchList"))};
+ render();let cursor=0;
+ const worker=async()=>{while(cursor<sources.length&&token===S.mangaMatchToken){const s=sources[cursor++];try{const items=await searchOneInstalledSource(s,title,false,media),best=(items||[]).slice().sort((a,b)=>titleSimilarity(b.title,title)-titleSimilarity(a.title,title))[0];if(best&&titleSimilarity(best.title,title)>=35){results.set(s.homeUrl,best);states.set(s.homeUrl,"ok")}else states.set(s.homeUrl,"fail")}catch{states.set(s.homeUrl,"fail")}render()}};
+ await Promise.all(Array.from({length:Math.min(5,sources.length)},worker))
+}
+async function mangaPage(){
+ S.currentPage="manga";if(S.mangaTab==="extensions")S.mangaTab="explore";setActiveNav("manga");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
+ $("#page").classList.remove("searchPage","mangaPageModern","musicPageModern","booksPageModern");$("#page").classList.add("mangaPageV24");$("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Mangás";
+ $("#pageBody").innerHTML=`<div class="m24Shell"><div class="m24Header"><div class="m24HeaderText"><div class="m24Eyebrow">MANGÁS</div><h2>Encontre e abra na fonte original</h2><p>O ResenhaFlix não lê mais mangás dentro do site. Ele procura fontes em português do repositório Keiyoushi e abre o site original.</p></div><div class="m24Tabs" id="mangaTabs"><button type="button" data-manga-tab="explore">Explorar</button><button type="button" data-manga-tab="library">Biblioteca</button></div></div><div class="m24Search"><input id="mangaTitleSearch" placeholder="Pesquisar mangá em português ou inglês…" autocomplete="off" value="${esc(S.mangaQuery)}"><select id="mangaSourceLimit">${[5,8,10,12,15].map(n=>`<option value="${n}" ${Number(S.mangaSourceLimit)===n?"selected":""}>${n} fontes</option>`).join("")}</select><button type="button" id="mangaSearchBtn">Buscar</button></div><div class="m24Hint">A busca de fontes usa somente PT/PT-BR. Quando CORS impede a confirmação, o ResenhaFlix oferece a busca no site original sem afirmar que encontrou o mangá.</div><div id="mangaContent"><div class="loading">Carregando…</div></div></div>`;
+ const input=$("#mangaTitleSearch");let timer;const sync=()=>{$$("#mangaTabs [data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))};const go=()=>{S.mangaQuery=input.value.trim();S.mangaTab="explore";sync();renderMangaExplore()};
+ input.oninput=()=>{clearTimeout(timer);timer=setTimeout(go,520)};input.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(timer);go();input.blur()}};$("#mangaSearchBtn").onclick=go;$("#mangaSourceLimit").onchange=e=>{S.mangaSourceLimit=Math.max(5,Math.min(15,Number(e.target.value)||10));localStorage.setItem("rf24_manga_source_limit",String(S.mangaSourceLimit))};$$("#mangaTabs [data-manga-tab]").forEach(b=>b.onclick=()=>{S.mangaTab=b.dataset.mangaTab;sync();renderMangaCurrentTab()});sync();renderMangaCurrentTab()
+}
+
 const PAGE_GENRES=[
  ["all","Todos"],
  ["Action","Ação"],
@@ -4652,12 +4895,63 @@ async function trendingPage(){
   bindSocialBuzz($("#socialBuzzList"));bindCards($("#trendMovies"));bindCards($("#trendSeries"));if($("#trendAnime"))bindCards($("#trendAnime"));if($("#trendAniLive"))bindAniTrendCards($("#trendAniLive"));if($("#trendManga"))bindNativeMangaCards($("#trendManga"),mangas);
  }catch(e){console.error(e);$("#pageBody").innerHTML='<div class="empty">Não foi possível atualizar o radar agora.</div>'}
 }
+
+/* Música V24 */
+function musicImportedNormalized(){return mediaImported("music").map(normalizeCustomMusic).filter(Boolean)}
+function normalizeCustomMusic(x){if(!x||typeof x!=="object")return null;const kind=String(x.kind||x.type||"track").toLowerCase(),title=x.title||x.name||x.track||x.album||x.artist;if(!title)return null;return{kind:["track","album","artist"].includes(kind)?kind:"track",id:String(x.id||`${kind}:${title}:${x.artist||""}`),title:String(title),artist:String(x.artist||x.artistName||""),album:String(x.album||x.collectionName||""),image:safeHttpUrl(x.image||x.artwork||x.cover||""),previewUrl:safeHttpUrl(x.previewUrl||x.preview||""),externalUrl:safeHttpUrl(x.url||x.externalUrl||""),genre:String(x.genre||""),source:String(x.source||"JSON personalizado")}}
+function normalizeItunes(x,kind){if(kind==="tracks")return{kind:"track",id:String(x.trackId||x.collectionId||x.artistId||Math.random()),title:x.trackName||x.collectionName||"Faixa",artist:x.artistName||"",album:x.collectionName||"",image:(x.artworkUrl100||"").replace("100x100bb","600x600bb").replace("100x100","600x600"),previewUrl:safeHttpUrl(x.previewUrl||""),externalUrl:safeHttpUrl(x.trackViewUrl||x.collectionViewUrl||x.artistViewUrl||""),genre:x.primaryGenreName||"",source:"iTunes"};if(kind==="albums")return{kind:"album",id:String(x.collectionId||Math.random()),title:x.collectionName||"Álbum",artist:x.artistName||"",album:x.collectionName||"",image:(x.artworkUrl100||"").replace("100x100bb","600x600bb").replace("100x100","600x600"),previewUrl:"",externalUrl:safeHttpUrl(x.collectionViewUrl||""),genre:x.primaryGenreName||"",source:"iTunes"};return{kind:"artist",id:String(x.artistId||Math.random()),title:x.artistName||"Artista",artist:x.artistName||"",album:"",image:"",previewUrl:"",externalUrl:safeHttpUrl(x.artistLinkUrl||x.artistViewUrl||""),genre:x.primaryGenreName||"",source:"iTunes"}}
+async function searchItunes(q,tab){const entity=tab==="tracks"?"song":tab==="albums"?"album":"musicArtist",base=safeHttpUrl(mediaCfg.musicApi)||MEDIA_DEFAULT.musicApi,sep=base.includes("?")?"&":"?",url=`${base}${sep}term=${encodeURIComponent(q)}&country=BR&media=music&entity=${entity}&limit=40`;const data=await getJSONTimeout(url,7000);return(data.results||[]).map(x=>normalizeItunes(x,tab))}
+async function customMusicResults(q,tab){const want=tab==="tracks"?"track":tab==="albums"?"album":"artist",out=musicImportedNormalized().filter(x=>x.kind===want&&(!q||normText(JSON.stringify(x)).includes(normText(q)))),urls=String(mediaCfg.musicJsonUrls||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).slice(0,6),settled=await Promise.allSettled(urls.map(u=>fetchCustomJson(u,q)));for(const r of settled)if(r.status==="fulfilled")for(const x of r.value){const n=normalizeCustomMusic(x);if(n&&n.kind===want)out.push(n)}return out}
+function dedupeMusic(items){const map=new Map();for(const x of items){const k=normText(`${x.kind}|${x.title}|${x.artist}`);if(!map.has(k))map.set(k,x)}return[...map.values()]}
+function musicTrackHtml(x,i){return`<article class="musicTrack"><div class="musicTrackCover" style="background-image:url('${esc(x.image)}')"></div><div><div class="musicTrackTitle">${esc(x.title)}</div><div class="musicTrackArtist">${esc(x.artist)}${x.album?` • ${esc(x.album)}`:""}</div></div><div class="musicTrackActions">${x.previewUrl?`<button type="button" class="preview" data-music-preview="${i}">▶ Prévia</button>`:""}${x.externalUrl?`<button type="button" data-music-open="${i}">Abrir</button>`:""}</div></article>`}
+function musicAlbumHtml(x,i){return`<article class="musicAlbum"><div class="musicAlbumCover" style="background-image:url('${esc(x.image)}')"></div><div class="musicAlbumTitle">${esc(x.title)}</div><div class="musicAlbumArtist">${esc(x.artist)}</div>${x.externalUrl?`<button type="button" data-music-open="${i}">Ver álbum ↗</button>`:""}</article>`}
+function musicArtistHtml(x,i){const initials=x.title.split(/\s+/).slice(0,2).map(s=>s[0]).join("").toUpperCase();return`<article class="musicArtist"><div class="musicArtistAvatar">${esc(initials||"♪")}</div><div class="musicArtistName">${esc(x.title)}</div><div class="musicArtistGenre">${esc(x.genre||"Artista")}</div>${x.externalUrl?`<button type="button" data-music-open="${i}">Abrir artista ↗</button>`:""}</article>`}
+function bindMusicResults(root,items){root.querySelectorAll("[data-music-open]").forEach(b=>b.onclick=()=>{const x=items[Number(b.dataset.musicOpen)],u=safeHttpUrl(x?.externalUrl);if(u)window.open(u,"_blank","noopener,noreferrer")});root.querySelectorAll("[data-music-preview]").forEach(b=>b.onclick=()=>playMusicPreview(items[Number(b.dataset.musicPreview)]))}
+function playMusicPreview(x){if(!x?.previewUrl)return toast("Essa música não possui prévia.");const a=$("#musicPreviewAudio");a.pause();a.src=x.previewUrl;a.load();$("#musicMiniCover").style.backgroundImage=`url('${x.image||""}')`;$("#musicMiniTitle").textContent=x.title||"Prévia";$("#musicMiniArtist").textContent=x.source==="iTunes"?`${x.artist||""} • Prévia cortesia da iTunes`:(x.artist||x.source||"Prévia");$("#musicMiniStore").style.display=x.externalUrl?"":"none";$("#musicMiniStore").onclick=()=>{if(x.externalUrl)window.open(x.externalUrl,"_blank","noopener,noreferrer")};$("#musicMiniPlayer").classList.add("show");a.play().catch(()=>{})}
+async function runMusicSearch(q=S.musicQuery){const root=$("#musicResults");if(!root)return;q=String(q||"").trim();S.musicQuery=q;if(q.length<2){root.innerHTML='<div class="mediaEmpty"><b>Pesquise sua música.</b>Use o nome da faixa, álbum ou artista.</div>';return}const token=++S.searchToken;root.innerHTML='<div class="loading">Buscando música…</div>';try{const[main,custom]=await Promise.all([searchItunes(q,S.musicTab).catch(()=>[]),customMusicResults(q,S.musicTab).catch(()=>[])]);if(token!==S.searchToken)return;const items=dedupeMusic([...main,...custom]);S.musicResults=items;$("#musicResultMeta").textContent=`${items.length} resultado(s) • ${S.musicTab==="tracks"?"Faixas":S.musicTab==="albums"?"Álbuns":"Artistas"}`;if(S.musicTab==="tracks")root.innerHTML=`<div class="musicTrackList">${items.map(musicTrackHtml).join("")}</div>`;else if(S.musicTab==="albums")root.innerHTML=`<div class="musicAlbumGrid">${items.map(musicAlbumHtml).join("")}</div>`;else root.innerHTML=`<div class="musicArtistGrid">${items.map(musicArtistHtml).join("")}</div>`;if(!items.length)root.innerHTML='<div class="mediaEmpty"><b>Nada encontrado.</b>Tente outro nome ou adicione uma fonte JSON.</div>';bindMusicResults(root,items)}catch(e){console.error(e);root.innerHTML='<div class="mediaEmpty"><b>A busca falhou.</b>Confira sua internet ou a URL da API nas Fontes.</div>'}}
+async function musicPage(){S.currentPage="music";setActiveNav("music");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);$("#page").classList.remove("searchPage","mangaPageModern","mangaPageV24","booksPageModern");$("#page").classList.add("musicPageModern");$("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Música";$("#pageBody").innerHTML=`<div class="mediaHub"><div class="mediaHubHero"><div class="mediaHubTitle"><small>MÚSICA</small><h2>Faixas, álbuns e artistas</h2><p>Pesquise gratuitamente e abra o conteúdo na plataforma de origem. Prévia de áudio aparece apenas quando a API disponibiliza.</p></div><button type="button" class="mediaSourcesBtn" id="openMusicSources">⚙ Fontes</button></div><div class="mediaSearchBar"><input id="musicSearchInput" placeholder="Buscar música, álbum ou artista…" value="${esc(S.musicQuery)}" autocomplete="off"><button id="musicSearchBtn">Buscar</button></div><div class="mediaTabs" id="musicTabs"><button data-music-tab="tracks">Faixas</button><button data-music-tab="albums">Álbuns</button><button data-music-tab="artists">Artistas</button></div><div class="mediaQuick">${["MPB","Rock","Rap","Pop","Sertanejo","K-pop","Jazz"].map(q=>`<button type="button" data-music-quick="${q}">${q}</button>`).join("")}</div><div class="mediaResultMeta" id="musicResultMeta"></div><div id="musicResults"></div></div>`;const input=$("#musicSearchInput"),sync=()=>{$$("#musicTabs [data-music-tab]").forEach(b=>b.classList.toggle("active",b.dataset.musicTab===S.musicTab))};$("#openMusicSources").onclick=()=>openMediaSources("music");$("#musicSearchBtn").onclick=()=>runMusicSearch(input.value);input.onkeydown=e=>{if(e.key==="Enter"){runMusicSearch(input.value);input.blur()}};$$("#musicTabs [data-music-tab]").forEach(b=>b.onclick=()=>{S.musicTab=b.dataset.musicTab;sync();runMusicSearch(input.value)});$$("#pageBody [data-music-quick]").forEach(b=>b.onclick=()=>{input.value=b.dataset.musicQuick;runMusicSearch(input.value)});sync();runMusicSearch(S.musicQuery)}
+
+/* Livros V24 */
+function bookLibrary(){try{return JSON.parse(localStorage.getItem("rf24_book_library")||"[]")}catch{return[]}}
+function saveBookLibrary(x){localStorage.setItem("rf24_book_library",JSON.stringify(x.slice(0,300)))}
+function bookKey(x){return String(x?.key||x?.id||`${x?.title}|${x?.authors}`)}
+function bookSaved(x){return bookLibrary().some(b=>bookKey(b)===bookKey(x))}
+function toggleBookSaved(x){let a=bookLibrary(),i=a.findIndex(b=>bookKey(b)===bookKey(x));if(i>=0){a.splice(i,1);toast("Livro removido da estante.")}else{a.unshift(x);toast("Livro adicionado à estante.")}saveBookLibrary(a)}
+function openLibraryCover(id){return id?`https://covers.openlibrary.org/b/id/${id}-M.jpg`:""}
+function normalizeOpenLibraryBook(x){return{kind:"book",source:"Open Library",key:x.key||"",id:x.key||x.cover_edition_key||x.title,title:x.title||"Livro",authors:(x.author_name||[]).join(", "),image:openLibraryCover(x.cover_i),year:x.first_publish_year||"",languages:(x.language||[]).slice(0,4),externalUrl:x.key?`https://openlibrary.org${x.key}`:"",publicDomain:false,formats:{},description:""}}
+function normalizeGutendexBook(x){return{kind:"book",source:"Project Gutenberg",key:`gutenberg:${x.id}`,id:String(x.id),title:x.title||"Livro",authors:(x.authors||[]).map(a=>a.name).join(", "),image:safeHttpUrl(x.formats?.["image/jpeg"]||""),year:"",languages:x.languages||[],externalUrl:`https://www.gutenberg.org/ebooks/${x.id}`,publicDomain:x.copyright===false,formats:x.formats||{},description:(x.summaries||[])[0]||"",downloads:Number(x.download_count||0)}}
+function normalizeCustomBook(x){if(!x||typeof x!=="object"||!(x.title||x.name))return null;const pd=x.publicDomain===true||x.license==="public-domain";return{kind:"book",source:String(x.source||"JSON personalizado"),key:String(x.key||x.id||`custom:${x.title||x.name}`),id:String(x.id||""),title:String(x.title||x.name),authors:Array.isArray(x.authors)?x.authors.join(", "):String(x.authors||x.author||""),image:safeHttpUrl(x.image||x.cover||""),year:x.year||"",languages:x.languages||[],externalUrl:safeHttpUrl(x.url||x.externalUrl||""),publicDomain:pd,formats:x.formats&&typeof x.formats==="object"?x.formats:{},readUrl:safeHttpUrl(x.readUrl||""),downloadUrl:pd?safeHttpUrl(x.downloadUrl||""):"",description:String(x.description||"")}}
+async function searchOpenLibraryBooks(q){const base=safeHttpUrl(mediaCfg.booksOpenLibrary)||MEDIA_DEFAULT.booksOpenLibrary,sep=base.includes("?")?"&":"?",fields="key,title,author_name,cover_i,first_publish_year,language,edition_count",data=await getJSONTimeout(`${base}${sep}q=${encodeURIComponent(q)}&limit=30&fields=${encodeURIComponent(fields)}`,7500);return(data.docs||[]).map(normalizeOpenLibraryBook)}
+async function searchGutendexBooks(q=""){const base=safeHttpUrl(mediaCfg.booksGutendex)||MEDIA_DEFAULT.booksGutendex,sep=base.includes("?")?"&":"?",params=[];if(q)params.push(`search=${encodeURIComponent(q)}`);params.push("languages=pt,en");const data=await getJSONTimeout(`${base}${sep}${params.join("&")}`,7500);return(data.results||[]).map(normalizeGutendexBook).filter(x=>x.publicDomain)}
+async function customBookResults(q){const out=mediaImported("books").map(normalizeCustomBook).filter(Boolean).filter(x=>!q||normText(JSON.stringify(x)).includes(normText(q))),urls=String(mediaCfg.booksJsonUrls||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).slice(0,6),settled=await Promise.allSettled(urls.map(u=>fetchCustomJson(u,q)));for(const r of settled)if(r.status==="fulfilled")for(const x of r.value){const n=normalizeCustomBook(x);if(n)out.push(n)}return out}
+function dedupeBooks(items){const map=new Map();for(const x of items){const k=normText(`${x.title}|${x.authors}`);if(!map.has(k))map.set(k,x)}return[...map.values()]}
+function bookFormatChoices(b){const f=b.formats||{},choices=[];for(const[mime,url]of Object.entries(f)){const u=safeHttpUrl(url);if(!u)continue;const m=mime.toLowerCase();if(m.includes("epub"))choices.push({kind:"epub",url:u,label:"EPUB"});else if(m.startsWith("text/html"))choices.push({kind:"html",url:u,label:"HTML"});else if(m.startsWith("text/plain"))choices.push({kind:"text",url:u,label:"TXT"});else if(m.includes("pdf"))choices.push({kind:"pdf",url:u,label:"PDF"})}if(b.readUrl)choices.unshift({kind:/\.epub($|\?)/i.test(b.readUrl)?"epub":/\.pdf($|\?)/i.test(b.readUrl)?"pdf":"html",url:b.readUrl,label:"Ler"});if(b.downloadUrl)choices.unshift({kind:/\.epub($|\?)/i.test(b.downloadUrl)?"epub":"download",url:b.downloadUrl,label:"Arquivo"});const seen=new Set();return choices.filter(x=>!seen.has(x.url)&&seen.add(x.url))}
+function bestBookRead(b){const c=bookFormatChoices(b);return c.find(x=>x.kind==="epub")||c.find(x=>x.kind==="html")||c.find(x=>x.kind==="pdf")||c.find(x=>x.kind==="text")||c[0]||null}
+function bestBookDownload(b){if(!b.publicDomain)return null;const c=bookFormatChoices(b);return c.find(x=>x.kind==="epub")||c.find(x=>x.kind==="pdf")||c.find(x=>x.kind==="text")||c[0]||null}
+function bookCardHtml(b,i){const saved=bookSaved(b),read=bestBookRead(b),download=bestBookDownload(b);return`<article class="bookCard"><div class="bookCover" style="background-image:url('${esc(b.image)}')"></div><div class="bookInfo"><div class="bookTitle">${esc(b.title)}</div><div class="bookAuthor">${esc(b.authors||"Autor não informado")}${b.year?` • ${esc(b.year)}`:""}</div><div class="bookBadges"><span>${esc(b.source)}</span>${b.publicDomain?'<span class="free">Domínio público</span>':""}</div><div class="bookActions">${read&&b.publicDomain?`<button type="button" class="read" data-book-read="${i}">▶ Ler</button>`:""}${download?`<button type="button" data-book-download="${i}">⬇ Baixar ${esc(download.label)}</button>`:""}${b.externalUrl?`<button type="button" data-book-open="${i}">Abrir ↗</button>`:""}<button type="button" class="${saved?"saved":""}" data-book-save="${i}">${saved?"✓ Estante":"＋ Estante"}</button></div></div></article>`}
+function bindBookCards(root,items){root.querySelectorAll("[data-book-read]").forEach(b=>b.onclick=()=>openBookReader(items[Number(b.dataset.bookRead)]));root.querySelectorAll("[data-book-download]").forEach(b=>b.onclick=()=>downloadBook(items[Number(b.dataset.bookDownload)]));root.querySelectorAll("[data-book-open]").forEach(b=>b.onclick=()=>{const u=safeHttpUrl(items[Number(b.dataset.bookOpen)]?.externalUrl);if(u)window.open(u,"_blank","noopener,noreferrer")});root.querySelectorAll("[data-book-save]").forEach(b=>b.onclick=()=>{const x=items[Number(b.dataset.bookSave)];toggleBookSaved(x);b.textContent=bookSaved(x)?"✓ Estante":"＋ Estante";b.classList.toggle("saved",bookSaved(x));if(S.booksTab==="library"&&!bookSaved(x))runBookSearch(S.booksQuery)})}
+async function runBookSearch(q=S.booksQuery){const root=$("#bookResults");if(!root)return;S.booksQuery=String(q||"").trim();if(S.booksTab==="library"){const items=bookLibrary();S.bookResults=items;$("#bookResultMeta").textContent=`${items.length} livro(s) na estante`;root.innerHTML=items.length?`<div class="bookGrid">${items.map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty"><b>Sua estante está vazia.</b>Adicione livros pelos resultados da busca.</div>';if(items.length)bindBookCards(root,items);return}const token=++S.searchToken;root.innerHTML='<div class="loading">Buscando livros…</div>';try{let items=[];if(S.booksTab==="free"){items=dedupeBooks([...(await searchGutendexBooks(S.booksQuery).catch(()=>[])),...(await customBookResults(S.booksQuery).catch(()=>[])).filter(x=>x.publicDomain)])}else{if(S.booksQuery.length<2){root.innerHTML='<div class="mediaEmpty"><b>Pesquise um livro.</b>Use título, autor ou palavra-chave. A aba Grátis também mostra obras em domínio público.</div>';$("#bookResultMeta").textContent="";return}const[ol,gut,custom]=await Promise.all([searchOpenLibraryBooks(S.booksQuery).catch(()=>[]),searchGutendexBooks(S.booksQuery).catch(()=>[]),customBookResults(S.booksQuery).catch(()=>[])]);items=dedupeBooks([...gut,...ol,...custom])}if(token!==S.searchToken)return;S.bookResults=items;$("#bookResultMeta").textContent=`${items.length} resultado(s) • ${S.booksTab==="free"?"Grátis":"Todos os livros"}`;root.innerHTML=items.length?`<div class="bookGrid">${items.map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty"><b>Nenhum livro encontrado.</b>Tente outro título ou uma fonte JSON.</div>';if(items.length)bindBookCards(root,items)}catch(e){console.error(e);root.innerHTML='<div class="mediaEmpty"><b>A busca falhou.</b>Confira as fontes de livros.</div>'}}
+async function booksPage(){S.currentPage="books";setActiveNav("books");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);$("#page").classList.remove("searchPage","mangaPageModern","mangaPageV24","musicPageModern");$("#page").classList.add("booksPageModern");$("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Livros";$("#pageBody").innerHTML=`<div class="mediaHub"><div class="mediaHubHero"><div class="mediaHubTitle"><small>LIVROS</small><h2>Descubra, leia e baixe obras gratuitas</h2><p>Busca geral pelo Open Library. A aba Grátis usa obras do Project Gutenberg quando marcadas como domínio público.</p></div><button type="button" class="mediaSourcesBtn" id="openBookSources">⚙ Fontes</button></div><div class="mediaSearchBar"><input id="bookSearchInput" placeholder="Buscar livro ou autor…" value="${esc(S.booksQuery)}" autocomplete="off"><button id="bookSearchBtn">Buscar</button></div><div class="mediaTabs" id="bookTabs"><button data-book-tab="all">Todos</button><button data-book-tab="free">Grátis</button><button data-book-tab="library">Minha estante</button></div><div class="mediaQuick">${["Machado de Assis","Sherlock Holmes","Jane Austen","Dom Quixote","Ficção científica"].map(q=>`<button type="button" data-book-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div><div class="mediaResultMeta" id="bookResultMeta"></div><div id="bookResults"></div></div>`;const input=$("#bookSearchInput"),sync=()=>{$$("#bookTabs [data-book-tab]").forEach(b=>b.classList.toggle("active",b.dataset.bookTab===S.booksTab))};$("#openBookSources").onclick=()=>openMediaSources("books");$("#bookSearchBtn").onclick=()=>runBookSearch(input.value);input.onkeydown=e=>{if(e.key==="Enter"){runBookSearch(input.value);input.blur()}};$$("#bookTabs [data-book-tab]").forEach(b=>b.onclick=()=>{S.booksTab=b.dataset.bookTab;sync();runBookSearch(input.value)});$$("#pageBody [data-book-quick]").forEach(b=>b.onclick=()=>{input.value=b.dataset.bookQuick;S.booksTab="all";sync();runBookSearch(input.value)});sync();runBookSearch(S.booksQuery)}
+
+let epubLibPromise=null,bookReaderBookObject=null;
+function ensureEpubJs(){if(window.ePub)return Promise.resolve(window.ePub);if(epubLibPromise)return epubLibPromise;epubLibPromise=new Promise((resolve,reject)=>{const load=(src,done)=>{const s=document.createElement("script");s.src=src;s.async=true;s.onload=done;s.onerror=()=>reject(new Error("Falha ao carregar leitor EPUB"));document.head.appendChild(s)},next=()=>load("https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js",()=>resolve(window.ePub));if(window.JSZip)next();else load("https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js",next)});return epubLibPromise}
+function resetBookReader(){if(S.bookReaderRendition){try{S.bookReaderRendition.destroy()}catch{}S.bookReaderRendition=null}if(bookReaderBookObject){try{bookReaderBookObject.destroy()}catch{}bookReaderBookObject=null}$("#bookEpubArea").innerHTML="";$("#bookEpubArea").classList.remove("active");$("#bookHtmlFrame").classList.remove("active");$("#bookHtmlFrame").src="about:blank";$("#bookTextReader").classList.remove("active");$("#bookTextReader").textContent=""}
+async function openBookReader(b){const choice=bestBookRead(b);if(!choice)return b.externalUrl&&window.open(b.externalUrl,"_blank","noopener,noreferrer");S.bookReaderBook=b;resetBookReader();$("#bookReaderTitle").textContent=b.title;$("#bookReaderMeta").textContent=`${b.authors||"Autor não informado"} • ${choice.label}`;$("#bookReaderExternal").onclick=()=>window.open(b.externalUrl||choice.url,"_blank","noopener,noreferrer");$("#bookReaderLoading").textContent="Preparando livro…";$("#bookReaderLoading").classList.remove("hidden");$("#bookReaderModal").classList.add("open");document.body.classList.add("bookReaderOpen");try{if(choice.kind==="epub"){await ensureEpubJs();$("#bookEpubArea").classList.add("active");bookReaderBookObject=ePub(choice.url);S.bookReaderRendition=bookReaderBookObject.renderTo("bookEpubArea",{width:"100%",height:"100%",spread:"none"});await S.bookReaderRendition.display();$("#bookReaderStatus").textContent="EPUB"}else if(choice.kind==="text"){const r=await fetch(choice.url);if(!r.ok)throw Error("Texto "+r.status);$("#bookTextReader").textContent=await r.text();$("#bookTextReader").classList.add("active");$("#bookReaderStatus").textContent="Texto"}else{$("#bookHtmlFrame").src=choice.url;$("#bookHtmlFrame").classList.add("active");$("#bookReaderStatus").textContent=choice.kind.toUpperCase()}$("#bookReaderLoading").classList.add("hidden")}catch(e){console.warn(e);$("#bookReaderLoading").textContent="Não consegui abrir dentro do leitor. Use “Abrir original”."}}
+function closeBookReader(){resetBookReader();$("#bookReaderModal").classList.remove("open");document.body.classList.remove("bookReaderOpen")}
+function downloadBook(b){const d=bestBookDownload(b);if(!d)return toast("Este livro não possui download liberado.");const u=safeHttpUrl(d.url);if(!u)return;const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener noreferrer";a.download="";document.body.appendChild(a);a.click();a.remove()}
+
+function openMediaSources(tab="music"){S.mediaSourceTab=tab;$("#musicApiUrl").value=mediaCfg.musicApi;$("#musicJsonUrls").value=mediaCfg.musicJsonUrls;$("#booksOpenLibraryUrl").value=mediaCfg.booksOpenLibrary;$("#booksGutendexUrl").value=mediaCfg.booksGutendex;$("#booksJsonUrls").value=mediaCfg.booksJsonUrls;$$("[data-media-source-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mediaSourceTab===tab));$$("[data-media-source-pane]").forEach(x=>x.classList.toggle("active",x.dataset.mediaSourcePane===tab));$("#mediaSourcesModal").classList.add("open");document.body.classList.add("mediaSourcesOpen")}
+function closeMediaSources(){$("#mediaSourcesModal").classList.remove("open");document.body.classList.remove("mediaSourcesOpen")}
+function saveMediaSourceSettings(){mediaCfg.musicApi=$("#musicApiUrl").value.trim()||MEDIA_DEFAULT.musicApi;mediaCfg.musicJsonUrls=$("#musicJsonUrls").value.trim();mediaCfg.booksOpenLibrary=$("#booksOpenLibraryUrl").value.trim()||MEDIA_DEFAULT.booksOpenLibrary;mediaCfg.booksGutendex=$("#booksGutendexUrl").value.trim()||MEDIA_DEFAULT.booksGutendex;mediaCfg.booksJsonUrls=$("#booksJsonUrls").value.trim();localStorage.setItem("rf24_music_api",mediaCfg.musicApi);localStorage.setItem("rf24_music_json_urls",mediaCfg.musicJsonUrls);localStorage.setItem("rf24_books_openlibrary",mediaCfg.booksOpenLibrary);localStorage.setItem("rf24_books_gutendex",mediaCfg.booksGutendex);localStorage.setItem("rf24_books_json_urls",mediaCfg.booksJsonUrls);closeMediaSources();toast("Fontes de mídia salvas.")}
+async function importJsonFile(kind,file){if(!file)return;const status=$(kind==="music"?"#musicImportStatus":"#booksImportStatus");if(file.size>1.5*1024*1024){status.textContent="Arquivo maior que 1,5 MB.";return}try{const data=JSON.parse(await file.text()),items=genericJsonItems(data);if(!items.length)throw Error("O JSON não contém um array reconhecível.");saveMediaImported(kind,items);status.textContent=`${Math.min(items.length,500)} item(ns) importado(s) e salvo(s) neste dispositivo.`}catch(e){status.textContent=`Erro: ${e.message||"JSON inválido"}`}}
 async function page(type,initialCategory="all"){
  if(type==="trending")return trendingPage();
  if(type==="manga")return mangaPage();
+ if(type==="music")return musicPage();
+ if(type==="books")return booksPage();
  S.currentPage=type;S.pageTypeForCategories=type;S.pageCategory=initialCategory||"all";
  setActiveNav(type);unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
- $("#page").classList.remove("searchPage","mangaPageModern");
+ $("#page").classList.remove("searchPage","mangaPageModern","mangaPageV24","musicPageModern","booksPageModern");
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  const titles={movies:"Filmes",series:"Séries",anime:"Animes",manga:"Mangás",list:"Minha lista"};
  $("#pageTitle").textContent=titles[type]||"Catálogo";
@@ -4835,7 +5129,7 @@ function repairTouchState(){
  if(!$("#playerModal").classList.contains("open"))body.classList.remove("playerOpen");
  if(!$("#detailModal").classList.contains("open"))body.classList.remove("detailOpen");
  if(!$("#settingsModal").classList.contains("open"))body.classList.remove("settingsOpen");
- if(!$("#mangaReaderModal").classList.contains("open"))body.classList.remove("mangaReaderOpen");if(!$("#mangaDetailModal").classList.contains("open"))body.classList.remove("mangaDetailOpen");if(!$("#mangaMatchModal").classList.contains("open"))body.classList.remove("mangaMatchOpen");if(!$("#mangaWebModal").classList.contains("open"))body.classList.remove("mangaWebOpen");if(!$("#mangaMarketModal").classList.contains("open"))body.classList.remove("mangaMarketOpen");
+ if(!$("#mangaReaderModal").classList.contains("open"))body.classList.remove("mangaReaderOpen");if(!$("#mangaDetailModal").classList.contains("open"))body.classList.remove("mangaDetailOpen");if(!$("#mangaMatchModal").classList.contains("open"))body.classList.remove("mangaMatchOpen");if(!$("#mangaWebModal").classList.contains("open"))body.classList.remove("mangaWebOpen");if(!$("#mangaMarketModal").classList.contains("open"))body.classList.remove("mangaMarketOpen");if(!$("#mediaSourcesModal").classList.contains("open"))body.classList.remove("mediaSourcesOpen");if(!$("#bookReaderModal").classList.contains("open"))body.classList.remove("bookReaderOpen");
  if(!$("#playerMenu").classList.contains("open")){
   $("#playerMenuBackdrop").classList.remove("open");
   S.playerMenuKind=null;
@@ -4853,6 +5147,19 @@ function setActiveNav(target){
  $$(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===target));
  $$("[data-mobile-page]").forEach(x=>x.classList.toggle("active",x.dataset.mobilePage===target));
 }
+$("#closeMediaSources").onclick=closeMediaSources;
+$("#mediaSourcesModal").onclick=e=>{if(e.target.id==="mediaSourcesModal")closeMediaSources()};
+$$("#mediaSourcesModal [data-media-source-tab]").forEach(b=>b.onclick=()=>openMediaSources(b.dataset.mediaSourceTab));
+$("#saveMediaSources").onclick=saveMediaSourceSettings;
+$("#resetMediaSources").onclick=()=>{mediaCfg.musicApi=MEDIA_DEFAULT.musicApi;mediaCfg.musicJsonUrls="";mediaCfg.booksOpenLibrary=MEDIA_DEFAULT.booksOpenLibrary;mediaCfg.booksGutendex=MEDIA_DEFAULT.booksGutendex;mediaCfg.booksJsonUrls="";localStorage.removeItem("rf24_music_api");localStorage.removeItem("rf24_music_json_urls");localStorage.removeItem("rf24_books_openlibrary");localStorage.removeItem("rf24_books_gutendex");localStorage.removeItem("rf24_books_json_urls");openMediaSources(S.mediaSourceTab);toast("Fontes padrão restauradas.")};
+$("#musicJsonFile").onchange=e=>importJsonFile("music",e.target.files?.[0]);
+$("#booksJsonFile").onchange=e=>importJsonFile("books",e.target.files?.[0]);
+$("#closeBookReader").onclick=closeBookReader;$("#bookReaderCloseX").onclick=closeBookReader;
+$("#bookReaderModal").onclick=e=>{if(e.target.id==="bookReaderModal")closeBookReader()};
+$("#bookPrevPage").onclick=()=>{if(S.bookReaderRendition)S.bookReaderRendition.prev()};
+$("#bookNextPage").onclick=()=>{if(S.bookReaderRendition)S.bookReaderRendition.next()};
+$("#musicMiniClose").onclick=()=>{$("#musicPreviewAudio").pause();$("#musicMiniPlayer").classList.remove("show")};
+
 $("#logoHome").onclick=()=>{closeTransientUI();home()};
 $("#categoriesNavBtn").onclick=e=>{e.stopPropagation();toggleCategoryMega()};
 $("#categoryMegaBackdrop").onclick=()=>toggleCategoryMega(false);
