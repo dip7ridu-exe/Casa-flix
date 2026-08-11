@@ -1,25 +1,49 @@
-# ResenhaFlix V22 — Smooth Player
+# ResenhaFlix V23 — Stable Playback
 
-## Player
-- Topo agora mostra somente `Trocar fonte` e `Fechar`.
-- Áudio, legenda, proporção e fullscreen ficam na barra inferior.
-- Proporção foi removida completamente da área de Fontes.
-- Botões centrais de voltar/avançar 10s usam SVG próprio para evitar os ícones quebrados.
-- O painel de Fontes continua lateral no PC e bottom sheet no celular.
+## Botão Fontes
+- O botão `Trocar fonte` ganhou espaço próprio.
+- Foi movido visualmente para a esquerda.
+- Existe uma pequena divisória antes do botão X.
+- No mobile o espaçamento é menor, mas os dois botões não se sobrepõem.
 
-## Desempenho
-- HLS.js não é mais baixado ao abrir o site; só é carregado quando uma fonte `.m3u8` precisa dele.
-- Imagens de cards usam `loading=lazy`, `decoding=async` e prioridade baixa.
-- Seções fora da tela usam `content-visibility`.
-- Catálogos extras da Home são carregados depois do conteúdo principal.
-- A rotação de cards não bloqueia mais a primeira renderização tentando páginas com `skip`.
-- Eventos de mousemove/scroll/resize foram limitados com requestAnimationFrame/debounce.
-- Efeitos caros de backdrop blur foram reduzidos.
-- Durante scroll, animações de hover são suspensas.
+## Reprodução mais estável
+A V23 diferencia:
+1. fonte que não inicia;
+2. fonte que inicia, mas fica travando durante o filme/episódio.
 
-## Catálogo
-A rotação principal passou para janelas de aproximadamente 3 horas.
-Uma página alternativa do catálogo é aquecida em background e usada nas próximas navegações quando estiver disponível.
+### Monitor de buffering
+Durante a reprodução o ResenhaFlix observa:
+- `waiting`;
+- `stalled`;
+- tempo contínuo sem buffer suficiente;
+- travamentos repetidos em uma janela de 90 segundos.
+
+Quando uma fonte fica instável:
+- salva a posição atual;
+- penaliza essa fonte no ranking;
+- tenta outra fonte automaticamente;
+- continua aproximadamente do mesmo segundo;
+- se nenhuma alternativa funcionar, tenta voltar para a fonte anterior.
+
+### Aprendizado
+O histórico de fontes agora também salva:
+- quantidade de travamentos;
+- travamentos graves;
+- último travamento;
+- duração do último travamento.
+
+Isso reduz a chance de um episódio futuro escolher novamente uma fonte que iniciou normalmente, mas travou muito.
+
+## HLS
+- `loadVideo()` agora é aguardado antes do teste da fonte.
+- Buffer máximo aumentado.
+- HLS adaptativo usa margem mais conservadora ao subir qualidade.
+- Uma falha de rede recebe uma tentativa de `startLoad()`.
+- Uma falha de mídia recebe uma tentativa de `recoverMediaError()`.
+- Depois disso entra a troca automática de fonte.
+
+## Arquivos diretos
+O elemento `<video>` passa para `preload=auto` durante a reprodução para permitir que o navegador faça buffer à frente.
 
 ## PWA
-Cache: `resenhaflix-shell-v22`
+Cache: `resenhaflix-shell-v23`.

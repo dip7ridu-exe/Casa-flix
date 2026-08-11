@@ -1964,6 +1964,35 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 
+
+/* =========================================================
+   ResenhaFlix v23 — Fontes separado do X + reprodução estável
+   ========================================================= */
+.primeTopActions{
+ gap:0!important;
+ padding-right:2px;
+}
+.primeSourceOnly{
+ margin-right:20px!important;
+ position:relative;
+}
+.primeSourceOnly::after{
+ content:"";
+ position:absolute;
+ right:-11px;
+ top:8px;
+ bottom:8px;
+ width:1px;
+ background:#ffffff20;
+ pointer-events:none
+}
+.primeClose{margin-left:0!important}
+
+@media(max-width:900px){
+ .primeSourceOnly{margin-right:14px!important}
+ .primeSourceOnly::after{right:-8px;top:7px;bottom:7px}
+}
+
 </style>
 </head>
 <body>
@@ -2412,7 +2441,7 @@ const cfg={
  mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0,_stallTimer:null,_stallStartedAt:0,_stallEvents:[],_stallRecovery:false,_stallCooldownUntil:0,_lastStablePlaybackAt:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -2576,6 +2605,7 @@ function rememberSourceResult(s,ok,reason=""){
  if(!s)return;
  const stats=sourceStats(),key=sourceStatKey(s),old=stats[key]||{};
  stats[key]={
+  ...old,
   success:Number(old.success||0)+(ok?1:0),
   fail:Number(old.fail||0)+(ok?0:1),
   lastSuccess:ok?Date.now():Number(old.lastSuccess||0),
@@ -2595,6 +2625,26 @@ function rememberSourceResult(s,ok,reason=""){
 function preferredSeriesSource(){
  const prefs=seriesSourcePrefs();
  return prefs[sourcePrefKey()]||prefs[`${S.currentShow?.id||S.rootId}|0`]||null;
+}
+function rememberSourceStall(s,durationMs){
+ if(!s||durationMs<1800)return;
+ const stats=sourceStats(),key=sourceStatKey(s),old=stats[key]||{};
+ const severe=durationMs>=5500;
+ stats[key]={
+  ...old,
+  stalls:Number(old.stalls||0)+1,
+  severeStalls:Number(old.severeStalls||0)+(severe?1:0),
+  lastStall:Date.now(),
+  lastStallDuration:Math.round(durationMs)
+ };
+ saveSourceStats(stats);
+}
+function recentSourceInstability(s){
+ const st=sourceStats()[sourceStatKey(s)]||{},now=Date.now();
+ let penalty=Math.min(105,Number(st.stalls||0)*7+Number(st.severeStalls||0)*18);
+ if(st.lastStall&&now-Number(st.lastStall)<2*3600e3)penalty+=48;
+ if(st.lastStall&&now-Number(st.lastStall)>7*864e5)penalty=Math.round(penalty*.25);
+ return penalty;
 }
 function sourceReliabilityScore(s,resumeEntry=null){
  let score=qualityScore(s._quality)*12;
@@ -2621,6 +2671,7 @@ function sourceReliabilityScore(s,resumeEntry=null){
  if(stats.lastSuccess&&now-stats.lastSuccess<7*864e5)score+=45;
  if(stats.lastFail&&now-stats.lastFail<6*3600e3)score-=90;
  score-=Math.min(100,Number(stats.fail||0)*18);
+ score-=recentSourceInstability(s);
  if(S.primaryManifest&&s._manifest===S.primaryManifest)score+=190;
  score+=configuredManifestPriority(s._manifest);
  if(s._external)score-=500;
@@ -3087,8 +3138,11 @@ function sourceBadgeList(s){
  return [...new Set(out)].slice(0,3);
 }
 function sourceStatusLabel(s){
- const h=getHealthStatus(s);
- return h==="working"?"Funcionando":h==="testing"?"Testando…":h==="failed"?"Falhou":s._external?"Externo":"Disponível";
+ const h=getHealthStatus(s),st=sourceStats()[sourceStatKey(s)]||{};
+ if(h==="working")return"Funcionando";
+ if(h==="testing")return"Testando…";
+ if(h==="failed")return st.lastStall&&Date.now()-st.lastStall<2*3600e3?"Instável":"Falhou";
+ return s._external?"Externo":"Disponível";
 }
 function sourceStatusIcon(s){
  const h=getHealthStatus(s);
@@ -3200,8 +3254,15 @@ async function attemptSource(stream,autoplay=true,resumeEntry=null){
  setHealth(stream,"testing");
  renderSourceUI();
 
- loadVideo(stream.url,autoplay,stream,resumeEntry);
- // loadVideo cria HLS de forma síncrona; agora conseguimos observar erro fatal/canplay.
+ try{
+  await loadVideo(stream.url,autoplay,stream,resumeEntry);
+ }catch(e){
+  console.warn("Falha preparando a fonte",e);
+  setHealth(stream,"failed","prepare-error");
+  rememberSourceResult(stream,false,"prepare-error");
+  return false;
+ }
+ // Aguarda o HLS/arquivo realmente ficar pronto para reproduzir.
  const result=await waitForSourceReady(stream,token,14000);
  if(token!==S.sourceAttemptToken)return false;
  if(result.ok){
@@ -3688,7 +3749,7 @@ async function playStream(type,id,title,meta,resumeEntry=null){
  }catch(e){console.error(e);$("#sources").innerHTML="<div class='sourceEmpty'>Falha ao consultar as fontes. Verifique CORS, o manifesto e a disponibilidade do addon.</div>"}
 }
 function resetVideo(){
- stopSourceAttempt();
+ stopSourceAttempt();clearPlaybackStallMonitor();S._stallRecovery=false;S._stallEvents=[];
  const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");
  [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
  if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
@@ -3709,7 +3770,8 @@ function ensureHlsLibrary(){
  return hlsLibraryPromise;
 }
 async function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
- const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();$("#buffering").classList.add("show");
+ clearPlaybackStallMonitor();
+ const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.preload="auto";v.load();$("#buffering").classList.add("show");
  S.resumeEntry=resumeEntry||null;S.resumeApplied=false;
  const applyResume=()=>{
   if(S.resumeApplied)return;
@@ -3725,17 +3787,121 @@ async function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
   try{
    await ensureHlsLibrary();
    if(window.Hls&&Hls.isSupported()){
-    v._hls=new Hls({enableWorker:true,lowLatencyMode:false,backBufferLength:30,maxBufferLength:30});
+    v._hls=new Hls({
+     enableWorker:true,
+     lowLatencyMode:false,
+     backBufferLength:30,
+     maxBufferLength:55,
+     maxMaxBufferLength:110,
+     maxBufferSize:80*1000*1000,
+     capLevelToPlayerSize:true,
+     startFragPrefetch:true,
+     abrBandWidthFactor:.82,
+     abrBandWidthUpFactor:.68,
+     maxBufferHole:.5,
+     nudgeMaxRetry:5,
+     highBufferWatchdogPeriod:2
+    });
     v._hls.loadSource(url);v._hls.attachMedia(v);
     v._hls.on(Hls.Events.MANIFEST_PARSED,async()=>{await afterTracks();$("#buffering").classList.remove("show")});
     if(Hls.Events.AUDIO_TRACKS_UPDATED)v._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED,()=>{applyPreferredAudio();updateTrackStatus()});
     if(Hls.Events.SUBTITLE_TRACKS_UPDATED)v._hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED,()=>{applyPreferredSubtitle();updateTrackStatus()});
-    v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)console.warn("Fonte HLS falhou",data)});
+    let hlsNetworkRecoveries=0,hlsMediaRecoveries=0;
+    v._hls.on(Hls.Events.ERROR,(_,data)=>{
+     if(!data?.fatal)return;
+     console.warn("Fonte HLS falhou",data);
+     if(data.type===Hls.ErrorTypes.NETWORK_ERROR&&hlsNetworkRecoveries<1){
+      hlsNetworkRecoveries++;try{v._hls.startLoad()}catch{}
+      return;
+     }
+     if(data.type===Hls.ErrorTypes.MEDIA_ERROR&&hlsMediaRecoveries<1){
+      hlsMediaRecoveries++;try{v._hls.recoverMediaError()}catch{}
+      return;
+     }
+     schedulePlaybackRecovery("hls-fatal",1200);
+    });
    }else v.src=url;
   }catch(e){console.warn("HLS.js",e);v.src=url}
  }else{
   v.src=url;
  }
+}
+
+function clearPlaybackStallMonitor(){
+ clearTimeout(S._stallTimer);
+ S._stallTimer=null;
+ S._stallStartedAt=0;
+}
+function trimStallEvents(){
+ const cutoff=Date.now()-90000;
+ S._stallEvents=(S._stallEvents||[]).filter(t=>t>=cutoff);
+}
+function schedulePlaybackRecovery(reason="buffering",delayMs=null){
+ const v=$("#video");
+ if(!S.autoFallback||S._stallRecovery||!S.selectedStream||S.selectedStream._external)return;
+ if(v.paused||v.ended||v.seeking||!v.src&&!v._hls)return;
+ if(Date.now()<Number(S._stallCooldownUntil||0))return;
+ trimStallEvents();
+ const repeated=S._stallEvents.length>=2;
+ const delay=delayMs??(repeated?3500:7500);
+ clearTimeout(S._stallTimer);
+ S._stallStartedAt=S._stallStartedAt||Date.now();
+ S._stallTimer=setTimeout(()=>{
+  if(v.paused||v.ended||v.seeking||v.readyState>=3)return;
+  recoverFromUnstableSource(reason);
+ },delay);
+}
+async function recoverFromUnstableSource(reason="buffering"){
+ if(S._stallRecovery||!S.selectedStream)return;
+ const v=$("#video"),current=S.selectedStream;
+ if(v.paused||v.ended||v.seeking)return;
+ S._stallRecovery=true;
+ clearPlaybackStallMonitor();
+ S._stallCooldownUntil=Date.now()+18000;
+ const position=Number(v.currentTime||0);
+ const duration=Number(isFinite(v.duration)?v.duration:0);
+ const stalledFor=Math.max(0,Date.now()-Number(S._stallStartedAt||Date.now()));
+ rememberSourceStall(current,Math.max(stalledFor,5500));
+ setHealth(current,"failed",reason);
+ const resume={currentTime:position,duration,stream:streamIdentity(current)};
+ toast(`Fonte instável. Tentando outra opção a partir de ${formatTime(position)}…`);
+ try{
+  S.attemptedSourceKeys.clear();
+  S.attemptedSourceKeys.add(sourceKey(current));
+  const ranked=rankedPlayableStreams(S.streams,resume)
+   .filter(s=>sourceKey(s)!==sourceKey(current))
+   .slice(0,5);
+  const found=await trySourcesInOrder(ranked,true,resume,false);
+  if(found){
+   toast(`Troquei para ${detectProvider(found)} • ${found._quality} para reduzir travamentos.`);
+   return;
+  }
+  // Se nenhuma alternativa funcionar, volta à fonte anterior na mesma posição.
+  S.attemptedSourceKeys.clear();
+  await attemptSource(current,true,resume);
+ }finally{
+  S._stallRecovery=false;
+ }
+}
+function onPlaybackWaiting(kind="waiting"){
+ const v=$("#video");
+ $("#buffering").classList.add("show");
+ if(v.paused||v.seeking||v.ended||Number(v.currentTime||0)<2)return;
+ if(!S._stallStartedAt)S._stallStartedAt=Date.now();
+ trimStallEvents();
+ S._stallEvents.push(Date.now());
+ trimStallEvents();
+ schedulePlaybackRecovery(kind);
+}
+function onPlaybackStable(){
+ const v=$("#video");
+ $("#buffering").classList.remove("show");
+ if(S._stallStartedAt){
+  const duration=Date.now()-S._stallStartedAt;
+  if(duration>=1800)rememberSourceStall(S.selectedStream,duration);
+ }
+ clearPlaybackStallMonitor();
+ S._lastStablePlaybackAt=Date.now();
 }
 function togglePlayback(){const v=$("#video");if(!v.src&&!v._hls)return;if(v.paused)v.play().catch(()=>{});else v.pause()}
 function hidePlayerUI(){
@@ -4750,7 +4916,7 @@ $("#mangaPrevChapter").onclick=()=>nextNativeChapter(-1);$("#mangaNextChapter").
 $("#mangaReaderCanvas").onclick=e=>{if(e.target.closest(".nativeReaderTapZone"))return;showReaderUi()};
 $("#mangaReaderModal").onclick=e=>{if(e.target.id==="mangaReaderModal")closeMangaReader()};
 $("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
-$("#closePlayer").onclick=()=>{$("#playerSide")?.classList.remove("drawerOpen");$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
+$("#closePlayer").onclick=()=>{$("#playerSide")?.classList.remove("drawerOpen");$("#sourcePanelBackdrop")?.classList.remove("open");$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();clearPlaybackStallMonitor();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
@@ -4793,7 +4959,12 @@ $("#video").addEventListener("timeupdate",()=>{syncPlayer();updateSkipIntroButto
 $("#video").addEventListener("play",()=>{syncPlayer();showPlayerUI()});
 $("#video").addEventListener("pause",()=>{syncPlayer();persistPlaybackProgress(true);showPlayerUI(true)});
 $("#video").addEventListener("ended",()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode){$("#nextBtn").style.display="";$("#primeNextFloat").classList.add("show")}});
-$("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
+$("#video").addEventListener("waiting",()=>onPlaybackWaiting("waiting"));
+$("#video").addEventListener("stalled",()=>onPlaybackWaiting("stalled"));
+$("#video").addEventListener("playing",onPlaybackStable);
+$("#video").addEventListener("canplay",()=>{if(!$("#video").paused)onPlaybackStable()});
+$("#video").addEventListener("seeking",clearPlaybackStallMonitor);
+$("#video").addEventListener("seeked",()=>{if(!$("#video").paused)S._stallCooldownUntil=Date.now()+2500});
 $("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
 let playerMoveRAF=0;
 $("#videoShell").addEventListener("mousemove",()=>{
