@@ -1,20 +1,34 @@
-# ResenhaFlix V17 — Discover UI
+# ResenhaFlix V18 — Categories + Search
 
-## Visual
-- Nova linguagem visual inspirada em plataformas modernas de anime: fundo carvão/navy, destaque laranja, navegação compacta, hero mais limpo e cards planos.
-- Mantém a logo e os ícones da V16.
+## Visual e textos
+- títulos dos cards agora usam até 2 linhas;
+- contraste de textos secundários melhorado;
+- títulos não ficam mais cortados em uma única linha;
+- tipo do conteúdo mostra Filme / Série / Anime.
 
-## Novo seletor de fontes
-- Painel mais limpo; ações repetidas foram removidas dos cards.
-- Cards compactos com provedor, addon, qualidade, idioma/status e botão de play.
-- Fonte recomendada automaticamente com base em qualidade, histórico de sucesso/falha e preferência.
-- Barra fixa da fonte selecionada com Assistir, Outro player e Download quando aplicável.
-- Filtro por addon e qualidade.
-- Campo “Fonte principal”: qualquer addon já configurado pode ser fixado e ganha prioridade na pesquisa e no próximo episódio.
-- Em celular, o seletor vira um bottom sheet recolhível para não ocupar a tela inteira.
+## Categorias
+Filmes, Séries e Animes receberam uma barra horizontal de categorias:
+Todos, Ação, Aventura, Comédia, Drama, Fantasia, Romance, Terror,
+Ficção científica, Suspense, Crime, Mistério, Família e Animação.
 
-## Compatibilidade
-A V17 preserva os manifests/addons já salvos em localStorage e todas as funções anteriores (histórico, continuar assistindo, próximo episódio, legendas, áudio, mangás e PWA).
+Minha Lista possui:
+Todos, Filmes, Séries, Animes e os gêneros existentes nos itens salvos.
+
+Nos Filmes/Séries, tocar em um gênero consulta diretamente o catálogo daquele gênero.
+Nos Animes e Minha Lista, a filtragem é aplicada aos itens disponíveis.
+
+## Logo
+A marca RESENHAFLIX no topo agora funciona como botão Início.
+
+## Busca
+A busca foi redesenhada inspirada no comportamento visual mostrado pelo usuário:
+- barra escura;
+- input simples com linha laranja inferior;
+- tela de busca dedicada;
+- filtros Todos / Filmes / Séries / Animes;
+- no celular os resultados usam linhas grandes com imagem + título completo;
+- no desktop os resultados continuam em grid;
+- botão X volta para o Início.
 
 ## PWA
-Cache: resenhaflix-shell-v17
+Cache: resenhaflix-shell-v18

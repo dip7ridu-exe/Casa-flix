@@ -1307,11 +1307,156 @@ main{margin-top:-40px;padding:0 3vw 70px}.section{margin-bottom:38px}.sectionHea
  .top{height:58px!important;padding:0 13px!important}.hero{height:530px!important;min-height:530px!important;padding:0 18px 64px!important}.hero h1{font-size:42px!important}.heroDesc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card{flex-basis:132px!important}.sectionTitle{font-size:18px!important}.sectionTitle:before{height:18px}.mobileBottomNav{background:#202127ee!important;border-top:1px solid #34353c!important;backdrop-filter:blur(16px)}
 }
 
+
+/* =========================================================
+   ResenhaFlix v18 — categorias + busca estilo Crunchyroll
+   ========================================================= */
+.logo{
+ border:0!important;background:transparent!important;color:#fff!important;padding:0!important;
+ cursor:pointer;text-align:left
+}
+.logo:hover span{color:#fff}.logo:active{transform:scale(.98)}
+
+.cardInfo{min-height:66px!important;padding-top:9px!important}
+.title{
+ white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;
+ display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
+ line-height:1.28!important;min-height:33px!important;color:#f3f3f5!important;
+ font-weight:850!important;letter-spacing:-.08px
+}
+.sub{color:#aaaab2!important;line-height:1.35!important}
+.sourceMark,.resumeSource{color:#b8b8c0!important;white-space:normal!important;line-height:1.3!important}
+.page h2{color:#fff!important;letter-spacing:-.5px}
+.empty,.loading{color:#a3a3ab!important;line-height:1.55}
+
+.categoryWrap{
+ margin:-5px 0 23px;position:relative
+}
+.categoryLabel{
+ font-size:10px;font-weight:950;letter-spacing:1.1px;text-transform:uppercase;
+ color:#81828a;margin-bottom:9px
+}
+.categoryBar{
+ display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:1px 2px 7px;
+ scroll-snap-type:x proximity
+}
+.categoryBar::-webkit-scrollbar{display:none}
+.categoryChip{
+ flex:none;min-height:39px;border:1px solid #373840;background:#17181d;color:#c7c8cd;
+ border-radius:4px;padding:8px 13px;font-size:11px;font-weight:850;scroll-snap-align:start;
+ transition:.15s
+}
+.categoryChip:hover{border-color:#61626c;color:#fff;background:#202127}
+.categoryChip.active{
+ background:var(--accent)!important;border-color:var(--accent)!important;color:#17100b!important
+}
+.categoryCount{font-size:10px;color:#787981;margin-left:6px}
+.categoryLoading{
+ display:flex;align-items:center;gap:8px;color:#a4a4ac;font-size:11px;padding:8px 2px 18px
+}
+.categoryLoading:before{
+ content:"";width:13px;height:13px;border:2px solid #4a4b52;border-top-color:var(--accent);
+ border-radius:50%;animation:spin .7s linear infinite
+}
+
+/* Busca */
+.searchPage{padding-top:64px!important}
+.searchPage>h2{display:none!important}
+#searchShell{max-width:1280px;margin:0 auto}
+.crSearchBar{
+ position:sticky;top:64px;z-index:25;background:#202126;
+ padding:13px max(16px,3vw) 11px;margin:0 calc(-4vw) 18px;
+ border-bottom:1px solid #282930;box-shadow:0 8px 24px #0005
+}
+.crSearchInputWrap{
+ max-width:760px;margin:0 auto;display:flex;align-items:center;gap:8px;
+ border-bottom:2px solid var(--accent);height:47px
+}
+.crSearchIcon{font-size:22px;color:#b8b9c0;flex:none}
+.crSearchInputWrap input{
+ flex:1;min-width:0;height:100%;border:0!important;background:transparent!important;color:#fff!important;
+ outline:0!important;border-radius:0!important;padding:8px 2px!important;font-size:16px!important;
+ box-shadow:none!important
+}
+.crSearchInputWrap input::placeholder{color:#8f9098}
+.crSearchClose{
+ width:38px;height:38px;flex:none;border:0;background:transparent;color:#b9bac1;
+ font-size:18px;border-radius:4px
+}
+.crSearchClose:hover{background:#ffffff10;color:#fff}
+.searchContent{padding:0}
+.searchTabs{margin-bottom:8px}
+.searchMeta{color:#a7a8af!important;font-size:12px!important}
+.searchResultList{display:flex;flex-direction:column;gap:1px}
+.searchResultItem{
+ width:100%;display:flex;align-items:center;gap:17px;border:0;background:transparent;color:#fff;
+ padding:13px 4px;text-align:left;border-bottom:1px solid #202127;cursor:pointer;
+ transition:background .15s
+}
+.searchResultItem:hover{background:#ffffff06}
+.searchResultThumb{
+ width:150px;aspect-ratio:16/10;flex:none;background:#24252a center/cover no-repeat;
+ border-radius:2px;box-shadow:0 7px 20px #0006
+}
+.searchResultInfo{min-width:0;flex:1}
+.searchResultTitle{
+ font-size:15px;font-weight:900;line-height:1.35;color:#f8f8f9;
+ white-space:normal;overflow-wrap:anywhere
+}
+.searchResultMeta{font-size:11px;color:#999aa2;margin-top:5px}
+.searchResultGenres{
+ font-size:10px;color:#777881;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.searchResultPlus{
+ width:36px;height:36px;flex:none;border:1px solid #3a3b42;background:#202127;color:#fff;
+ border-radius:4px;font-size:18px;font-weight:900
+}
+.searchResultPlus.saved{background:var(--accent);color:#16100b;border-color:var(--accent)}
+.searchDesktopGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:18px 14px}
+
+@media(max-width:760px){
+ .cardInfo{min-height:63px!important;padding:8px 2px 6px!important}
+ .title{font-size:12.5px!important;min-height:32px!important}
+ .sub{font-size:10.5px!important}
+ .page h2{font-size:27px!important;margin-bottom:16px!important}
+ .categoryWrap{margin:0 0 17px}
+ .categoryLabel{padding-left:1px}
+ .categoryBar{margin-right:-14px;padding-right:14px}
+ .categoryChip{min-height:38px;padding:7px 12px;font-size:10.5px;border-radius:3px}
+
+ .searchPage{padding:58px 0 calc(85px + env(safe-area-inset-bottom))!important;background:#050506!important}
+ #searchShell{max-width:none}
+ .crSearchBar{
+   top:58px;margin:0;padding:7px 14px 9px;background:#202123;
+   border-bottom:0;box-shadow:none
+ }
+ .crSearchInputWrap{height:44px;max-width:none;border-bottom:2px solid var(--accent)}
+ .crSearchInputWrap input{font-size:16px!important}
+ .searchContent{padding:12px 14px 24px}
+ .searchTabs{padding:2px 0 6px!important;margin:0 -14px 7px;padding-left:14px!important;padding-right:14px!important}
+ .searchTabs button{min-height:36px!important;border-radius:3px!important;font-size:10px!important;padding:7px 10px!important}
+ .searchMeta{margin:0 0 7px!important;font-size:10.5px!important}
+ .searchResultList{margin:0 -14px}
+ .searchResultItem{gap:14px;padding:14px}
+ .searchResultThumb{width:164px;max-width:47vw;aspect-ratio:1.28/1}
+ .searchResultTitle{font-size:15px;line-height:1.3}
+ .searchResultMeta{font-size:10.5px}
+ .searchResultGenres{display:none}
+ .searchResultPlus{display:none}
+ .searchLoading{padding:28px 0!important;font-size:12px}
+ .searchPage .mobileBottomNav{display:none!important}
+}
+@media(max-width:430px){
+ .searchResultThumb{width:47%;max-width:164px}
+ .searchResultItem{align-items:center}
+ .searchResultTitle{font-size:14.5px}
+}
+
 </style>
 </head>
 <body>
 <header class="top" id="top">
- <div class="logo"><img src="./icons/resenhaflix-logo.png" alt=""><span>RESENHA<b>FLIX</b></span></div>
+ <button type="button" class="logo" id="logoHome" aria-label="Ir para o início"><img src="./icons/resenhaflix-logo.png" alt=""><span>RESENHA<b>FLIX</b></span></button>
  <nav class="nav">
   <button class="active" data-page="home">Início</button>
   <button data-page="movies">Filmes</button>
@@ -1663,7 +1808,7 @@ const cfg={
  mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -1893,7 +2038,7 @@ function card(m){
    <button class="plus ${saved?"saved":""}" data-plus="${esc(m.id)}" data-type="${esc(m.type||"movie")}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
    ${m._continue?`<button class="continueRemove" data-remove-continue="${esc(m._historyKey||key)}" title="Remover de Continuar assistindo">✕</button>`:""}
    ${m._continue&&remaining?`<div class="resumeBadge">▶ ${esc(remaining)}</div>`:""}
-   <div class="cardInfo"><div class="title">${esc(m.name||"Sem título")}</div><div class="sub">${esc(m.year||"")} ${m.type==="series"?"• Série":"• Filme"}</div>${m._continue&&h?.stream?.addon?`<div class="resumeSource">Última fonte: ${esc(h.stream.addon)}${h.stream.quality?` • ${esc(h.stream.quality)}`:""}</div>`:(m._catalogSource?`<div class="sourceMark">${esc(m._catalogSource)}</div>`:"")}</div>
+   <div class="cardInfo"><div class="title">${esc(m.name||"Sem título")}</div><div class="sub">${esc(m.year||"")} • ${isAnimeLike(m)?"Anime":(m.type==="series"?"Série":"Filme")}</div>${m._continue&&h?.stream?.addon?`<div class="resumeSource">Última fonte: ${esc(h.stream.addon)}${h.stream.quality?` • ${esc(h.stream.quality)}`:""}</div>`:(m._catalogSource?`<div class="sourceMark">${esc(m._catalogSource)}</div>`:"")}</div>
    ${h?`<div class="bar"><i style="width:${Math.min(100,Math.max(0,h.progress||0))}%"></i></div>`:""}
  </article>`
 }
@@ -2054,7 +2199,8 @@ async function externalCatalogRows(){
 }
 
 async function home(){
- S.currentPage="home";setActiveNav("home");unlockMobileDocument();scrollPageTop();
+ S.currentPage="home";S.pageCategory="all";setActiveNav("home");unlockMobileDocument();scrollPageTop();
+ $("#page").classList.remove("searchPage");
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
@@ -3363,22 +3509,131 @@ async function mangaPage(){
  $("#pageBody").innerHTML=`<div class="mangaShell"><div class="mangaHero"><h3>ResenhaFlix Mangás</h3><p>O objetivo desta tela é simples: instalar fontes, pesquisar e ler dentro do ResenhaFlix. Explorar abre rápido; as fontes só são consultadas quando necessário.</p><div class="mangaPriority">${pt?`${pt} fonte(s) em Português instalada(s)`:"Português é prioridade"}</div></div><div class="mangaTabs" id="mangaTabs"><button type="button" data-manga-tab="library">Biblioteca</button><button type="button" data-manga-tab="explore">Explorar</button><button type="button" data-manga-tab="extensions">Extensões</button></div><div class="mangaRepoStatus" id="mangaRepoStatus">${bridgeBase()?"Manga Bridge configurado.":"Modo direto ativo; fontes que bloqueiam CORS exigem Manga Bridge."}</div><div id="mangaContent"><div class="loading">Carregando…</div></div></div>`;
  $$("[data-manga-tab]").forEach(b=>b.onclick=()=>{S.mangaTab=b.dataset.mangaTab;S.mangaQuery="";renderMangaCurrentTab()});await renderMangaCurrentTab()
 }
+
+const PAGE_GENRES=[
+ ["all","Todos"],
+ ["Action","Ação"],
+ ["Adventure","Aventura"],
+ ["Comedy","Comédia"],
+ ["Drama","Drama"],
+ ["Fantasy","Fantasia"],
+ ["Romance","Romance"],
+ ["Horror","Terror"],
+ ["Sci-Fi","Ficção científica"],
+ ["Thriller","Suspense"],
+ ["Crime","Crime"],
+ ["Mystery","Mistério"],
+ ["Biography","Biografia"],
+ ["Documentary","Documentário"],
+ ["Family","Família"],
+ ["Animation","Animação"],
+ ["Sport","Esportes"],
+ ["Western","Faroeste"]
+];
+function metaHasGenre(m,genre){
+ if(!genre||genre==="all")return true;
+ const target=normText(genre);
+ return (m.genres||[]).some(g=>normText(g)===target||normText(g).includes(target)||target.includes(normText(g)));
+}
+function categoryLabel(value){
+ if(value==="movie")return"Filmes";
+ if(value==="series")return"Séries";
+ if(value==="anime")return"Animes";
+ return PAGE_GENRES.find(x=>x[0]===value)?.[1]||value;
+}
+function listCategories(items){
+ const cats=[["all","Todos"],["movie","Filmes"],["series","Séries"],["anime","Animes"]];
+ const present=new Set();
+ for(const m of items)for(const g of (m.genres||[])){
+  const def=PAGE_GENRES.find(x=>normText(x[0])===normText(g));
+  if(def)present.add(def[0]);
+ }
+ for(const def of PAGE_GENRES.slice(1))if(present.has(def[0]))cats.push(def);
+ return cats;
+}
+function categoriesForPage(type,items){
+ if(type==="list")return listCategories(items);
+ if(type==="anime")return PAGE_GENRES.filter(([v])=>v!=="Animation");
+ return PAGE_GENRES;
+}
+function renderCategoryBar(type,items){
+ const cats=categoriesForPage(type,items);
+ return `<div class="categoryWrap">
+   <div class="categoryLabel">Categorias</div>
+   <div class="categoryBar" id="pageCategoryBar">
+    ${cats.map(([value,label])=>`<button type="button" class="categoryChip ${S.pageCategory===value?"active":""}" data-page-category="${esc(value)}">${esc(label)}</button>`).join("")}
+   </div>
+  </div>`;
+}
+function filterListCategory(items,value){
+ if(value==="all")return items;
+ if(value==="movie")return items.filter(x=>x.type==="movie"&&!isAnimeLike(x));
+ if(value==="series")return items.filter(x=>x.type==="series"&&!isAnimeLike(x));
+ if(value==="anime")return items.filter(isAnimeLike);
+ return items.filter(x=>metaHasGenre(x,value));
+}
+async function fetchCatalogPageItems(type,category="all"){
+ if(type==="list")return lists();
+ if(type==="anime"){
+  const [a,b]=await Promise.all([
+   safeCatalog("series","top",{genre:"Animation"}),
+   safeCatalog("movie","top",{genre:"Animation"})
+  ]);
+  let all=Array.from(new Map([...a,...b].map(x=>[`${x.type}|${x.id}`,x])).values());
+  if(category!=="all")all=all.filter(x=>metaHasGenre(x,category));
+  return all;
+ }
+ const mediaType=type==="movies"?"movie":"series";
+ return safeCatalog(mediaType,"top",category==="all"?"":{genre:category});
+}
+function bindCategoryBar(type){
+ const bar=$("#pageCategoryBar");if(!bar)return;
+ bar.querySelectorAll("[data-page-category]").forEach(b=>b.onclick=async()=>{
+  const next=b.dataset.pageCategory;
+  if(next===S.pageCategory)return;
+  S.pageCategory=next;
+  bar.querySelectorAll("[data-page-category]").forEach(x=>x.classList.toggle("active",x.dataset.pageCategory===next));
+  const body=$("#pageCatalogResults");
+  if(body)body.innerHTML='<div class="categoryLoading">Carregando '+esc(categoryLabel(next))+'…</div>';
+  if(type==="list"){
+   const shown=filterListCategory(S.pageItems,next);
+   renderPageCatalogResults(shown);
+   return;
+  }
+  try{
+   const items=await fetchCatalogPageItems(type,next);
+   S.pageItems=items;
+   renderPageCatalogResults(items);
+  }catch(e){
+   console.error(e);
+   if(body)body.innerHTML='<div class="empty">Não foi possível carregar esta categoria.</div>';
+  }
+ });
+}
+function renderPageCatalogResults(items){
+ const target=$("#pageCatalogResults");if(!target)return;
+ target.innerHTML=items.length?`<div class="grid">${items.map(card).join("")}</div>`:'<div class="empty">Nenhum título encontrado nesta categoria.</div>';
+ bindCards(target);
+}
 async function page(type){
  if(type==="manga")return mangaPage();
- S.currentPage=type;setActiveNav(type);unlockMobileDocument();scrollPageTop();
+ S.currentPage=type;S.pageTypeForCategories=type;S.pageCategory="all";
+ setActiveNav(type);unlockMobileDocument();scrollPageTop();
+ $("#page").classList.remove("searchPage");
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
- const titles={movies:"Filmes",series:"Séries",anime:"Animes",manga:"Mangás",list:"Minha lista"};$("#pageTitle").textContent=titles[type]||"Catálogo";
- if(type==="list"){const a=lists();$("#pageBody").innerHTML=a.length?`<div class="grid">${a.map(card).join("")}</div>`:'<div class="empty">Sua lista está vazia.</div>';bindCards($("#pageBody"));return}
+ const titles={movies:"Filmes",series:"Séries",anime:"Animes",manga:"Mangás",list:"Minha lista"};
+ $("#pageTitle").textContent=titles[type]||"Catálogo";
  $("#pageBody").innerHTML='<div class="loading">Carregando...</div>';
- let items=[];
- if(type==="movies")items=await safeCatalog("movie","top");
- if(type==="series")items=await safeCatalog("series","top");
- if(type==="anime"){
-  const [a,b]=await Promise.all([safeCatalog("series","top",{genre:"Animation"}),safeCatalog("movie","top",{genre:"Animation"})]);
-  items=Array.from(new Map([...a,...b].map(x=>[x.id,x])).values());
+ try{
+  const items=await fetchCatalogPageItems(type,"all");
+  S.pageItems=items;
+  $("#pageBody").innerHTML=renderCategoryBar(type,items)+`<div id="pageCatalogResults"></div>`;
+  renderPageCatalogResults(type==="list"?filterListCategory(items,"all"):items);
+  bindCategoryBar(type);
+ }catch(e){
+  console.error(e);
+  $("#pageBody").innerHTML='<div class="empty">Não foi possível carregar esta página.</div>';
  }
- $("#pageBody").innerHTML=items.length?`<div class="grid">${items.map(card).join("")}</div>`:'<div class="empty">Nenhum título encontrado.</div>';
- bindCards($("#pageBody"));
 }
 
 function searchCounts(){
@@ -3390,17 +3645,25 @@ function searchCounts(){
   anime:all.filter(isAnimeLike)
  };
 }
+
 function ensureSearchShell(){
  $("#pageTitle").textContent="Buscar";
+ $("#page").classList.add("searchPage");
  let shell=$("#searchShell");
  if(shell)return shell;
  $("#pageBody").innerHTML=`<div id="searchShell">
-   <div class="searchTools">
-    <input id="pageSearchInput" placeholder="Digite o nome de um filme, série ou anime" autocomplete="off" inputmode="search">
-    <div class="searchTabs" id="searchTabs"></div>
+   <div class="crSearchBar">
+    <div class="crSearchInputWrap">
+     <span class="crSearchIcon">⌕</span>
+     <input id="pageSearchInput" placeholder="Buscar..." autocomplete="off" inputmode="search" aria-label="Buscar filmes, séries e animes">
+     <button type="button" class="crSearchClose" id="pageSearchClose" aria-label="Fechar busca">✕</button>
+    </div>
    </div>
-   <div class="searchMeta" id="searchMeta"></div>
-   <div id="searchResultsArea"></div>
+   <div class="searchContent">
+    <div class="searchTabs" id="searchTabs"></div>
+    <div class="searchMeta" id="searchMeta"></div>
+    <div id="searchResultsArea"></div>
+   </div>
   </div>`;
  const inp=$("#pageSearchInput");
  inp.value=S.searchQuery||"";
@@ -3408,17 +3671,43 @@ function ensureSearchShell(){
  inp.addEventListener("input",e=>{
   clearTimeout(timer);
   const value=e.target.value;
-  timer=setTimeout(()=>search(value,false),420);
+  timer=setTimeout(()=>search(value,false),380);
  });
  inp.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
-   clearTimeout(timer);
-   e.preventDefault();
-   search(e.target.value,true);
-   e.target.blur();
+   clearTimeout(timer);e.preventDefault();search(e.target.value,true);e.target.blur();
   }
+  if(e.key==="Escape"){e.preventDefault();home()}
  });
+ $("#pageSearchClose").onclick=()=>home();
  return $("#searchShell");
+}
+function searchResultItem(m){
+ const saved=lists().some(x=>x.id===m.id&&String(x.type||"movie")===String(m.type||"movie"));
+ const label=isAnimeLike(m)?"Anime":(m.type==="series"?"Série":"Filme");
+ return `<article class="searchResultItem" data-search-id="${esc(m.id)}" data-search-type="${esc(m.type||"movie")}">
+   <div class="searchResultThumb" style="background-image:url('${esc(m.background||m.poster||"")}')"></div>
+   <div class="searchResultInfo">
+    <div class="searchResultTitle">${esc(m.name||"Sem título")}</div>
+    <div class="searchResultMeta">${[m.year,label,m.imdbRating?`★ ${m.imdbRating}`:""].filter(Boolean).map(esc).join(" • ")}</div>
+    <div class="searchResultGenres">${esc((m.genres||[]).slice(0,4).join(" • "))}</div>
+   </div>
+   <button type="button" class="searchResultPlus ${saved?"saved":""}" data-search-plus="${esc(m.id)}" data-search-plus-type="${esc(m.type||"movie")}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
+  </article>`;
+}
+function bindSearchResultItems(root,items){
+ root.querySelectorAll(".searchResultItem").forEach(el=>el.onclick=e=>{
+  if(e.target.closest("[data-search-plus]"))return;
+  openDetails(el.dataset.searchType,el.dataset.searchId);
+ });
+ root.querySelectorAll("[data-search-plus]").forEach(b=>b.onclick=e=>{
+  e.stopPropagation();
+  const m=items.find(x=>x.id===b.dataset.searchPlus&&String(x.type||"movie")===String(b.dataset.searchPlusType||"movie"));
+  if(m)S.itemCache.set(`${m.type||"movie"}|${m.id}`,m);
+  toggleListById(b.dataset.searchPlus,b.dataset.searchPlusType,b);
+  const saved=lists().some(x=>x.id===b.dataset.searchPlus&&String(x.type||"movie")===String(b.dataset.searchPlusType||"movie"));
+  b.classList.toggle("saved",saved);b.textContent=saved?"✓":"+";
+ });
 }
 function renderSearchResults(){
  ensureSearchShell();
@@ -3431,19 +3720,22 @@ function renderSearchResults(){
   ["anime",`Animes (${groups.anime.length})`]
  ];
  $("#searchTabs").innerHTML=tabs.map(([k,t])=>`<button type="button" data-search-filter="${k}" class="${S.searchFilter===k?"active":""}">${t}</button>`).join("");
- $("#searchTabs").querySelectorAll("[data-search-filter]").forEach(b=>b.onclick=()=>{
-  S.searchFilter=b.dataset.searchFilter;
-  renderSearchResults();
- });
+ $("#searchTabs").querySelectorAll("[data-search-filter]").forEach(b=>b.onclick=()=>{S.searchFilter=b.dataset.searchFilter;renderSearchResults()});
  const q=S.searchQuery;
  $("#searchMeta").textContent=q?`${shown.length} resultado(s) para “${q}”`:"Digite pelo menos 2 caracteres para pesquisar.";
- $("#searchResultsArea").innerHTML=shown.length
-  ? `<div class="grid">${shown.map(card).join("")}</div>`
-  : `<div class="empty">${q?"Nenhum resultado encontrado. Tente parte do nome ou o título original.":"Comece digitando acima."}</div>`;
- bindCards($("#searchResultsArea"));
- const inp=$("#pageSearchInput");
- if(inp&&inp.value!==q)inp.value=q;
+ const area=$("#searchResultsArea");
+ if(!shown.length){
+  area.innerHTML=`<div class="empty">${q?"Nenhum resultado encontrado. Tente parte do nome ou o título original.":"Comece digitando acima."}</div>`;
+ }else if(innerWidth<=760){
+  area.innerHTML=`<div class="searchResultList">${shown.map(searchResultItem).join("")}</div>`;
+  bindSearchResultItems(area,shown);
+ }else{
+  area.innerHTML=`<div class="searchDesktopGrid">${shown.map(card).join("")}</div>`;
+  bindCards(area);
+ }
+ const inp=$("#pageSearchInput");if(inp&&inp.value!==q)inp.value=q;
 }
+
 function renderSearchLoading(){
  ensureSearchShell();
  const inp=$("#pageSearchInput");
@@ -3458,6 +3750,7 @@ async function search(q,force=false){
  $("#hero").classList.add("hidden");
  $("#main").classList.add("hidden");
  $("#page").classList.remove("hidden");
+ $("#page").classList.add("searchPage");
  setActiveNav("");
  ensureSearchShell();
 
@@ -3523,6 +3816,7 @@ function setActiveNav(target){
  $$(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===target));
  $$("[data-mobile-page]").forEach(x=>x.classList.toggle("active",x.dataset.mobilePage===target));
 }
+$("#logoHome").onclick=()=>{closeTransientUI();home()};
 $$("[data-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.page);if(b.dataset.page==="home")home();else page(b.dataset.page)});
 $$("[data-mobile-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.mobilePage);if(b.dataset.mobilePage==="home")home();else page(b.dataset.mobilePage)});
 let topSearchTimer;
@@ -3640,7 +3934,7 @@ window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>
 window.addEventListener("beforeunload",()=>persistPlaybackProgress(true));
 window.addEventListener("pageshow",()=>setTimeout(repairTouchState,0));
 window.addEventListener("orientationchange",()=>setTimeout(()=>{repairTouchState();applyAspectMode(S.aspectMode,false)},180));
-window.addEventListener("resize",()=>{if(innerWidth<=760)repairTouchState()});
+window.addEventListener("resize",()=>{if(innerWidth<=760)repairTouchState();if(S.currentPage==="search"&&S.searchQuery)renderSearchResults()});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)persistPlaybackProgress(true)});
 
 const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
