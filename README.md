@@ -1,56 +1,52 @@
-# ResenhaFlix V25 — Manga Direct + Full Music + Better Books
+# ResenhaFlix V26 — Global Search + SoundCloud + Books Fast + Manga Repo Fix
 
 ## Mangás
-- Busca em até 15 fontes PT/PT-BR do Keiyoushi.
-- As fontes confirmadas ficam no topo.
-- O ranking considera:
-  - correspondência do título;
-  - URL exata encontrada;
-  - idioma PT/PT-BR;
-  - histórico de fontes já abertas com sucesso.
-- Quando a busca consegue uma URL exata, `Ler agora` abre diretamente a página daquele mangá.
-- Se CORS/anti-bot impedir confirmar a página, a fonte fica separada como `Abrir busca`.
-- O ResenhaFlix não afirma que o mangá existe em uma fonte sem confirmação.
+O problema principal das fontes foi corrigido:
+- a V25 usava `index.min.json`;
+- o índice atual completo do Keiyoushi está em um novo formato dentro de `index.json`;
+- a V26 entende `extensionList.extensions`;
+- filtra PT/PT-BR;
+- mantém ranking e busca em até 15 fontes.
+
+O navegador ainda pode ser impedido por CORS/anti-bot de confirmar a página exata em algumas fontes. Nesses casos a fonte continua aparecendo como alternativa, sem falso positivo.
 
 ## Música
-O player inferior foi redesenhado com visual inspirado em aplicativos de streaming:
-- capa + faixa + artista à esquerda;
-- aleatório / anterior / play / próxima / repetir no centro;
-- timeline;
-- origem / fila / volume à direita;
-- versão mobile compacta.
+### SoundCloud
+- suporte ao player/widget oficial do SoundCloud;
+- colar uma URL pública do SoundCloud na busca toca a faixa pelo widget oficial;
+- botão de busca externa no SoundCloud;
+- Worker opcional para pesquisar SoundCloud dentro do ResenhaFlix;
+- Worker guarda Client Secret fora do GitHub Pages;
+- resultados SoundCloud entram antes de Audius/iTunes quando o Worker está configurado.
 
-### Faixas completas
-A V25 adiciona Audius:
-- Base padrão `https://api.audius.co`;
-- campo para API Key do Audius;
-- faixas Audius recebem selo `COMPLETA`;
-- o player usa o endpoint de stream da própria plataforma;
-- iTunes continua como catálogo/previews;
-- JSON personalizado continua funcionando.
+Arquivos:
+- `soundcloud-worker/worker.js`
+- `soundcloud-worker/README.md`
 
-Não existe download de música.
+Audius e iTunes continuam como fallback.
 
 ## Livros
-A preferência de formato agora é:
+- página organizada por categorias;
+- leitura rápida prefere PDF;
+- se PDF não existe, HTML vem antes de EPUB para abrir mais rápido;
+- epub.js é pré-carregado em segundo plano ao entrar em Livros;
+- Open Library agora pede `ebook_access`, `ia` e `public_scan_b`;
+- livros com acesso público podem consultar o Metadata API do Internet Archive para descobrir PDF/EPUB/MOBI;
+- formatos são atualizados em background sem segurar a primeira renderização.
 
-1. PDF
-2. EPUB
-3. MOBI
-4. HTML
-5. TXT
+Downloads continuam restritos a itens classificados como públicos/liberados pelas fontes usadas.
 
-Para itens marcados como domínio público/liberados:
-- PDF abre no leitor do navegador;
-- EPUB abre com epub.js;
-- MOBI fica disponível para download;
-- formatos disponíveis aparecem individualmente no card;
-- `Melhor download` segue PDF > EPUB > MOBI.
+## Busca global
+A barra principal agora pesquisa:
+- Filmes
+- Séries
+- Animes
+- Músicas
+- Artistas
+- Mangás
+- Livros
 
-## Observação sobre a referência de livros
-A URL do site de livros mencionada pelo usuário não veio na mensagem desta atualização.
-Por isso a V25 mantém Open Library + Gutendex/Project Gutenberg e melhora o fluxo de leitura/download.
-Quando a URL de referência for fornecida, o layout pode ser aproximado dela.
+Cada grupo carrega em paralelo, então uma API lenta não bloqueia as demais.
 
 ## PWA
-Cache: `resenhaflix-shell-v25`
+Cache: `resenhaflix-shell-v26`
