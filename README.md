@@ -1,29 +1,25 @@
-# ResenhaFlix V21 — Prime Player + Trending
+# ResenhaFlix V22 — Smooth Player
 
 ## Player
-- Fullscreen real.
-- Fontes em drawer lateral no desktop e bottom sheet no celular.
-- Botões grandes de -10s / play-pause / +10s.
-- Título e temporada/episódio no topo.
-- Próximo episódio no canto inferior.
-- Mobile não perde altura para a lista de fontes.
+- Topo agora mostra somente `Trocar fonte` e `Fechar`.
+- Áudio, legenda, proporção e fullscreen ficam na barra inferior.
+- Proporção foi removida completamente da área de Fontes.
+- Botões centrais de voltar/avançar 10s usam SVG próprio para evitar os ícones quebrados.
+- O painel de Fontes continua lateral no PC e bottom sheet no celular.
+
+## Desempenho
+- HLS.js não é mais baixado ao abrir o site; só é carregado quando uma fonte `.m3u8` precisa dele.
+- Imagens de cards usam `loading=lazy`, `decoding=async` e prioridade baixa.
+- Seções fora da tela usam `content-visibility`.
+- Catálogos extras da Home são carregados depois do conteúdo principal.
+- A rotação de cards não bloqueia mais a primeira renderização tentando páginas com `skip`.
+- Eventos de mousemove/scroll/resize foram limitados com requestAnimationFrame/debounce.
+- Efeitos caros de backdrop blur foram reduzidos.
+- Durante scroll, animações de hover são suspensas.
 
 ## Catálogo
-Home, Filmes, Séries e Animes usam rotação por janela de 4 horas.
-O código tenta `skip` quando o catálogo suporta e embaralha de forma estável como fallback.
-
-## Em alta
-Página nova para Filmes, Séries, Animes e Mangás.
-Inclui Radar Social com atalhos para TikTok, Instagram e Google Trends.
-O ranking principal usa catálogos atuais e AniList, sem inventar métricas privadas.
-
-## Mangás
-No detalhe:
-- Onde comprar
-- Ler grátis legalmente
-
-Google Books é consultado para compra, preço e prévia quando houver.
-Também há pesquisas para Amazon BR, Panini, JBC, NewPOP, MANGA Plus e WEBTOON.
+A rotação principal passou para janelas de aproximadamente 3 horas.
+Uma página alternativa do catálogo é aquecida em background e usada nas próximas navegações quando estiver disponível.
 
 ## PWA
-Cache: resenhaflix-shell-v21
+Cache: `resenhaflix-shell-v22`

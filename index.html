@@ -1850,7 +1850,7 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
  .playerTop{min-height:70px;padding:calc(10px + env(safe-area-inset-top)) 10px 20px!important;justify-content:flex-start!important}
  .primePlayerTitleWrap{position:static;transform:none;width:calc(100% - 150px);text-align:left;margin-top:1px}
  .playerTitle{font-size:13px!important;font-weight:800!important}.primePlayerSubtitle{font-size:10px;margin-top:3px;color:#a8a8ad}
- .primeTopActions{gap:4px}.primeTopBtn{width:36px;height:36px;font-size:13px}#primeAudioBtn,#primeSubsBtn,#primeAspectBtn{display:none}.primeClose{width:38px;height:38px;font-size:25px!important}
+ .primeTopActions{gap:4px}.primeTopBtn{width:36px;height:36px;font-size:13px}.primeClose{width:38px;height:38px;font-size:25px!important}
  .primeCenterControls{gap:27px}.primePlay{width:64px;height:64px;font-size:25px}.primeJump{width:56px;height:56px;font-size:41px}.primeJump b{font-size:14px}
  .playerControls{bottom:54px!important;padding:42px 10px 8px!important;background:linear-gradient(transparent,#000d 62%,#000f 100%)!important}
  .controlRow{gap:2px!important}.controlRow .ctl{height:34px!important;min-width:34px!important;padding:0 6px!important}#muteBtn{display:flex!important}.time{display:inline!important;min-width:78px!important;font-size:9px!important}#downloadCurrent,#pipBtn,.trackStatus,.volume{display:none!important}.speed{height:34px!important;max-width:56px!important;font-size:9px!important}
@@ -1877,6 +1877,91 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
  .mobileBottomNav{display:flex!important;overflow-x:auto!important;grid-template-columns:none!important;justify-content:flex-start!important;scrollbar-width:none}.mobileBottomNav::-webkit-scrollbar{display:none}.mobileBottomNav button{flex:0 0 68px!important;min-width:68px!important}
  .trendingHero{padding:8px 0 4px}.trendingHero h2{font-size:28px}.trendingRow{grid-auto-columns:126px;gap:10px;margin-right:-14px;padding-right:14px}.socialBuzz{width:185px}
  #mangaMarketModal{padding:0;align-items:flex-end}.mangaMarketPanel{width:100%;max-height:88dvh;border-radius:18px 18px 0 0;border-left:0;border-right:0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}.mangaMarketBody{padding:11px}.marketGrid{grid-template-columns:1fr}.mangaNativeDetailActions{display:grid!important;grid-template-columns:1fr 1fr!important}
+}
+
+
+/* =========================================================
+   ResenhaFlix v22 — player limpo + otimizações de fluidez
+   ========================================================= */
+
+/* Topo do player: só Fonte + Fechar */
+.primeTopActions{gap:7px!important}
+.primeSourceOnly{font-size:17px!important}
+@media(min-width:901px){
+ .primeSourceOnly{width:44px!important}
+}
+
+/* Botões centrais de 10 segundos redesenhados */
+.primeJump{font-size:0!important}
+.jumpSvg{width:68px;height:68px;display:block;overflow:visible}
+.jumpArc,.jumpArrow{
+ fill:none;stroke:#f3f3f3;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round
+}
+.jumpSvg text{
+ fill:#f3f3f3;font:800 17px/1 Inter,system-ui,sans-serif;text-anchor:middle;
+ dominant-baseline:middle
+}
+.primeJump:active .jumpSvg{transform:scale(.92)}
+.primeJump .jumpSvg{transition:transform .12s ease}
+@media(max-width:900px){
+ .jumpSvg{width:52px;height:52px}
+ .jumpArc,.jumpArrow{stroke-width:4.5}
+ .jumpSvg text{font-size:17px}
+}
+
+/* Proporção agora fica na barra inferior */
+.aspectCtl{font-size:18px!important}
+.sourceTools{grid-template-columns:repeat(2,1fr)!important}
+.sourceTools.open{max-height:62px!important}
+
+/* Imagens dos cards: loading lazy + decode assíncrono */
+.poster{position:relative;background:#202126!important}
+.posterImg{
+ width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+ border-radius:inherit;user-select:none;-webkit-user-drag:none
+}
+
+/* Browser pode pular layout/pintura de áreas bem fora da viewport */
+.section,.trendingSection,.socialRadar,.mangaShelfTitle,.mangaLatestGrid,.mangaExtGrid{
+ content-visibility:auto;
+ contain-intrinsic-size:auto 310px
+}
+.card,.mangaNativeResultCard,.sourceCard.compact{
+ contain:layout paint style
+}
+
+/* Menos composição GPU pesada durante navegação */
+.top.solid,.mobileBottomNav,.primeTopBtn,.resumeBadge{
+ backdrop-filter:none!important;
+ -webkit-backdrop-filter:none!important
+}
+.top.solid{background:#101114f2!important}
+.mobileBottomNav{background:#1c1d22f7!important}
+
+/* Enquanto o usuário rola, elimina animações de hover que causam jank */
+body.fastScrolling .card,
+body.fastScrolling .poster,
+body.fastScrolling .sourceCard{
+ transition:none!important
+}
+body.fastScrolling .card:hover .poster{transform:none!important;filter:none!important}
+
+/* Scroll mais previsível em telas touch */
+.row,.trendingRow,.categoryMediaRow,.mangaTrendRow,.socialBuzzList{
+ overscroll-behavior-inline:contain
+}
+
+/* barra inferior continua cabendo com o novo botão de proporção */
+@media(max-width:760px){
+ .controlRow .aspectCtl{display:flex!important;align-items:center;justify-content:center}
+ .controlRow{gap:2px!important}
+ #audioBtn,#subsBtn,.aspectCtl,#fullBtn{flex:0 0 34px!important;width:34px!important;min-width:34px!important}
+ .speed{max-width:49px!important;padding:0 4px!important}
+}
+
+/* reduz movimento se o aparelho/navegador pedir */
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 
 </style>
@@ -1968,11 +2053,8 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
       <div class="primePlayerSubtitle" id="playerSubtitle"></div>
      </div>
      <div class="primeTopActions">
-      <button type="button" class="primeTopBtn" id="primeSourceBtn" title="Fontes">▣</button>
-      <button type="button" class="primeTopBtn" id="primeAudioBtn" title="Áudio">🎧</button>
-      <button type="button" class="primeTopBtn" id="primeSubsBtn" title="Legendas">CC</button>
-      <button type="button" class="primeTopBtn" id="primeAspectBtn" title="Proporção">▭</button>
-      <button class="close primeClose" id="closePlayer">×</button>
+      <button type="button" class="primeTopBtn primeSourceOnly" id="primeSourceBtn" title="Trocar fonte" aria-label="Trocar fonte">▣</button>
+      <button class="close primeClose" id="closePlayer" aria-label="Fechar player">×</button>
      </div>
     </div>
     <div class="videoShell" id="videoShell">
@@ -1980,9 +2062,23 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
      <div class="buffering" id="buffering"></div>
      <button class="bigPlay" id="bigPlay" aria-label="Reproduzir">▶</button>
      <div class="primeCenterControls" id="primeCenterControls">
-      <button type="button" class="primeJump" id="centerBack10" aria-label="Voltar 10 segundos"><span>↶</span><b>10</b></button>
+      <button type="button" class="primeJump" id="centerBack10" aria-label="Voltar 10 segundos">
+       <svg class="jumpSvg" viewBox="0 0 64 64" aria-hidden="true">
+        <path class="jumpArc" d="M18 13A24 24 0 1 1 9.5 39"/>
+        <path class="jumpArrow" d="M19 4 10 13l9 9"/>
+        <text x="32" y="39">10</text>
+       </svg>
+      </button>
       <button type="button" class="primePlay" id="centerPlay" aria-label="Reproduzir ou pausar">▶</button>
-      <button type="button" class="primeJump" id="centerForward10" aria-label="Avançar 10 segundos"><span>↷</span><b>10</b></button>
+      <button type="button" class="primeJump" id="centerForward10" aria-label="Avançar 10 segundos">
+       <svg class="jumpSvg" viewBox="0 0 64 64" aria-hidden="true">
+        <g transform="translate(64 0) scale(-1 1)">
+         <path class="jumpArc" d="M18 13A24 24 0 1 1 9.5 39"/>
+         <path class="jumpArrow" d="M19 4 10 13l9 9"/>
+        </g>
+        <text x="32" y="39">10</text>
+       </svg>
+      </button>
      </div>
      <button type="button" class="skipIntroBtn" id="skipIntroBtn">Pular abertura ⏭</button>
      <div class="playerControls" id="playerControls">
@@ -1999,6 +2095,7 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
        <button class="ctl" id="nextBtn" title="Próximo episódio" style="display:none">Próx. ⏭</button>
        <button class="ctl" id="audioBtn" title="Áudio">🎧</button>
        <button class="ctl" id="subsBtn" title="Legendas">CC</button>
+       <button class="ctl aspectCtl" id="aspectBtn" title="Proporção da imagem" aria-label="Proporção da imagem">▭</button>
        <select class="speed" id="speed" title="Velocidade">
         <option value=".75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option>
        </select>
@@ -2038,7 +2135,6 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
      </div>
      <div class="playerUtilities sourceTools" id="sourceTools">
       <button type="button" id="otherPlayerBtn">↗ Outro player</button>
-      <button type="button" id="aspectBtn">▭ Auto 16:9</button>
       <button type="button" id="introSetupBtn">⏭ Abertura</button>
      </div>
     </div>
@@ -2542,7 +2638,7 @@ function card(m){
  S.itemCache.set(`${m.type||"movie"}|${m.id}`,m);
  const remaining=h?.currentTime?formatTime(h.currentTime):"";
  return `<article class="card" data-id="${esc(m.id)}" data-type="${esc(m.type||"movie")}" ${m._continue?`data-continue-key="${esc(m._historyKey||key)}"`:""}>
-   <div class="poster" style="background-image:url('${esc(m.poster||"")}')"></div>
+   <div class="poster">${m.poster?`<img class="posterImg" src="${esc(m.poster)}" alt="" loading="lazy" decoding="async" fetchpriority="low">`:""}</div>
    ${m.imdbRating?`<div class="rating">★ ${esc(m.imdbRating)}</div>`:""}
    <button class="plus ${saved?"saved":""}" data-plus="${esc(m.id)}" data-type="${esc(m.type||"movie")}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
    ${m._continue?`<button class="continueRemove" data-remove-continue="${esc(m._historyKey||key)}" title="Remover de Continuar assistindo">✕</button>`:""}
@@ -2613,7 +2709,20 @@ function refreshBucket(hours=4){return Math.floor(Date.now()/(hours*3600000))}
 function stableHash(text){let h=2166136261;for(const ch of String(text)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
 function seededShuffle(items,seedText){const a=[...items],seed=stableHash(seedText);let x=seed||1;const rnd=()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296};for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function addCatalogSkip(params,skip){if(!skip)return params;if(!params)return{skip};if(typeof params==="string")return params+(params?"&":"")+`skip=${skip}`;return{...params,skip}}
-async function freshCatalog(type,id="top",params="",manifest=cfg.meta,salt=""){const bucket=refreshBucket(4),page=stableHash(`${bucket}|${type}|${id}|${salt}`)%4,skip=page*20;let items=[];if(skip){try{items=await safeCatalog(type,id,addCatalogSkip(params,skip),manifest)}catch{}}if(!items.length)items=await safeCatalog(type,id,params,manifest);return seededShuffle(items,`${bucket}|${salt}|${type}|${id}`)}
+const FRESH_PAGE_CACHE=new Map();
+async function freshCatalog(type,id="top",params="",manifest=cfg.meta,salt=""){
+ const bucket=refreshBucket(3),page=stableHash(`${bucket}|${type}|${id}|${salt}`)%4,skip=page*20;
+ const cacheKey=`${manifest}|${type}|${id}|${JSON.stringify(params)}|${skip}`;
+ const warm=FRESH_PAGE_CACHE.get(cacheKey);
+ if(warm?.length)return seededShuffle(warm,`${bucket}|${salt}|${type}|${id}|warm`);
+ const base=await safeCatalog(type,id,params,manifest);
+ if(skip){
+  Promise.resolve(safeCatalog(type,id,addCatalogSkip(params,skip),manifest)).then(items=>{
+   if(items?.length)FRESH_PAGE_CACHE.set(cacheKey,items);
+  }).catch(()=>{});
+ }
+ return seededShuffle(base,`${bucket}|${salt}|${type}|${id}`);
+}
 function rotateFresh(items,salt=""){return items?.length?seededShuffle(items,`${refreshBucket(4)}|${salt}`):[]}
 async function safeCatalog(type,id="top",params="",manifest=cfg.meta){
  try{return await getCatalog(manifest,type,id,params)}catch(e){console.warn("catalog",e);return[]}
@@ -2714,20 +2823,35 @@ async function externalCatalogRows(){
  return rows;
 }
 
+function runWhenIdle(fn){
+ if("requestIdleCallback" in window)requestIdleCallback(fn,{timeout:1200});
+ else setTimeout(fn,80);
+}
+async function appendExternalHomeRows(){
+ try{
+  const extraRows=await externalCatalogRows();
+  if(S.currentPage!=="home"||!extraRows.length)return;
+  const host=$("#main");
+  const wrapper=document.createElement("div");
+  wrapper.innerHTML=extraRows.map(r=>row(r.title,r.items,r.sub)).join("");
+  const nodes=[...wrapper.children];
+  for(const node of nodes){host.appendChild(node);bindCards(node)}
+ }catch(e){console.warn("catálogos extras",e)}
+}
 async function home(){
  S.currentPage="home";S.pageCategory="all";setActiveNav("home");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
  $("#page").classList.remove("searchPage");
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
-  const [movies,series,animeMovies,animeSeries,hist,extraRows]=await Promise.all([
+  const [movies,series,animeMovies,animeSeries,hist]=await Promise.all([
    freshCatalog("movie","top","",cfg.meta,"home-movies"),
    freshCatalog("series","top","",cfg.meta,"home-series"),
    freshCatalog("movie","top",{genre:"Animation"},cfg.meta,"home-anime-movies"),
    freshCatalog("series","top",{genre:"Animation"},cfg.meta,"home-anime-series"),
-   Promise.resolve(history()),
-   externalCatalogRows()
+   Promise.resolve(history())
   ]);
+  if(S.currentPage!=="home")return;
   const continueItems=hist.map(x=>{
    const rootId=x.rootId||x.id;
    const meta=x.rootMeta||x.meta||x;
@@ -2740,11 +2864,11 @@ async function home(){
    row("Filmes populares",movies,"Atualizado automaticamente"),
    row("Séries populares",series,"Atualizado automaticamente"),
    row("Animes",Array.from(new Map([...animeSeries,...animeMovies].map(x=>[x.id,x])).values()),"Animação"),
-   ...extraRows.map(r=>row(r.title,r.items,r.sub)),
    row("Mais filmes",movies.slice(8),""),
    row("Mais séries",series.slice(8),"")
   ].join("")||'<div class="empty">Nenhum catálogo retornado.</div>';
   bindCards($("#main"));
+  runWhenIdle(appendExternalHomeRows);
  }catch(e){$("#main").innerHTML='<div class="loading">Não foi possível carregar o catálogo.</div>'}
 }
 function setHero(m){
@@ -3371,7 +3495,11 @@ function aspectLabel(mode){
 }
 function updateAspectButton(){
  const b=$("#aspectBtn");
- if(b)b.textContent=`▭ Proporção: ${aspectLabel(S.aspectMode)}`;
+ if(!b)return;
+ const label=`Proporção: ${aspectLabel(S.aspectMode)}`;
+ b.textContent="▭";
+ b.title=label;
+ b.setAttribute("aria-label",label);
 }
 function applyAspectMode(mode=S.aspectMode,notify=false){
  const shell=$("#videoShell"),video=$("#video");
@@ -3566,7 +3694,21 @@ function resetVideo(){
  if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
  v.load();S.resumeEntry=null;S.resumeApplied=false;applyAspectMode(S.aspectMode,false);$("#seek").value=0;$("#seek").style.setProperty("--seek-fill","0%");$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#centerPlay").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;
 }
-function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
+let hlsLibraryPromise=null;
+function ensureHlsLibrary(){
+ if(window.Hls)return Promise.resolve(window.Hls);
+ if(hlsLibraryPromise)return hlsLibraryPromise;
+ hlsLibraryPromise=new Promise((resolve,reject)=>{
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";
+  s.async=true;
+  s.onload=()=>resolve(window.Hls);
+  s.onerror=()=>{hlsLibraryPromise=null;reject(new Error("Falha ao carregar HLS.js"))};
+  document.head.appendChild(s);
+ });
+ return hlsLibraryPromise;
+}
+async function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
  const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();$("#buffering").classList.add("show");
  S.resumeEntry=resumeEntry||null;S.resumeApplied=false;
  const applyResume=()=>{
@@ -3579,13 +3721,18 @@ function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
  };
  const afterTracks=async()=>{applyPreferredAudio();if(S.playType&&S.playId){await fetchExternalSubtitles(S.playType,S.playId,stream||S.selectedStream);await applyPreferredSubtitle()}updateTrackStatus()};
  v.addEventListener("loadedmetadata",async()=>{applyAspectMode(S.aspectMode,false);applyResume();await afterTracks();$("#buffering").classList.remove("show");if(autoplay)v.play().catch(()=>{})},{once:true});
- if(window.Hls&&Hls.isSupported()&&/\.m3u8($|\?)/i.test(url)){
-  v._hls=new Hls({enableWorker:true,lowLatencyMode:false});
-  v._hls.loadSource(url);v._hls.attachMedia(v);
-  v._hls.on(Hls.Events.MANIFEST_PARSED,async()=>{await afterTracks();$("#buffering").classList.remove("show")});
-  if(Hls.Events.AUDIO_TRACKS_UPDATED)v._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED,()=>{applyPreferredAudio();updateTrackStatus()});
-  if(Hls.Events.SUBTITLE_TRACKS_UPDATED)v._hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED,()=>{applyPreferredSubtitle();updateTrackStatus()});
-  v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)console.warn("Fonte HLS falhou",data)});
+ if(/\.m3u8($|\?)/i.test(url)){
+  try{
+   await ensureHlsLibrary();
+   if(window.Hls&&Hls.isSupported()){
+    v._hls=new Hls({enableWorker:true,lowLatencyMode:false,backBufferLength:30,maxBufferLength:30});
+    v._hls.loadSource(url);v._hls.attachMedia(v);
+    v._hls.on(Hls.Events.MANIFEST_PARSED,async()=>{await afterTracks();$("#buffering").classList.remove("show")});
+    if(Hls.Events.AUDIO_TRACKS_UPDATED)v._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED,()=>{applyPreferredAudio();updateTrackStatus()});
+    if(Hls.Events.SUBTITLE_TRACKS_UPDATED)v._hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED,()=>{applyPreferredSubtitle();updateTrackStatus()});
+    v._hls.on(Hls.Events.ERROR,(_,data)=>{if(data?.fatal)console.warn("Fonte HLS falhou",data)});
+   }else v.src=url;
+  }catch(e){console.warn("HLS.js",e);v.src=url}
  }else{
   v.src=url;
  }
@@ -4623,9 +4770,6 @@ $("#primeSourceBtn").onclick=()=>setSourceDrawer(!$("#playerSide").classList.con
 $("#centerPlay").onclick=togglePlayback;
 $("#centerBack10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
 $("#centerForward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
-$("#primeAudioBtn").onclick=e=>{e.stopPropagation();openAudioMenu()};
-$("#primeSubsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu()};
-$("#primeAspectBtn").onclick=openAspectMenu;
 $("#primeNextFloat").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode){const carry=nextEpisodeCarry();playEpisode(S.currentShow,S.nextEpisode,carry)}};
 $("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
 $("#aspectBtn").onclick=openAspectMenu;
@@ -4651,7 +4795,11 @@ $("#video").addEventListener("pause",()=>{syncPlayer();persistPlaybackProgress(t
 $("#video").addEventListener("ended",()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode){$("#nextBtn").style.display="";$("#primeNextFloat").classList.add("show")}});
 $("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
 $("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
-$("#videoShell").addEventListener("mousemove",()=>showPlayerUI());
+let playerMoveRAF=0;
+$("#videoShell").addEventListener("mousemove",()=>{
+ if(playerMoveRAF)return;
+ playerMoveRAF=requestAnimationFrame(()=>{playerMoveRAF=0;showPlayerUI()});
+},{passive:true});
 $("#videoShell").addEventListener("pointerdown",()=>showPlayerUI());
 $("#videoShell").addEventListener("touchstart",()=>showPlayerUI(),{passive:true});
 $("#playerControls").addEventListener("mouseenter",()=>showPlayerUI(true));
@@ -4675,14 +4823,24 @@ function openSettingsTab(name="geral"){
 }
 $$("[data-settings-tab]").forEach(b=>b.onclick=()=>openSettingsTab(b.dataset.settingsTab));
 $("#resetSettings").onclick=()=>{$("#frostUrl").value=CFG_DEFAULT.frost;$("#metaUrl").value=CFG_DEFAULT.meta;$("#catalogUrls").value=CFG_DEFAULT.catalogs;$("#subtitleAddon").value=CFG_DEFAULT.subtitleAddon;$("#audioPref").value=CFG_DEFAULT.audioPref;$("#subtitlePref").value=CFG_DEFAULT.subtitlePref;$("#mangaRepoUrls").value=CFG_DEFAULT.mangaRepos;$("#mangaBridgeUrl").value=CFG_DEFAULT.mangaBridge;$("#lang").value=CFG_DEFAULT.lang};
-window.addEventListener("scroll",()=>$("#top").classList.toggle("solid",scrollY>35));
+let scrollRAF=0,scrollEndTimer=0;
+window.addEventListener("scroll",()=>{
+ document.body.classList.add("fastScrolling");
+ clearTimeout(scrollEndTimer);
+ scrollEndTimer=setTimeout(()=>document.body.classList.remove("fastScrolling"),110);
+ if(scrollRAF)return;
+ scrollRAF=requestAnimationFrame(()=>{scrollRAF=0;$("#top").classList.toggle("solid",scrollY>35)});
+},{passive:true});
 window.addEventListener("beforeunload",()=>persistPlaybackProgress(true));
 window.addEventListener("pageshow",()=>setTimeout(repairTouchState,0));
 window.addEventListener("orientationchange",()=>setTimeout(()=>{repairTouchState();applyAspectMode(S.aspectMode,false)},180));
-window.addEventListener("resize",()=>{if(innerWidth<=760)repairTouchState();if(S.currentPage==="search"&&S.searchQuery)renderSearchResults()});
+let resizeTimer=0;
+window.addEventListener("resize",()=>{
+ clearTimeout(resizeTimer);
+ resizeTimer=setTimeout(()=>{if(innerWidth<=760)repairTouchState();if(S.currentPage==="search"&&S.searchQuery)renderSearchResults()},120);
+},{passive:true});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)persistPlaybackProgress(true)});
 
-const hls=document.createElement("script");hls.src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";document.head.appendChild(hls);
 let deferredInstallPrompt=null;
 window.addEventListener("beforeinstallprompt",e=>{
  e.preventDefault();deferredInstallPrompt=e;
