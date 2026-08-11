@@ -1,58 +1,56 @@
-# ResenhaFlix V24 — Manga Sources + Música + Livros
+# ResenhaFlix V25 — Manga Direct + Full Music + Better Books
 
 ## Mangás
-A área de Mangás foi simplificada para somente:
-- Explorar
-- Biblioteca
-
-Não existe mais leitura de mangá dentro do ResenhaFlix.
-
-Ao tocar em `Buscar fontes`, o site lê o repositório Keiyoushi, seleciona somente fontes PT/PT-BR e consulta entre 5 e 15 fontes (10 por padrão). Resultados confirmados aparecem primeiro. Se CORS impedir a confirmação, o botão abre a busca no site original e não afirma que o título foi encontrado.
+- Busca em até 15 fontes PT/PT-BR do Keiyoushi.
+- As fontes confirmadas ficam no topo.
+- O ranking considera:
+  - correspondência do título;
+  - URL exata encontrada;
+  - idioma PT/PT-BR;
+  - histórico de fontes já abertas com sucesso.
+- Quando a busca consegue uma URL exata, `Ler agora` abre diretamente a página daquele mangá.
+- Se CORS/anti-bot impedir confirmar a página, a fonte fica separada como `Abrir busca`.
+- O ResenhaFlix não afirma que o mangá existe em uma fonte sem confirmação.
 
 ## Música
-Nova página com:
-- Faixas
-- Álbuns
-- Artistas
-- iTunes Search API como padrão
-- prévia de áudio quando fornecida pela API
-- URLs JSON adicionais
-- importação de `.json`
+O player inferior foi redesenhado com visual inspirado em aplicativos de streaming:
+- capa + faixa + artista à esquerda;
+- aleatório / anterior / play / próxima / repetir no centro;
+- timeline;
+- origem / fila / volume à direita;
+- versão mobile compacta.
 
-O ResenhaFlix não cria download de música.
+### Faixas completas
+A V25 adiciona Audius:
+- Base padrão `https://api.audius.co`;
+- campo para API Key do Audius;
+- faixas Audius recebem selo `COMPLETA`;
+- o player usa o endpoint de stream da própria plataforma;
+- iTunes continua como catálogo/previews;
+- JSON personalizado continua funcionando.
+
+Não existe download de música.
 
 ## Livros
-Nova página com:
-- Todos
-- Grátis
-- Minha estante
+A preferência de formato agora é:
 
-Fontes:
-- Open Library para busca geral
-- Gutendex / Project Gutenberg para obras gratuitas
+1. PDF
+2. EPUB
+3. MOBI
+4. HTML
+5. TXT
 
-Downloads e leitor interno só aparecem em itens marcados como domínio público/liberados.
+Para itens marcados como domínio público/liberados:
+- PDF abre no leitor do navegador;
+- EPUB abre com epub.js;
+- MOBI fica disponível para download;
+- formatos disponíveis aparecem individualmente no card;
+- `Melhor download` segue PDF > EPUB > MOBI.
 
-Formatos:
-- EPUB
-- HTML
-- TXT
-- PDF
-
-EPUB usa epub.js carregado somente quando necessário.
-
-## APIs / URLs / JSON
-Nas páginas Música ou Livros, toque em `⚙ Fontes`.
-
-Você pode:
-- trocar a API principal;
-- adicionar URLs JSON;
-- usar `{query}` na URL;
-- importar arquivo `.json`.
-
-Exemplos:
-- `examples/music-source.example.json`
-- `examples/books-source.example.json`
+## Observação sobre a referência de livros
+A URL do site de livros mencionada pelo usuário não veio na mensagem desta atualização.
+Por isso a V25 mantém Open Library + Gutendex/Project Gutenberg e melhora o fluxo de leitura/download.
+Quando a URL de referência for fornecida, o layout pode ser aproximado dela.
 
 ## PWA
-Cache: `resenhaflix-shell-v24`
+Cache: `resenhaflix-shell-v25`
