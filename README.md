@@ -1,52 +1,39 @@
-# ResenhaFlix V26 — Global Search + SoundCloud + Books Fast + Manga Repo Fix
+# ResenhaFlix V27 — Smart Manga + Internal SoundCloud + dLivros Finder
 
 ## Mangás
-O problema principal das fontes foi corrigido:
-- a V25 usava `index.min.json`;
-- o índice atual completo do Keiyoushi está em um novo formato dentro de `index.json`;
-- a V26 entende `extensionList.extensions`;
-- filtra PT/PT-BR;
-- mantém ranking e busca em até 15 fontes.
+A busca agora considera:
+- título inglês;
+- romaji;
+- título nativo;
+- synonyms do AniList;
+- tradução automática inglês → PT-BR via MyMemory;
+- heurísticas de nomes comuns;
+- aliases aprendidos de resultados anteriores.
 
-O navegador ainda pode ser impedido por CORS/anti-bot de confirmar a página exata em algumas fontes. Nesses casos a fonte continua aparecendo como alternativa, sem falso positivo.
+Exemplo:
+`The Infinite Mage` também tenta `Mago do Infinito` e `Mago Infinito`.
 
-## Música
-### SoundCloud
-- suporte ao player/widget oficial do SoundCloud;
-- colar uma URL pública do SoundCloud na busca toca a faixa pelo widget oficial;
-- botão de busca externa no SoundCloud;
-- Worker opcional para pesquisar SoundCloud dentro do ResenhaFlix;
-- Worker guarda Client Secret fora do GitHub Pages;
-- resultados SoundCloud entram antes de Audius/iTunes quando o Worker está configurado.
+Quando um resultado traduzido é encontrado, o nome é salvo localmente para buscas futuras.
 
-Arquivos:
-- `soundcloud-worker/worker.js`
-- `soundcloud-worker/README.md`
+Para LycanToons existe ainda um atalho inteligente usando:
+`https://lycantoons.com/series/<slug-do-alias>`
 
-Audius e iTunes continuam como fallback.
+Ele é mostrado como `Atalho provável` quando não foi possível confirmar via CORS.
+
+## Música / SoundCloud
+- faixas SoundCloud são reproduzidas dentro do ResenhaFlix com o Widget oficial;
+- cards SoundCloud mostram apenas `Ouvir inteira`;
+- o player inferior não mostra botão para sair do ResenhaFlix quando a origem é SoundCloud;
+- colar uma URL pública SoundCloud continua tocando dentro do site;
+- pesquisa por nome no SoundCloud dentro do ResenhaFlix usa o Worker opcional incluído no ZIP;
+- sem Worker, Audius/iTunes continuam como fallback, sem botão de pesquisa externa SoundCloud.
 
 ## Livros
-- página organizada por categorias;
-- leitura rápida prefere PDF;
-- se PDF não existe, HTML vem antes de EPUB para abrir mais rápido;
-- epub.js é pré-carregado em segundo plano ao entrar em Livros;
-- Open Library agora pede `ebook_access`, `ia` e `public_scan_b`;
-- livros com acesso público podem consultar o Metadata API do Internet Archive para descobrir PDF/EPUB/MOBI;
-- formatos são atualizados em background sem segurar a primeira renderização.
+Cada livro agora possui:
+`🔎 Achar no dLivros`
 
-Downloads continuam restritos a itens classificados como públicos/liberados pelas fontes usadas.
-
-## Busca global
-A barra principal agora pesquisa:
-- Filmes
-- Séries
-- Animes
-- Músicas
-- Artistas
-- Mangás
-- Livros
-
-Cada grupo carrega em paralelo, então uma API lenta não bloqueia as demais.
+O botão tenta montar a URL provável do livro usando título + autor.
+O ResenhaFlix não importa nem automatiza downloads vindos do dLivros.
 
 ## PWA
-Cache: `resenhaflix-shell-v26`
+Cache: `resenhaflix-shell-v27`
