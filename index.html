@@ -1807,6 +1807,78 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
  .mangaWebAction{font-size:0;width:38px;padding:0}
  #mangaWebExternal:after{content:"↗";font-size:17px}
 }
+
+/* ResenhaFlix v21 — Player cinematográfico, Em alta e Manga Market */
+#playerModal{padding:0!important;background:#000!important}
+#playerModal .playerWrap{width:100vw!important;height:100dvh!important;max-height:none!important;border:0!important;border-radius:0!important;background:#000!important;overflow:hidden!important}
+#playerModal .playerLayout{display:block!important;width:100%;height:100%;min-height:0!important}
+#playerModal .playerStage{position:absolute!important;inset:0!important;width:100%;height:100%;background:#000;z-index:1}
+#playerModal .videoShell{width:100%;height:100%;min-height:0!important;aspect-ratio:auto!important;background:#000}
+#playerModal .videoShell video{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important}
+.playerTop{position:absolute!important;left:0;right:0;top:0;z-index:21!important;min-height:94px;padding:25px 38px 35px!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;background:linear-gradient(#000e 0%,#0008 55%,transparent 100%)!important;pointer-events:none}
+.primePlayerTitleWrap{position:absolute;left:50%;top:20px;transform:translateX(-50%);width:min(760px,58vw);text-align:center;pointer-events:none}
+.playerTitle{font-size:27px!important;line-height:1.15!important;font-weight:500!important;letter-spacing:.1px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;padding:0!important}
+.primePlayerSubtitle{margin-top:7px;color:#ddd;font-size:16px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.primeTopActions{margin-left:auto;display:flex;align-items:center;gap:9px;pointer-events:auto}
+.primeTopBtn,.primeClose{width:42px;height:42px;border:0;border-radius:7px;background:#161616b5;color:#eee;display:grid;place-items:center;font-size:16px;backdrop-filter:blur(7px)}
+.primeTopBtn:hover,.primeClose:hover{background:#ffffff20;color:#fff}.primeClose{font-size:29px!important;font-weight:300!important}
+.bigPlay{display:none!important}
+.primeCenterControls{position:absolute;z-index:17;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:66px;opacity:1;transition:.2s;pointer-events:auto}
+.playerStage.uiHidden .primeCenterControls{opacity:0;pointer-events:none}
+.primePlay{width:84px;height:84px;border:0;border-radius:50%;background:#f7f7f4;color:#111;display:grid;place-items:center;font-size:34px;padding-left:5px;box-shadow:0 10px 45px #000a}
+.primePlay:hover{transform:scale(1.06)}
+.primeJump{width:76px;height:76px;border:0;background:transparent;color:#eee;position:relative;display:grid;place-items:center;font-size:53px;line-height:1}
+.primeJump b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:18px;font-weight:800;color:#eee}.primeJump span{opacity:.9}.primeJump:hover{transform:scale(1.08)}
+.playerControls{z-index:18!important;padding:55px 38px 24px!important;background:linear-gradient(transparent,#000e 55%,#000 100%)!important}
+.seek{height:18px!important;appearance:none!important;-webkit-appearance:none!important;background:transparent!important;cursor:pointer;--seek-fill:0%}
+.seek::-webkit-slider-runnable-track{height:5px;border-radius:2px;background:linear-gradient(to right,#f3f3f3 0 var(--seek-fill),#747474 var(--seek-fill) 100%);box-shadow:0 0 0 1px #0007}
+.seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;margin-top:-4.5px;box-shadow:0 0 0 2px #0006}
+.seek::-moz-range-track{height:5px;background:#727272;border:0}.seek::-moz-range-progress{height:5px;background:#f3f3f3}.seek::-moz-range-thumb{width:14px;height:14px;border:0;background:#fff}
+.controlRow{margin-top:4px!important}#playPause,#back10,#forward10{display:none!important}.ctl{background:transparent!important;border:0!important;font-size:16px}.ctl:hover{background:#ffffff14!important}
+.time{font-size:12px!important;color:#eee!important}.trackStatus{color:#bcbcbc!important}.speed{background:#0c0c0ccf!important}
+.primeNextFloat{position:absolute;z-index:19;right:41px;bottom:24px;display:none;border:0;background:transparent;color:#f2f2f2;font-size:15px;padding:8px 0;font-weight:500}
+.primeNextFloat.show{display:block}.primeNextFloat span{font-size:28px;vertical-align:-2px;margin-left:5px}.primeNextFloat:hover{color:#fff;text-decoration:underline}
+.sourcePanelBackdrop{position:fixed;inset:0;z-index:49;border:0;background:#0008;opacity:0;pointer-events:none;transition:.22s}.sourcePanelBackdrop.open{opacity:1;pointer-events:auto}
+#playerModal .playerSide{position:fixed!important;z-index:50!important;right:0;top:0;bottom:0;width:min(410px,92vw)!important;height:100dvh!important;max-height:none!important;display:flex!important;flex-direction:column!important;background:#111318!important;border-left:1px solid #2a2d34!important;border-radius:0!important;transform:translateX(100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);overflow:hidden!important;padding:0!important}
+#playerModal .playerSide.drawerOpen{transform:translateX(0)}
+.sourceDrawerHandle{display:flex!important;height:58px!important;min-height:58px!important;border-radius:0!important;border:0!important;border-bottom:1px solid #292c33!important;background:#181a20!important}.sourceDrawerGrip{display:none!important}.sourceDrawerLabel{padding:0!important;font-size:13px!important}.sourceDrawerChevron{padding:0!important}
+@media(max-width:900px){
+ #playerModal .playerWrap{position:fixed!important;inset:0!important;overflow:hidden!important;padding:0!important}
+ #playerModal .playerStage{position:fixed!important;inset:0!important;height:100dvh!important}
+ #playerModal .videoShell{position:absolute!important;inset:0!important;height:100dvh!important}
+ #playerModal .videoShell video{object-fit:contain!important}
+ .playerTop{min-height:70px;padding:calc(10px + env(safe-area-inset-top)) 10px 20px!important;justify-content:flex-start!important}
+ .primePlayerTitleWrap{position:static;transform:none;width:calc(100% - 150px);text-align:left;margin-top:1px}
+ .playerTitle{font-size:13px!important;font-weight:800!important}.primePlayerSubtitle{font-size:10px;margin-top:3px;color:#a8a8ad}
+ .primeTopActions{gap:4px}.primeTopBtn{width:36px;height:36px;font-size:13px}#primeAudioBtn,#primeSubsBtn,#primeAspectBtn{display:none}.primeClose{width:38px;height:38px;font-size:25px!important}
+ .primeCenterControls{gap:27px}.primePlay{width:64px;height:64px;font-size:25px}.primeJump{width:56px;height:56px;font-size:41px}.primeJump b{font-size:14px}
+ .playerControls{bottom:54px!important;padding:42px 10px 8px!important;background:linear-gradient(transparent,#000d 62%,#000f 100%)!important}
+ .controlRow{gap:2px!important}.controlRow .ctl{height:34px!important;min-width:34px!important;padding:0 6px!important}#muteBtn{display:flex!important}.time{display:inline!important;min-width:78px!important;font-size:9px!important}#downloadCurrent,#pipBtn,.trackStatus,.volume{display:none!important}.speed{height:34px!important;max-width:56px!important;font-size:9px!important}
+ .primeNextFloat{right:12px;bottom:60px;font-size:11px}.skipIntroBtn{right:12px!important;bottom:105px!important}
+ #playerModal .playerSide{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:100%!important;height:min(72dvh,630px)!important;max-height:min(72dvh,630px)!important;border-left:0!important;border-top:1px solid #30333b!important;border-radius:18px 18px 0 0!important;transform:translateY(calc(100% - 54px));padding-bottom:env(safe-area-inset-bottom)!important;box-shadow:0 -18px 50px #000b}
+ #playerModal .playerSide.drawerOpen{transform:translateY(0)}
+ .sourceDrawerHandle{height:54px!important;min-height:54px!important;border-radius:18px 18px 0 0!important;border-bottom:1px solid #292c33!important;padding:7px 14px!important}.sourceDrawerGrip{display:block!important;top:7px!important}.sourceDrawerLabel{padding-top:8px!important}.sourceDrawerChevron{padding-top:8px!important}
+ .sourcePanelBackdrop{z-index:39!important}#playerModal .playerSide{z-index:40!important}.sourceHead{padding:10px 13px 7px!important}.sourceFilters{padding:0 13px 5px!important}.sourceRecommend{padding:0 13px 7px!important}.sourceList{padding:0 9px 9px!important;min-height:0!important;overflow-y:auto!important}.sourceSelectedBar{padding-bottom:calc(8px + env(safe-area-inset-bottom))!important}
+ body.playerOpen{height:100dvh!important;overflow:hidden!important;touch-action:none}#playerModal .videoShell,#playerModal .playerTop,#playerModal .playerControls,#playerModal .primeCenterControls{touch-action:manipulation}#playerModal .playerSide,#playerModal .sourceList{touch-action:pan-y}
+}
+@media(max-width:900px) and (orientation:landscape){
+ #playerModal .playerSide{left:auto!important;top:0!important;right:0!important;bottom:0!important;width:min(390px,48vw)!important;height:100dvh!important;max-height:none!important;border-radius:0!important;border-top:0!important;border-left:1px solid #30333b!important;transform:translateX(calc(100% - 48px))}
+ #playerModal .playerSide.drawerOpen{transform:translateX(0)}.sourceDrawerHandle{height:48px!important;min-height:48px!important;border-radius:0!important}.playerControls{bottom:0!important;padding-bottom:8px!important}.primeNextFloat{bottom:12px}
+}
+
+/* Em alta */
+.trendingShell{max-width:1320px;margin:0 auto}.trendingHero{padding:23px 0 8px;display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}.trendingHeroText{flex:1;min-width:240px}.trendingEyebrow{font-size:10px;letter-spacing:1.5px;color:var(--accent);font-weight:950}.trendingHero h2{font-size:34px;margin:5px 0 6px;color:#fff;letter-spacing:-.9px}.trendingHero p{margin:0;color:#93949c;font-size:12px;line-height:1.5;max-width:720px}.trendingUpdated{flex:none;padding:7px 10px;border:1px solid #32333a;background:#15161a;border-radius:999px;color:#aaa;font-size:10px}.trendingSection{margin:20px 0 31px}.trendingSectionHead{display:flex;align-items:end;gap:10px;margin-bottom:10px}.trendingSectionHead h3{margin:0;font-size:20px;color:#fff}.trendingSectionHead p{margin:0 0 2px;color:#74757d;font-size:10px;flex:1}.trendingRow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(145px,170px);gap:13px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:2px 0 8px}.trendingRow::-webkit-scrollbar{display:none}.trendingRow .card{width:auto!important;scroll-snap-align:start}
+.socialRadar{border:1px solid #292b32;background:linear-gradient(135deg,#16171c,#0c0d10);border-radius:10px;padding:15px;margin:10px 0 30px}.socialRadarHead{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px}.socialRadarHead>div{flex:1}.socialRadarHead h3{font-size:16px;margin:0 0 4px;color:#fff}.socialRadarHead p{font-size:10px;color:#85868e;margin:0;line-height:1.45}.socialRadarBadge{font-size:9px;color:#f3ad7b;border:1px solid #5a3924;background:#22150e;border-radius:999px;padding:5px 8px}.socialBuzzList{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.socialBuzzList::-webkit-scrollbar{display:none}.socialBuzz{flex:none;width:210px;border:1px solid #2a2b31;background:#111217;border-radius:8px;padding:10px}.socialBuzz b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.socialBuzz small{display:block;color:#777982;font-size:9px;margin-top:4px}.socialLinks{display:flex;gap:5px;margin-top:9px}.socialLinks button{min-height:30px;border:1px solid #33353d;background:#1b1c22;color:#ddd;border-radius:5px;padding:5px 7px;font-size:9px;font-weight:850}.socialLinks button:hover{border-color:var(--accent);color:#fff}
+
+/* Manga onde encontrar */
+.mangaNativeDetailActions{flex-wrap:wrap!important}.mangaMarketBtn,.mangaFreeBtn{font-size:10px!important}.mangaFreeBtn{border-color:#28513a!important;color:#9fe0b2!important}
+#mangaMarketModal{padding:12px}.mangaMarketPanel{width:min(840px,96vw);max-height:90dvh;overflow:hidden;display:flex;flex-direction:column;background:#0e141d;border:1px solid #283140;border-radius:12px}.mangaMarketHead{display:flex;gap:10px;align-items:center;padding:16px;border-bottom:1px solid #242d39}.mangaMarketHead>div{flex:1;min-width:0}.mangaMarketHead small{font-size:9px;letter-spacing:1.2px;color:#737e8e;font-weight:900}.mangaMarketHead h3{margin:3px 0 0;font-size:22px;color:#e6eaf0}.mangaMarketTabs{display:flex;gap:5px;padding:9px 13px;background:#101721;border-bottom:1px solid #242d39}.mangaMarketTabs button{min-height:36px;border:1px solid #283342;background:#151d28;color:#aab3c0;border-radius:6px;padding:7px 10px;font-size:10px;font-weight:900}.mangaMarketTabs button.active{background:#14aef1;color:#061019;border-color:#14aef1}.mangaMarketBody{padding:14px;overflow-y:auto;min-height:220px;overscroll-behavior:contain}.marketInfo{padding:10px;border:1px solid #252f3d;background:#111821;border-radius:8px;color:#8993a2;font-size:10px;line-height:1.5;margin-bottom:11px}.marketGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:8px}.marketBook{display:flex;gap:10px;border:1px solid #252f3b;background:#111821;border-radius:8px;padding:9px}.marketBookCover{width:62px;height:88px;flex:none;background:#202631 center/cover no-repeat;border-radius:5px}.marketBookInfo{min-width:0;flex:1}.marketBookTitle{font-size:11px;color:#e0e4eb;font-weight:900;line-height:1.3}.marketBookMeta{font-size:9px;color:#7f8998;margin-top:4px}.marketBookActions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.marketBookActions button,.marketProvider{min-height:31px;border:1px solid #303b49;background:#1a2330;color:#d8e0e9;border-radius:5px;padding:5px 8px;font-size:9px;font-weight:850}.marketProviderGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:7px}.marketProvider{text-align:left}.marketProvider b{display:block;color:#e0e5ec;font-size:10px}.marketProvider small{display:block;color:#778291;font-size:8.5px;margin-top:3px}.marketProvider.free{border-color:#28513a;background:#111e17;color:#9be0af}
+@media(max-width:760px){
+ .mobileBottomNav{display:flex!important;overflow-x:auto!important;grid-template-columns:none!important;justify-content:flex-start!important;scrollbar-width:none}.mobileBottomNav::-webkit-scrollbar{display:none}.mobileBottomNav button{flex:0 0 68px!important;min-width:68px!important}
+ .trendingHero{padding:8px 0 4px}.trendingHero h2{font-size:28px}.trendingRow{grid-auto-columns:126px;gap:10px;margin-right:-14px;padding-right:14px}.socialBuzz{width:185px}
+ #mangaMarketModal{padding:0;align-items:flex-end}.mangaMarketPanel{width:100%;max-height:88dvh;border-radius:18px 18px 0 0;border-left:0;border-right:0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}.mangaMarketBody{padding:11px}.marketGrid{grid-template-columns:1fr}.mangaNativeDetailActions{display:grid!important;grid-template-columns:1fr 1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -1815,6 +1887,7 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
  <nav class="nav">
   <button type="button" class="categoriesNavBtn" id="categoriesNavBtn">Categorias <span>⌄</span></button>
   <button class="active" data-page="home">Início</button>
+  <button data-page="trending">Em alta</button>
   <button data-page="movies">Filmes</button>
   <button data-page="series">Séries</button>
   <button data-page="anime">Animes</button>
@@ -1833,6 +1906,7 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
   <aside class="categoryMegaExplore">
    <div class="categoryMegaTitle">Explorar</div>
    <button type="button" data-category-page="anime">Explorar tudo (A–Z)</button>
+   <button type="button" data-category-page="trending">Em alta agora</button>
    <button type="button" data-category-page="movies">Filmes</button>
    <button type="button" data-category-page="series">Séries</button>
    <button type="button" data-category-page="anime">Animes</button>
@@ -1888,11 +1962,28 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
  <div class="playerWrap">
   <div class="playerLayout">
    <section class="playerStage">
-    <div class="playerTop"><div class="playerTitle" id="playerTitle">Reprodução</div><button class="close" id="closePlayer">×</button></div>
+    <div class="playerTop">
+     <div class="primePlayerTitleWrap">
+      <div class="playerTitle" id="playerTitle">Reprodução</div>
+      <div class="primePlayerSubtitle" id="playerSubtitle"></div>
+     </div>
+     <div class="primeTopActions">
+      <button type="button" class="primeTopBtn" id="primeSourceBtn" title="Fontes">▣</button>
+      <button type="button" class="primeTopBtn" id="primeAudioBtn" title="Áudio">🎧</button>
+      <button type="button" class="primeTopBtn" id="primeSubsBtn" title="Legendas">CC</button>
+      <button type="button" class="primeTopBtn" id="primeAspectBtn" title="Proporção">▭</button>
+      <button class="close primeClose" id="closePlayer">×</button>
+     </div>
+    </div>
     <div class="videoShell" id="videoShell">
      <video id="video" playsinline preload="metadata"></video>
      <div class="buffering" id="buffering"></div>
      <button class="bigPlay" id="bigPlay" aria-label="Reproduzir">▶</button>
+     <div class="primeCenterControls" id="primeCenterControls">
+      <button type="button" class="primeJump" id="centerBack10" aria-label="Voltar 10 segundos"><span>↶</span><b>10</b></button>
+      <button type="button" class="primePlay" id="centerPlay" aria-label="Reproduzir ou pausar">▶</button>
+      <button type="button" class="primeJump" id="centerForward10" aria-label="Avançar 10 segundos"><span>↷</span><b>10</b></button>
+     </div>
      <button type="button" class="skipIntroBtn" id="skipIntroBtn">Pular abertura ⏭</button>
      <div class="playerControls" id="playerControls">
       <input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="Progresso">
@@ -1916,10 +2007,12 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
        <button class="ctl" id="fullBtn" title="Tela cheia">⛶</button>
       </div>
      </div>
+     <button type="button" class="primeNextFloat" id="primeNextFloat">Próximo episódio <span>›</span></button>
      <div class="playerMenuBackdrop" id="playerMenuBackdrop"></div>
      <div class="playerMenu" id="playerMenu"></div>
     </div>
    </section>
+   <button type="button" class="sourcePanelBackdrop" id="sourcePanelBackdrop" aria-label="Fechar fontes"></button>
    <aside class="playerSide" id="playerSide">
     <button type="button" class="sourceDrawerHandle" id="sourceDrawerHandle" aria-label="Abrir fontes">
      <span class="sourceDrawerGrip"></span>
@@ -2051,6 +2144,8 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
     <div class="mangaNativeDetailActions">
      <button type="button" class="btn primary" id="mangaContinueRead">▶ Começar a ler</button>
      <button type="button" class="btn secondary" id="mangaSaveNative">☆ Seguir</button>
+     <button type="button" class="btn secondary mangaMarketBtn" id="mangaWhereBuy">🛒 Onde comprar</button>
+     <button type="button" class="btn secondary mangaFreeBtn" id="mangaWhereFree">◉ Ler grátis legalmente</button>
     </div>
    </div>
   </div>
@@ -2063,6 +2158,20 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
    <button type="button" id="mangaChapterOrder">↓ Mais novos</button>
   </div>
   <div class="mangaChapterList" id="mangaChapterList"></div>
+ </div>
+</div>
+
+<div class="modal" id="mangaMarketModal">
+ <div class="mangaMarketPanel">
+  <div class="mangaMarketHead">
+   <div><small>ONDE ENCONTRAR</small><h3 id="mangaMarketTitle">Mangá</h3></div>
+   <button type="button" class="close" id="closeMangaMarket">×</button>
+  </div>
+  <div class="mangaMarketTabs">
+   <button type="button" class="active" data-market-tab="buy">Comprar</button>
+   <button type="button" data-market-tab="free">Ler grátis legalmente</button>
+  </div>
+  <div class="mangaMarketBody" id="mangaMarketBody"></div>
  </div>
 </div>
 
@@ -2160,6 +2269,7 @@ body.mangaWebOpen .mobileBottomNav{display:none!important}
 
 <nav class="mobileBottomNav" id="mobileBottomNav" aria-label="Navegação principal">
  <button type="button" class="active" data-mobile-page="home"><span>⌂</span><small>Início</small></button>
+ <button type="button" data-mobile-page="trending"><span>↗</span><small>Em alta</small></button>
  <button type="button" data-mobile-page="movies"><span>▣</span><small>Filmes</small></button>
  <button type="button" data-mobile-page="series"><span>▤</span><small>Séries</small></button>
  <button type="button" data-mobile-page="anime"><span>✦</span><small>Animes</small></button>
@@ -2498,6 +2608,13 @@ function row(title,items,sub="",opts={}){
  return `<section class="section" ${opts.key?`data-section="${esc(opts.key)}"`:""}><div class="sectionHead"><div class="sectionTitle">${esc(title)}</div><div class="sectionSub">${esc(sub||"")}</div></div><div class="row">${items.map(card).join("")}</div></section>`
 }
 
+
+function refreshBucket(hours=4){return Math.floor(Date.now()/(hours*3600000))}
+function stableHash(text){let h=2166136261;for(const ch of String(text)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function seededShuffle(items,seedText){const a=[...items],seed=stableHash(seedText);let x=seed||1;const rnd=()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296};for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function addCatalogSkip(params,skip){if(!skip)return params;if(!params)return{skip};if(typeof params==="string")return params+(params?"&":"")+`skip=${skip}`;return{...params,skip}}
+async function freshCatalog(type,id="top",params="",manifest=cfg.meta,salt=""){const bucket=refreshBucket(4),page=stableHash(`${bucket}|${type}|${id}|${salt}`)%4,skip=page*20;let items=[];if(skip){try{items=await safeCatalog(type,id,addCatalogSkip(params,skip),manifest)}catch{}}if(!items.length)items=await safeCatalog(type,id,params,manifest);return seededShuffle(items,`${bucket}|${salt}|${type}|${id}`)}
+function rotateFresh(items,salt=""){return items?.length?seededShuffle(items,`${refreshBucket(4)}|${salt}`):[]}
 async function safeCatalog(type,id="top",params="",manifest=cfg.meta){
  try{return await getCatalog(manifest,type,id,params)}catch(e){console.warn("catalog",e);return[]}
 }
@@ -2590,7 +2707,7 @@ async function externalCatalogRows(){
  const rows=[];
  for(const d of defs){
   try{
-   const items=(await safeCatalog(d.catalog.type,d.catalog.id,"",d.manifestUrl)).slice(0,18).map(m=>cleanMeta(m,d.sourceName)).filter(Boolean);
+   const items=rotateFresh((await safeCatalog(d.catalog.type,d.catalog.id,"",d.manifestUrl)).map(m=>cleanMeta(m,d.sourceName)).filter(Boolean),`external-${d.sourceName}-${d.catalog.id}`).slice(0,18);
    if(items.length)rows.push({title:d.catalog.name||d.catalog.id||d.sourceName,sub:d.sourceName,items});
   }catch{}
  }
@@ -2604,10 +2721,10 @@ async function home(){
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
   const [movies,series,animeMovies,animeSeries,hist,extraRows]=await Promise.all([
-   safeCatalog("movie","top"),
-   safeCatalog("series","top"),
-   safeCatalog("movie","top",{genre:"Animation"}),
-   safeCatalog("series","top",{genre:"Animation"}),
+   freshCatalog("movie","top","",cfg.meta,"home-movies"),
+   freshCatalog("series","top","",cfg.meta,"home-series"),
+   freshCatalog("movie","top",{genre:"Animation"},cfg.meta,"home-anime-movies"),
+   freshCatalog("series","top",{genre:"Animation"},cfg.meta,"home-anime-series"),
    Promise.resolve(history()),
    externalCatalogRows()
   ]);
@@ -2703,6 +2820,7 @@ function playEpisode(show,ep,resumeEntry=null){
  const idx=ordered.findIndex(x=>String(x.id)===String(ep.id));
  S.nextEpisode=idx>=0&&idx<ordered.length-1?ordered[idx+1]:null;
  $("#nextBtn").style.display=S.nextEpisode?"":"none";
+ $("#primeNextFloat").classList.toggle("show",!!S.nextEpisode);
  const key=ep.id;
  playStream("series",key,`${show.name} — T${ep.season} E${ep.episode}`,{...compactMeta(show),...compactMeta(ep),id:ep.id,name:show.name,poster:show.poster,background:show.background,year:show.year},resumeEntry)
 }
@@ -3405,8 +3523,15 @@ function nextEpisodeCarry(){
   stream:identity?{...identity,provider:detectProvider(S.selectedStream)}:null
  };
 }
+function setPrimePlayerMeta(type,title,meta){
+ const main=type==="series"?(S.currentShow?.name||meta?.name||title):(meta?.name||title||"Reprodução");
+ let sub="";
+ if(type==="series"){const ep=S.currentEpisode;sub=[ep?.season?`Temporada ${ep.season}`:"",ep?.episode?`Ep. ${ep.episode}`:"",ep?.title||ep?.name||""].filter(Boolean).join(", ")}
+ else sub=[meta?.year,meta?.runtime].filter(Boolean).join(" • ");
+ $("#playerTitle").textContent=main||"Reprodução";$("#playerSubtitle").textContent=sub;
+}
 async function playStream(type,id,title,meta,resumeEntry=null){
- $("#playerModal").classList.add("open");document.body.classList.add("playerOpen");$("#playerTitle").textContent=title||"Reprodução";
+ $("#playerModal").classList.add("open");document.body.classList.add("playerOpen");setPrimePlayerMeta(type,title,meta);$("#playerSide").classList.remove("drawerOpen");$("#sourcePanelBackdrop").classList.remove("open");$("#primeNextFloat").classList.remove("show");
  S.streamTitle=title||"video";S.streamMeta=meta||{id,type,name:title};S.playType=type;S.playId=id;S.introSkipped=false;$("#skipIntroBtn").classList.remove("show");S.rootId=type==="series"?(S.currentShow?.id||resumeEntry?.rootId||meta?.id):(resumeEntry?.rootId||meta?.id||id);S.resumeEntry=resumeEntry;S.resumeApplied=false;S.streams=[];S.selectedStream=null;S.selectedAddon="all";S.qualityFilter="all";S.externalSubtitles=[];S.sourceHealth.clear();S.attemptedSourceKeys.clear();S._lastProgressSave=0;
  resetVideo();showPlayerUI(true);
  $("#addonTabs").innerHTML="";$("#qualityFilters").innerHTML="";$("#sources").innerHTML="<div class='sourceEmpty'>Buscando fontes disponíveis...</div>";
@@ -3439,7 +3564,7 @@ function resetVideo(){
  const v=$("#video");v.pause();if(v._hls){v._hls.destroy();v._hls=null}v.removeAttribute("src");
  [...v.querySelectorAll("track[data-casaflix]")].forEach(t=>t.remove());
  if(S.externalSubtitleBlob){URL.revokeObjectURL(S.externalSubtitleBlob);S.externalSubtitleBlob=null}
- v.load();S.resumeEntry=null;S.resumeApplied=false;applyAspectMode(S.aspectMode,false);$("#seek").value=0;$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;
+ v.load();S.resumeEntry=null;S.resumeApplied=false;applyAspectMode(S.aspectMode,false);$("#seek").value=0;$("#seek").style.setProperty("--seek-fill","0%");$("#timeText").textContent="0:00 / 0:00";$("#bigPlay").classList.remove("hidden");$("#playPause").textContent="▶";$("#centerPlay").textContent="▶";$("#trackStatus").textContent="Áudio: auto • Legenda: auto";$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;
 }
 function loadVideo(url,autoplay=true,stream=null,resumeEntry=null){
  const v=$("#video");if(v._hls){v._hls.destroy();v._hls=null}v.pause();v.removeAttribute("src");v.load();$("#buffering").classList.add("show");
@@ -3478,8 +3603,8 @@ function showPlayerUI(sticky=false){
 }
 function syncPlayer(){
  const v=$("#video"),dur=isFinite(v.duration)?v.duration:0,cur=v.currentTime||0;
- $("#seek").value=dur?Math.round(cur/dur*1000):0;$("#timeText").textContent=`${formatTime(cur)} / ${formatTime(dur)}`;
- $("#playPause").textContent=v.paused?"▶":"❚❚";$("#bigPlay").classList.toggle("hidden",!v.paused);
+ const seekValue=dur?Math.round(cur/dur*1000):0;$("#seek").value=seekValue;$("#seek").style.setProperty("--seek-fill",`${seekValue/10}%`);$("#timeText").textContent=`${formatTime(cur)} / ${formatTime(dur)}`;
+ $("#playPause").textContent=v.paused?"▶":"❚❚";$("#centerPlay").textContent=v.paused?"▶":"❚❚";$("#bigPlay").classList.toggle("hidden",!v.paused);
  if(v.paused)showPlayerUI(true);
  if(dur&&S.streamMeta?.id)persistPlaybackProgress(false);
 }
@@ -3942,6 +4067,16 @@ function mangaLanguageLabel(lang){
  if(l==="all")return"Multilíngue";
  return lang||"Idioma não informado";
 }
+
+function mangaCurrentMarketTitle(){return S.mangaDetail?.title||S.mangaDetail?._rfTitle||S.mangaPickerMedia?._rfTitle||"Mangá"}
+function marketGoogleSearch(query){return`https://www.google.com/search?q=${encodeURIComponent(query)}`}
+function mangaStoreProviders(title){return[{name:"Amazon Brasil",sub:"Edições físicas e digitais",url:`https://www.amazon.com.br/s?k=${encodeURIComponent(title+" mangá")}`},{name:"Panini Brasil",sub:"Pesquisar edição nacional",url:marketGoogleSearch(`site:panini.com.br "${title}" mangá`)},{name:"JBC",sub:"Pesquisar edição brasileira",url:marketGoogleSearch(`site:editorajbc.com.br "${title}"`)},{name:"NewPOP",sub:"Pesquisar edição brasileira",url:marketGoogleSearch(`site:newpop.com.br "${title}"`)}]}
+function mangaFreeProviders(title){return[{name:"MANGA Plus",sub:"Pesquisar capítulos oficiais gratuitos",url:marketGoogleSearch(`site:mangaplus.shueisha.co.jp "${title}"`),free:true},{name:"WEBTOON",sub:"Pesquisar leitura oficial gratuita",url:marketGoogleSearch(`site:webtoons.com "${title}"`),free:true},{name:"Google Books",sub:"Pesquisar prévias gratuitas / domínio público",url:`https://books.google.com/books?q=${encodeURIComponent(title+" manga")}`,free:true}]}
+async function googleBooksManga(title){const q=encodeURIComponent(`intitle:${title}`),ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),7000);try{const r=await fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=10&printType=books`,{signal:ctl.signal});if(!r.ok)throw Error("Google Books "+r.status);const d=await r.json();return(d.items||[]).map(x=>({id:x.id,title:x.volumeInfo?.title||"Livro",authors:(x.volumeInfo?.authors||[]).join(", "),image:(x.volumeInfo?.imageLinks?.thumbnail||x.volumeInfo?.imageLinks?.smallThumbnail||"").replace("http://","https://"),info:x.volumeInfo?.infoLink||"",buy:x.saleInfo?.buyLink||"",price:x.saleInfo?.retailPrice?`${x.saleInfo.retailPrice.amount} ${x.saleInfo.retailPrice.currencyCode}`:"",preview:x.accessInfo?.webReaderLink||x.volumeInfo?.previewLink||"",publicDomain:!!x.accessInfo?.publicDomain,viewability:x.accessInfo?.viewability||""})).filter(x=>x.title)}finally{clearTimeout(timer)}}
+function marketBookHtml(x,tab){const canFree=x.publicDomain||x.viewability==="ALL_PAGES"||x.viewability==="PARTIAL";return`<article class="marketBook"><div class="marketBookCover" style="background-image:url('${esc(x.image)}')"></div><div class="marketBookInfo"><div class="marketBookTitle">${esc(x.title)}</div><div class="marketBookMeta">${esc(x.authors||"")}${x.price?` • ${esc(x.price)}`:""}</div><div class="marketBookActions">${tab==="buy"&&x.buy?`<button type="button" data-market-open="${esc(x.buy)}">Comprar</button>`:""}${canFree&&x.preview?`<button type="button" data-market-open="${esc(x.preview)}">${x.publicDomain||x.viewability==="ALL_PAGES"?"Ler grátis":"Ver prévia"}</button>`:""}${x.info?`<button type="button" data-market-open="${esc(x.info)}">Detalhes</button>`:""}</div></div></article>`}
+async function renderMangaMarket(tab="buy"){const body=$("#mangaMarketBody"),title=mangaCurrentMarketTitle();$$('#mangaMarketModal [data-market-tab]').forEach(b=>b.classList.toggle("active",b.dataset.marketTab===tab));body.innerHTML='<div class="loading">Procurando opções…</div>';let books=[];try{books=await googleBooksManga(title)}catch(e){console.warn(e)}const providers=tab==="buy"?mangaStoreProviders(title):mangaFreeProviders(title),useful=books.filter(x=>tab==="buy"?x.buy:(x.publicDomain||x.viewability==="ALL_PAGES"||x.viewability==="PARTIAL"));body.innerHTML=`<div class="marketInfo">${tab==="buy"?"Resultados de compra e pesquisas em lojas brasileiras. A disponibilidade varia por edição e região.":"Aqui aparecem apenas opções oficiais/gratuitas ou prévias quando disponíveis. O ResenhaFlix não direciona para cópias piratas."}</div>${useful.length?`<div class="marketGrid">${useful.slice(0,6).map(x=>marketBookHtml(x,tab)).join("")}</div>`:""}<div class="mangaShelfTitle"><div><h3>${tab==="buy"?"Pesquisar em lojas":"Serviços oficiais"}</h3><small>${tab==="buy"?"Brasil":"Grátis / prévia"}</small></div></div><div class="marketProviderGrid">${providers.map(x=>`<button type="button" class="marketProvider ${x.free?"free":""}" data-market-open="${esc(x.url)}"><b>${esc(x.name)}</b><small>${esc(x.sub)}</small></button>`).join("")}</div>`;body.querySelectorAll("[data-market-open]").forEach(b=>b.onclick=()=>window.open(b.dataset.marketOpen,"_blank","noopener,noreferrer"))}
+function openMangaMarket(tab="buy"){$("#mangaMarketTitle").textContent=mangaCurrentMarketTitle();$("#mangaMarketModal").classList.add("open");document.body.classList.add("mangaMarketOpen");renderMangaMarket(tab)}
+function closeMangaMarket(){$("#mangaMarketModal").classList.remove("open");document.body.classList.remove("mangaMarketOpen")}
 function updateMangaDetailBadges(){
  if(!S.mangaDetail)return;
  const src=S.mangaDetailSource||{};
@@ -4127,7 +4262,7 @@ function toggleCategoryMega(force){
  box.setAttribute("aria-hidden",open?"false":"true");
 }
 function categoryTargetPage(){
- return ["movies","series","anime","list"].includes(S.currentPage)?S.currentPage:"anime";
+ return ["movies","series","anime","list","trending"].includes(S.currentPage)?S.currentPage:"anime";
 }
 function openGenreFromMega(genre){
  toggleCategoryMega(false);
@@ -4152,13 +4287,13 @@ function filterListCategory(items,value){
 async function fetchCatalogPageItems(type,category="all"){
  if(type==="list")return lists();
  if(type==="anime"){
-  const [a,b]=await Promise.all([safeCatalog("series","top",{genre:"Animation"}),safeCatalog("movie","top",{genre:"Animation"})]);
+  const [a,b]=await Promise.all([freshCatalog("series","top",{genre:"Animation"},cfg.meta,`anime-series-${category}`),freshCatalog("movie","top",{genre:"Animation"},cfg.meta,`anime-movies-${category}`)]);
   let all=Array.from(new Map([...a,...b].map(x=>[`${x.type}|${x.id}`,x])).values());
   if(category!=="all")all=all.filter(x=>metaHasGenre(x,category));
   return all;
  }
  const mediaType=type==="movies"?"movie":"series";
- return safeCatalog(mediaType,"top",category==="all"?"":{genre:category});
+ return freshCatalog(mediaType,"top",category==="all"?"":{genre:category},cfg.meta,`page-${type}-${category}`);
 }
 function bindCategoryBar(){
  const b=$("#pageCategoryOpen");if(b)b.onclick=()=>toggleCategoryMega(true);
@@ -4182,7 +4317,30 @@ function renderPageCatalogResults(items){
  }
  bindCards(target);
 }
+
+async function aniListTrendingMedia(type="ANIME",perPage=18){
+ const gql=`query($type:MediaType,$n:Int){Page(page:1,perPage:$n){media(type:$type,sort:TRENDING_DESC){id title{romaji english native}coverImage{large extraLarge}averageScore status format genres}}}`;
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),7000);
+ try{const r=await fetch(ANILIST_API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({query:gql,variables:{type,n:perPage}}),signal:ctl.signal});if(!r.ok)throw Error("AniList "+r.status);const d=await r.json();return d.data?.Page?.media||[]}finally{clearTimeout(timer)}
+}
+function socialSearchUrl(kind,title){const q=encodeURIComponent(`"${title}"`);if(kind==="tiktok")return`https://www.google.com/search?q=site%3Atiktok.com+${q}`;if(kind==="instagram")return`https://www.google.com/search?q=site%3Ainstagram.com+${q}`;return`https://trends.google.com/trends/explore?q=${encodeURIComponent(title)}`}
+function socialBuzzCard(item){const title=item.name||item._rfTitle||mangaDisplayTitle(item)||"Título",type=item._trendType||"Em alta";return`<article class="socialBuzz"><b>${esc(title)}</b><small>${esc(type)}</small><div class="socialLinks"><button type="button" data-social-kind="tiktok" data-social-title="${esc(title)}">TikTok</button><button type="button" data-social-kind="instagram" data-social-title="${esc(title)}">Instagram</button><button type="button" data-social-kind="google" data-social-title="${esc(title)}">Google Trends</button></div></article>`}
+function bindSocialBuzz(root){root.querySelectorAll("[data-social-kind]").forEach(b=>b.onclick=()=>window.open(socialSearchUrl(b.dataset.socialKind,b.dataset.socialTitle),"_blank","noopener,noreferrer"))}
+function aniTrendCard(m,type){const title=m.title?.english||m.title?.romaji||m.title?.native||"Anime",cover=m.coverImage?.extraLarge||m.coverImage?.large||"";return`<article class="mangaNativeResultCard aniTrendCard" data-ani-trend-title="${esc(title)}"><div class="mangaNativeResultCover" style="background-image:url('${esc(cover)}')"><div class="mangaCatalogOnlyBadge">Em alta</div></div><div class="mangaNativeResultBody"><div class="mangaNativeResultTitle">${esc(title)}</div><div class="mangaNativeResultMeta">${esc(type)}${m.averageScore?` • ★ ${(m.averageScore/10).toFixed(1)}`:""}</div><div class="mangaNativeResultActions"><button type="button" data-ani-search>Buscar no ResenhaFlix</button></div></div></article>`}
+function bindAniTrendCards(root){root.querySelectorAll("[data-ani-trend-title]").forEach(card=>card.querySelector("[data-ani-search]").onclick=()=>search(card.dataset.aniTrendTitle,true))}
+async function trendingPage(){
+ S.currentPage="trending";setActiveNav("trending");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
+ $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden","searchPage","mangaPageModern");$("#pageTitle").textContent="Em alta";$("#pageBody").innerHTML='<div class="loading">Atualizando o radar…</div>';
+ try{
+  const [movies,series,animeCatalog,aniAnime,mangaData]=await Promise.all([freshCatalog("movie","top","",cfg.meta,"trend-movies"),freshCatalog("series","top","",cfg.meta,"trend-series"),freshCatalog("series","top",{genre:"Animation"},cfg.meta,"trend-anime-catalog"),aniListTrendingMedia("ANIME",14).catch(()=>[]),aniListManga("",1).then(x=>(x.media||[]).map(normalizeAniMedia)).catch(()=>[])]);
+  const anime=animeCatalog.slice(0,16),mangas=mangaData.slice(0,16),buzz=[...movies.slice(0,3).map(x=>({...x,_trendType:"Filme"})),...series.slice(0,3).map(x=>({...x,_trendType:"Série"})),...anime.slice(0,2).map(x=>({...x,_trendType:"Anime"})),...mangas.slice(0,2).map(x=>({...x,_trendType:"Mangá"}))];
+  const updated=new Date().toLocaleString("pt-BR",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit"});
+  $("#pageBody").innerHTML=`<div class="trendingShell"><section class="trendingHero"><div class="trendingHeroText"><div class="trendingEyebrow">RADAR RESENHAFLIX</div><h2>Em alta agora</h2><p>Filmes, séries, animes e mangás que estão ganhando atenção. O ranking usa catálogos atualizados e tendências do AniList; o Radar Social facilita conferir a repercussão no TikTok, Instagram e Google Trends.</p></div><div class="trendingUpdated">Atualizado ${updated}</div></section><section class="socialRadar"><div class="socialRadarHead"><div><h3>Radar social</h3><p>Confira a repercussão do título com um toque. O ResenhaFlix não inventa números de redes que não fornecem um feed público anônimo.</p></div><span class="socialRadarBadge">SOCIAL</span></div><div class="socialBuzzList" id="socialBuzzList">${buzz.map(socialBuzzCard).join("")}</div></section><section class="trendingSection"><div class="trendingSectionHead"><h3>Filmes</h3><p>Atualização automática</p></div><div class="trendingRow" id="trendMovies">${movies.slice(0,18).map(card).join("")}</div></section><section class="trendingSection"><div class="trendingSectionHead"><h3>Séries</h3><p>Atualização automática</p></div><div class="trendingRow" id="trendSeries">${series.slice(0,18).map(card).join("")}</div></section><section class="trendingSection"><div class="trendingSectionHead"><h3>Animes</h3><p>Tendências atuais</p></div>${aniAnime.length?`<div class="trendingRow" id="trendAniLive">${aniAnime.slice(0,14).map(x=>aniTrendCard(x,"Anime")).join("")}</div>`:`<div class="trendingRow" id="trendAnime">${anime.map(card).join("")}</div>`}</section><section class="trendingSection"><div class="trendingSectionHead"><h3>Mangás</h3><p>Tendências atuais do AniList</p></div><div class="trendingRow" id="trendManga">${mangas.map(nativeMangaCard).join("")}</div></section></div>`;
+  bindSocialBuzz($("#socialBuzzList"));bindCards($("#trendMovies"));bindCards($("#trendSeries"));if($("#trendAnime"))bindCards($("#trendAnime"));if($("#trendAniLive"))bindAniTrendCards($("#trendAniLive"));if($("#trendManga"))bindNativeMangaCards($("#trendManga"),mangas);
+ }catch(e){console.error(e);$("#pageBody").innerHTML='<div class="empty">Não foi possível atualizar o radar agora.</div>'}
+}
 async function page(type,initialCategory="all"){
+ if(type==="trending")return trendingPage();
  if(type==="manga")return mangaPage();
  S.currentPage=type;S.pageTypeForCategories=type;S.pageCategory=initialCategory||"all";
  setActiveNav(type);unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
@@ -4364,7 +4522,7 @@ function repairTouchState(){
  if(!$("#playerModal").classList.contains("open"))body.classList.remove("playerOpen");
  if(!$("#detailModal").classList.contains("open"))body.classList.remove("detailOpen");
  if(!$("#settingsModal").classList.contains("open"))body.classList.remove("settingsOpen");
- if(!$("#mangaReaderModal").classList.contains("open"))body.classList.remove("mangaReaderOpen");if(!$("#mangaDetailModal").classList.contains("open"))body.classList.remove("mangaDetailOpen");if(!$("#mangaMatchModal").classList.contains("open"))body.classList.remove("mangaMatchOpen");if(!$("#mangaWebModal").classList.contains("open"))body.classList.remove("mangaWebOpen");
+ if(!$("#mangaReaderModal").classList.contains("open"))body.classList.remove("mangaReaderOpen");if(!$("#mangaDetailModal").classList.contains("open"))body.classList.remove("mangaDetailOpen");if(!$("#mangaMatchModal").classList.contains("open"))body.classList.remove("mangaMatchOpen");if(!$("#mangaWebModal").classList.contains("open"))body.classList.remove("mangaWebOpen");if(!$("#mangaMarketModal").classList.contains("open"))body.classList.remove("mangaMarketOpen");
  if(!$("#playerMenu").classList.contains("open")){
   $("#playerMenuBackdrop").classList.remove("open");
   S.playerMenuKind=null;
@@ -4426,6 +4584,11 @@ $("#closeMangaDetail").onclick=closeMangaDetail;
 $("#mangaDetailModal").onclick=e=>{if(e.target.id==="mangaDetailModal")closeMangaDetail()};
 $("#mangaContinueRead").onclick=()=>{if(!S.mangaChapters.length)return;const last=S.mangaChapters.slice().reverse().find(c=>getChapterProgress(c)?.percent>0&&!getChapterProgress(c)?.completed);openNativeChapter(last||S.mangaChapters[0])};
 $("#mangaSaveNative").onclick=toggleNativeMangaSave;
+$("#mangaWhereBuy").onclick=()=>openMangaMarket("buy");
+$("#mangaWhereFree").onclick=()=>openMangaMarket("free");
+$("#closeMangaMarket").onclick=closeMangaMarket;
+$("#mangaMarketModal").onclick=e=>{if(e.target.id==="mangaMarketModal")closeMangaMarket()};
+$$("#mangaMarketModal [data-market-tab]").forEach(b=>b.onclick=()=>renderMangaMarket(b.dataset.marketTab));
 $("#mangaChapterFilter").oninput=renderMangaChapterList;
 $("#mangaChapterOrder").onclick=()=>{S.mangaChapterOrder=S.mangaChapterOrder==="desc"?"asc":"desc";renderMangaChapterList()};
 $("#mangaReaderSettingsBtn").onclick=()=>{$("#nativeReaderSettings").classList.toggle("open");showReaderUi(true)};
@@ -4447,13 +4610,23 @@ $("#forward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.durati
 $("#muteBtn").onclick=()=>{const v=$("#video");v.muted=!v.muted;$("#muteBtn").textContent=v.muted?"🔇":"🔊";showPlayerUI()};
 $("#volume").oninput=e=>{const v=$("#video");v.volume=Number(e.target.value);v.muted=v.volume===0;$("#muteBtn").textContent=v.muted?"🔇":"🔊";showPlayerUI()};
 $("#speed").onchange=e=>{$("#video").playbackRate=Number(e.target.value);showPlayerUI()};
-$("#seek").oninput=e=>{const v=$("#video");if(isFinite(v.duration)&&v.duration)v.currentTime=Number(e.target.value)/1000*v.duration;showPlayerUI()};
+$("#seek").oninput=e=>{const v=$("#video"),n=Number(e.target.value);e.target.style.setProperty("--seek-fill",`${n/10}%`);if(isFinite(v.duration)&&v.duration)v.currentTime=n/1000*v.duration;showPlayerUI()};
 $("#fullBtn").onclick=()=>{const el=$("#videoShell");if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.();showPlayerUI()};
 $("#pipBtn").onclick=async()=>{const v=$("#video");try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled)await v.requestPictureInPicture()}catch{toast("Picture-in-Picture não disponível neste navegador.")}showPlayerUI()};
 $("#downloadCurrent").onclick=()=>S.selectedStream?browserDownload(S.selectedStream):toast("Escolha uma fonte primeiro.");
 $("#skipIntroBtn").onclick=skipIntro;
 $("#sourceToolsToggle").onclick=()=>{S.sourceToolsOpen=!S.sourceToolsOpen;$("#sourceTools").classList.toggle("open",S.sourceToolsOpen);$("#sourceToolsToggle").classList.toggle("active",S.sourceToolsOpen)};
-$("#sourceDrawerHandle").onclick=()=>{$("#playerSide").classList.toggle("drawerOpen")};
+function setSourceDrawer(open){$("#playerSide").classList.toggle("drawerOpen",!!open);$("#sourcePanelBackdrop").classList.toggle("open",!!open);showPlayerUI(!!open)}
+$("#sourceDrawerHandle").onclick=()=>setSourceDrawer(!$("#playerSide").classList.contains("drawerOpen"));
+$("#sourcePanelBackdrop").onclick=()=>setSourceDrawer(false);
+$("#primeSourceBtn").onclick=()=>setSourceDrawer(!$("#playerSide").classList.contains("drawerOpen"));
+$("#centerPlay").onclick=togglePlayback;
+$("#centerBack10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
+$("#centerForward10").onclick=()=>{const v=$("#video");v.currentTime=Math.min(v.duration||Infinity,v.currentTime+10);showPlayerUI()};
+$("#primeAudioBtn").onclick=e=>{e.stopPropagation();openAudioMenu()};
+$("#primeSubsBtn").onclick=e=>{e.stopPropagation();openSubtitleMenu()};
+$("#primeAspectBtn").onclick=openAspectMenu;
+$("#primeNextFloat").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nextEpisode){const carry=nextEpisodeCarry();playEpisode(S.currentShow,S.nextEpisode,carry)}};
 $("#otherPlayerBtn").onclick=()=>openOtherPlayerMenu(S.selectedStream);
 $("#aspectBtn").onclick=openAspectMenu;
 $("#introSetupBtn").onclick=openIntroSetupMenu;
@@ -4475,7 +4648,7 @@ $("#nextBtn").onclick=()=>{persistPlaybackProgress(true);if(S.currentShow&&S.nex
 $("#video").addEventListener("timeupdate",()=>{syncPlayer();updateSkipIntroButton()});
 $("#video").addEventListener("play",()=>{syncPlayer();showPlayerUI()});
 $("#video").addEventListener("pause",()=>{syncPlayer();persistPlaybackProgress(true);showPlayerUI(true)});
-$("#video").addEventListener("ended",()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode)$("#nextBtn").style.display=""});
+$("#video").addEventListener("ended",()=>{$("#skipIntroBtn").classList.remove("show");persistPlaybackProgress(true);showPlayerUI(true);if(S.currentShow&&S.nextEpisode){$("#nextBtn").style.display="";$("#primeNextFloat").classList.add("show")}});
 $("#video").addEventListener("waiting",()=>$("#buffering").classList.add("show"));$("#video").addEventListener("playing",()=>$("#buffering").classList.remove("show"));
 $("#video").addEventListener("dblclick",()=>$("#fullBtn").click());
 $("#videoShell").addEventListener("mousemove",()=>showPlayerUI());
