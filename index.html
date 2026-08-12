@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ResenhaFlix — sua biblioteca</title>
-<meta name="theme-color" content="#070707">
+<meta name="theme-color" content="#6d28d9">
+<meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2406,6 +2407,155 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  .netflixPlayBtn{padding:8px 13px;font-size:13px}
  .netflixRoundBtn{width:40px;height:40px;font-size:20px}
  .detailSimilarGrid{grid-template-columns:1fr 1fr}
+}
+
+/* =========================================================
+   ResenhaFlix v29 — identidade roxa, acessibilidade e mobile
+   ========================================================= */
+:root{
+ --bg:#07050c;--bg2:#0d0a15;--card:#151120;--line:#2d2639;
+ --text:#faf9ff;--muted:#aaa3b7;--accent:#8b5cf6;--accent2:#a78bfa;
+ --orange-soft:#201334;--nav:#120f19;
+ color-scheme:dark
+}
+html{background:var(--bg);scroll-padding-top:76px}
+body{
+ background:
+  radial-gradient(circle at 82% -10%,rgba(124,58,237,.18),transparent 34rem),
+  radial-gradient(circle at -10% 38%,rgba(91,33,182,.10),transparent 32rem),
+  var(--bg);
+ line-height:1.45
+}
+::selection{background:rgba(139,92,246,.38);color:#fff}
+a,button,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+ outline:3px solid rgba(167,139,250,.72)!important;
+ outline-offset:2px!important
+}
+input::placeholder,textarea::placeholder{color:#898294;opacity:1}
+
+.top,.top.solid{
+ background:rgba(14,11,20,.90)!important;
+ border-bottom:1px solid rgba(167,139,250,.13)!important;
+ box-shadow:0 8px 30px rgba(0,0,0,.22)!important;
+ backdrop-filter:blur(18px) saturate(140%)!important
+}
+.logo{border:0;background:transparent;color:#fff;border-radius:12px;padding:3px 6px 3px 3px}
+.logo b,.tag,.trendingEyebrow,.mediaHubTitle small{color:var(--accent2)!important}
+.nav button{border-radius:8px!important;height:42px!important;padding:0 11px!important}
+.nav button:hover{background:rgba(139,92,246,.10)!important}
+.nav button.active:after{left:10px!important;right:10px!important;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2))!important}
+.search{
+ width:clamp(180px,18vw,270px);height:42px;border-radius:12px!important;
+ border-color:#393044!important;background:rgba(8,6,12,.74)!important;
+ transition:border-color .18s,box-shadow .18s,background .18s
+}
+.search:focus-within{
+ border-color:var(--accent)!important;background:#0c0912!important;
+ box-shadow:0 0 0 3px rgba(139,92,246,.16)
+}
+.search input{font-size:14px}.iconbtn{border-radius:12px!important;background:#110e18!important;border-color:#352d40!important}
+.iconbtn:hover{border-color:#6f54a2!important;background:#1a1424!important}
+
+.btn,.pageCategoryChooser button,.mediaSourcesBtn{border-radius:10px!important}
+.btn.primary,.primary,.mediaSearchBar button,.bookActions .read,.musicTrackActions .preview{
+ background:linear-gradient(135deg,var(--accent),#7c3aed)!important;
+ border-color:transparent!important;color:#fff!important;
+ box-shadow:0 7px 22px rgba(109,40,217,.22)
+}
+.btn.primary:hover,.primary:hover{background:linear-gradient(135deg,var(--accent2),var(--accent))!important}
+.sectionTitle:before{border-radius:999px;background:linear-gradient(180deg,var(--accent2),var(--accent))!important}
+.poster{border-radius:10px!important;box-shadow:0 9px 28px rgba(0,0,0,.42)!important}
+.card:hover .poster{box-shadow:0 14px 34px rgba(59,26,97,.34)!important}
+.plus.saved,.searchResultPlus.saved{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important}
+.bar i,.nativeReaderProgress i{background:linear-gradient(90deg,var(--accent),var(--accent2))!important}
+.searchTabs button.active,.mediaTabs button.active,.bookCategoryStrip button.active{
+ background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important
+}
+.categoryChip.active{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important}
+.netflixBrand{color:var(--accent2)!important}
+.musicArtistAvatar{background:linear-gradient(135deg,var(--accent),#4c1d95)!important}
+.socialRadarBadge{color:#d8ccff!important;border-color:#57417b!important;background:#1c132a!important}
+
+.crSearchBar{
+ background:rgba(14,11,20,.94)!important;border-bottom-color:rgba(167,139,250,.15)!important;
+ backdrop-filter:blur(18px) saturate(135%)
+}
+.crSearchInputWrap{
+ max-width:820px!important;height:50px!important;padding:0 10px!important;
+ border:1px solid #423650!important;border-radius:14px!important;background:#0a0810!important;
+ transition:border-color .18s,box-shadow .18s
+}
+.crSearchInputWrap:focus-within{border-color:var(--accent)!important;box-shadow:0 0 0 4px rgba(139,92,246,.14)!important}
+.crSearchInputWrap input{padding:8px 4px!important}
+.crSearchIcon{color:var(--accent2)!important}
+.globalSearchSection{
+ content-visibility:auto;contain-intrinsic-size:280px;
+ border-top:1px solid rgba(167,139,250,.08);padding-top:18px
+}
+.globalSearchHead h3{font-size:19px!important}.globalSearchLoading{min-height:74px}
+.searchDot{background:var(--accent2)!important}
+
+.mobileBottomNav button.active{color:#fff!important;background:rgba(139,92,246,.17)!important}
+.mobileBottomNav button.active span{color:var(--accent2)!important}
+.toast{border-color:#4d3b65!important;background:#1a1424!important}
+
+@media(max-width:1180px) and (min-width:761px){
+ .top{gap:14px!important;padding:0 18px!important}
+ .nav{gap:2px!important}
+ .nav button[data-page="music"],.nav button[data-page="books"],.nav button[data-page="list"]{display:none}
+ .search{width:190px}
+}
+@media(max-width:960px) and (min-width:761px){
+ .nav button[data-page="anime"],.nav button[data-page="manga"]{display:none}
+ .search{width:170px}
+}
+@media(max-width:760px){
+ :root{--mobile-nav-h:72px}
+ html{scroll-padding-top:64px}
+ body{background:radial-gradient(circle at 100% 0,rgba(124,58,237,.18),transparent 25rem),var(--bg)}
+ .top,.top.solid{
+  background:rgba(10,7,15,.94)!important;padding-left:10px!important;padding-right:10px!important;
+  border-bottom-color:rgba(167,139,250,.10)!important
+ }
+ .logo{min-height:44px}.right{gap:5px!important}.iconbtn{width:44px!important;height:44px!important}
+ .hero{height:min(74dvh,610px)!important;min-height:510px!important;padding:0 18px 62px!important}
+ .hero h1{font-size:clamp(36px,12vw,52px)!important;line-height:.98!important}
+ .heroDesc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+ main{padding-left:12px!important;padding-right:12px!important}
+ .row{gap:10px!important;margin-right:-12px;padding-right:12px!important}
+ .row .card{flex-basis:132px!important}
+ .poster{border-radius:9px!important}
+ .page{padding-left:12px!important;padding-right:12px!important}
+ .grid{gap:16px 10px!important}
+ .crSearchBar{top:58px!important;padding:9px 12px 10px!important}
+ .crSearchInputWrap{height:50px!important;border-radius:13px!important}
+ .searchContent{padding:14px 12px 26px!important}
+ .searchResultList{margin:0 -12px!important}
+ .searchResultItem{min-height:112px;padding:12px!important;gap:12px!important}
+ .searchResultThumb{width:42%!important;max-width:155px!important;border-radius:9px!important}
+ .mobileBottomNav{
+  height:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom))!important;
+  background:rgba(10,7,15,.94)!important;border-top-color:rgba(167,139,250,.15)!important;
+  backdrop-filter:blur(18px) saturate(140%)!important;gap:3px!important
+ }
+ .mobileBottomNav button{flex-basis:72px!important;min-width:72px!important;min-height:56px!important;border-radius:12px!important}
+ .mobileBottomNav button span{font-size:20px!important}.mobileBottomNav button small{font-size:9px!important}
+ .modal .close,.netflixDetailClose{min-width:44px!important;min-height:44px!important}
+}
+@media(max-width:370px){
+ .logo span{display:none!important}
+ .hero{padding-left:14px!important;padding-right:14px!important}
+ .row .card{flex-basis:124px!important}
+}
+@media(hover:none),(pointer:coarse){
+ button,.iconbtn,.ctl{min-height:44px}
+ .plus{opacity:1!important;min-width:36px;min-height:36px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
 </style>
@@ -5993,6 +6143,11 @@ function searchCounts(){
  };
 }
 
+function syncSearchField(input,value){
+ if(!input||document.activeElement===input||input.value===value)return;
+ input.value=value;
+}
+
 function ensureSearchShell(){
  $("#pageTitle").textContent="Buscar";
  $("#page").classList.add("searchPage");
@@ -6018,9 +6173,11 @@ function ensureSearchShell(){
  inp.addEventListener("input",e=>{
   clearTimeout(timer);
   const value=e.target.value;
-  timer=setTimeout(()=>search(value,false),380);
+  const delay=value.trim().length<2?140:480;
+  timer=setTimeout(()=>search(value,false),delay);
  });
  inp.addEventListener("keydown",e=>{
+  if(e.isComposing)return;
   if(e.key==="Enter"){
    clearTimeout(timer);e.preventDefault();search(e.target.value,true);e.target.blur();
   }
@@ -6080,13 +6237,12 @@ function renderSearchResults(){
   area.innerHTML=`<div class="searchDesktopGrid">${shown.map(card).join("")}</div>`;
   bindCards(area);
  }
- const inp=$("#pageSearchInput");if(inp&&inp.value!==q)inp.value=q;
+ syncSearchField($("#pageSearchInput"),q);
 }
 
 function renderSearchLoading(){
  ensureSearchShell();
- const inp=$("#pageSearchInput");
- if(inp&&inp.value!==S.searchQuery)inp.value=S.searchQuery;
+ syncSearchField($("#pageSearchInput"),S.searchQuery);
  $("#searchMeta").textContent=`Pesquisando “${S.searchQuery}”...`;
  $("#searchResultsArea").innerHTML=`<div class="searchLoading"><span>Buscando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
 }
@@ -6108,18 +6264,23 @@ function globalSearchMangaHtml(items){
 function globalSearchBooksHtml(items){
  return items.length?`<div class="globalBookGrid">${items.slice(0,8).map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum livro encontrado.</div>'
 }
-async function search(q,force=false){
- S.currentPage="search";q=String(q||"").trim();S.searchQuery=q;
+async function search(rawQuery,force=false){
+ const raw=String(rawQuery||""),q=raw.trim(),sourceId=document.activeElement?.id||"";
+ S.currentPage="search";S.searchQuery=q;
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  $("#page").classList.add("searchPage");setActiveNav("");ensureSearchShell();
- const inp=$("#pageSearchInput");if(inp&&inp.value!==q)inp.value=q;
- if($("#search")&&$("#search").value!==q)$("#search").value=q;
+ const displayValue=(sourceId==="pageSearchInput"||sourceId==="search")?raw:q;
+ syncSearchField($("#pageSearchInput"),displayValue);
+ syncSearchField($("#search"),displayValue);
  if(q.length<2){
   ++S.searchToken;
+  S.lastGlobalSearchQuery="";
   $("#searchTabs").innerHTML="";$("#searchMeta").textContent="Pesquisa global";
   $("#searchResultsArea").innerHTML='<div class="mediaEmpty"><b>Pesquise em todo o ResenhaFlix.</b>Filmes, séries, animes, mangás, músicas, artistas e livros aparecem juntos.</div>';
   return
  }
+ if(!force&&S.lastGlobalSearchQuery===q&&$("#globalVideos"))return;
+ S.lastGlobalSearchQuery=q;
  const token=++S.searchToken;
  $("#searchTabs").innerHTML="";
  $("#searchMeta").textContent=`Resultados globais para “${q}”`;
@@ -6229,8 +6390,21 @@ $$("#categoryMega [data-category-page]").forEach(b=>b.onclick=()=>{toggleCategor
 $$("[data-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.page);if(b.dataset.page==="home")home();else page(b.dataset.page)});
 $$("[data-mobile-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.mobilePage);if(b.dataset.mobilePage==="home")home();else page(b.dataset.mobilePage)});
 let topSearchTimer;
-$("#search").addEventListener("input",e=>{clearTimeout(topSearchTimer);const q=e.target.value.trim();if(q.length>=2)topSearchTimer=setTimeout(()=>search(q,false),420)});
-$("#search").addEventListener("keydown",e=>{if(e.key==="Enter"){clearTimeout(topSearchTimer);search(e.target.value,true)};if(e.key==="Escape"){e.target.value="";home()}});
+$("#search").addEventListener("input",e=>{
+ clearTimeout(topSearchTimer);
+ const input=e.target,raw=input.value;
+ if(raw.trim().length<2)return;
+ topSearchTimer=setTimeout(()=>{
+  search(raw,false);
+  requestAnimationFrame(()=>{
+   const pageInput=$("#pageSearchInput");if(!pageInput)return;
+   pageInput.value=raw;
+   try{pageInput.focus({preventScroll:true})}catch{pageInput.focus()}
+   try{pageInput.setSelectionRange(raw.length,raw.length)}catch{}
+  });
+ },480)
+});
+$("#search").addEventListener("keydown",e=>{if(e.isComposing)return;if(e.key==="Enter"){clearTimeout(topSearchTimer);search(e.target.value,true)};if(e.key==="Escape"){e.target.value="";home()}});
 const mobileSearchPanel=$("#mobileSearchPanel"),mobileSearchInput=$("#mobileSearchInput");
 function openMobileSearch(){
  repairTouchState();
@@ -6376,7 +6550,7 @@ window.addEventListener("orientationchange",()=>setTimeout(()=>{repairTouchState
 let resizeTimer=0;
 window.addEventListener("resize",()=>{
  clearTimeout(resizeTimer);
- resizeTimer=setTimeout(()=>{if(innerWidth<=760)repairTouchState();if(S.currentPage==="search"&&S.searchQuery)renderSearchResults()},120);
+ resizeTimer=setTimeout(()=>{if(innerWidth<=760)repairTouchState()},120);
 },{passive:true});
 document.addEventListener("visibilitychange",()=>{if(document.hidden)persistPlaybackProgress(true)});
 
