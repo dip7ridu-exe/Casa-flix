@@ -2408,92 +2408,6 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  .detailSimilarGrid{grid-template-columns:1fr 1fr}
 }
 
-
-/* =========================================================
-   ResenhaFlix V29 — trailers, busca global completa, metadata correta
-   ========================================================= */
-
-/* Trailer de fundo nos detalhes */
-.detailTrailerWrap{
- position:absolute;inset:0;z-index:1;overflow:hidden;background:#080808;
- opacity:0;visibility:hidden;transition:opacity .42s ease
-}
-.detailTrailerWrap.show{opacity:1;visibility:visible}
-.detailTrailerFrame{
- position:absolute;left:50%;top:50%;width:100%;height:100%;
- transform:translate(-50%,-50%) scale(1.12);
- transform-origin:center;border:0;pointer-events:none;background:#080808
-}
-.netflixDetailGradient{z-index:2!important}
-.netflixDetailContent{z-index:4!important}
-.detailMuteVisual{z-index:5!important}
-.netflixDetailClose{z-index:40!important}
-.netflixDetailDialog{animation:rfDetailEnter .28s cubic-bezier(.2,.72,.25,1)}
-@keyframes rfDetailEnter{
- from{opacity:0;transform:translateY(14px) scale(.985)}
- to{opacity:1;transform:none}
-}
-#detailModal:not(.open) .netflixDetailDialog{animation:none}
-
-/* Busca global: botão Ver mais e páginas específicas */
-.globalSearchHead .globalMoreBtn{
- margin-left:auto;display:inline-flex;align-items:center;gap:6px;
- min-height:32px;padding:6px 10px;border:1px solid #373a42;background:#1b1d23;
- color:#eee;border-radius:6px;font-size:9px;font-weight:950
-}
-.globalSearchHead .globalMoreBtn:hover{background:#fff;color:#111;border-color:#fff}
-.globalMorePage{max-width:1320px;margin:0 auto}
-.globalMoreTop{
- display:flex;gap:12px;align-items:flex-end;margin-bottom:18px;padding-bottom:14px;
- border-bottom:1px solid #26282e
-}
-.globalMoreTop>div{flex:1;min-width:0}
-.globalMoreEyebrow{font-size:9px;color:var(--accent);font-weight:950;letter-spacing:1.2px}
-.globalMoreTop h2{font-size:29px;margin:4px 0 3px;color:#fff;letter-spacing:-.7px}
-.globalMoreTop p{margin:0;color:#7d8088;font-size:10px}
-.globalMoreBack{
- flex:none;min-height:38px;border:1px solid #353840;background:#191b21;color:#ddd;
- border-radius:7px;padding:7px 11px;font-size:9px;font-weight:900
-}
-.globalMoreGrid{
- display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:15px 11px
-}
-.globalMoreGrid .card{width:auto;max-width:none;flex:none}
-.globalMoreMusic .musicTrackList{max-width:980px}
-.globalMoreArtists .musicArtistGrid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
-.globalMoreManga .m24Grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
-.globalMoreBooks .bookGrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-
-/* cartões mais suaves sem pesar */
-@media(hover:hover) and (pointer:fine){
- .card{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease}
- .card:hover{transform:translateY(-3px) scale(1.025)!important}
-}
-.card:active,.detailSimilarCard:active{transform:scale(.985)!important}
-.globalSearchSection,.detailSimilarSection{contain:layout paint style}
-.detailSimilarCard{will-change:auto}
-
-/* Mobile */
-@media(max-width:760px){
- .detailTrailerFrame{transform:translate(-50%,-50%) scale(1.18)}
- .globalSearchHead{align-items:center}
- .globalSearchHead h3{font-size:15px}
- .globalSearchHead small{display:none}
- .globalSearchHead .globalMoreBtn{min-height:34px;padding:6px 9px}
- .globalMoreTop{align-items:flex-start}
- .globalMoreTop h2{font-size:24px}
- .globalMoreBack{min-height:40px}
- .globalMoreGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 9px}
- .globalMoreManga .m24Grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .globalMoreBooks .bookGrid{grid-template-columns:1fr}
-}
-@media(max-width:390px){
- .globalMoreGrid{gap:12px 8px}
-}
-@media(prefers-reduced-motion:reduce){
- .netflixDetailDialog,.detailTrailerWrap{animation:none!important;transition:none!important}
-}
-
 </style>
 </head>
 <body>
@@ -2566,11 +2480,8 @@ body.fastScrolling .card:hover .poster{transform:none!important;filter:none!impo
  <div class="dialog netflixDetailDialog">
   <button class="close netflixDetailClose" id="closeDetail" aria-label="Fechar">×</button>
   <div class="detailHero netflixDetailHero" id="detailHero">
-   <div class="detailTrailerWrap" id="detailTrailerWrap" aria-hidden="true">
-    <iframe id="detailTrailerFrame" class="detailTrailerFrame" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-   </div>
    <div class="netflixDetailGradient"></div>
-   <button type="button" class="detailMuteVisual" id="detailMuteVisual" title="Ativar áudio do trailer" aria-label="Ativar áudio do trailer">🔇</button>
+   <button type="button" class="detailMuteVisual" id="detailMuteVisual" title="Imagem de destaque">⌁</button>
    <div class="detailContent netflixDetailContent">
     <div class="netflixBrand" id="detailType">RESENHAFLIX</div>
     <h2 id="detailTitle"></h2>
@@ -3344,61 +3255,16 @@ function rankedPlayableStreams(streams,resumeEntry=null){
 }
 
 
-const META_RESOLVE_CACHE=new Map();
-const SEARCH_RESULT_CACHE=new Map();
-const GLOBAL_RESULT_CACHE=new Map();
-
-function isImdbId(id){return /^tt\d+$/i.test(String(id||""))}
-function itemIdentity(m){
- const type=String(m?.type||"movie"),id=String(m?.id||"");
- if(isImdbId(id))return `${type}|imdb|${id}`;
- const source=String(m?._metaManifest||m?._catalogManifest||m?._catalogSource||"local");
- return `${source}|${type}|${id}`
-}
-function cacheItem(m){
- if(!m?.id)return"";
- const key=itemIdentity(m);S.itemCache.set(key,m);
- if(isImdbId(m.id))S.itemCache.set(`${m.type||"movie"}|${m.id}`,m);
- return key
-}
-function listHasItem(m){const k=itemIdentity(m);return lists().some(x=>itemIdentity(x)===k)}
-function metaURLFor(manifest,type,id){return api(manifest||cfg.meta,`meta/${type}/${encodeURIComponent(id)}.json`)}
-async function resolveMetaForItem(item){
- if(!item?.id)throw Error("Item sem ID");
- const cacheKey=itemIdentity(item),cached=META_RESOLVE_CACHE.get(cacheKey);
- if(cached&&Date.now()-cached.at<10*60e3)return cached.meta;
-
- const type=item.type||"movie",id=String(item.id);
- const manifests=isImdbId(id)
-  ? [...new Set([cfg.meta,item._metaManifest].filter(Boolean))]
-  : [...new Set([item._metaManifest].filter(Boolean))];
-
- for(const manifest of manifests){
-  try{
-   const d=await getJSONTimeout(metaURLFor(manifest,type,id),4800),m=d?.meta||d;
-   if(!m?.id)continue;
-   if(String(m.id)!==id)continue;
-   if(!isImdbId(id)&&item.name&&m.name&&titleSimilarity(item.name,m.name)<18)continue;
-   const merged={...item,...m,type:m.type||type,_metaManifest:manifest,_catalogManifest:item._catalogManifest||manifest};
-   META_RESOLVE_CACHE.set(cacheKey,{at:Date.now(),meta:merged});
-   return merged
-  }catch(e){console.warn("meta fallback",manifest,id,e)}
- }
- // Nunca pergunta ao Cinemeta por ID customizado: mantém exatamente o card clicado.
- const safe={...item,type:item.type||type};
- META_RESOLVE_CACHE.set(cacheKey,{at:Date.now(),meta:safe});
- return safe
-}
-
 function card(m){
  const key=historyKey(m.type||"movie",m._rootId||m.id);
  const h=m._continue?getHistoryEntry(m._historyKey||key):history().find(x=>(x.key||historyKey(x.type,x.rootId||x.id))===key);
- const itemKey=cacheItem(m),saved=listHasItem(m);
+ const saved=lists().some(x=>x.id===m.id&&String(x.type||"movie")===String(m.type||"movie"));
+ S.itemCache.set(`${m.type||"movie"}|${m.id}`,m);
  const remaining=h?.currentTime?formatTime(h.currentTime):"";
- return `<article class="card" data-id="${esc(m.id)}" data-type="${esc(m.type||"movie")}" data-item-key="${esc(itemKey)}" ${m._continue?`data-continue-key="${esc(m._historyKey||key)}"`:""}>
+ return `<article class="card" data-id="${esc(m.id)}" data-type="${esc(m.type||"movie")}" ${m._continue?`data-continue-key="${esc(m._historyKey||key)}"`:""}>
    <div class="poster">${m.poster?`<img class="posterImg" src="${esc(m.poster)}" alt="" loading="lazy" decoding="async" fetchpriority="low">`:""}</div>
    ${m.imdbRating?`<div class="rating">★ ${esc(m.imdbRating)}</div>`:""}
-   <button class="plus ${saved?"saved":""}" data-plus="${esc(m.id)}" data-type="${esc(m.type||"movie")}" data-item-key="${esc(itemKey)}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
+   <button class="plus ${saved?"saved":""}" data-plus="${esc(m.id)}" data-type="${esc(m.type||"movie")}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
    ${m._continue?`<button class="continueRemove" data-remove-continue="${esc(m._historyKey||key)}" title="Remover de Continuar assistindo">✕</button>`:""}
    ${m._continue&&remaining?`<div class="resumeBadge">▶ ${esc(remaining)}</div>`:""}
    <div class="cardInfo"><div class="title">${esc(m.name||"Sem título")}</div><div class="sub">${esc(m.year||"")} • ${isAnimeLike(m)?"Anime":(m.type==="series"?"Série":"Filme")}</div>${m._continue&&h?.stream?.addon?`<div class="resumeSource">Última fonte: ${esc(h.stream.addon)}${h.stream.quality?` • ${esc(h.stream.quality)}`:""}</div>`:(m._catalogSource?`<div class="sourceMark">${esc(m._catalogSource)}</div>`:"")}</div>
@@ -3418,14 +3284,10 @@ function bindCards(root){
    if(e.target.closest("[data-plus]")||e.target.closest("[data-remove-continue]"))return;
    const continueKey=c.dataset.continueKey;
    if(continueKey){resumeFromHistoryKey(continueKey);return}
-   const m=S.itemCache.get(c.dataset.itemKey);
-   if(m)openDetailsForItem(m);
-   else openDetails(c.dataset.type,c.dataset.id)
+   openDetails(c.dataset.type,c.dataset.id)
  });
  root.querySelectorAll("[data-plus]").forEach(b=>b.onclick=e=>{
-   e.stopPropagation();
-   const m=S.itemCache.get(b.dataset.itemKey);
-   if(m)toggleListItem(m,b);else toggleListById(b.dataset.plus,b.dataset.type,b)
+   e.stopPropagation();toggleListById(b.dataset.plus,b.dataset.type,b)
  });
  root.querySelectorAll("[data-remove-continue]").forEach(b=>b.onclick=e=>{
    e.stopPropagation();
@@ -3435,15 +3297,6 @@ function bindCards(root){
    toast("Removido de Continuar assistindo.");
  });
 }
-function toggleListItem(m,btn){
- let a=lists(),key=itemIdentity(m),i=a.findIndex(x=>itemIdentity(x)===key),added=false;
- if(i>=0){a.splice(i,1);toast("Removido da minha lista.")}
- else{a.unshift(m);added=true;toast("Adicionado à minha lista.")}
- saveList(a);animateListButton(btn,added);
- if(S.current&&itemIdentity(S.current)===key)updateDetailListButton(S.current);
- if(S.currentPage==="list"&&!added)setTimeout(()=>page("list"),280)
-}
-
 function refreshContinueSectionState(){
  const section=document.querySelector('[data-section="continue"]');
  if(section&&!section.querySelector(".card")){
@@ -3452,13 +3305,20 @@ function refreshContinueSectionState(){
  }
 }
 function toggleListById(id,type,btn){
- const generic=S.itemCache.get(`${type||"movie"}|${id}`);
- if(generic)return toggleListItem(generic,btn);
- const m={id,type:type||"movie"};return toggleListItem(m,btn)
+ let a=lists();let i=a.findIndex(x=>x.id===id&&String(x.type||"movie")===String(type||"movie"));
+ let added=false;
+ if(i>=0){
+  a.splice(i,1);toast("Removido da minha lista.");
+ }else{
+  const m=S.itemCache.get(`${type||"movie"}|${id}`)||S.current?.id===id&&S.current||{id,type:type||"movie"};
+  a.unshift(m);added=true;toast("Adicionado à minha lista.");
+ }
+ saveList(a);animateListButton(btn,added);
+ if(S.current?.id===id)updateDetailListButton(S.current);
+ if(S.currentPage==="list"&&!added)setTimeout(()=>page("list"),280);
 }
-
 function updateDetailListButton(m){
- const added=listHasItem(m);
+ const added=lists().some(x=>x.id===m.id&&String(x.type||"movie")===String(m.type||"movie"));
  const b=$("#detailList");if(!b)return;
  b.textContent=added?"✓":"＋";
  b.dataset.saved=added?"1":"0";
@@ -3500,34 +3360,23 @@ function catalogSupportsSearch(c){
 function catalogNeedsOtherRequiredExtra(c){
  return Array.isArray(c?.extra)&&c.extra.some(x=>typeof x==="object"&&x?.isRequired===true&&x?.name!=="search");
 }
-function cleanMeta(m,sourceName,manifestUrl="",fallbackType="movie"){
+function cleanMeta(m,sourceName){
  if(!m||!m.id||!m.name)return null;
- return {...m,type:m.type||fallbackType,_catalogSource:sourceName||m._catalogSource||"",_catalogManifest:manifestUrl||m._catalogManifest||"",_metaManifest:manifestUrl||m._metaManifest||""}
+ return {...m,type:m.type||"movie",_catalogSource:sourceName||m._catalogSource||""};
 }
 function dedupeMetas(items){
  const map=new Map();
  for(const raw of items){
-  const m=raw&&cleanMeta(raw,raw._catalogSource,raw._catalogManifest||raw._metaManifest,raw.type||"movie");if(!m)continue;
-  // IMDb IDs can be safely merged across addons. Custom IDs are scoped to the addon that created them.
-  const key=isImdbId(m.id)?`${m.type}|imdb|${m.id}`:`${m._catalogManifest||m._catalogSource}|${m.type}|${m.id}`;
+  const m=raw&&cleanMeta(raw,raw._catalogSource);if(!m)continue;
+  const key=`${m.type}|${m.id}`;
   if(!map.has(key))map.set(key,m);
   else{
    const old=map.get(key);
-   const preferNew=m._metaManifest===cfg.meta&&old._metaManifest!==cfg.meta;
-   const baseItem=preferNew?m:old,other=preferNew?old:m;
-   map.set(key,{...other,...baseItem,
-    poster:baseItem.poster||other.poster,
-    background:baseItem.background||other.background,
-    description:baseItem.description||other.description,
-    _metaManifest:baseItem._metaManifest||other._metaManifest,
-    _catalogManifest:baseItem._catalogManifest||other._catalogManifest,
-    _catalogSource:[old._catalogSource,m._catalogSource].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(" + ")
-   })
+   map.set(key,{...old,...m,poster:m.poster||old.poster,background:m.background||old.background,description:m.description||old.description,_catalogSource:[old._catalogSource,m._catalogSource].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(" + ")});
   }
  }
- return [...map.values()]
+ return [...map.values()];
 }
-
 function normText(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim()}
 function searchScore(m,q){
  const n=normText(m.name),x=normText(q);
@@ -3565,44 +3414,36 @@ async function catalogDefinitions(){
  return defs;
 }
 async function searchAllCatalogs(q){
- const norm=normText(q),cached=SEARCH_RESULT_CACHE.get(norm);
- if(cached&&Date.now()-cached.at<4*60e3)return cached.items;
-
- const defs=(await catalogDefinitions()).sort((a,b)=>(b.manifestUrl===cfg.meta?1:0)-(a.manifestUrl===cfg.meta?1:0));
- const counts=new Map(),chosen=[];let nonSearch=0;
+ const defs=await catalogDefinitions();
+ // Limit each source to a sane number of catalogs so a typo does not fire dozens of requests.
+ const counts=new Map(),chosen=[];
  for(const d of defs){
   const n=counts.get(d.manifestUrl)||0;
-  if(n>=5)continue;
-  if(!catalogSupportsSearch(d.catalog)&&d.manifestUrl!==cfg.meta){
-   if(nonSearch>=1)continue;nonSearch++
-  }
-  counts.set(d.manifestUrl,n+1);chosen.push(d)
+  if(n>=12)continue;
+  counts.set(d.manifestUrl,n+1);chosen.push(d);
  }
  const jobs=chosen.map(async d=>{
-  const c=d.catalog;let metas=[];
-  try{
-   if(catalogSupportsSearch(c)){
-    const data=await getJSONTimeout(catalogURLFor(d.manifestUrl,c.type,c.id,{search:q}),3800);
-    metas=data?.metas||[]
-   }else{
-    const data=await getJSONTimeout(catalogURLFor(d.manifestUrl,c.type,c.id,""),3200);
-    metas=(data?.metas||[]).filter(m=>normText(m.name).includes(norm))
-   }
-  }catch{return[]}
-  return metas.map(m=>cleanMeta(m,d.sourceName,d.manifestUrl,c.type)).filter(Boolean)
+  const c=d.catalog;
+  let metas=[];
+  if(catalogSupportsSearch(c)){
+   metas=await safeCatalog(c.type,c.id,{search:q},d.manifestUrl);
+  }else{
+   // Some catalog addons do not expose "search"; fetch their first page and filter locally.
+   metas=await safeCatalog(c.type,c.id,"",d.manifestUrl);
+   const x=normText(q);metas=metas.filter(m=>normText(m.name).includes(x));
+  }
+  return metas.map(m=>cleanMeta(m,d.sourceName)).filter(Boolean);
  });
  const settled=await Promise.allSettled(jobs);
- const items=dedupeMetas(settled.flatMap(r=>r.status==="fulfilled"?r.value:[]))
-  .sort((a,b)=>searchScore(b,q)-searchScore(a,q));
- SEARCH_RESULT_CACHE.set(norm,{at:Date.now(),items});
- return items
+ const items=dedupeMetas(settled.flatMap(r=>r.status==="fulfilled"?r.value:[]));
+ return items.sort((a,b)=>searchScore(b,q)-searchScore(a,q));
 }
 async function externalCatalogRows(){
  const defs=(await catalogDefinitions()).filter(d=>d.manifestUrl!==cfg.meta&&!catalogNeedsOtherRequiredExtra(d.catalog)).slice(0,5);
  const rows=[];
  for(const d of defs){
   try{
-   const items=rotateFresh((await safeCatalog(d.catalog.type,d.catalog.id,"",d.manifestUrl)).map(m=>cleanMeta(m,d.sourceName,d.manifestUrl,d.catalog.type)).filter(Boolean),`external-${d.sourceName}-${d.catalog.id}`).slice(0,18);
+   const items=rotateFresh((await safeCatalog(d.catalog.type,d.catalog.id,"",d.manifestUrl)).map(m=>cleanMeta(m,d.sourceName)).filter(Boolean),`external-${d.sourceName}-${d.catalog.id}`).slice(0,18);
    if(items.length)rows.push({title:d.catalog.name||d.catalog.id||d.sourceName,sub:d.sourceName,items});
   }catch{}
  }
@@ -3681,112 +3522,49 @@ function detailPeople(m){
  const raw=m?.cast||m?.actors||m?.stars||[];
  return Array.isArray(raw)?raw.filter(Boolean).slice(0,5).join(", "):String(raw||"")
 }
-function parseYoutubeId(value){
- const s=String(value||"").trim();
- if(/^[A-Za-z0-9_-]{11}$/.test(s))return s;
- try{
-  const u=new URL(s);
-  if(u.hostname.includes("youtu.be"))return u.pathname.split("/").filter(Boolean)[0]||"";
-  if(u.hostname.includes("youtube.com")){
-   if(u.pathname.startsWith("/embed/"))return u.pathname.split("/")[2]||"";
-   return u.searchParams.get("v")||""
-  }
- }catch{}
- return""
-}
-function extractTrailerId(m){
- const raw=[
-  ...(Array.isArray(m?.trailers)?m.trailers:[]),
-  ...(Array.isArray(m?.trailerStreams)?m.trailerStreams:[])
- ];
- const ordered=[...raw].sort((a,b)=>(String(a?.type||"").toLowerCase()==="trailer"?-1:0)-(String(b?.type||"").toLowerCase()==="trailer"?-1:0));
- for(const t of ordered){
-  const id=parseYoutubeId(t?.source||t?.ytId||t?.url||t?.externalUrl||"");
-  if(id)return id
- }
- return""
-}
-let detailTrailerMuted=true;
-function stopDetailTrailer(){
- const frame=$("#detailTrailerFrame"),wrap=$("#detailTrailerWrap");
- if(frame){try{frame.contentWindow?.postMessage(JSON.stringify({event:"command",func:"stopVideo",args:[]}),"*")}catch{};frame.src="about:blank"}
- if(wrap)wrap.classList.remove("show")
-}
-function trailerCommand(func,args=[]){
- const frame=$("#detailTrailerFrame");
- try{frame?.contentWindow?.postMessage(JSON.stringify({event:"command",func,args}),"*")}catch{}
-}
-function setupDetailTrailer(m){
- const id=extractTrailerId(m),wrap=$("#detailTrailerWrap"),frame=$("#detailTrailerFrame"),mute=$("#detailMuteVisual");
- stopDetailTrailer();detailTrailerMuted=true;
- if(!id){
-  mute.style.display="none";return
- }
- mute.style.display="";
- mute.textContent="🔇";mute.title="Ativar áudio do trailer";mute.setAttribute("aria-label",mute.title);
- frame.onload=()=>{
-  if(frame.src==="about:blank")return;
-  wrap.classList.add("show");
-  setTimeout(()=>{trailerCommand("mute");trailerCommand("playVideo")},180)
- };
- // Carrega só depois do conteúdo principal aparecer, evitando atrasar a abertura do modal.
- const load=()=>{
-  if(!$("#detailModal").classList.contains("open"))return;
-  const origin=encodeURIComponent(location.origin==="null"?"https://example.com":location.origin);
-  frame.src=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&mute=1&controls=0&loop=1&playlist=${encodeURIComponent(id)}&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin=${origin}`
- };
- if("requestIdleCallback" in window)requestIdleCallback(load,{timeout:700});else setTimeout(load,260)
-}
 function detailSimilarCard(m){
- const bg=m.background||m.poster||"",itemKey=cacheItem(m);
- return`<article class="detailSimilarCard" data-item-key="${esc(itemKey)}"><div class="detailSimilarImage" style="background-image:url('${esc(bg)}')"></div><div class="detailSimilarBody"><div class="detailSimilarTitle">${esc(m.name||"Sem título")}</div><div class="detailSimilarSub">${esc(m.year||"")} ${m.imdbRating?`• ★ ${esc(m.imdbRating)}`:""}</div><div class="detailSimilarDesc">${esc(m.description||"")}</div></div></article>`
+ const bg=m.background||m.poster||"";
+ return`<article class="detailSimilarCard" data-similar-type="${esc(m.type||"movie")}" data-similar-id="${esc(m.id)}"><div class="detailSimilarImage" style="background-image:url('${esc(bg)}')"></div><div class="detailSimilarBody"><div class="detailSimilarTitle">${esc(m.name||"Sem título")}</div><div class="detailSimilarSub">${esc(m.year||"")} ${m.imdbRating?`• ★ ${esc(m.imdbRating)}`:""}</div><div class="detailSimilarDesc">${esc(m.description||"")}</div></div></article>`
 }
 async function renderDetailSimilar(m){
  const root=$("#detailSimilar");if(!root)return;
  root.innerHTML='<div class="loading">Carregando recomendações…</div>';
  try{
   const genre=(m.genres||[])[0]||"";
-  let items=(await freshCatalog(m.type||"movie","top",genre?{genre}:"",cfg.meta,`detail-${m.id}`))
-   .map(x=>cleanMeta(x,"Cinemeta",cfg.meta,m.type||"movie"))
-   .filter(x=>String(x.id)!==String(m.id)).slice(0,9);
+  let items=await freshCatalog(m.type||"movie","top",genre?{genre}:"",cfg.meta,`detail-${m.id}`);
+  items=items.filter(x=>String(x.id)!==String(m.id)).slice(0,9);
   if(!root.isConnected)return;
   root.innerHTML=items.length?items.map(detailSimilarCard).join(""):'<div class="hint">Nenhum título semelhante encontrado agora.</div>';
   $("#detailSimilarMeta").textContent=genre?`Baseado em ${genre}`:"";
-  root.querySelectorAll("[data-item-key]").forEach(c=>c.onclick=()=>{const x=S.itemCache.get(c.dataset.itemKey);if(x)openDetailsForItem(x)})
+  root.querySelectorAll("[data-similar-id]").forEach(c=>c.onclick=()=>openDetails(c.dataset.similarType,c.dataset.similarId))
  }catch{
   root.innerHTML='<div class="hint">Não foi possível carregar títulos semelhantes.</div>'
  }
 }
 async function openDetails(type,id){
- const cached=S.itemCache.get(`${type||"movie"}|${id}`)||{id,type:type||"movie",name:""};
- return openDetailsForItem(cached)
-}
-async function openDetailsForItem(clicked){
  $("#detailModal").classList.add("open");document.body.classList.add("detailOpen");
- $("#detailTitle").textContent=clicked?.name||"Carregando…";$("#episodes").innerHTML="";$("#detailSimilar").innerHTML='<div class="loading">Carregando recomendações…</div>';
- stopDetailTrailer();
+ $("#detailTitle").textContent="Carregando…";$("#episodes").innerHTML="";$("#detailSimilar").innerHTML='<div class="loading">Carregando recomendações…</div>';
  try{
-  const m=await resolveMetaForItem(clicked);S.current=m;cacheItem(m);
-  const type=m.type||clicked.type||"movie",anime=isAnimeLike(m);
+  const d=await getJSON(metaURL(type,id));const m=d.meta||d;S.current=m;
+  const anime=isAnimeLike(m);
   $("#detailType").textContent="RESENHAFLIX";
-  $("#detailTitle").textContent=m.name||clicked.name||"Sem título";
+  $("#detailTitle").textContent=m.name||"Sem título";
   const heroBits=[m.year,m.runtime,m.imdbRating?`★ ${m.imdbRating}`:"",anime?"ANIME":(type==="series"?"SÉRIE":"FILME")].filter(Boolean);
   $("#detailMeta").innerHTML=heroBits.map((x,i)=>i===heroBits.length-1?`<span class="metaBadge">${esc(x)}</span>`:`<span>${esc(x)}</span>`).join("");
   const match=m.imdbRating?`${Math.min(99,Math.max(70,Math.round(Number(m.imdbRating)*10)))}% relevante`:"Em destaque";
   $("#detailFacts").innerHTML=`<span class="factRating">${esc(match)}</span>${m.year?`<span>${esc(m.year)}</span>`:""}${m.runtime?`<span>${esc(m.runtime)}</span>`:""}<span class="factBadge">HD</span><span class="factBadge">${type==="series"?"SÉRIE":"FILME"}</span>`;
   $("#detailTagline").textContent=anime?"Anime selecionado para você":type==="series"?"Comece agora ou continue de onde parou":"Aperte Assistir e escolha a melhor fonte";
-  $("#detailDesc").textContent=m.description||clicked.description||"Sem sinopse disponível.";
+  $("#detailDesc").textContent=m.description||"Sem sinopse disponível.";
   $("#detailCast").textContent=detailPeople(m)||"Não informado";
   $("#detailGenres").textContent=(m.genres||[]).join(", ")||"Não informado";
   $("#detailTraits").textContent=[anime?"Anime":"",...(m.genres||[]).slice(0,3)].filter(Boolean).join(", ")||"Entretenimento";
-  $("#detailHero").style.backgroundImage=`url('${m.background||clicked.background||m.poster||clicked.poster||""}')`;
-  const hist=getHistoryEntry(historyKey(type,m.id));
+  $("#detailHero").style.backgroundImage=`url('${m.background||m.poster||""}')`;
+  const hist=getHistoryEntry(historyKey(m.type||type,m.id));
   $("#detailWatch").innerHTML=hist?.currentTime>5?'▶ <span>Continuar</span>':'▶ <span>Assistir</span>';
-  $("#detailWatch").onclick=()=>{stopDetailTrailer();playFirst(m)};
+  $("#detailWatch").onclick=()=>playFirst(m);
   updateDetailListButton(m);$("#detailList").onclick=()=>toggleCurrentList(m);
   updateDetailLikeButton(m);$("#detailLike").onclick=()=>toggleDetailLike(m);
   if(type==="series")renderEpisodes(m);else $("#episodes").innerHTML="";
-  setupDetailTrailer(m);
   runWhenIdle(()=>renderDetailSimilar(m))
  }catch(e){
   console.error(e);$("#detailTitle").textContent="Não foi possível carregar";toast("Erro ao buscar os detalhes.")
@@ -3794,12 +3572,13 @@ async function openDetailsForItem(clicked){
 }
 
 function toggleCurrentList(m){
- let a=lists(),key=itemIdentity(m),i=a.findIndex(x=>itemIdentity(x)===key),added=false;
+ let a=lists(),i=a.findIndex(x=>x.id===m.id&&String(x.type||"movie")===String(m.type||"movie"));
+ let added=false;
  if(i>=0){a.splice(i,1);toast("Removido da minha lista.")}
  else{a.unshift(m);added=true;toast("Adicionado à minha lista.")}
  saveList(a);updateDetailListButton(m);
  const b=$("#detailList");b.classList.remove("detailListAdded");void b.offsetWidth;b.classList.add("detailListAdded");
- document.querySelectorAll(`.card[data-item-key="${CSS.escape(key)}"] [data-plus]`).forEach(btn=>animateListButton(btn,added))
+ document.querySelectorAll(`.card[data-id="${CSS.escape(m.id)}"][data-type="${CSS.escape(m.type||"movie")}"] [data-plus]`).forEach(btn=>animateListButton(btn,added));
 }
 function renderEpisodes(m){
  const vids=m.videos||m.episodes||[];
@@ -6203,28 +5982,32 @@ function ensureSearchShell(){
  return $("#searchShell");
 }
 function searchResultItem(m){
- const saved=listHasItem(m),label=isAnimeLike(m)?"Anime":(m.type==="series"?"Série":"Filme"),itemKey=cacheItem(m);
- return `<article class="searchResultItem" data-item-key="${esc(itemKey)}">
+ const saved=lists().some(x=>x.id===m.id&&String(x.type||"movie")===String(m.type||"movie"));
+ const label=isAnimeLike(m)?"Anime":(m.type==="series"?"Série":"Filme");
+ return `<article class="searchResultItem" data-search-id="${esc(m.id)}" data-search-type="${esc(m.type||"movie")}">
    <div class="searchResultThumb" style="background-image:url('${esc(m.background||m.poster||"")}')"></div>
    <div class="searchResultInfo">
     <div class="searchResultTitle">${esc(m.name||"Sem título")}</div>
     <div class="searchResultMeta">${[m.year,label,m.imdbRating?`★ ${m.imdbRating}`:""].filter(Boolean).map(esc).join(" • ")}</div>
     <div class="searchResultGenres">${esc((m.genres||[]).slice(0,4).join(" • "))}</div>
    </div>
-   <button type="button" class="searchResultPlus ${saved?"saved":""}" data-item-key="${esc(itemKey)}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
+   <button type="button" class="searchResultPlus ${saved?"saved":""}" data-search-plus="${esc(m.id)}" data-search-plus-type="${esc(m.type||"movie")}" title="${saved?"Remover da minha lista":"Adicionar à minha lista"}">${saved?"✓":"+"}</button>
   </article>`;
 }
 function bindSearchResultItems(root,items){
  root.querySelectorAll(".searchResultItem").forEach(el=>el.onclick=e=>{
-  if(e.target.closest(".searchResultPlus"))return;
-  const m=S.itemCache.get(el.dataset.itemKey);if(m)openDetailsForItem(m)
+  if(e.target.closest("[data-search-plus]"))return;
+  openDetails(el.dataset.searchType,el.dataset.searchId);
  });
- root.querySelectorAll(".searchResultPlus").forEach(b=>b.onclick=e=>{
-  e.stopPropagation();const m=S.itemCache.get(b.dataset.itemKey);if(!m)return;
-  toggleListItem(m,b);const saved=listHasItem(m);b.classList.toggle("saved",saved);b.textContent=saved?"✓":"+"
- })
+ root.querySelectorAll("[data-search-plus]").forEach(b=>b.onclick=e=>{
+  e.stopPropagation();
+  const m=items.find(x=>x.id===b.dataset.searchPlus&&String(x.type||"movie")===String(b.dataset.searchPlusType||"movie"));
+  if(m)S.itemCache.set(`${m.type||"movie"}|${m.id}`,m);
+  toggleListById(b.dataset.searchPlus,b.dataset.searchPlusType,b);
+  const saved=lists().some(x=>x.id===b.dataset.searchPlus&&String(x.type||"movie")===String(b.dataset.searchPlusType||"movie"));
+  b.classList.toggle("saved",saved);b.textContent=saved?"✓":"+";
+ });
 }
-
 function renderSearchResults(){
  ensureSearchShell();
  const groups=searchCounts();
@@ -6259,86 +6042,23 @@ function renderSearchLoading(){
  $("#searchMeta").textContent=`Pesquisando “${S.searchQuery}”...`;
  $("#searchResultsArea").innerHTML=`<div class="searchLoading"><span>Buscando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
 }
-function globalSectionShell(id,title,sub="",kind=""){
- return `<section class="globalSearchSection"><div class="globalSearchHead"><h3>${esc(title)}</h3>${sub?`<small>${esc(sub)}</small>`:""}${kind?`<button type="button" class="globalMoreBtn" data-global-more="${esc(kind)}">Ver mais ›</button>`:""}</div><div id="${id}" class="globalSearchLoading">Buscando…</div></section>`
+function globalSectionShell(id,title,sub=""){
+ return `<section class="globalSearchSection"><div class="globalSearchHead"><h3>${esc(title)}</h3>${sub?`<small>${esc(sub)}</small>`:""}</div><div id="${id}" class="globalSearchLoading">Buscando…</div></section>`
 }
-function globalSearchVideoHtml(items){return items.length?`<div class="globalSearchRow">${items.slice(0,10).map(card).join("")}</div>`:'<div class="mediaEmpty">Nenhum resultado.</div>'}
-function globalSearchMusicHtml(items){return items.length?`<div class="globalMusicList">${items.slice(0,6).map(musicTrackHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhuma música encontrada.</div>'}
-function globalSearchArtistsHtml(items){return items.length?`<div class="musicArtistGrid">${items.slice(0,7).map(musicArtistHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum artista encontrado.</div>'}
-function globalSearchMangaHtml(items){return items.length?`<div class="globalSearchRow">${items.slice(0,9).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'}
-function globalSearchBooksHtml(items){return items.length?`<div class="globalBookGrid">${items.slice(0,6).map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum livro encontrado.</div>'}
-function splitVideoSearch(items){
- const anime=items.filter(isAnimeLike);
- return{
-  movies:items.filter(x=>x.type==="movie"&&!isAnimeLike(x)),
-  series:items.filter(x=>x.type==="series"&&!isAnimeLike(x)),
-  anime
- }
+function globalSearchVideoHtml(items){
+ return items.length?`<div class="globalSearchRow">${items.slice(0,12).map(card).join("")}</div>`:'<div class="mediaEmpty">Nenhum filme, série ou anime.</div>'
 }
-function globalCache(q,kind,items){
- const key=normText(q),old=GLOBAL_RESULT_CACHE.get(key)||{at:Date.now(),q,groups:{}};
- old.at=Date.now();old.groups[kind]=items;GLOBAL_RESULT_CACHE.set(key,old)
+function globalSearchMusicHtml(items,q){
+ return items.length?`<div class="globalMusicList">${items.slice(0,7).map(musicTrackHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhuma música encontrada.</div>'
 }
-function cachedGlobal(q,kind){
- const x=GLOBAL_RESULT_CACHE.get(normText(q));
- if(!x||Date.now()-x.at>5*60e3)return null;
- return x.groups?.[kind]||null
+function globalSearchArtistsHtml(items){
+ return items.length?`<div class="musicArtistGrid">${items.slice(0,8).map(musicArtistHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum artista encontrado.</div>'
 }
-function bindGlobalMoreButtons(q){
- $$("[data-global-more]").forEach(b=>b.onclick=()=>showGlobalMore(b.dataset.globalMore,q))
+function globalSearchMangaHtml(items){
+ return items.length?`<div class="globalSearchRow">${items.slice(0,10).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'
 }
-function globalMoreTitle(kind){
- return({movies:"Filmes",series:"Séries",anime:"Animes",music:"Músicas",artists:"Artistas",manga:"Mangás",books:"Livros"})[kind]||"Resultados"
-}
-async function fetchGlobalGroup(kind,q){
- const cached=cachedGlobal(q,kind);if(cached)return cached;
- if(["movies","series","anime"].includes(kind)){
-  const all=await searchAllCatalogs(q),split=splitVideoSearch(all);
-  for(const [k,v] of Object.entries(split))globalCache(q,k,v);
-  return split[kind]||[]
- }
- if(kind==="music"){
-  const [sc,aud,it]=await Promise.all([searchSoundCloudProxy(q,"tracks").catch(()=>[]),searchAudiusTracks(q).catch(()=>[]),searchItunes(q,"tracks").catch(()=>[])]);
-  const items=dedupeMusic([...sc,...aud,...it]);globalCache(q,kind,items);return items
- }
- if(kind==="artists"){
-  const [sc,it]=await Promise.all([searchSoundCloudProxy(q,"users").catch(()=>[]),searchItunes(q,"artists").catch(()=>[])]);
-  const items=dedupeMusic([...sc,...it]);globalCache(q,kind,items);return items
- }
- if(kind==="manga"){
-  const pg=await aniListManga(q,1),items=(pg.media||[]).map(normalizeAniMedia);globalCache(q,kind,items);return items
- }
- if(kind==="books"){
-  const [ol,gut]=await Promise.all([searchOpenLibraryBooks(q).catch(()=>[]),searchGutendexBooks(q).catch(()=>[])]);
-  const items=dedupeBooks([...gut,...ol]);globalCache(q,kind,items);return items
- }
- return[]
-}
-function renderGlobalMore(kind,q,items){
- $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
- $("#page").classList.remove("searchPage");$("#pageTitle").textContent="";
- const title=globalMoreTitle(kind);
- let body="";
- if(["movies","series","anime"].includes(kind))body=`<div class="globalMoreGrid">${items.map(card).join("")}</div>`;
- else if(kind==="music")body=`<div class="globalMoreMusic"><div class="musicTrackList">${items.map(musicTrackHtml).join("")}</div></div>`;
- else if(kind==="artists")body=`<div class="globalMoreArtists"><div class="musicArtistGrid">${items.map(musicArtistHtml).join("")}</div></div>`;
- else if(kind==="manga")body=`<div class="globalMoreManga"><div class="m24Grid">${items.map(mangaV24Card).join("")}</div></div>`;
- else body=`<div class="globalMoreBooks"><div class="bookGrid">${items.map(bookCardHtml).join("")}</div></div>`;
- $("#pageBody").innerHTML=`<div class="globalMorePage"><div class="globalMoreTop"><div><div class="globalMoreEyebrow">PESQUISA GLOBAL</div><h2>${esc(title)}</h2><p>${items.length} resultado(s) para “${esc(q)}”</p></div><button type="button" class="globalMoreBack" id="globalMoreBack">← Voltar</button></div>${body||'<div class="mediaEmpty">Nenhum resultado.</div>'}</div>`;
- $("#globalMoreBack").onclick=()=>search(q,true);
- const root=$("#pageBody");
- if(["movies","series","anime"].includes(kind))bindCards(root);
- else if(kind==="music"||kind==="artists")bindMusicResults(root,items);
- else if(kind==="manga")bindMangaV24Cards(root,items);
- else if(kind==="books"){bindBookCards(root,items);runWhenIdle(()=>hydrateBookFormatsProgressively(items,root))}
-}
-async function showGlobalMore(kind,q){
- S.currentPage="search-more";setActiveNav("");scrollPageTop();
- $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
- $("#pageTitle").textContent="";$("#pageBody").innerHTML=`<div class="globalMorePage"><div class="globalMoreTop"><div><div class="globalMoreEyebrow">PESQUISA GLOBAL</div><h2>${esc(globalMoreTitle(kind))}</h2><p>Buscando “${esc(q)}”...</p></div><button type="button" class="globalMoreBack" id="globalMoreBack">← Voltar</button></div><div class="loading">Carregando mais resultados…</div></div>`;
- $("#globalMoreBack").onclick=()=>search(q,true);
- try{const items=await fetchGlobalGroup(kind,q);if(S.currentPage==="search-more")renderGlobalMore(kind,q,items)}
- catch(e){console.error(e);$("#pageBody").insertAdjacentHTML("beforeend",'<div class="globalSearchError">Não consegui carregar mais resultados.</div>')}
+function globalSearchBooksHtml(items){
+ return items.length?`<div class="globalBookGrid">${items.slice(0,8).map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum livro encontrado.</div>'
 }
 async function search(q,force=false){
  S.currentPage="search";q=String(q||"").trim();S.searchQuery=q;
@@ -6347,52 +6067,42 @@ async function search(q,force=false){
  const inp=$("#pageSearchInput");if(inp&&inp.value!==q)inp.value=q;
  if($("#search")&&$("#search").value!==q)$("#search").value=q;
  if(q.length<2){
-  ++S.searchToken;$("#searchTabs").innerHTML="";$("#searchMeta").textContent="Pesquisa global";
-  $("#searchResultsArea").innerHTML='<div class="mediaEmpty"><b>Pesquise em todo o ResenhaFlix.</b>Filmes, séries, animes, mangás, músicas, artistas e livros aparecem juntos.</div>';return
+  ++S.searchToken;
+  $("#searchTabs").innerHTML="";$("#searchMeta").textContent="Pesquisa global";
+  $("#searchResultsArea").innerHTML='<div class="mediaEmpty"><b>Pesquise em todo o ResenhaFlix.</b>Filmes, séries, animes, mangás, músicas, artistas e livros aparecem juntos.</div>';
+  return
  }
  const token=++S.searchToken;
- $("#searchTabs").innerHTML="";$("#searchMeta").textContent=`Resultados globais para “${q}”`;
- $("#searchResultsArea").innerHTML=`<div class="globalSearchIntro"><div><h2>${esc(q)}</h2><p>Cada categoria carrega separadamente. Use “Ver mais” para abrir a pesquisa completa daquela área.</p></div></div>
-  ${globalSectionShell("globalMovies","Filmes","Catálogos de filmes","movies")}
-  ${globalSectionShell("globalSeries","Séries","Catálogos de séries","series")}
-  ${globalSectionShell("globalAnime","Animes","Resultados de animação/anime","anime")}
-  ${globalSectionShell("globalMusic","Músicas","SoundCloud • Audius • iTunes","music")}
-  ${globalSectionShell("globalArtists","Artistas","","artists")}
-  ${globalSectionShell("globalManga","Mangás","","manga")}
-  ${globalSectionShell("globalBooks","Livros","","books")}`;
- bindGlobalMoreButtons(q);
+ $("#searchTabs").innerHTML="";
+ $("#searchMeta").textContent=`Resultados globais para “${q}”`;
+ $("#searchResultsArea").innerHTML=`<div class="globalSearchIntro"><div><h2>${esc(q)}</h2><p>Resultados de todas as áreas do ResenhaFlix, carregados em paralelo para a tela responder mais rápido.</p></div></div>
+  ${globalSectionShell("globalVideos","Filmes, séries e animes")}
+  ${globalSectionShell("globalMusic","Músicas","SoundCloud • Audius • iTunes")}
+  ${globalSectionShell("globalArtists","Artistas")}
+  ${globalSectionShell("globalManga","Mangás")}
+  ${globalSectionShell("globalBooks","Livros")}`;
 
  const jobs=[
+  (async()=>{try{const items=await searchAllCatalogs(q);if(token!==S.searchToken)return;const el=$("#globalVideos");el.innerHTML=globalSearchVideoHtml(items);if(items.length)bindCards(el)}catch{$("#globalVideos").innerHTML='<div class="globalSearchError">Falha ao buscar vídeos.</div>'}})(),
   (async()=>{try{
-   const all=await searchAllCatalogs(q);if(token!==S.searchToken)return;const groups=splitVideoSearch(all);
-   for(const [kind,items] of Object.entries(groups))globalCache(q,kind,items);
-   for(const [id,kind] of [["#globalMovies","movies"],["#globalSeries","series"],["#globalAnime","anime"]]){
-    const el=$(id),items=groups[kind];el.innerHTML=globalSearchVideoHtml(items);if(items.length)bindCards(el)
-   }
-  }catch{
-   ["#globalMovies","#globalSeries","#globalAnime"].forEach(id=>{const el=$(id);if(el)el.innerHTML='<div class="globalSearchError">Falha ao buscar esta categoria.</div>'})
-  }})(),
+    const [sc,aud,it]=await Promise.all([searchSoundCloudProxy(q,"tracks").catch(()=>[]),searchAudiusTracks(q).catch(()=>[]),searchItunes(q,"tracks").catch(()=>[])]);
+    if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...aud,...it]);const el=$("#globalMusic");el.innerHTML=globalSearchMusicHtml(items,q);bindMusicResults(el,items)
+   }catch{$("#globalMusic").innerHTML='<div class="globalSearchError">Falha ao buscar músicas.</div>'}})(),
   (async()=>{try{
-   const [sc,aud,it]=await Promise.all([searchSoundCloudProxy(q,"tracks").catch(()=>[]),searchAudiusTracks(q).catch(()=>[]),searchItunes(q,"tracks").catch(()=>[])]);
-   if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...aud,...it]);globalCache(q,"music",items);const el=$("#globalMusic");el.innerHTML=globalSearchMusicHtml(items);bindMusicResults(el,items)
-  }catch{$("#globalMusic").innerHTML='<div class="globalSearchError">Falha ao buscar músicas.</div>'}})(),
+    const [sc,it]=await Promise.all([searchSoundCloudProxy(q,"users").catch(()=>[]),searchItunes(q,"artists").catch(()=>[])]);
+    if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...it]);const el=$("#globalArtists");el.innerHTML=globalSearchArtistsHtml(items);bindMusicResults(el,items)
+   }catch{$("#globalArtists").innerHTML='<div class="globalSearchError">Falha ao buscar artistas.</div>'}})(),
+  (async()=>{try{const page=await aniListManga(q,1);if(token!==S.searchToken)return;const items=(page.media||[]).map(normalizeAniMedia);const el=$("#globalManga");el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindMangaV24Cards(el,items)}catch{$("#globalManga").innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}})(),
   (async()=>{try{
-   const [sc,it]=await Promise.all([searchSoundCloudProxy(q,"users").catch(()=>[]),searchItunes(q,"artists").catch(()=>[])]);
-   if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...it]);globalCache(q,"artists",items);const el=$("#globalArtists");el.innerHTML=globalSearchArtistsHtml(items);bindMusicResults(el,items)
-  }catch{$("#globalArtists").innerHTML='<div class="globalSearchError">Falha ao buscar artistas.</div>'}})(),
-  (async()=>{try{
-   const pg=await aniListManga(q,1);if(token!==S.searchToken)return;const items=(pg.media||[]).map(normalizeAniMedia);globalCache(q,"manga",items);const el=$("#globalManga");el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindMangaV24Cards(el,items)
-  }catch{$("#globalManga").innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}})(),
-  (async()=>{try{
-   const [ol,gut]=await Promise.all([searchOpenLibraryBooks(q).catch(()=>[]),searchGutendexBooks(q).catch(()=>[])]);
-   if(token!==S.searchToken)return;const items=dedupeBooks([...gut,...ol]);globalCache(q,"books",items);const el=$("#globalBooks");el.innerHTML=globalSearchBooksHtml(items);if(items.length){bindBookCards(el,items);runWhenIdle(()=>hydrateBookFormatsProgressively(items,el))}
-  }catch{$("#globalBooks").innerHTML='<div class="globalSearchError">Falha ao buscar livros.</div>'}})()
+    const [ol,gut]=await Promise.all([searchOpenLibraryBooks(q).catch(()=>[]),searchGutendexBooks(q).catch(()=>[])]);
+    if(token!==S.searchToken)return;const items=dedupeBooks([...gut,...ol]);const el=$("#globalBooks");el.innerHTML=globalSearchBooksHtml(items);if(items.length){bindBookCards(el,items);runWhenIdle(()=>hydrateBookFormatsProgressively(items,el))}
+   }catch{$("#globalBooks").innerHTML='<div class="globalSearchError">Falha ao buscar livros.</div>'}})()
  ];
  Promise.allSettled(jobs)
 }
 
-$("#heroWatch").onclick=()=>S.hero&&openDetailsForItem(S.hero);
-$("#heroDetails").onclick=()=>S.hero&&openDetailsForItem(S.hero);
+$("#heroWatch").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
+$("#heroDetails").onclick=()=>S.hero&&openDetails(S.hero.type,S.hero.id);
 
 function unlockMobileDocument(){
  if(innerWidth>760)return;
@@ -6525,15 +6235,7 @@ $("#mangaPrevPage").onclick=()=>readerNextPage(-1);$("#mangaNextPage").onclick=(
 $("#mangaPrevChapter").onclick=()=>nextNativeChapter(-1);$("#mangaNextChapter").onclick=()=>nextNativeChapter(1);
 $("#mangaReaderCanvas").onclick=e=>{if(e.target.closest(".nativeReaderTapZone"))return;showReaderUi()};
 $("#mangaReaderModal").onclick=e=>{if(e.target.id==="mangaReaderModal")closeMangaReader()};
-$("#detailMuteVisual").onclick=()=>{
- if(!extractTrailerId(S.current||{}))return;
- detailTrailerMuted=!detailTrailerMuted;
- trailerCommand(detailTrailerMuted?"mute":"unMute");
- $("#detailMuteVisual").textContent=detailTrailerMuted?"🔇":"🔊";
- $("#detailMuteVisual").title=detailTrailerMuted?"Ativar áudio do trailer":"Silenciar trailer";
- $("#detailMuteVisual").setAttribute("aria-label",$("#detailMuteVisual").title)
-};
-$("#closeDetail").onclick=()=>{stopDetailTrailer();$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
+$("#closeDetail").onclick=()=>{$("#detailModal").classList.remove("open");document.body.classList.remove("detailOpen");unlockMobileDocument()};
 $("#closePlayer").onclick=()=>{$("#playerSide")?.classList.remove("drawerOpen");$("#sourcePanelBackdrop")?.classList.remove("open");$("#skipIntroBtn").classList.remove("show");stopSourceAttempt();clearPlaybackStallMonitor();persistPlaybackProgress(true);clearTimeout(S._ctlTimer);$("#playerMenu").classList.remove("open");$("#playerMenuBackdrop").classList.remove("open");S.playerMenuKind=null;resetVideo();$("#playerModal").classList.remove("open");document.body.classList.remove("playerOpen")};
 $("#bigPlay").onclick=togglePlayback;$("#playPause").onclick=togglePlayback;
 $("#back10").onclick=()=>{$("#video").currentTime=Math.max(0,$("#video").currentTime-10);showPlayerUI()};
@@ -6651,6 +6353,6 @@ if("serviceWorker" in navigator){
 home();
 </script>
 <!-- ResenhaFlix v12 — fontes progressivas/cache + tela Mangás/Keiyoushi -->
-<!-- ResenhaFlix v29 — busca global com Ver mais, metadata source-aware e trailers nos detalhes -->
+<!-- ResenhaFlix v28 — manga exato/rápido, livros PT-BR e detalhes estilo Netflix -->
 </body>
 </html>
