@@ -5263,14 +5263,6 @@ async function loadMangaExplore(query=""){
   bindNativeMangaCards($("#catalogMangaResults"),S.mangaCatalog);
  }catch{$("#catalogMangaResults").innerHTML='<div class="mangaEmpty">Catálogo temporariamente indisponível.</div>'}
 }
-function renderMangaExplore(){
- const area=$("#mangaContent");if(!area)return;
- area.innerHTML='<div id="mangaExploreResults"><div class="loading">Carregando…</div></div>';
- loadMangaExplore(S.mangaQuery)
-}
-function renderMangaLibrary(){
- const items=mangaLibrary();$("#mangaContent").innerHTML=items.length?`<div class="mangaCount">${items.length} mangá(s) salvo(s).</div><div class="mangaNativeResultGrid" id="libraryMangaResults">${items.map(nativeMangaCard).join("")}</div>`:'<div class="mangaLibraryEmpty">Sua biblioteca está vazia.<br>No Explorar, use o botão ＋ em qualquer mangá.</div>';if(items.length)bindNativeMangaCards($("#libraryMangaResults"),items)
-}
 async function findMangaInSingleSource(title,source){
  $("#mangaMatchModal").classList.add("open");document.body.classList.add("mangaMatchOpen");$("#mangaMatchTitle").textContent=title;$("#mangaMatchStatus").textContent=`Pesquisando em ${source.name}…`;$("#mangaMatchProgress").innerHTML=sourceStatusChip(source,"loading");$("#mangaMatchList").innerHTML="";
  const items=await searchOneInstalledSource(source,title,false);$("#mangaMatchProgress").innerHTML=sourceStatusChip(source,items.length?"ok":"fail");
@@ -5397,47 +5389,7 @@ function bindReaderTapZones(){const l=$("#readerTapLeft"),r=$("#readerTapRight")
 function nextNativeChapter(delta){const i=readerChapterIndex(),ch=S.mangaChapters[i+delta];if(ch){saveNativeReaderProgress();openNativeChapter(ch)}else toast(delta>0?"Você chegou ao último capítulo.":"Você está no primeiro capítulo.")}
 function showReaderUi(sticky=false){clearTimeout(S.mangaReaderUiTimer);$("#nativeReaderTop").classList.remove("hidden");$("#nativeReaderBottom").classList.remove("hidden");if(!sticky)S.mangaReaderUiTimer=setTimeout(()=>{$("#nativeReaderTop").classList.add("hidden");$("#nativeReaderBottom").classList.add("hidden")},4500)}
 function closeMangaReader(){saveNativeReaderProgress();if(S.mangaReaderObserver){S.mangaReaderObserver.disconnect();S.mangaReaderObserver=null}clearTimeout(S.mangaReaderUiTimer);$("#mangaReaderModal").classList.remove("open");document.body.classList.remove("mangaReaderOpen");$("#mangaReaderPages").innerHTML="";S.mangaReaderPages=[]}
-function renderMangaCurrentTab(){if(S.mangaTab==="extensions"){if(!S.mangaRepoItems.length)return loadMangaRepo(false).then(renderMangaExtensions);renderMangaExtensions()}else if(S.mangaTab==="explore")renderMangaExplore();else renderMangaLibrary();$$("[data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))}
-async function mangaPage(){
- S.currentPage="manga";setActiveNav("manga");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
- $("#page").classList.remove("searchPage");$("#page").classList.add("mangaPageModern");
- $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Mangás";
- const sources=mangaSourcesFromInstalled(),pt=portugueseInstalledSources().length,en=englishInstalledSources().length;
- if(!sources.length&&S.mangaTab==="library")S.mangaTab="explore";
- $("#pageBody").innerHTML=`<div class="mangaModernShell">
-   <div class="mangaModernHeader">
-    <div class="mangaModernTitle"><h2>Mangás</h2><p>Pesquise, acompanhe e leia sem sair do ResenhaFlix.</p></div>
-    <div class="mangaTabs" id="mangaTabs">
-     <button type="button" data-manga-tab="explore">Explorar</button>
-     <button type="button" data-manga-tab="library">Biblioteca</button>
-     <button type="button" data-manga-tab="extensions">Extensões</button>
-    </div>
-   </div>
-   <div class="mangaModernSearch">
-    <input id="mangaTitleSearch" placeholder="Pesquisar mangá em português ou inglês…" autocomplete="off" value="${esc(S.mangaQuery)}">
-    <select id="mangaSearchLang">
-     <option value="both" ${S.mangaSearchLang==="both"?"selected":""}>Português + Inglês</option>
-     <option value="pt" ${S.mangaSearchLang==="pt"?"selected":""}>Somente Português</option>
-     <option value="en" ${S.mangaSearchLang==="en"?"selected":""}>Somente Inglês</option>
-    </select>
-    <button type="button" id="mangaSearchBtn">Buscar</button>
-   </div>
-   <div class="mangaModernStats">
-    <span class="pt">🇧🇷 ${pt} fonte(s) em Português</span>
-    <span>EN ${en} fonte(s) em Inglês/multilíngue</span>
-    <span>${bridgeBase()?"Ponte de mangá configurada":"Acesso direto"}</span>
-   </div>
-   <div id="mangaContent"><div class="loading">Carregando…</div></div>
-  </div>`;
- const input=$("#mangaTitleSearch");let timer;
- const go=()=>{S.mangaQuery=input.value.trim();if(S.mangaTab!=="explore"){S.mangaTab="explore";syncMangaTabs()}renderMangaExplore()};
- input.oninput=()=>{clearTimeout(timer);timer=setTimeout(go,500)};
- input.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(timer);go();input.blur()}};
- $("#mangaSearchBtn").onclick=go;
- $("#mangaSearchLang").onchange=e=>{S.mangaSearchLang=e.target.value;localStorage.setItem("rf16_manga_search_lang",S.mangaSearchLang);if(S.mangaQuery)go()};
- function syncMangaTabs(){$$("#mangaTabs [data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))}
- $$("#mangaTabs [data-manga-tab]").forEach(b=>b.onclick=()=>{S.mangaTab=b.dataset.mangaTab;S.mangaQuery="";input.value="";syncMangaTabs();renderMangaCurrentTab()});
- syncMangaTabs();await renderMangaCurrentTab()
+
 }
 
 /* Manga V24 */
