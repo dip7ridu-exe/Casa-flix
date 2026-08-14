@@ -3864,7 +3864,7 @@ async function appendExternalHomeRows(){
 }
 async function home(){
  S.currentPage="home";S.pageCategory="all";setActiveNav("home");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
- $("#page").classList.remove("searchPage");
+ $("#page").classList.remove("searchPage","hk-manga-page");
  $("#hero").classList.remove("hidden");$("#main").classList.remove("hidden");$("#page").classList.add("hidden");
  $("#main").innerHTML='<div class="row">'+Array.from({length:8},()=>'<div class="skeleton card"></div>').join("")+'</div>';
  try{
@@ -6419,7 +6419,7 @@ async function page(type,initialCategory="all"){
  if(type==="books")return booksPage();
  S.currentPage=type;S.pageTypeForCategories=type;S.pageCategory=initialCategory||"all";
  setActiveNav(type);unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
- $("#page").classList.remove("searchPage","mangaPageModern","mangaPageV24","musicPageModern","booksPageModern");
+ $("#page").classList.remove("searchPage","mangaPageModern","mangaPageV24","musicPageModern","booksPageModern","hk-manga-page");
  $("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");
  const titles={movies:"Filmes",series:"Séries",anime:"Animes",manga:"Mangás",list:"Minha lista"};
  $("#pageTitle").textContent=titles[type]||"Catálogo";
@@ -6572,8 +6572,19 @@ function globalSearchMusicHtml(items,q){
 function globalSearchArtistsHtml(items){
  return items.length?`<div class="musicArtistGrid">${items.slice(0,8).map(musicArtistHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum artista encontrado.</div>'
 }
+function globalEngineMangaCard(manga){
+ const key=`${manga.connector||"mangadex"}|${manga.id||""}`,cover=safeHttpUrl(manga.cover||"");
+ return `<article class="m24Card" data-global-hk-manga="${esc(key)}"><div class="m24Cover" style="background-image:url('${esc(cover)}')"></div><div class="m24CardTitle">${esc(manga.title||"Mangá")}</div><div class="m24CardMeta">${esc(manga.source||"MangaDex")}${manga.year?` • ${esc(manga.year)}`:""}</div><div class="m24Actions"><button type="button" class="find" data-global-hk-open>Capítulos</button></div></article>`
+}
+function bindGlobalEngineMangaCards(root,items){
+ const byKey=new Map(items.map(item=>[`${item.connector||"mangadex"}|${item.id||""}`,item]));
+ root.querySelectorAll("[data-global-hk-manga]").forEach(card=>{
+  const manga=byKey.get(card.dataset.globalHkManga);if(!manga)return;
+  card.querySelector("[data-global-hk-open]")?.addEventListener("click",()=>window.ResenhaMangaEngine?.openManga(manga));
+ });
+}
 function globalSearchMangaHtml(items){
- return items.length?`<div class="globalSearchRow" data-carousel tabindex="0" aria-label="Resultados de mangás; deslize para ver mais">${items.slice(0,10).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'
+ return items.length?`<div class="globalSearchRow" data-carousel tabindex="0" aria-label="Resultados de mangás; deslize para ver mais">${items.slice(0,12).map(globalEngineMangaCard).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'
 }
 function globalSearchBooksHtml(items){
  return items.length?`<div class="globalBookGrid">${items.slice(0,8).map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum livro encontrado.</div>'
@@ -6620,7 +6631,23 @@ async function search(rawQuery,force=false){
     const [sc,it]=await Promise.all([searchSoundCloudProxy(q,"users").catch(()=>[]),searchItunes(q,"artists").catch(()=>[])]);
     if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...it]);const el=$("#globalArtists");el.innerHTML=globalSearchArtistsHtml(items);bindMusicResults(el,items)
    }catch{$("#globalArtists").innerHTML='<div class="globalSearchError">Falha ao buscar artistas.</div>'}})(),
-  (async()=>{try{const page=await aniListManga(q,1);if(token!==S.searchToken)return;const items=(page.media||[]).map(normalizeAniMedia);const el=$("#globalManga");el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindMangaV24Cards(el,items);initCarousels(el)}catch{$("#globalManga").innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}})(),
+  (async()=>{
+   const el=$("#globalManga");
+   try{
+    const mangaEngine=window.ResenhaMangaEngine;
+    if(!mangaEngine)throw Error("Motor de mangás ainda não carregado");
+    const items=await mangaEngine.search(q,{language:"pt-br",source:"all",limit:40});
+    if(token!==S.searchToken)return;
+    el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindGlobalEngineMangaCards(el,items);initCarousels(el);
+   }catch(engineError){
+    try{
+     const page=await aniListManga(q,1);if(token!==S.searchToken)return;
+     const items=(page.media||[]).map(normalizeAniMedia);
+     el.innerHTML=items.length?`<div class="globalSearchRow" data-carousel tabindex="0" aria-label="Resultados de mangás; deslize para ver mais">${items.slice(0,12).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>';
+     if(items.length)bindMangaV24Cards(el,items);initCarousels(el);
+    }catch{el.innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}
+   }
+  })(),
   (async()=>{try{
     const [ol,gut]=await Promise.all([searchOpenLibraryBooks(q).catch(()=>[]),searchGutendexBooks(q).catch(()=>[])]);
     if(token!==S.searchToken)return;const items=dedupeBooks([...gut,...ol]);const el=$("#globalBooks");el.innerHTML=globalSearchBooksHtml(items);if(items.length){bindBookCards(el,items);runWhenIdle(()=>hydrateBookFormatsProgressively(items,el))}
