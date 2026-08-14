@@ -810,7 +810,7 @@
     main?.classList.add("hidden");
     pageElement.classList.remove("hidden", "searchPage", "mangaPageModern", "mangaPageV24", "musicPageModern", "booksPageModern");
     pageElement.classList.add("hk-manga-page");
-    if (pageTitle) pageTitle.textContent = "Mangas";
+    if (pageTitle) pageTitle.textContent = "Mangás";
 
     pageBody.innerHTML = `
       <div class="hk-shell">
