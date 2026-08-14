@@ -12,13 +12,15 @@ Modulo de mangas inspirado na separacao de responsabilidades do HakuNeko:
 
 - Busca por titulo e nomes alternativos, com ranking de correspondencia.
 - PT-BR como idioma padrao e troca rapida de idioma.
-- Catalogo e capitulos pelo endpoint publico do MangaDex.
+- Catálogo, capítulos e páginas do MangaDex pelo bridge, com fallback direto.
+- Busca adicional em até quatro fontes PT-BR curadas a partir do Keiyoushi.
+- Tela Fontes para configurar e testar o Manga Bridge no próprio site.
 - Leitor vertical ou pagina a pagina.
 - Qualidade economica ou original, ajuste de largura, espacamento e brilho.
 - Progresso salvo localmente por capitulo.
 - Biblioteca local.
 - Fila e historico de downloads.
-- Download CBZ sem biblioteca externa e sem enviar as imagens ao ResenhaFLIX.
+- Download CBZ sem biblioteca externa; imagens passam pelo proxy assinado quando o bridge está ativo.
 - Interface responsiva para celular e desktop.
 
 ## Arquivos
@@ -27,7 +29,9 @@ Modulo de mangas inspirado na separacao de responsabilidades do HakuNeko:
 - `manga-hakuneko.css`: interface isolada pelo prefixo `hk-`.
 - `index.html`: carrega o modulo depois do codigo principal e substitui somente a pagina de mangas.
 - `service-worker.js`: inclui os arquivos do modulo no shell offline.
+- `manga-bridge/server.py`: proxy FastAPI para MangaDex e adaptadores PT-BR.
+- `Dockerfile` e `railway.toml`: deploy do bridge sem alterar o GitHub Pages.
 
 ## Observacoes
 
-O download e montado em memoria no aparelho. Capitulos muito grandes podem usar bastante RAM, principalmente em qualidade original. A disponibilidade de titulos, idiomas e capitulos depende da fonte. O usuario deve baixar somente material que tenha permissao para armazenar.
+O download e montado em memoria no aparelho. Capitulos muito grandes podem usar bastante RAM, principalmente em qualidade original. O índice Keiyoushi descreve extensões Android em Kotlin; o navegador não executa os APKs e depende dos adaptadores reimplementados no bridge. A disponibilidade de títulos, idiomas e capítulos depende da fonte. O usuário deve baixar somente material que tenha permissão para armazenar.

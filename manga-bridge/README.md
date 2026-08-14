@@ -1,26 +1,45 @@
-# ResenhaFlix Manga Bridge V30
+# ResenhaFlix Manga Bridge V32
 
-O Bridge é recomendado para conseguir ler dentro do ResenhaFlix quando as fontes bloqueiam CORS.
+Backend opcional, mas recomendado, para o leitor de mangás do ResenhaFlix. Ele evita bloqueios CORS do navegador, protege as URLs das imagens e permite montar downloads CBZ no aparelho.
 
-Adaptadores incluídos:
-- Madara / WordPress (inclui busca AJAX, capítulos AJAX e leitor de páginas);
-- Saikai Scan (API usada pela extensão atual);
-- LycanToons (API JSON `/api/series`);
-- Mangás Brasuka (busca JSON e capítulos serializados pelo Next.js);
-- parser HTML genérico.
+## Fontes
 
-Fontes que exigem login, captcha, WebView ou lógica Kotlin específica podem continuar incompatíveis até receberem um adaptador próprio.
+- MangaDex: catálogo, detalhes, capítulos e páginas por API pública;
+- Saikai Scan: API usada pela extensão Keiyoushi atual;
+- Lycan Toons: busca JSON e dados RSC do Next.js;
+- Mangás Brasuka: Madara/WordPress e fluxo especial de páginas;
+- Boruto Explorer: Madara/WordPress;
+- parser Madara e HTML genérico mantidos como fallback.
 
-## Rodar local
+O catálogo Keiyoushi é um índice de extensões Android em Kotlin/APK. O bridge usa seus metadados e reimplementa somente adaptadores web compatíveis; ele não instala nem executa APKs no servidor.
+
+## Rodar localmente
 
 ```bash
-pip install -r requirements.txt
-uvicorn server:app --port 8787
+python -m pip install -r requirements.txt
+uvicorn server:app --host 0.0.0.0 --port 8787
 ```
 
-Depois coloque `http://localhost:8787` em:
-ResenhaFlix → Configurações → Mangás → Manga Bridge.
+Teste em `http://localhost:8787/api/health`.
+
+## Railway
+
+O `Dockerfile` e o `railway.toml` na raiz do repositório estão prontos para deploy. Conecte o repositório, gere um domínio HTTPS e configure:
+
+- `ALLOWED_ORIGIN=https://dip7ridu-exe.github.io`
+- `BRIDGE_SECRET` com uma sequência longa e aleatória
+- `PUBLIC_BASE_URL=https://SEU-DOMINIO.up.railway.app`
+
+Depois cole a URL HTTPS em **ResenhaFlix → Mangás → Fontes**. Também é possível abrir uma vez com `?mangaBridge=https://SEU-DOMINIO` para salvar a configuração no aparelho.
 
 ## Render
 
-O `render.yaml` já está preparado. Após publicar, use a URL HTTPS do serviço no campo Manga Bridge.
+O `render.yaml` desta pasta continua disponível. Após o deploy, configure `PUBLIC_BASE_URL` com a URL pública do serviço.
+
+## Segurança
+
+- CORS limitado ao GitHub Pages do ResenhaFlix por padrão;
+- fontes limitadas a uma lista de hosts conhecidos;
+- proxy de imagem usa assinatura temporária;
+- conteúdo MangaDex limitado a `safe` e `suggestive`;
+- no máximo cinco fontes são consultadas em lote.
