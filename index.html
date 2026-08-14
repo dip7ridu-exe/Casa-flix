@@ -2558,8 +2558,106 @@ input::placeholder,textarea::placeholder{color:#898294;opacity:1}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+/* ResenhaFlix v33 — carrosséis touch e navegação móvel compacta */
+.sectionHeadText{min-width:0;flex:1}
+.carouselControls,.globalSearchActions{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-left:auto}
+.carouselArrow{
+ width:36px;height:36px;min-width:36px;border:1px solid #37313f;border-radius:50%;
+ background:#17131d;color:#f3eefb;font-size:24px;line-height:1;display:grid;place-items:center;
+ transition:opacity .16s,background .16s,border-color .16s,transform .16s
+}
+.carouselArrow:hover{background:#2a2037;border-color:#7956a5}.carouselArrow:active{transform:scale(.93)}
+.carouselArrow:disabled{opacity:.28;cursor:default;transform:none}
+[data-carousel]{
+ -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x pan-y;
+ scroll-snap-type:x proximity;scrollbar-width:none
+}
+[data-carousel]::-webkit-scrollbar{display:none}
+[data-carousel]>*{scroll-snap-align:start;touch-action:pan-x pan-y!important}
+[data-carousel] .card *,[data-carousel] .m24Card *{touch-action:pan-x pan-y!important}
+[data-carousel]:focus-visible{outline:2px solid var(--accent2);outline-offset:4px;border-radius:8px}
+.globalSearchHead{align-items:center}
+.globalSearchHead>small{flex:1}
+.globalSearchActions button:not(.carouselArrow){min-height:36px;padding:7px 11px;font-size:10px;border-radius:8px}
+.globalSearchSection.is-expanded .carouselArrow{display:none}
+.globalSearchRow.is-expanded{
+ grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-columns:auto;
+ overflow:visible;scroll-snap-type:none;gap:16px 12px
+}
+.globalSearchRow.is-expanded .card,.globalSearchRow.is-expanded .m24Card{width:100%;min-width:0}
+
+.mobileNavMenu{display:none}
+
+@media(max-width:760px){
+ .sectionHead{align-items:center!important;gap:8px}
+ .sectionHeadText .sectionSub{margin-top:2px}
+ .carouselControls{gap:5px}
+ .carouselArrow{width:40px;height:40px;min-width:40px;font-size:25px}
+ .row,.globalSearchRow{touch-action:pan-x pan-y!important;scroll-snap-type:x proximity!important}
+ .row>.card,.globalSearchRow>*{touch-action:pan-x pan-y!important}
+ .globalSearchHead{align-items:center;flex-wrap:wrap}
+ .globalSearchHead>h3{min-width:0;flex:1}
+ .globalSearchHead>small{display:none}
+ .globalSearchActions{flex:none}
+ .globalSearchActions button:not(.carouselArrow){min-height:40px;padding:8px 10px;font-size:10px}
+ .globalSearchRow.is-expanded{
+  grid-template-columns:repeat(2,minmax(0,1fr));margin-right:0;padding-right:0;
+  overflow:visible!important;touch-action:pan-y!important;scroll-snap-type:none!important
+ }
+ .globalSearchRow.is-expanded>*{touch-action:pan-y!important}
+
+ .mobileBottomNav{
+  display:grid!important;grid-template-columns:repeat(var(--mobile-nav-count,5),minmax(0,1fr))!important;
+  justify-content:stretch!important;overflow:visible!important;scroll-snap-type:none!important;
+  padding-left:6px!important;padding-right:6px!important;gap:3px!important
+ }
+ .mobileBottomNav button{
+  width:auto!important;min-width:0!important;flex:initial!important;flex-basis:auto!important;
+  scroll-snap-align:none!important;padding-left:2px!important;padding-right:2px!important
+ }
+ body.playerOpen .mobileBottomNav,body.detailOpen .mobileBottomNav,body.settingsOpen .mobileBottomNav,
+ body.mangaReaderOpen .mobileBottomNav,body.mangaSourceOpen .mobileBottomNav,body.mangaDetailOpen .mobileBottomNav,
+ body.mangaMatchOpen .mobileBottomNav,body.mangaWebOpen .mobileBottomNav,body.mediaSourcesOpen .mobileBottomNav,
+ body.bookReaderOpen .mobileBottomNav{display:none!important}
+
+ .mobileNavMenu{
+  position:fixed;inset:0;z-index:180;display:block;visibility:hidden;pointer-events:none
+ }
+ .mobileNavMenu.open{visibility:visible;pointer-events:auto}
+ .mobileNavMenuBackdrop{
+  position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:0;background:#020104b8;
+  opacity:0;transition:opacity .2s
+ }
+ .mobileNavMenu.open .mobileNavMenuBackdrop{opacity:1}
+ .mobileNavMenuPanel{
+  position:absolute;left:0;right:0;bottom:0;max-height:min(82dvh,680px);overflow-y:auto;
+  padding:16px 14px calc(18px + env(safe-area-inset-bottom));border:1px solid #3b3049;
+  border-width:1px 0 0;border-radius:22px 22px 0 0;background:#100c16;color:#fff;
+  box-shadow:0 -22px 70px #000c;transform:translateY(105%);transition:transform .24s cubic-bezier(.2,.8,.2,1);
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y
+ }
+ .mobileNavMenu.open .mobileNavMenuPanel{transform:translateY(0)}
+ .mobileNavMenuHead{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+ .mobileNavMenuHead>div{flex:1;min-width:0}.mobileNavMenuHead small{color:var(--accent2);font-size:9px;font-weight:950;letter-spacing:1.3px}
+ .mobileNavMenuHead h2{margin:3px 0 0;font-size:23px}.mobileNavMenuClose{width:44px;height:44px;border:1px solid #41354f;border-radius:12px;background:#211929;color:#fff;font-size:25px}
+ .mobileNavDestinations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .mobileNavDestination{
+  min-width:0;min-height:78px;border:1px solid #33293e;border-radius:13px;background:#17111e;color:#c9c2d2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px
+ }
+ .mobileNavDestination>span{font-size:23px;line-height:1}.mobileNavDestination>b{max-width:100%;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .mobileNavDestination>small{font-size:8px;color:#877d91}.mobileNavDestination.active{border-color:#7955a8;background:#251a32;color:#fff}.mobileNavDestination.preferred>small{color:#c7a9f5}
+ .mobileNavEditToggle{width:100%;min-height:46px;margin-top:12px;border:1px solid #49395b;border-radius:11px;background:#21172c;color:#eee;font-size:11px;font-weight:900}
+ .mobileNavEditor{margin-top:10px;padding:11px;border:1px solid #33283e;border-radius:12px;background:#0c0910}
+ .mobileNavEditor[hidden]{display:none}.mobileNavEditor>p{margin:0 0 9px;color:#9a90a5;font-size:10px;line-height:1.45}
+ .mobileNavEditRow{display:flex;align-items:center;gap:8px;min-height:48px;border-top:1px solid #241d2b;padding:5px 0}.mobileNavEditRow:first-child{border-top:0}
+ .mobileNavEditChoice{display:flex;align-items:center;gap:9px;min-width:0;flex:1;color:#e5dfeb;font-size:11px;font-weight:800}.mobileNavEditChoice input{width:20px;height:20px;accent-color:var(--accent)}
+ .mobileNavOrder{display:flex;gap:4px}.mobileNavOrder button{width:38px;height:38px;border:1px solid #3a3044;border-radius:9px;background:#1c1524;color:#ddd}.mobileNavOrder button:disabled{opacity:.25}
+ .mobileNavMenu button:focus-visible,.mobileBottomNav button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+}
+
 </style>
-  <link rel="stylesheet" href="./manga-hakuneko.css?v=32">
+  <link rel="stylesheet" href="./manga-hakuneko.css?v=33">
 </head>
 <body>
 <header class="top" id="top">
@@ -3087,17 +3185,23 @@ input::placeholder,textarea::placeholder{color:#898294;opacity:1}
  </div>
 </div>
 
-<nav class="mobileBottomNav" id="mobileBottomNav" aria-label="Navegação principal">
- <button type="button" class="active" data-mobile-page="home"><span>⌂</span><small>Início</small></button>
- <button type="button" data-mobile-page="trending"><span>↗</span><small>Em alta</small></button>
- <button type="button" data-mobile-page="movies"><span>▣</span><small>Filmes</small></button>
- <button type="button" data-mobile-page="series"><span>▤</span><small>Séries</small></button>
- <button type="button" data-mobile-page="anime"><span>✦</span><small>Animes</small></button>
- <button type="button" data-mobile-page="manga"><span>▥</span><small>Mangás</small></button>
- <button type="button" data-mobile-page="music"><span>♪</span><small>Música</small></button>
- <button type="button" data-mobile-page="books"><span>▧</span><small>Livros</small></button>
- <button type="button" data-mobile-page="list"><span>＋</span><small>Lista</small></button>
-</nav>
+<nav class="mobileBottomNav" id="mobileBottomNav" aria-label="Navegação principal"></nav>
+
+<div class="mobileNavMenu" id="mobileNavMenu" aria-hidden="true">
+ <button type="button" class="mobileNavMenuBackdrop" id="mobileNavMenuBackdrop" aria-label="Fechar menu"></button>
+ <section class="mobileNavMenuPanel" id="mobileNavMenuPanel" role="dialog" aria-modal="true" aria-labelledby="mobileNavMenuTitle" tabindex="-1">
+  <header class="mobileNavMenuHead">
+   <div><small>NAVEGAÇÃO</small><h2 id="mobileNavMenuTitle">Mais opções</h2></div>
+   <button type="button" class="mobileNavMenuClose" id="mobileNavMenuClose" aria-label="Fechar">×</button>
+  </header>
+  <div class="mobileNavDestinations" id="mobileNavDestinations"></div>
+  <button type="button" class="mobileNavEditToggle" id="mobileNavEditToggle" aria-expanded="false" aria-controls="mobileNavEditor">Editar atalhos da barra</button>
+  <div class="mobileNavEditor" id="mobileNavEditor" hidden>
+   <p>Escolha até quatro destinos. Use as setas para mudar a ordem.</p>
+   <div id="mobileNavEditorList"></div>
+  </div>
+ </section>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -3146,6 +3250,106 @@ const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
 const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
+S.globalVideoResults=[];
+S.globalVideosExpanded=false;
+
+const MOBILE_NAV_STORAGE="rf33_mobile_nav";
+const MOBILE_NAV_DEFAULT=["home","trending","movies","manga"];
+const MOBILE_NAV_ITEMS=[
+ {id:"home",label:"Início",icon:"⌂"},
+ {id:"trending",label:"Em alta",icon:"↗"},
+ {id:"movies",label:"Filmes",icon:"▣"},
+ {id:"series",label:"Séries",icon:"▤"},
+ {id:"anime",label:"Animes",icon:"✦"},
+ {id:"manga",label:"Mangás",icon:"▥"},
+ {id:"music",label:"Música",icon:"♪"},
+ {id:"books",label:"Livros",icon:"▧"},
+ {id:"list",label:"Lista",icon:"＋"}
+];
+const MOBILE_NAV_IDS=new Set(MOBILE_NAV_ITEMS.map(item=>item.id));
+function loadMobileNavPreferences(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(MOBILE_NAV_STORAGE)||"null");
+  if(Array.isArray(saved)){
+   const valid=[...new Set(saved.map(String).filter(id=>MOBILE_NAV_IDS.has(id)))].slice(0,4);
+   if(valid.length)return valid;
+  }
+ }catch{}
+ return [...MOBILE_NAV_DEFAULT];
+}
+let mobileNavPreferences=loadMobileNavPreferences();
+let mobileNavEditorOpen=false;
+let mobileNavPreviousFocus=null;
+function saveMobileNavPreferences(){
+ try{localStorage.setItem(MOBILE_NAV_STORAGE,JSON.stringify(mobileNavPreferences))}catch{}
+}
+function mobileNavItem(id){return MOBILE_NAV_ITEMS.find(item=>item.id===id)}
+function renderMobileBottomNav(){
+ const nav=$("#mobileBottomNav");if(!nav)return;
+ const current=S.currentPage;
+ nav.style.setProperty("--mobile-nav-count",String(Math.min(5,mobileNavPreferences.length+1)));
+ nav.innerHTML=mobileNavPreferences.map(id=>{
+  const item=mobileNavItem(id);if(!item)return"";
+  const active=current===id;
+  return `<button type="button" class="${active?"active":""}" data-mobile-page="${esc(id)}"${active?' aria-current="page"':""}><span aria-hidden="true">${item.icon}</span><small>${esc(item.label)}</small></button>`;
+ }).join("")+`<button type="button" id="mobileNavMore" data-mobile-more aria-haspopup="dialog" aria-controls="mobileNavMenu" aria-expanded="false"><span aria-hidden="true">•••</span><small>Mais</small></button>`;
+ const more=$("#mobileNavMore");
+ if(more&&MOBILE_NAV_IDS.has(current)&&!mobileNavPreferences.includes(current)){
+  more.classList.add("active");more.setAttribute("aria-current","page");
+ }
+}
+function renderMobileNavMenu(){
+ const destinations=$("#mobileNavDestinations"),editor=$("#mobileNavEditor"),list=$("#mobileNavEditorList");
+ if(!destinations||!editor||!list)return;
+ destinations.innerHTML=MOBILE_NAV_ITEMS.map(item=>{
+  const preferred=mobileNavPreferences.includes(item.id),active=S.currentPage===item.id;
+  return `<button type="button" class="mobileNavDestination ${preferred?"preferred":""} ${active?"active":""}" data-mobile-destination="${esc(item.id)}"${active?' aria-current="page"':""}><span aria-hidden="true">${item.icon}</span><b>${esc(item.label)}</b><small>${preferred?"Na barra":"Abrir"}</small></button>`;
+ }).join("");
+ list.innerHTML=MOBILE_NAV_ITEMS.map(item=>{
+  const order=mobileNavPreferences.indexOf(item.id),selected=order>=0;
+  return `<div class="mobileNavEditRow"><label class="mobileNavEditChoice"><input type="checkbox" data-mobile-preference="${esc(item.id)}" ${selected?"checked":""}><span>${item.icon} ${esc(item.label)}</span></label><div class="mobileNavOrder"><button type="button" data-mobile-nav-move="-1" data-mobile-nav-id="${esc(item.id)}" aria-label="Mover ${esc(item.label)} para a esquerda" ${!selected||order===0?"disabled":""}>←</button><button type="button" data-mobile-nav-move="1" data-mobile-nav-id="${esc(item.id)}" aria-label="Mover ${esc(item.label)} para a direita" ${!selected||order===mobileNavPreferences.length-1?"disabled":""}>→</button></div></div>`;
+ }).join("");
+ editor.hidden=!mobileNavEditorOpen;
+ const toggle=$("#mobileNavEditToggle");if(toggle)toggle.setAttribute("aria-expanded",mobileNavEditorOpen?"true":"false");
+}
+function openMobileNavMenu(){
+ const menu=$("#mobileNavMenu");if(!menu)return;
+ mobileNavPreviousFocus=document.activeElement;renderMobileNavMenu();
+ menu.classList.add("open");menu.setAttribute("aria-hidden","false");
+ $("#mobileNavMore")?.setAttribute("aria-expanded","true");
+ requestAnimationFrame(()=>$("#mobileNavMenuPanel")?.focus({preventScroll:true}));
+}
+function closeMobileNavMenu(restoreFocus=true){
+ const menu=$("#mobileNavMenu");if(!menu)return;
+ menu.classList.remove("open");menu.setAttribute("aria-hidden","true");
+ $("#mobileNavMore")?.setAttribute("aria-expanded","false");
+ if(restoreFocus&&mobileNavPreviousFocus?.isConnected)mobileNavPreviousFocus.focus({preventScroll:true});
+}
+function navigateMobileDestination(target){
+ closeMobileNavMenu(false);closeTransientUI();setActiveNav(target);
+ if(target==="home")home();else page(target);
+}
+function updateMobileNavPreference(id,selected){
+ if(!MOBILE_NAV_IDS.has(id))return;
+ if(selected){
+  if(mobileNavPreferences.includes(id))return;
+  if(mobileNavPreferences.length>=4){toast("Escolha no máximo quatro atalhos.");renderMobileNavMenu();return}
+  mobileNavPreferences.push(id);
+ }else{
+  if(mobileNavPreferences.length<=1){toast("Mantenha pelo menos um atalho na barra.");renderMobileNavMenu();return}
+  mobileNavPreferences=mobileNavPreferences.filter(item=>item!==id);
+ }
+ saveMobileNavPreferences();renderMobileBottomNav();renderMobileNavMenu();setActiveNav(S.currentPage);
+}
+function moveMobileNavPreference(id,direction){
+ const from=mobileNavPreferences.indexOf(id),to=from+Number(direction);
+ if(from<0||to<0||to>=mobileNavPreferences.length)return;
+ [mobileNavPreferences[from],mobileNavPreferences[to]]=[mobileNavPreferences[to],mobileNavPreferences[from]];
+ saveMobileNavPreferences();renderMobileBottomNav();renderMobileNavMenu();setActiveNav(S.currentPage);
+}
+renderMobileBottomNav();
+renderMobileNavMenu();
 const base=u=>u.replace(/\/manifest\.json.*$/,"").replace(/\/$/,"");
 const api=(b,p)=>base(b)+"/"+p.replace(/^\/+/,"");
 
@@ -3482,8 +3686,47 @@ function updateDetailListButton(m){
 
 function row(title,items,sub="",opts={}){
  if(!items?.length)return "";
- return `<section class="section" ${opts.key?`data-section="${esc(opts.key)}"`:""}><div class="sectionHead"><div class="sectionTitle">${esc(title)}</div><div class="sectionSub">${esc(sub||"")}</div></div><div class="row">${items.map(card).join("")}</div></section>`
+ return `<section class="section" ${opts.key?`data-section="${esc(opts.key)}"`:""} aria-label="${esc(title)}"><div class="sectionHead"><div class="sectionHeadText"><div class="sectionTitle">${esc(title)}</div><div class="sectionSub">${esc(sub||"")}</div></div><div class="carouselControls" aria-label="Navegar em ${esc(title)}"><button type="button" class="carouselArrow" data-carousel-dir="-1" aria-label="Ver itens anteriores">‹</button><button type="button" class="carouselArrow" data-carousel-dir="1" aria-label="Ver próximos itens">›</button></div></div><div class="row" data-carousel tabindex="0" aria-label="${esc(title)}; deslize para ver mais">${items.map(card).join("")}</div></section>`
 }
+
+const carouselResizeObserver=typeof ResizeObserver==="function"?new ResizeObserver(entries=>entries.forEach(entry=>updateCarouselControls(entry.target))):null;
+function updateCarouselControls(scroller){
+ if(!scroller)return;
+ const section=scroller.closest(".section,.globalSearchSection"),max=Math.max(0,scroller.scrollWidth-scroller.clientWidth),slack=3;
+ if(!section)return;
+ const previous=section.querySelector('[data-carousel-dir="-1"]'),next=section.querySelector('[data-carousel-dir="1"]');
+ if(previous)previous.disabled=max<=slack||scroller.scrollLeft<=slack;
+ if(next)next.disabled=max<=slack||scroller.scrollLeft>=max-slack;
+}
+function initCarousels(root=document){
+ const carousels=[];
+ if(root?.matches?.("[data-carousel]"))carousels.push(root);
+ root?.querySelectorAll?.("[data-carousel]").forEach(scroller=>carousels.push(scroller));
+ carousels.forEach(scroller=>{
+  if(scroller.dataset.carouselReady!=="1"){
+   scroller.dataset.carouselReady="1";
+   scroller.addEventListener("scroll",()=>updateCarouselControls(scroller),{passive:true});
+   scroller.addEventListener("keydown",e=>{
+    if(e.key!=="ArrowLeft"&&e.key!=="ArrowRight")return;
+    e.preventDefault();scrollCarousel(scroller,e.key==="ArrowLeft"?-1:1);
+   });
+   carouselResizeObserver?.observe(scroller);
+  }
+  requestAnimationFrame(()=>updateCarouselControls(scroller));
+ });
+}
+function scrollCarousel(scroller,direction){
+ if(!scroller)return;
+ const distance=Math.max(220,Math.round(scroller.clientWidth*.82));
+ const reduceMotion=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+ scroller.scrollBy({left:distance*Number(direction||1),behavior:reduceMotion?"auto":"smooth"});
+ requestAnimationFrame(()=>updateCarouselControls(scroller));
+}
+document.addEventListener("click",e=>{
+ const button=e.target.closest("[data-carousel-dir]");if(!button)return;
+ const scroller=button.closest(".section,.globalSearchSection")?.querySelector("[data-carousel]");
+ scrollCarousel(scroller,button.dataset.carouselDir);
+});
 
 
 function refreshBucket(hours=4){return Math.floor(Date.now()/(hours*3600000))}
@@ -3616,7 +3859,7 @@ async function appendExternalHomeRows(){
   const wrapper=document.createElement("div");
   wrapper.innerHTML=extraRows.map(r=>row(r.title,r.items,r.sub)).join("");
   const nodes=[...wrapper.children];
-  for(const node of nodes){host.appendChild(node);bindCards(node)}
+  for(const node of nodes){host.appendChild(node);bindCards(node);initCarousels(node)}
  }catch(e){console.warn("catálogos extras",e)}
 }
 async function home(){
@@ -3648,7 +3891,7 @@ async function home(){
    row("Mais filmes",movies.slice(8),""),
    row("Mais séries",series.slice(8),"")
   ].join("")||'<div class="empty">Nenhum catálogo retornado.</div>';
-  bindCards($("#main"));
+  bindCards($("#main"));initCarousels($("#main"));
   runWhenIdle(appendExternalHomeRows);
  }catch(e){$("#main").innerHTML='<div class="loading">Não foi possível carregar o catálogo.</div>'}
 }
@@ -4686,15 +4929,31 @@ function onPlaybackStable(){
  S._lastStablePlaybackAt=Date.now();
 }
 function togglePlayback(){const v=$("#video");if(!v.src&&!v._hls)return;if(v.paused)v.play().catch(()=>{});else v.pause()}
-function hidePlayerUI(){
- if($("#video").paused||S.playerMenuKind)return;
+function setPlayerUIAccessibility(hidden){
+ [$(".playerTop"),$("#primeCenterControls"),$("#playerControls")].forEach(el=>{
+  if(!el)return;el.setAttribute("aria-hidden",hidden?"true":"false");
+  if("inert" in el)el.inert=hidden;
+ });
+}
+function hidePlayerUI(force=false){
+ if((!force&&$("#video").paused)||S.playerMenuKind||$("#playerSide")?.classList.contains("drawerOpen"))return;
+ clearTimeout(S._ctlTimer);
  $("#playerControls").classList.remove("show");
  $("#videoShell").classList.add("uiHidden");
  $(".playerStage").classList.add("uiHidden");
+ setPlayerUIAccessibility(true);
 }
 function showPlayerUI(sticky=false){
  clearTimeout(S._ctlTimer);$("#playerControls").classList.add("show");$("#videoShell").classList.remove("uiHidden");$(".playerStage").classList.remove("uiHidden");
- if(!sticky&&!$("#video").paused)S._ctlTimer=setTimeout(hidePlayerUI,10000)
+ setPlayerUIAccessibility(false);
+ if(!sticky&&!$("#video").paused){
+  const coarse=window.matchMedia?.("(hover: none), (pointer: coarse)").matches;
+  S._ctlTimer=setTimeout(hidePlayerUI,coarse?3800:7000);
+ }
+}
+function togglePlayerUIVisibility(){
+ const hidden=$(".playerStage").classList.contains("uiHidden")||!$("#playerControls").classList.contains("show");
+ if(hidden)showPlayerUI();else hidePlayerUI(true);
 }
 function syncPlayer(){
  const v=$("#video"),dur=isFinite(v.duration)?v.duration:0,cur=v.currentTime||0;
@@ -6289,11 +6548,23 @@ function renderSearchLoading(){
  $("#searchMeta").textContent=`Pesquisando “${S.searchQuery}”...`;
  $("#searchResultsArea").innerHTML=`<div class="searchLoading"><span>Buscando em vários catálogos</span><i class="searchDot"></i><i class="searchDot"></i><i class="searchDot"></i></div>`;
 }
-function globalSectionShell(id,title,sub=""){
- return `<section class="globalSearchSection"><div class="globalSearchHead"><h3>${esc(title)}</h3>${sub?`<small>${esc(sub)}</small>`:""}</div><div id="${id}" class="globalSearchLoading">Buscando…</div></section>`
+function globalSectionShell(id,title,sub="",opts={}){
+ const toggle=opts.videoToggle?'<button type="button" data-global-video-toggle aria-expanded="false" disabled>Ver mais</button>':"";
+ const carousel=opts.carousel?'<button type="button" class="carouselArrow" data-carousel-dir="-1" aria-label="Ver resultados anteriores">‹</button><button type="button" class="carouselArrow" data-carousel-dir="1" aria-label="Ver próximos resultados">›</button>':"";
+ return `<section class="globalSearchSection" data-global-section="${esc(id)}"><div class="globalSearchHead"><h3>${esc(title)}</h3>${sub?`<small>${esc(sub)}</small>`:""}<div class="globalSearchActions">${toggle}${carousel}</div></div><div id="${id}" class="globalSearchLoading">Buscando…</div></section>`
 }
-function globalSearchVideoHtml(items){
- return items.length?`<div class="globalSearchRow">${items.slice(0,12).map(card).join("")}</div>`:'<div class="mediaEmpty">Nenhum filme, série ou anime.</div>'
+function globalSearchVideoHtml(items,expanded=S.globalVideosExpanded){
+ const shown=expanded?items:items.slice(0,12);
+ return items.length?`<div class="globalSearchRow ${expanded?"is-expanded":""}" data-carousel tabindex="0" aria-label="Resultados de filmes, séries e animes; ${expanded?"todos exibidos":"deslize para ver mais"}">${shown.map(card).join("")}</div>`:'<div class="mediaEmpty">Nenhum filme, série ou anime.</div>'
+}
+function renderGlobalVideoResults(){
+ const el=$("#globalVideos");if(!el)return;
+ const items=S.globalVideoResults||[],section=el.closest(".globalSearchSection"),toggle=section?.querySelector("[data-global-video-toggle]");
+ el.innerHTML=globalSearchVideoHtml(items,S.globalVideosExpanded);
+ section?.classList.toggle("is-expanded",S.globalVideosExpanded);
+ if(toggle){toggle.disabled=!items.length;toggle.textContent=S.globalVideosExpanded?"Ver menos":"Ver mais";toggle.setAttribute("aria-expanded",S.globalVideosExpanded?"true":"false")}
+ if(items.length)bindCards(el);
+ initCarousels(el);
 }
 function globalSearchMusicHtml(items,q){
  return items.length?`<div class="globalMusicList">${items.slice(0,7).map(musicTrackHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhuma música encontrada.</div>'
@@ -6302,11 +6573,15 @@ function globalSearchArtistsHtml(items){
  return items.length?`<div class="musicArtistGrid">${items.slice(0,8).map(musicArtistHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum artista encontrado.</div>'
 }
 function globalSearchMangaHtml(items){
- return items.length?`<div class="globalSearchRow">${items.slice(0,10).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'
+ return items.length?`<div class="globalSearchRow" data-carousel tabindex="0" aria-label="Resultados de mangás; deslize para ver mais">${items.slice(0,10).map(mangaV24Card).join("")}</div>`:'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'
 }
 function globalSearchBooksHtml(items){
  return items.length?`<div class="globalBookGrid">${items.slice(0,8).map(bookCardHtml).join("")}</div>`:'<div class="mediaEmpty">Nenhum livro encontrado.</div>'
 }
+document.addEventListener("click",e=>{
+ const toggle=e.target.closest("[data-global-video-toggle]");if(!toggle)return;
+ S.globalVideosExpanded=!S.globalVideosExpanded;renderGlobalVideoResults();
+});
 async function search(rawQuery,force=false){
  const raw=String(rawQuery||""),q=raw.trim(),sourceId=document.activeElement?.id||"";
  S.currentPage="search";S.searchQuery=q;
@@ -6325,17 +6600,18 @@ async function search(rawQuery,force=false){
  if(!force&&S.lastGlobalSearchQuery===q&&$("#globalVideos"))return;
  S.lastGlobalSearchQuery=q;
  const token=++S.searchToken;
+ S.globalVideoResults=[];S.globalVideosExpanded=false;
  $("#searchTabs").innerHTML="";
  $("#searchMeta").textContent=`Resultados globais para “${q}”`;
  $("#searchResultsArea").innerHTML=`<div class="globalSearchIntro"><div><h2>${esc(q)}</h2><p>Resultados de todas as áreas do ResenhaFlix, carregados em paralelo para a tela responder mais rápido.</p></div></div>
-  ${globalSectionShell("globalVideos","Filmes, séries e animes")}
+  ${globalSectionShell("globalVideos","Filmes, séries e animes","",{carousel:true,videoToggle:true})}
   ${globalSectionShell("globalMusic","Músicas","SoundCloud • Audius • iTunes")}
   ${globalSectionShell("globalArtists","Artistas")}
-  ${globalSectionShell("globalManga","Mangás")}
+  ${globalSectionShell("globalManga","Mangás","",{carousel:true})}
   ${globalSectionShell("globalBooks","Livros")}`;
 
  const jobs=[
-  (async()=>{try{const items=await searchAllCatalogs(q);if(token!==S.searchToken)return;const el=$("#globalVideos");el.innerHTML=globalSearchVideoHtml(items);if(items.length)bindCards(el)}catch{$("#globalVideos").innerHTML='<div class="globalSearchError">Falha ao buscar vídeos.</div>'}})(),
+  (async()=>{try{const items=await searchAllCatalogs(q);if(token!==S.searchToken)return;S.globalVideoResults=items;renderGlobalVideoResults()}catch{$("#globalVideos").innerHTML='<div class="globalSearchError">Falha ao buscar vídeos.</div>'}})(),
   (async()=>{try{
     const [sc,aud,it]=await Promise.all([searchSoundCloudProxy(q,"tracks").catch(()=>[]),searchAudiusTracks(q).catch(()=>[]),searchItunes(q,"tracks").catch(()=>[])]);
     if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...aud,...it]);const el=$("#globalMusic");el.innerHTML=globalSearchMusicHtml(items,q);bindMusicResults(el,items)
@@ -6344,7 +6620,7 @@ async function search(rawQuery,force=false){
     const [sc,it]=await Promise.all([searchSoundCloudProxy(q,"users").catch(()=>[]),searchItunes(q,"artists").catch(()=>[])]);
     if(token!==S.searchToken)return;const items=dedupeMusic([...sc,...it]);const el=$("#globalArtists");el.innerHTML=globalSearchArtistsHtml(items);bindMusicResults(el,items)
    }catch{$("#globalArtists").innerHTML='<div class="globalSearchError">Falha ao buscar artistas.</div>'}})(),
-  (async()=>{try{const page=await aniListManga(q,1);if(token!==S.searchToken)return;const items=(page.media||[]).map(normalizeAniMedia);const el=$("#globalManga");el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindMangaV24Cards(el,items)}catch{$("#globalManga").innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}})(),
+  (async()=>{try{const page=await aniListManga(q,1);if(token!==S.searchToken)return;const items=(page.media||[]).map(normalizeAniMedia);const el=$("#globalManga");el.innerHTML=globalSearchMangaHtml(items);if(items.length)bindMangaV24Cards(el,items);initCarousels(el)}catch{$("#globalManga").innerHTML='<div class="globalSearchError">Falha ao buscar mangás.</div>'}})(),
   (async()=>{try{
     const [ol,gut]=await Promise.all([searchOpenLibraryBooks(q).catch(()=>[]),searchGutendexBooks(q).catch(()=>[])]);
     if(token!==S.searchToken)return;const items=dedupeBooks([...gut,...ol]);const el=$("#globalBooks");el.innerHTML=globalSearchBooksHtml(items);if(items.length){bindBookCards(el,items);runWhenIdle(()=>hydrateBookFormatsProgressively(items,el))}
@@ -6391,7 +6667,16 @@ function closeTransientUI(){
 }
 function setActiveNav(target){
  $$(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===target));
- $$("[data-mobile-page]").forEach(x=>x.classList.toggle("active",x.dataset.mobilePage===target));
+ $$("[data-mobile-page]").forEach(x=>{
+  const active=x.dataset.mobilePage===target;x.classList.toggle("active",active);
+  if(active)x.setAttribute("aria-current","page");else x.removeAttribute("aria-current");
+ });
+ $$("[data-mobile-destination]").forEach(x=>{
+  const active=x.dataset.mobileDestination===target;x.classList.toggle("active",active);
+  if(active)x.setAttribute("aria-current","page");else x.removeAttribute("aria-current");
+ });
+ const more=$("#mobileNavMore"),moreActive=MOBILE_NAV_IDS.has(target)&&!mobileNavPreferences.includes(target);
+ if(more){more.classList.toggle("active",moreActive);if(moreActive)more.setAttribute("aria-current","page");else more.removeAttribute("aria-current")}
 }
 $("#closeMediaSources").onclick=closeMediaSources;
 $("#mediaSourcesModal").onclick=e=>{if(e.target.id==="mediaSourcesModal")closeMediaSources()};
@@ -6431,7 +6716,33 @@ $("#categoryMegaBackdrop").onclick=()=>toggleCategoryMega(false);
 $$("#categoryMega [data-category-page]").forEach(b=>b.onclick=()=>{toggleCategoryMega(false);page(b.dataset.categoryPage)});
 
 $$("[data-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.page);if(b.dataset.page==="home")home();else page(b.dataset.page)});
-$$("[data-mobile-page]").forEach(b=>b.onclick=()=>{closeTransientUI();setActiveNav(b.dataset.mobilePage);if(b.dataset.mobilePage==="home")home();else page(b.dataset.mobilePage)});
+$("#mobileBottomNav").onclick=e=>{
+ const destination=e.target.closest("[data-mobile-page]");
+ if(destination){navigateMobileDestination(destination.dataset.mobilePage);return}
+ if(e.target.closest("[data-mobile-more]"))openMobileNavMenu();
+};
+$("#mobileNavMenuBackdrop").onclick=()=>closeMobileNavMenu();
+$("#mobileNavMenuClose").onclick=()=>closeMobileNavMenu();
+$("#mobileNavEditToggle").onclick=()=>{mobileNavEditorOpen=!mobileNavEditorOpen;renderMobileNavMenu()};
+$("#mobileNavMenu").onclick=e=>{
+ const destination=e.target.closest("[data-mobile-destination]");
+ if(destination){navigateMobileDestination(destination.dataset.mobileDestination);return}
+ const move=e.target.closest("[data-mobile-nav-move]");
+ if(move)moveMobileNavPreference(move.dataset.mobileNavId,move.dataset.mobileNavMove);
+};
+$("#mobileNavMenu").onchange=e=>{
+ const input=e.target.closest("[data-mobile-preference]");
+ if(input)updateMobileNavPreference(input.dataset.mobilePreference,input.checked);
+};
+$("#mobileNavMenuPanel").addEventListener("keydown",e=>{
+ if(e.key==="Escape"){e.preventDefault();closeMobileNavMenu();return}
+ if(e.key!=="Tab")return;
+ const focusable=[...$("#mobileNavMenuPanel").querySelectorAll('button:not([disabled]),input:not([disabled])')].filter(el=>!el.closest("[hidden]"));
+ if(!focusable.length)return;
+ const first=focusable[0],last=focusable.at(-1);
+ if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+ else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+});
 let topSearchTimer;
 $("#search").addEventListener("input",e=>{
  clearTimeout(topSearchTimer);
@@ -6556,8 +6867,11 @@ $("#videoShell").addEventListener("mousemove",()=>{
  if(playerMoveRAF)return;
  playerMoveRAF=requestAnimationFrame(()=>{playerMoveRAF=0;showPlayerUI()});
 },{passive:true});
-$("#videoShell").addEventListener("pointerdown",()=>showPlayerUI());
-$("#videoShell").addEventListener("touchstart",()=>showPlayerUI(),{passive:true});
+$("#videoShell").addEventListener("pointerup",e=>{
+ if(e.pointerType==="mouse"&&e.button!==0)return;
+ if(e.target.closest("button,input,select,a,.playerTop,.playerControls,.primeCenterControls,.playerMenu"))return;
+ togglePlayerUIVisibility();
+});
 $("#playerControls").addEventListener("mouseenter",()=>showPlayerUI(true));
 $("#playerControls").addEventListener("mouseleave",()=>showPlayerUI());
 $("#playerMenu").addEventListener("mouseenter",()=>showPlayerUI(true));
@@ -6620,6 +6934,6 @@ home();
 <!-- ResenhaFlix v12 — fontes progressivas/cache + tela Mangás/Keiyoushi -->
 <!-- ResenhaFlix v28 — manga exato/rápido, livros PT-BR e detalhes estilo Netflix -->
 <!-- ResenhaFlix v32 — Manga Bridge resiliente, fontes PT-BR e CBZ -->
-  <script src="./manga-hakuneko.js?v=32"></script>
+  <script src="./manga-hakuneko.js?v=33"></script>
 </body>
 </html>

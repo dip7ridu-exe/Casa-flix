@@ -1,4 +1,4 @@
-# ResenhaFlix Manga Bridge V32
+# ResenhaFlix Manga Bridge V33
 
 Backend opcional, mas recomendado, para o leitor de mangás do ResenhaFlix. Ele evita bloqueios CORS do navegador, protege as URLs das imagens e permite montar downloads CBZ no aparelho.
 
@@ -21,6 +21,8 @@ uvicorn server:app --host 0.0.0.0 --port 8787
 ```
 
 Teste em `http://localhost:8787/api/health`.
+
+O CORS permite `http://localhost:PORTA` e `http://127.0.0.1:PORTA` para desenvolvimento no PC. Sirva o frontend por HTTP; paginas abertas diretamente com `file://` nao possuem uma origem web confiavel.
 
 ## Railway
 

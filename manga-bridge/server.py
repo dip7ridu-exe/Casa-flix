@@ -8,15 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-VERSION="32.0.0"
+VERSION="33.0.0"
 app=FastAPI(title=f"ResenhaFlix Manga Bridge v{VERSION}")
 origins=[x.strip() for x in os.getenv("ALLOWED_ORIGIN","https://dip7ridu-exe.github.io").split(",") if x.strip()]
+local_dev_origin_regex=r"https?://(?:localhost|127\.0\.0\.1)(?::\d+)?"
 secret=os.getenv("BRIDGE_SECRET","").encode() or os.urandom(32)
 public_base=os.getenv("PUBLIC_BASE_URL","").rstrip("/")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"] if "*" in origins else origins,
+    allow_origin_regex=local_dev_origin_regex,
     allow_methods=["GET","POST","OPTIONS"],
     allow_headers=["*"],
     allow_credentials=False,

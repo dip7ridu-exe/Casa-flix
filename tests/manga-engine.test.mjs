@@ -25,7 +25,7 @@ function json(value, status = 200) {
 
 globalThis.fetch = async (input, options = {}) => {
   const url = new URL(String(input));
-  if (url.pathname === "/api/health") return json({ ok: true, version: "32.0.0", sources: 4 });
+  if (url.pathname === "/api/health") return json({ ok: true, version: "33.0.0", sources: 4 });
   if (url.pathname === "/api/sources") return json({ sources: [source] });
   if (url.pathname === "/api/v2/manga/search") return json({ items: [{
     id: "11111111-1111-4111-8111-111111111111",
@@ -59,9 +59,10 @@ globalThis.fetch = async (input, options = {}) => {
 await import("../manga-hakuneko.js");
 
 const api = window.ResenhaMangaEngine;
-assert.equal(api.version, "32.0.0");
+assert.equal(api.version, "33.0.0");
 assert.equal(api.bridge.url, "https://bridge.test");
 assert.throws(() => api.bridge.configure("javascript:alert(1)"), /HTTPS/);
+assert.equal(await api.bridge.check(), "ready");
 
 const results = await api.search("teste", { language: "pt-br", limit: 20 });
 assert.equal(results.length, 2);
@@ -85,4 +86,4 @@ const bytes = new Uint8Array(await cbz.arrayBuffer());
 assert.equal(new DataView(bytes.buffer).getUint32(0, true), 0x04034b50);
 assert.equal(new DataView(bytes.buffer).getUint32(bytes.length - 22, true), 0x06054b50);
 
-console.log("manga engine v32: search, PT-BR bridge, pages and CBZ OK");
+console.log("manga engine v33: search, PT-BR bridge, pages and CBZ OK");

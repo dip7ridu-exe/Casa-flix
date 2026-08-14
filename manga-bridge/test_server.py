@@ -1,6 +1,8 @@
 import importlib.util
+import os
 import pathlib
 import unittest
+from unittest.mock import patch
 
 import httpx
 from fastapi.testclient import TestClient
@@ -9,7 +11,8 @@ from fastapi.testclient import TestClient
 MODULE_PATH = pathlib.Path(__file__).with_name("server.py")
 SPEC = importlib.util.spec_from_file_location("resenhaflix_manga_bridge", MODULE_PATH)
 server = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(server)
+with patch.dict(os.environ, {"ALLOWED_ORIGIN": "https://dip7ridu-exe.github.io"}):
+    SPEC.loader.exec_module(server)
 
 MANGA_ID = "11111111-1111-4111-8111-111111111111"
 CHAPTER_ID = "22222222-2222-4222-8222-222222222222"
@@ -79,10 +82,28 @@ class BridgeTests(unittest.TestCase):
     def test_health_and_curated_sources(self):
         health = self.client.get("/api/health").json()
         self.assertTrue(health["ok"])
-        self.assertEqual(health["version"], "32.0.0")
+        self.assertEqual(health["version"], "33.0.0")
         sources = self.client.get("/api/sources").json()["sources"]
         self.assertEqual(len(sources), 4)
         self.assertTrue(all(item["lang"] == "pt-BR" for item in sources))
+
+    def test_cors_allows_github_pages(self):
+        origin = "https://dip7ridu-exe.github.io"
+        response = self.client.get("/api/health", headers={"Origin": origin})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers.get("access-control-allow-origin"), origin)
+
+    def test_cors_allows_local_development_origins(self):
+        for origin in ("http://localhost:5500", "http://127.0.0.1:5173"):
+            with self.subTest(origin=origin):
+                response = self.client.get("/api/health", headers={"Origin": origin})
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.headers.get("access-control-allow-origin"), origin)
+
+    def test_cors_blocks_arbitrary_origin(self):
+        response = self.client.get("/api/health", headers={"Origin": "https://malicious.example"})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn("access-control-allow-origin", response.headers)
 
     def test_mangadex_search_is_normalized_and_proxied(self):
         response = self.client.get("/api/v2/manga/search", params={"query": "teste", "language": "pt-br"})
