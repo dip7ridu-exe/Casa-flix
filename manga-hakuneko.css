@@ -37,6 +37,8 @@
   font-size:11px;font-weight:900
 }
 .hk-engine-status i{width:8px;height:8px;border-radius:50%;background:#45d06c;box-shadow:0 0 0 5px #45d06c18}
+.hk-engine-status.off{border-color:#685725;background:#241e0e;color:#ecd477}
+.hk-engine-status.off i{background:#e8b63f;box-shadow:0 0 0 5px #e8b63f18}
 .hk-tabs{display:flex;gap:8px;margin:17px 0 12px;overflow:auto;scrollbar-width:none}
 .hk-tabs::-webkit-scrollbar{display:none}
 .hk-tabs button{
@@ -106,6 +108,24 @@
   margin-top:14px;min-height:42px;border:1px solid #44444c;border-radius:10px;
   background:#242429;color:#fff;padding:8px 13px;font-weight:900
 }
+.hk-bridge-setup{
+  display:grid;gap:12px;margin-top:14px;padding:15px;border:1px solid #33465f;border-radius:14px;
+  background:linear-gradient(135deg,#111a26,#101318);color:#c5ceda
+}
+.hk-bridge-setup b{color:#fff;font-size:14px}.hk-bridge-setup p{margin:5px 0 0;color:#9ba9ba;font-size:11px;line-height:1.5}
+.hk-bridge-setup small{color:#788697;line-height:1.45}.hk-bridge-setup code{color:#b8e1ff}
+.hk-bridge-form{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:8px}
+.hk-bridge-form input,.hk-bridge-form button{
+  min-height:44px;border:1px solid #3a4656;border-radius:10px;background:#171e27;color:#fff;padding:8px 11px
+}
+.hk-bridge-form button{border-color:#4b7eaa;background:#173651;font-weight:900}
+.hk-bridge-form button:disabled{opacity:.6}
+.hk-source-health{display:flex;align-items:center;gap:9px;margin-bottom:12px;padding:12px 14px;border:1px solid #5b4d24;border-radius:12px;background:#211c0e;color:#e0c979}
+.hk-source-health.ok{border-color:#28583a;background:#102016;color:#a7e6b9}.hk-source-health b{font-size:12px}.hk-source-health span{margin-left:auto;font-size:10px}
+.hk-source-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px;margin-top:14px}
+.hk-source-list article{display:grid;gap:5px;padding:13px;border:1px solid #2d343e;border-radius:12px;background:#11161c}
+.hk-source-list b{font-size:12px}.hk-source-list span{color:#8f9baa;font-size:10px;line-height:1.45}
+.hk-source-note{margin-top:12px;padding:11px 13px;border:1px dashed #343d49;border-radius:11px;color:#7f8b99;font-size:10px;line-height:1.55}
 
 .hk-modal{
   position:fixed;z-index:560;inset:0;display:none;align-items:center;justify-content:center;
@@ -274,6 +294,7 @@ body.hk-lock .mobileBottomNav{display:none!important}
   .hk-tabs{margin-top:13px}
   .hk-searchbar{top:64px;grid-template-columns:1fr 112px;padding:9px;border-radius:13px}
   .hk-searchbar input{grid-column:1/-1}.hk-searchbar button{font-size:12px}
+  .hk-bridge-form{grid-template-columns:1fr}.hk-source-health{align-items:flex-start;flex-direction:column}.hk-source-health span{margin-left:0}
   .hk-content{padding-top:14px}
   .hk-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .hk-card-title{font-size:12px}.hk-card-body{padding:8px}
