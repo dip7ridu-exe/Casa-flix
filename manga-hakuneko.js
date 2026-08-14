@@ -1,5 +1,5 @@
 /*
- * ResenhaFLIX Manga Engine v31
+ * ResenhaFLIX Manga Engine v32
  *
  * Arquitetura inspirada no fluxo do HakuNeko:
  * connector -> manga -> chapters -> pages -> download job.
@@ -7,14 +7,15 @@
 (() => {
   "use strict";
 
-  const VERSION = "31.0.0";
+  const VERSION = "32.0.0";
   const KEYS = {
     library: "rf_hk_library_v1",
     progress: "rf_hk_progress_v1",
     preferences: "rf_hk_preferences_v1",
     query: "rf_hk_last_query_v1",
     language: "rf_hk_language_v1",
-    downloads: "rf_hk_download_history_v1"
+    downloads: "rf_hk_download_history_v1",
+    bridge: "rf14_manga_bridge"
   };
   const state = {
     tab: "explore",
@@ -31,8 +32,39 @@
     readerObserver: null,
     uiTimer: 0,
     saveTimer: 0,
-    downloads: readStorage(KEYS.downloads, []).slice(0, 20)
+    downloads: readStorage(KEYS.downloads, []).slice(0, 20),
+    bridgeStatus: "checking",
+    sourceReport: null
   };
+
+  function normalizeBridgeURL(value = "") {
+    const raw = String(value || "").trim().replace(/\/+$/, "");
+    if (!raw) return "";
+    try {
+      const url = new URL(raw);
+      if (url.protocol === "https:" || ((url.hostname === "localhost" || url.hostname === "127.0.0.1") && url.protocol === "http:")) return url.origin + url.pathname.replace(/\/+$/, "");
+    } catch {}
+    return "";
+  }
+  const queryBridge = (() => {
+    try { return normalizeBridgeURL(new URLSearchParams(location.search).get("mangaBridge")); }
+    catch { return ""; }
+  })();
+  if (queryBridge) localStorage.setItem(KEYS.bridge, queryBridge);
+  function bridgeBase() { return normalizeBridgeURL(localStorage.getItem(KEYS.bridge) || ""); }
+  function saveBridge(value) {
+    const normalized = normalizeBridgeURL(value);
+    if (value && !normalized) throw new Error("Use uma URL HTTPS valida para o Manga Bridge");
+    if (normalized) localStorage.setItem(KEYS.bridge, normalized);
+    else localStorage.removeItem(KEYS.bridge);
+    state.bridgeStatus = normalized ? "checking" : "off";
+    return normalized;
+  }
+  function bridgeURL(path) {
+    const base = bridgeBase();
+    if (!base) throw new Error("Manga Bridge ainda nao foi configurado");
+    return base + (String(path).startsWith("/") ? path : "/" + path);
+  }
 
   function readStorage(key, fallback) {
     try {
@@ -106,6 +138,12 @@
       return await response.json();
     } catch (error) {
       if (error?.name === "AbortError") throw new Error("A fonte demorou demais para responder");
+      if (error instanceof TypeError && /fetch|network|load/i.test(error.message || "")) {
+        const friendly = new Error("O navegador bloqueou a conexao com a fonte");
+        friendly.code = "NETWORK_BLOCKED";
+        friendly.cause = error;
+        throw friendly;
+      }
       throw error;
     } finally { clearTimeout(timer); }
   }
@@ -123,6 +161,11 @@
       super("mangadex", "MangaDex");
       this.apiBase = "https://api.mangadex.org";
       this.uploadBase = "https://uploads.mangadex.org";
+    }
+    async bridgeGet(path, parameters = {}, timeout = 15000) {
+      const url = new URL(bridgeURL(path));
+      for (const [key, value] of Object.entries(parameters)) if (value != null && value !== "") url.searchParams.set(key, String(value));
+      return fetchJSON(url, {}, timeout);
     }
     buildURL(path, parameters = {}) {
       const url = new URL(path, this.apiBase);
@@ -164,6 +207,14 @@
     }
     async search(query = "", options = {}) {
       const language = options.language || "pt-br";
+      if (bridgeBase()) {
+        const payload = await this.bridgeGet("/api/v2/manga/search", {
+          query, language, limit: Math.min(40, Math.max(1, Number(options.limit || 30)))
+        });
+        const items = (payload.items || []).map(item => ({ ...item, connector: this.id, tags: (item.tags || []).filter(Boolean) }));
+        items.sort((a, b) => smartScore(b, query) - smartScore(a, query));
+        return items;
+      }
       const parameters = {
         limit: Math.min(48, Math.max(1, Number(options.limit || 30))),
         offset: 0,
@@ -183,12 +234,17 @@
     }
     async manga(id) {
       if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error("Identificador de manga invalido");
+      if (bridgeBase()) return this.bridgeGet("/api/v2/manga/" + id, {}, 15000);
       const payload = await fetchJSON(this.buildURL("/manga/" + id, { "includes[]": ["cover_art", "author", "artist"] }));
       return this.mapManga(payload.data);
     }
     async chapters(mangaId, options = {}) {
       if (!/^[0-9a-f-]{36}$/i.test(mangaId)) throw new Error("Identificador de manga invalido");
       const language = options.language || "pt-br";
+      if (bridgeBase()) {
+        const payload = await this.bridgeGet("/api/v2/manga/" + mangaId + "/chapters", { language }, 20000);
+        return payload.chapters || [];
+      }
       const all = [];
       const limit = 100;
       let offset = 0;
@@ -242,6 +298,12 @@
     }
     async pages(chapterId, options = {}) {
       if (!/^[0-9a-f-]{36}$/i.test(chapterId)) throw new Error("Identificador de capitulo invalido");
+      if (bridgeBase()) {
+        const payload = await this.bridgeGet("/api/v2/chapter/" + chapterId + "/pages", {
+          quality: options.quality === "original" ? "original" : "data-saver"
+        }, 20000);
+        return payload.pages || [];
+      }
       const payload = await fetchJSON(this.buildURL("/at-home/server/" + chapterId), {}, 15000);
       const chapter = payload.chapter || {};
       const original = options.quality === "original";
@@ -251,6 +313,95 @@
         throw new Error("A fonte nao retornou paginas para este capitulo");
       }
       return files.map((file, index) => ({ index, file, url: `${payload.baseUrl}/${folder}/${chapter.hash}/${file}` }));
+    }
+  }
+
+  const CURATED_BRIDGE_SOURCES = [
+    { id: "saikai-scan", name: "Saikai Scan", lang: "pt-BR", homeUrl: "https://housesaikai.net", extension: "Saikai Scan", pkg: "eu.kanade.tachiyomi.extension.pt.saikaiscan", repo: "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json", contentWarning: "safe" },
+    { id: "lycan-toons", name: "Lycan Toons", lang: "pt-BR", homeUrl: "https://lycantoons.com", extension: "Lycan Toons", pkg: "eu.kanade.tachiyomi.extension.pt.lycantoons", repo: "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json", contentWarning: "safe" },
+    { id: "mangas-brasuka", name: "Mangas Brasuka", lang: "pt-BR", homeUrl: "https://mangasbrasuka.com.br", extension: "Mangas Brasuka", pkg: "eu.kanade.tachiyomi.extension.pt.mangasbrasuka", repo: "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json", contentWarning: "mixed" },
+    { id: "boruto-explorer", name: "Boruto Explorer", lang: "pt-BR", homeUrl: "https://leitor.borutoexplorer.com.br", extension: "Boruto Explorer", pkg: "eu.kanade.tachiyomi.extension.pt.borutoexplorer", repo: "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.json", contentWarning: "safe" }
+  ];
+  function encodeBridgeRecord(value) {
+    const bytes = new TextEncoder().encode(JSON.stringify(value));
+    let binary = "";
+    for (let offset = 0; offset < bytes.length; offset += 8192) binary += String.fromCharCode(...bytes.subarray(offset, offset + 8192));
+    return "bridge:" + btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+  function decodeBridgeRecord(value) {
+    if (!String(value).startsWith("bridge:")) throw new Error("Registro da fonte invalido");
+    let encoded = String(value).slice(7).replace(/-/g, "+").replace(/_/g, "/");
+    encoded += "=".repeat((4 - encoded.length % 4) % 4);
+    const binary = atob(encoded);
+    return JSON.parse(new TextDecoder().decode(Uint8Array.from(binary, character => character.charCodeAt(0))));
+  }
+  class BridgeSourcesConnector extends MangaConnector {
+    constructor() {
+      super("bridge", "Fontes PT-BR");
+      this.detailsCache = new Map();
+      this.sourcesCache = null;
+    }
+    async post(path, body, timeout = 16000) {
+      return fetchJSON(bridgeURL(path), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }, timeout);
+    }
+    async sources() {
+      if (this.sourcesCache) return this.sourcesCache;
+      try {
+        const payload = await fetchJSON(bridgeURL("/api/sources"), {}, 8000);
+        this.sourcesCache = (payload.sources || CURATED_BRIDGE_SOURCES).slice(0, 4);
+      } catch { this.sourcesCache = CURATED_BRIDGE_SOURCES; }
+      return this.sourcesCache;
+    }
+    mapResult(item, source) {
+      const record = { source: item.source || source, url: item.url };
+      return {
+        id: encodeBridgeRecord(record), connector: this.id, source: (item.source || source).name || "Fonte PT-BR",
+        sourceUrl: item.url, title: item.title || "Manga", altTitle: "", aliases: [], description: "Detalhes fornecidos pela fonte.",
+        cover: item.thumbnail || "", originalCover: item.thumbnail || "", status: "", year: "", author: "",
+        contentRating: (item.source || source).contentWarning === "safe" ? "safe" : "suggestive",
+        availableLanguages: ["pt-br"], tags: ["Português"], followedCount: 0
+      };
+    }
+    async search(query = "", options = {}) {
+      if (!bridgeBase() || !query.trim() || options.language === "en") return [];
+      const sources = await this.sources();
+      const payload = await this.post("/api/batch/search", { sources, query: query.trim() }, 22000);
+      const items = [];
+      for (const result of payload.results || []) for (const item of result.items || []) items.push(this.mapResult(item, result.source));
+      return items.sort((a, b) => smartScore(b, query) - smartScore(a, query)).slice(0, 30);
+    }
+    async manga(id) {
+      if (this.detailsCache.has(id)) return this.detailsCache.get(id).manga;
+      const record = decodeBridgeRecord(id);
+      const details = await this.post("/api/manga", { source: record.source, url: record.url }, 18000);
+      const manga = {
+        id, connector: this.id, source: record.source.name || "Fonte PT-BR", sourceUrl: details.url || record.url,
+        title: details.title || "Manga", altTitle: "", aliases: [], description: details.description || "Sem sinopse disponivel.",
+        cover: details.cover || "", originalCover: details.cover || "", status: "", year: "", author: "",
+        contentRating: record.source.contentWarning === "safe" ? "safe" : "suggestive",
+        availableLanguages: ["pt-br"], tags: ["Português"]
+      };
+      this.detailsCache.set(id, { manga, details, record });
+      return manga;
+    }
+    async chapters(id) {
+      if (!this.detailsCache.has(id)) await this.manga(id);
+      const cached = this.detailsCache.get(id);
+      return (cached.details.chapters || []).map((chapter, index) => ({
+        id: encodeBridgeRecord({ source: cached.record.source, url: chapter.url, mangaId: id }), mangaId: id,
+        connector: this.id, number: chapter.number == null ? String(index + 1) : String(chapter.number), volume: "",
+        title: chapter.name || "", language: "pt-br", pageCount: Number(chapter.pageCount || 0),
+        publishedAt: chapter.publishedAt || "", group: cached.record.source.name || ""
+      }));
+    }
+    async pages(chapterId) {
+      const record = decodeBridgeRecord(chapterId);
+      const payload = await this.post("/api/chapter", { source: record.source, url: record.url }, 22000);
+      return (payload.pages || []).map((page, index) => ({ index, file: String(index + 1), url: page.image, original: page.original || "" }));
     }
   }
 
@@ -264,12 +415,33 @@
       if (!connector) throw new Error("Fonte de manga indisponivel");
       return connector;
     }
-    search(query, options) { return this.connectors[0].search(query, options); }
+    async search(query, options = {}) {
+      const active = this.connectors.filter(connector => connector.id !== "bridge" || (bridgeBase() && query.trim() && options.language !== "en"));
+      const settled = await Promise.allSettled(active.map(connector => connector.search(query, options)));
+      const items = []; const errors = []; const sources = [];
+      settled.forEach((result, index) => {
+        const connector = active[index];
+        if (result.status === "fulfilled") { items.push(...result.value); sources.push({ id: connector.id, ok: true, count: result.value.length }); }
+        else { errors.push(result.reason); sources.push({ id: connector.id, ok: false, count: 0, error: result.reason?.message || "Falha" }); }
+      });
+      state.sourceReport = { sources, bridge: bridgeBase(), errors: errors.map(error => error?.message || "Falha") };
+      if (!settled.some(result => result.status === "fulfilled")) {
+        const error = new Error(errors.map(item => item?.message).filter(Boolean).join(" · ") || "Nenhuma fonte respondeu");
+        error.code = bridgeBase() ? "BRIDGE_OFFLINE" : "BRIDGE_REQUIRED";
+        throw error;
+      }
+      const unique = new Map();
+      for (const item of items.sort((a, b) => smartScore(b, query) - smartScore(a, query))) {
+        const key = item.connector + "|" + item.source + "|" + normalize(item.title);
+        if (!unique.has(key)) unique.set(key, item);
+      }
+      return [...unique.values()];
+    }
   }
-  const engine = new MangaEngine([new MangaDexConnector()]);
+  const engine = new MangaEngine([new MangaDexConnector(), new BridgeSourcesConnector()]);
 
   function library() { return readStorage(KEYS.library, []); }
-  function isSaved(id) { return library().some(item => item.id === id && item.connector === "mangadex"); }
+  function isSaved(id, connector = null) { return library().some(item => item.id === id && (!connector || item.connector === connector)); }
   function toggleSaved(manga) {
     const items = library();
     const index = items.findIndex(item => item.id === manga.id && item.connector === manga.connector);
@@ -277,7 +449,8 @@
     else items.unshift({
       id: manga.id, connector: manga.connector, source: manga.source, title: manga.title,
       altTitle: manga.altTitle, aliases: manga.aliases || [], cover: manga.cover,
-      status: manga.status, year: manga.year, author: manga.author
+      status: manga.status, year: manga.year, author: manga.author, sourceUrl: manga.sourceUrl || "",
+      contentRating: manga.contentRating || "safe", availableLanguages: manga.availableLanguages || []
     });
     writeStorage(KEYS.library, items);
     return index < 0;
@@ -428,6 +601,81 @@
     toast.timer = setTimeout(() => element.classList.remove("show"), 3600);
   }
 
+  async function checkBridgeStatus() {
+    if (!bridgeBase()) { state.bridgeStatus = "off"; return state.bridgeStatus; }
+    try {
+      const health = await fetchJSON(bridgeURL("/api/health"), {}, 8000);
+      state.bridgeStatus = health?.ok ? "ready" : "offline";
+      state.bridgeHealth = health || null;
+    } catch (error) {
+      state.bridgeStatus = "offline";
+      state.bridgeHealth = { error: error.message || "Falha de conexao" };
+    }
+    return state.bridgeStatus;
+  }
+  function updateEngineStatus() {
+    const element = document.getElementById("hkEngineStatus");
+    if (!element) return;
+    element.classList.toggle("off", state.bridgeStatus === "off" || state.bridgeStatus === "offline");
+    const text = state.bridgeStatus === "ready"
+      ? `Bridge conectado · MangaDex + ${Number(state.bridgeHealth?.sources || 4)} fontes PT-BR · v${VERSION}`
+      : state.bridgeStatus === "offline"
+        ? `Bridge indisponivel · modo direto · v${VERSION}`
+        : `Modo direto · configure o bridge · v${VERSION}`;
+    element.querySelector("span").textContent = text;
+  }
+  function bridgeSetupMarkup(message = "") {
+    return `
+      <div class="hk-bridge-setup">
+        <div><b>Conectar o Manga Bridge</b><p>${escapeHTML(message || "O bridge evita bloqueios do navegador e libera fontes PT-BR e download CBZ.")}</p></div>
+        <div class="hk-bridge-form">
+          <input id="hkBridgeInput" value="${escapeHTML(bridgeBase())}" placeholder="https://seu-servico.up.railway.app" inputmode="url" autocomplete="url">
+          <button type="button" id="hkBridgeSave">Salvar e testar</button>
+        </div>
+        <small>A URL fica salva somente neste aparelho. O servidor precisa responder em <code>/api/health</code>.</small>
+      </div>
+    `;
+  }
+  function bindBridgeSetup(root, onSuccess = null) {
+    root?.querySelector("#hkBridgeSave")?.addEventListener("click", async event => {
+      const button = event.currentTarget;
+      try {
+        button.disabled = true; button.textContent = "Testando...";
+        saveBridge(root.querySelector("#hkBridgeInput")?.value || "");
+        await checkBridgeStatus(); updateEngineStatus();
+        engine.connector("bridge").sourcesCache = null;
+        if (state.bridgeStatus !== "ready") throw new Error(state.bridgeHealth?.error || "O servidor nao respondeu como Manga Bridge");
+        toast("Manga Bridge conectado.");
+        if (onSuccess) onSuccess(); else renderSources();
+      } catch (error) {
+        toast(error.message || "Nao foi possivel conectar o bridge.");
+        button.disabled = false; button.textContent = "Salvar e testar";
+      }
+    });
+  }
+  function renderSources() {
+    const root = document.getElementById("hkContent");
+    if (!root) return;
+    const ready = state.bridgeStatus === "ready";
+    root.innerHTML = `
+      <div class="hk-section-head"><div><h3>Fontes de manga</h3><p>Somente a area de mangas usa estas configuracoes.</p></div><button type="button" id="hkRetestBridge">Testar conexao</button></div>
+      <div class="hk-source-health ${ready ? "ok" : "warn"}">
+        <b>${ready ? "Manga Bridge conectado" : bridgeBase() ? "Manga Bridge sem resposta" : "Manga Bridge nao configurado"}</b>
+        <span>${ready ? escapeHTML(state.bridgeHealth?.version || "online") : "O modo direto pode ser bloqueado por CORS ou pela rede."}</span>
+      </div>
+      ${bridgeSetupMarkup()}
+      <div class="hk-source-list">
+        <article><b>MangaDex</b><span>Catalogo internacional, PT-BR primeiro, leitura e CBZ pelo proxy.</span></article>
+        ${CURATED_BRIDGE_SOURCES.map(source => `<article><b>${escapeHTML(source.name)}</b><span>${escapeHTML(source.lang)} · Keiyoushi · ${source.contentWarning === "safe" ? "conteudo geral" : "catalogo misto"}</span></article>`).join("")}
+      </div>
+      <div class="hk-source-note">O Keiyoushi fornece metadados e codigo Kotlin para aplicativos Mihon. O ResenhaFLIX nao instala APKs: o bridge implementa adaptadores web proprios para ate cinco fontes.</div>
+    `;
+    bindBridgeSetup(root, renderSources);
+    document.getElementById("hkRetestBridge")?.addEventListener("click", async () => {
+      state.bridgeStatus = "checking"; updateEngineStatus(); await checkBridgeStatus(); updateEngineStatus(); renderSources();
+    });
+  }
+
   function mount() {
     ensureOverlays();
     try {
@@ -458,12 +706,13 @@
             <h2>Leia. Continue. Baixe.</h2>
             <p>Busca inteligente com prioridade para PT-BR, leitor nativo otimizado para celular, progresso automatico e download de capitulos em CBZ.</p>
           </div>
-          <div class="hk-engine-status"><i></i> MangaDex conectado · v${VERSION}</div>
+          <div class="hk-engine-status" id="hkEngineStatus"><i></i><span>${bridgeBase() ? "Verificando Manga Bridge" : "Modo direto · bridge nao configurado"}</span></div>
         </header>
         <nav class="hk-tabs" id="hkTabs" aria-label="Secoes de manga">
           <button type="button" data-hk-tab="explore">Explorar</button>
           <button type="button" data-hk-tab="library">Biblioteca</button>
           <button type="button" data-hk-tab="downloads">Downloads</button>
+          <button type="button" data-hk-tab="sources">Fontes</button>
         </nav>
         <form class="hk-searchbar" id="hkSearchForm">
           <label class="hk-sr" for="hkMangaSearch">Pesquisar manga</label>
@@ -507,6 +756,7 @@
         loadExplore();
       }, 520);
     });
+    checkBridgeStatus().then(updateEngineStatus);
     renderTab();
   }
 
@@ -515,12 +765,13 @@
       button.classList.toggle("active", button.dataset.hkTab === state.tab);
     });
     const form = document.getElementById("hkSearchForm");
-    if (form) form.style.display = state.tab === "downloads" ? "none" : "";
+    if (form) form.style.display = ["downloads", "sources"].includes(state.tab) ? "none" : "";
   }
   function renderTab() {
     setActiveTab();
     if (state.tab === "library") renderLibrary();
     else if (state.tab === "downloads") renderDownloads();
+    else if (state.tab === "sources") renderSources();
     else if (state.results.length) renderResults();
     else loadExplore();
   }
@@ -548,13 +799,15 @@
           <div><b>Nao foi possivel abrir o catalogo.</b>${escapeHTML(error.message || "Falha de conexao")}<br>
           <button type="button" id="hkRetryExplore">Tentar novamente</button></div>
         </div>
+        ${bridgeSetupMarkup(bridgeBase() ? "Confira se o deploy do bridge esta ativo e se ALLOWED_ORIGIN permite o GitHub Pages." : "A conexao direta falhou. Configure o bridge para liberar busca, leitura e download.")}
       `;
       document.getElementById("hkRetryExplore")?.addEventListener("click", loadExplore);
+      bindBridgeSetup(root, loadExplore);
     }
   }
 
   function cardHTML(manga) {
-    const saved = isSaved(manga.id);
+    const saved = isSaved(manga.id, manga.connector);
     const hasPortuguese = (manga.availableLanguages || []).includes("pt-br");
     return `
       <article class="hk-card" data-hk-manga="${escapeHTML(manga.id)}">
@@ -594,6 +847,7 @@
     const root = document.getElementById("hkContent");
     if (!root) return;
     const title = state.query ? 'Resultados para “' + state.query + '”' : "Populares com capitulos disponiveis";
+    const successfulSources = (state.sourceReport?.sources || []).filter(source => source.ok && source.count).length;
     const subtitle = state.language === "pt-br"
       ? "Resultados com PT-BR primeiro; se nao houver correspondencia, mostramos outras linguas."
       : "Catalogo filtrado por " + languageLabel(state.language) + ".";
@@ -603,7 +857,7 @@
     }
     root.innerHTML = `
       <div class="hk-section-head">
-        <div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(subtitle)} · ${state.results.length} titulos</p></div>
+        <div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(subtitle)} · ${state.results.length} titulos · ${successfulSources || 1} fonte(s)</p></div>
         <button type="button" id="hkRefresh">Atualizar</button>
       </div>
       <div class="hk-grid" id="hkResultGrid">${state.results.map(cardHTML).join("")}</div>
@@ -661,7 +915,7 @@
     const detail = document.getElementById("hkMangaDetail");
     const manga = state.currentManga;
     if (!detail || !manga) return;
-    const saved = isSaved(manga.id);
+    const saved = isSaved(manga.id, manga.connector);
     detail.innerHTML = `
       <div class="hk-detail-hero">
         <button class="hk-close" type="button" id="hkDetailClose" aria-label="Fechar">×</button>
@@ -679,7 +933,7 @@
           <div class="hk-detail-actions">
             <button class="primary" type="button" id="hkContinueManga">▶ Ler do inicio / continuar</button>
             <button type="button" id="hkSaveManga">${saved ? "✓ Na biblioteca" : "☆ Adicionar a biblioteca"}</button>
-            <button type="button" id="hkOpenMangaDex">Abrir fonte</button>
+            <button type="button" id="hkOpenMangaSource">Abrir fonte</button>
           </div>
         </div>
       </div>
@@ -701,8 +955,9 @@
       event.currentTarget.textContent = nowSaved ? "✓ Na biblioteca" : "☆ Adicionar a biblioteca";
       toast(nowSaved ? "Adicionado a sua biblioteca." : "Removido da biblioteca.");
     });
-    document.getElementById("hkOpenMangaDex").addEventListener("click", () => {
-      window.open("https://mangadex.org/title/" + manga.id, "_blank", "noopener,noreferrer");
+    document.getElementById("hkOpenMangaSource").addEventListener("click", () => {
+      const target = manga.sourceUrl || (manga.connector === "mangadex" ? "https://mangadex.org/title/" + manga.id : "");
+      if (target) window.open(target, "_blank", "noopener,noreferrer");
     });
     document.getElementById("hkContinueManga").addEventListener("click", continueManga);
     document.getElementById("hkChapterSearch").addEventListener("input", renderChapterList);
@@ -1168,7 +1423,13 @@
     state,
     mount,
     search: (query, options) => engine.search(query, options),
-    openManga: openDetails
+    openManga: openDetails,
+    bridge: {
+      get url() { return bridgeBase(); },
+      configure: saveBridge,
+      check: checkBridgeStatus
+    },
+    tools: { createCBZ, crc32 }
   };
   window.mangaPage = mount;
 })();
