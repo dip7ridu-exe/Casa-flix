@@ -2838,7 +2838,7 @@ input::placeholder,textarea::placeholder{color:#898294;opacity:1}
  <div class="mangaMatchModal">
   <div class="mangaMatchTop">
    <div>
-    <div class="mangaSourcePickerEyebrow">Buscar nas fontes instaladas</div>
+    <div class="mangaSourcePickerEyebrow">Buscar nas fontes de mangá</div>
     <h3 id="mangaMatchTitle">Mangá</h3>
    </div>
    <button type="button" class="close" id="closeMangaMatch">×</button>
@@ -3137,7 +3137,11 @@ const cfg={
  mangaBridge:localStorage.getItem("rf14_manga_bridge")||CFG_DEFAULT.mangaBridge,
  lang:localStorage.getItem("cf2_lang")||CFG_DEFAULT.lang
 };
-const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0,_stallTimer:null,_stallStartedAt:0,_stallEvents:[],_stallRecovery:false,_stallCooldownUntil:0,_lastStablePlaybackAt:0,mangaSourceLimit:Number(localStorage.getItem("rf24_manga_source_limit")||5),mangaRepoV24:null,musicTab:"tracks",musicQuery:"",musicResults:[],booksTab:"all",booksQuery:"",bookResults:[],bookReaderBook:null,bookReaderRendition:null,bookReaderEpub:null,mediaSourceTab:"music",musicQueue:[],musicQueueIndex:-1,musicShuffle:false,musicRepeat:false,musicCurrentItem:null,musicBackend:"audio",soundcloudWidget:null,soundcloudWidgetReady:false,soundcloudPosition:0,soundcloudDuration:0,soundcloudPaused:true};
+if(!localStorage.getItem("rf30_manga_repo_defaults")){
+ const merged=[...new Set([...String(cfg.mangaRepos||"").split(/\n+/),...String(CFG_DEFAULT.mangaRepos).split(/\n+/)].map(x=>x.trim()).filter(Boolean))];
+ cfg.mangaRepos=merged.join("\n");localStorage.setItem("rf15_manga_repos",cfg.mangaRepos);localStorage.setItem("rf30_manga_repo_defaults","1")
+}
+const S={hero:null,current:null,currentShow:null,currentEpisode:null,nextEpisode:null,season:1,currentPage:"home",streams:[],selectedStream:null,selectedAddon:"all",qualityFilter:"all",streamTitle:"",streamMeta:null,playType:null,playId:null,rootId:null,resumeEntry:null,resumeApplied:false,searchFilter:"all",searchItems:[],searchQuery:"",searchToken:0,manifestCache:new Map(),catalogCache:new Map(),itemCache:new Map(),externalSubtitles:[],externalSubtitleBlob:null,playerMenuKind:null,aspectMode:localStorage.getItem("cf9_aspect")||"smart",introSkipped:false,introSkipSeconds:90,autoFallback:localStorage.getItem("cf11_auto_fallback")!=="0",sourceHealth:new Map(),sourceAttemptToken:0,attemptedSourceKeys:new Set(),streamCache:new Map(),streamLoadToken:0,addonNameCache:new Map(),primaryManifest:localStorage.getItem("rf17_primary_manifest")||"",sourceToolsOpen:false,pageCategory:"all",pageItems:[],pageTypeForCategories:"",mangaRepoItems:[],mangaRepoLoadedAt:0,mangaTab:"explore",mangaQuery:"",mangaExtensionQuery:"",mangaLang:"pt",mangaReaderUrl:"",mangaCatalog:[],mangaCatalogPage:1,mangaCatalogHasNext:true,mangaSearchToken:0,mangaPickerMedia:null,mangaSearchCandidates:[],mangaSearchCandidateIndex:0,mangaNativeResults:[],mangaDetail:null,mangaDetailSource:null,mangaChapters:[],mangaChapterOrder:"desc",mangaReaderManga:null,mangaReaderSource:null,mangaReaderChapter:null,mangaReaderPages:[],mangaReaderPageIndex:0,mangaReaderObserver:null,mangaReaderUiTimer:null,mangaRepoStats:[],mangaExploreCatalogCache:new Map(),mangaProgressiveToken:0,mangaProgressiveResults:[],mangaMatchMedia:null,mangaMatchResults:[],mangaMatchToken:0,mangaSearchLang:localStorage.getItem("rf16_manga_search_lang")||"both",mangaWebSource:null,mangaWebQuery:"",mangaWebCandidates:[],mangaWebCandidateIndex:0,mangaWebCurrentUrl:"",_sourceTimer:null,_ctlTimer:null,_lastProgressSave:0,_stallTimer:null,_stallStartedAt:0,_stallEvents:[],_stallRecovery:false,_stallCooldownUntil:0,_lastStablePlaybackAt:0,mangaSourceLimit:Number(localStorage.getItem("rf24_manga_source_limit")||5),mangaRepoV24:null,musicTab:"tracks",musicQuery:"",musicResults:[],booksTab:"all",booksQuery:"",bookResults:[],bookReaderBook:null,bookReaderRendition:null,bookReaderEpub:null,mediaSourceTab:"music",musicQueue:[],musicQueueIndex:-1,musicShuffle:false,musicRepeat:false,musicCurrentItem:null,musicBackend:"audio",soundcloudWidget:null,soundcloudWidgetReady:false,soundcloudPosition:0,soundcloudDuration:0,soundcloudPaused:true};
 
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
@@ -4787,11 +4791,11 @@ function repoKind(ext){
  return"manga";
 }
 function normalizeMangaRepo(data,repoUrl){
- let raw=[];if(Array.isArray(data))raw=data;else if(Array.isArray(data?.extensionList?.extensions))raw=data.extensionList.extensions;
+ let raw=[];if(Array.isArray(data))raw=data;else if(Array.isArray(data?.extensionList?.extensions))raw=data.extensionList.extensions;else if(Array.isArray(data?.extensions))raw=data.extensions;
  return raw.map((e,i)=>{
   const kind=repoKind(e);
   const sources=sortMangaSourcesPtFirst((e.sources||[]).map(s=>({id:String(s.id||""),name:s.name||e.name||"Fonte",lang:s.language||s.lang||e.lang||"all",homeUrl:s.homeUrl||s.baseUrl||"",_repo:repoUrl,_kind:kind})).filter(s=>s.homeUrl));
-  return {name:e.name||`Extensão ${i+1}`,pkg:e.packageName||e.pkg||`repo-${i}`,version:e.versionName||e.version||"",lang:e.lang||sources[0]?.lang||"all",icon:e.resources?.iconUrl||"",apk:e.resources?.apkUrl||e.apk||"",warning:e.contentWarning||((Number(e.nsfw||0)>0)?"CONTENT_WARNING_NSFW":""),sources,_repo:repoUrl,_repoLabel:repoLabel(repoUrl),_kind:kind};
+  return {name:e.name||`Extensão ${i+1}`,pkg:e.packageName||e.pkg||`repo-${i}`,version:e.versionName||e.version||"",lang:e.lang||sources[0]?.lang||"all",icon:e.resources?.iconUrl||e.icon||"",apk:e.resources?.apkUrl||e.apk||"",warning:e.contentWarning||((Number(e.nsfw||0)>0)?"CONTENT_WARNING_NSFW":""),sources,_repo:repoUrl,_repoLabel:repoLabel(repoUrl),_kind:kind};
  }).filter(x=>x.sources.length)
 }
 function mangaRepoFallbackUrl(url){
@@ -4799,10 +4803,17 @@ function mangaRepoFallbackUrl(url){
  return url
 }
 async function fetchOneMangaRepo(repoUrl){
- let used=repoUrl,fallback=false,data=await getJSONTimeout(repoUrl,7000),items=normalizeMangaRepo(data,repoUrl);
- if(items.filter(x=>x._kind==="manga").length<10&&repoUrl.includes("keiyoushi")&&/index\.min\.json/i.test(repoUrl)){
-  used=mangaRepoFallbackUrl(repoUrl);data=await getJSONTimeout(used,11000);items=normalizeMangaRepo(data,repoUrl);fallback=true;
+ const candidates=[repoUrl];
+ if(repoUrl.includes("keiyoushi")&&/index\.min\.json/i.test(repoUrl))candidates.push(mangaRepoFallbackUrl(repoUrl),"https://cdn.jsdelivr.net/gh/keiyoushi/extensions@repo/index.json");
+ let used=repoUrl,fallback=false,items=[],lastError=null;
+ for(const candidate of [...new Set(candidates)]){
+  try{
+   const data=await getJSONTimeout(candidate,candidate===repoUrl?7000:11000),parsed=normalizeMangaRepo(data,repoUrl);
+   if(parsed.length>items.length){items=parsed;used=candidate;fallback=candidate!==repoUrl}
+   if(parsed.filter(x=>x._kind==="manga").length>=10)break
+  }catch(e){lastError=e}
  }
+ if(!items.length&&lastError)throw lastError;
  const manga=items.filter(x=>x._kind==="manga"&&!String(x.warning||"").includes("NSFW"));
  const anime=items.filter(x=>x._kind==="anime");
  return {repoUrl,used,label:repoLabel(repoUrl),fallback,manga,anime,total:items.length}
@@ -4832,7 +4843,7 @@ async function loadMangaRepo(force=false){
  return S.mangaRepoItems
 }
 function filteredMangaExtensions(){
- const q=normText(S.mangaQuery),lang=S.mangaLang;
+ const q=normText(S.mangaExtensionQuery),lang=S.mangaLang;
  return S.mangaRepoItems.filter(e=>{
   const tx=normText([e.name,e.pkg,...e.sources.map(s=>`${s.name} ${s.homeUrl}`)].join(" "));
   return (!q||tx.includes(q))&&(lang==="all"||e.sources.some(s=>lang==="pt"?isPortugueseLang(s.lang):s.lang===lang));
@@ -4953,8 +4964,8 @@ function bindMangaExtensionCards(container){
 }
 function renderMangaExtensions(){
  const items=filteredMangaExtensions(),shown=items.slice(0,140);
- $("#mangaContent").innerHTML=`<div class="mangaToolbar"><input id="mangaExtSearch" value="${esc(S.mangaQuery)}" placeholder="Buscar extensão ou fonte…" autocomplete="off"><select id="mangaLangFilter"><option value="pt" ${S.mangaLang==="pt"?"selected":""}>🇧🇷 Português</option><option value="all" ${S.mangaLang==="all"?"selected":""}>Todos</option><option value="en" ${S.mangaLang==="en"?"selected":""}>Inglês</option><option value="es" ${S.mangaLang==="es"?"selected":""}>Espanhol</option></select><button type="button" id="refreshMangaRepo">↻ Atualizar</button></div><div class="mangaCount">${items.length} extensão(ões) de mangá</div><div class="mangaExtGrid">${shown.map(mangaExtCard).join("")||'<div class="mangaEmpty">Nenhuma extensão encontrada.</div>'}</div>`;
- let t;$("#mangaExtSearch").oninput=e=>{clearTimeout(t);t=setTimeout(()=>{S.mangaQuery=e.target.value;renderMangaExtensions()},240)};
+ $("#mangaContent").innerHTML=`<div class="mangaRepoStatus" id="mangaRepoStatus">${S.mangaRepoItems.length?`${S.mangaRepoItems.length} extensões carregadas dos repositórios configurados.`:"Carregando repositórios…"}</div><div class="mangaToolbar"><input id="mangaExtSearch" value="${esc(S.mangaExtensionQuery)}" placeholder="Buscar extensão ou fonte…" autocomplete="off"><select id="mangaLangFilter"><option value="pt" ${S.mangaLang==="pt"?"selected":""}>🇧🇷 Português</option><option value="all" ${S.mangaLang==="all"?"selected":""}>Todos</option><option value="en" ${S.mangaLang==="en"?"selected":""}>Inglês</option><option value="es" ${S.mangaLang==="es"?"selected":""}>Espanhol</option></select><button type="button" id="refreshMangaRepo">↻ Atualizar</button></div><div class="mangaCount">${items.length} extensão(ões) de mangá • ${mangaInstalled().length} instalada(s)</div><div class="mangaExtGrid">${shown.map(mangaExtCard).join("")||'<div class="mangaEmpty">Nenhuma extensão encontrada.</div>'}</div>`;
+ let t;$("#mangaExtSearch").oninput=e=>{clearTimeout(t);t=setTimeout(()=>{S.mangaExtensionQuery=e.target.value;renderMangaExtensions()},240)};
  $("#mangaLangFilter").onchange=e=>{S.mangaLang=e.target.value;renderMangaExtensions()};$("#refreshMangaRepo").onclick=async()=>{await loadMangaRepo(true);renderMangaExtensions()};bindMangaExtensionCards($("#mangaContent"))
 }
 
@@ -5106,14 +5117,14 @@ async function searchOneInstalledSource(source,query,popular=false,media=null,va
   if(bridgeBase()){
    try{
     const data=await Promise.race([
-      mangaBridgeRequest(popular?"/api/popular":"/api/search",{source:sourcePayload(source),query:q},3000),
-      new Promise((_,rej)=>setTimeout(()=>rej(Error("source-timeout")),3200))
+       mangaBridgeRequest(popular?"/api/popular":"/api/search",{source:sourcePayload(source),query:q},9000),
+       new Promise((_,rej)=>setTimeout(()=>rej(Error("source-timeout")),9200))
     ]);
     const items=(data.items||[]).map(x=>({...x,source:{...sourcePayload(source),...(x.source||{})},_nativeSource:true}));
     if(items.length){markMangaSourceHealth(source,true);return items}
    }catch{}
   }
-  const items=await directSourceSearch(source,q,popular,2300);
+   const items=await directSourceSearch(source,q,popular,3500);
   if(items.length){markMangaSourceHealth(source,true);return items}
  }
  markMangaSourceHealth(source,false);return[]
@@ -5399,21 +5410,17 @@ function normalizeKeiyoushiV26(data,repoUrl){
 }
 async function loadMangaRepoV24(force=false){
  if(!force&&S.mangaRepoV24&&Date.now()-Number(S.mangaRepoV24.at||0)<30*60e3)return S.mangaRepoV24.items;
- for(const url of MANGA_REPO_FALLBACKS){
-  try{
-   const data=await getJSONTimeout(url,10000);
-   const items=normalizeKeiyoushiV26(data,url);
-   if(items.length>50){S.mangaRepoV24={at:Date.now(),items,url};return items}
-  }catch(e){console.warn("Keiyoushi repo",url,e)}
- }
- console.warn("Keiyoushi: nenhum índice completo retornado.");
+ const items=await loadMangaRepo(force);
+ if(items.length){S.mangaRepoV24={at:Date.now(),items,url:configuredMangaRepos().join("\n")};return items}
+ console.warn("Mangás: nenhum índice configurado retornou extensões compatíveis.");
  return S.mangaRepoV24?.items||[]
 }
 async function mangaPortugueseSourcesV24(){
- const exts=await loadMangaRepoV24(false),all=[];
- for(const e of exts)for(const s of (e.sources||[]))if(isPortugueseLang(s.lang))all.push({...s,extension:e.name,pkg:e.pkg,icon:e.icon||"",warning:e.warning||""});
+ const exts=await loadMangaRepoV24(false),installedPkgs=new Set(mangaInstalled().map(e=>e.pkg)),all=[];
+ for(const e of exts)for(const s of (e.sources||[]))if(isPortugueseLang(s.lang))all.push({...s,extension:e.name,pkg:e.pkg,icon:e.icon||"",warning:e.warning||"",_installed:installedPkgs.has(e.pkg)});
+ for(const s of portugueseInstalledSources())all.unshift({...s,_installed:true});
  const byHost=new Map();
- for(const s of sortMangaSourcesPtFirst(all)){let h=s.homeUrl;try{h=new URL(s.homeUrl).hostname.replace(/^www\./,"")}catch{}if(!byHost.has(h))byHost.set(h,s)}
+ for(const s of sortMangaSourcesPtFirst(all).sort((a,b)=>Number(!!b._installed)-Number(!!a._installed))){let h=s.homeUrl;try{h=new URL(s.homeUrl).hostname.replace(/^www\./,"")}catch{}if(!byHost.has(h)||s._installed)byHost.set(h,s)}
  return[...byHost.values()]
 }
 function mangaV24Title(m){return m?._rfTitle||mangaDisplayTitle(m)||"Mangá"}
@@ -5426,7 +5433,14 @@ function mangaV24Card(m){
 function bindMangaV24Cards(root,items){
  root.querySelectorAll("[data-m24-key]").forEach(card=>{const m=items.find(x=>mangaItemKey(x)===card.dataset.m24Key);if(!m)return;card.querySelector("[data-m24-find]").onclick=()=>findMangaAcrossSourcesV24(m);card.querySelector("[data-m24-save]").onclick=()=>{toggleMangaLibrary(m);const b=card.querySelector("[data-m24-save]"),saved=mangaV24Saved(m);b.classList.toggle("saved",saved);b.textContent=saved?"✓":"＋";if(S.mangaTab==="library"&&!saved)renderMangaLibrary()}})
 }
-function renderMangaCurrentTab(){if(S.mangaTab==="extensions")S.mangaTab="explore";if(S.mangaTab==="library")renderMangaLibrary();else renderMangaExplore();$$("[data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))}
+async function renderMangaCurrentTab(){
+ if(S.mangaTab==="extensions"){
+  S.mangaSearchToken++;
+  const area=$("#mangaContent");if(area)area.innerHTML='<div class="loading">Carregando extensões…</div>';
+  try{await loadMangaRepo(false);renderMangaExtensions()}catch(e){console.error(e);if(area)area.innerHTML='<div class="mangaEmpty">Não foi possível carregar os repositórios agora.</div>'}
+ }else if(S.mangaTab==="library"){S.mangaSearchToken++;renderMangaLibrary()}else renderMangaExplore();
+ $$("[data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))
+}
 async function renderMangaExplore(){
  const area=$("#mangaContent");if(!area)return;const q=String(S.mangaQuery||"").trim(),token=++S.mangaSearchToken;area.innerHTML='<div class="loading">Carregando mangás…</div>';
  try{const page=await aniListManga(q,1);if(token!==S.mangaSearchToken)return;const items=(page.media||[]).map(normalizeAniMedia);S.mangaCatalog=items;area.innerHTML=`<div class="m24ShelfHead"><h3>${q?`Resultados para “${esc(q)}”`:"Em alta"}</h3><small>${items.length} títulos</small></div><div class="m24Grid" id="m24ExploreGrid">${items.map(mangaV24Card).join("")||'<div class="mediaEmpty">Nenhum mangá encontrado.</div>'}</div>`;bindMangaV24Cards($("#m24ExploreGrid"),items)}catch(e){console.error(e);area.innerHTML='<div class="mediaEmpty"><b>Não consegui carregar os mangás.</b>Tente novamente em alguns segundos.</div>'}
@@ -5457,12 +5471,40 @@ const VERIFIED_MANGA_DIRECTS=[
   aliases:["the infinite mage","infinite mage","mago do infinito","mago infinito"],
   title:"Mago do Infinito",
   url:"https://lycantoons.com/series/mago-do-infinito"
+ },
+ {
+  host:"lycantoons.com",
+  aliases:["eleceed","veletric"],
+  title:"Veletric - Eleceed",
+  url:"https://lycantoons.com/series/veletric"
+ },
+ {
+  host:"lycantoons.com",
+  aliases:["the stellar swordmaster","stellar swordmaster","mestre espadachim criado pelas estrelas"],
+  title:"Mestre Espadachim Criado Pelas Estrelas",
+  url:"https://lycantoons.com/series/mestre-espadachim-criado-pelas-estrelas"
+ },
+ {
+  host:"mangasbrasuka.com.br",
+  aliases:["revenge of the baskerville bloodhound","the revenge of the baskerville bloodhound","a vinganca do cao de caca dos baskerville","o retorno do cao de caca dos baskerville","the return of the iron-blood sword hound"],
+  title:"A Vingança do Cão de Caça dos Baskerville",
+  url:"https://mangasbrasuka.com.br/manhwa/a-vinganca-do-cao-de-caca-dos-baskerville"
+ },
+ {
+  host:"leitor.borutoexplorer.com.br",
+  aliases:["boruto","boruto: naruto next generations","boruto naruto next generations"],
+  title:"Boruto: Naruto Next Generations",
+  url:"https://leitor.borutoexplorer.com.br/manga/boruto-naruto-next-generations/"
  }
 ];
-async function smartMangaDirectCandidates(source,title,media){
+function verifiedMangaDirect(source,aliases){
  const host=(()=>{try{return new URL(source.homeUrl).hostname.replace(/^www\./,"")}catch{return""}})();
- const aliases=(await mangaQueryVariants(title,media)).map(normText);
- const hit=VERIFIED_MANGA_DIRECTS.find(x=>x.host===host&&x.aliases.some(a=>aliases.includes(normText(a))));
+ const normalized=(aliases||[]).map(normText);
+ return VERIFIED_MANGA_DIRECTS.find(x=>x.host===host&&x.aliases.some(a=>normalized.includes(normText(a))))||null
+}
+async function smartMangaDirectCandidates(source,title,media,aliasesOverride=null){
+ const aliases=aliasesOverride?.length?aliasesOverride:await mangaQueryVariants(title,media);
+ const hit=verifiedMangaDirect(source,aliases);
  if(!hit)return[];
  return [{
   title:hit.title,url:hit.url,thumbnail:"",
@@ -5487,7 +5529,7 @@ function m25SourceCard(source,result=null,rank=0,title=""){
   <div class="m25SourceRank">${rank||"•"}</div>
   <div>
    <div class="m24SourceName">${esc(source.name||source.extension||"Fonte")} ${confirmed?`<span class="m25SourceScore">${score}</span>`:""}</div>
-   <div class="m24SourceMeta">🇧🇷 Português • ${esc(source.extension||"Keiyoushi")}</div>
+    <div class="m24SourceMeta">🇧🇷 Português • ${source._installed?"✓ Instalada":"Catálogo"} • ${esc(source.extension||"Keiyoushi")}</div>
    <div class="m24SourceResult ${confirmed?"m25DirectLabel":""}">${confirmed?(smart?`✓ Link validado: ${esc(result.title||title)}`:`✓ Abre direto em: ${esc(result.title||title)}`):"Não foi possível confirmar a página exata; abrir pesquisa da fonte"}</div>
   </div>
   <button type="button" data-m25-open="${esc(target||source.homeUrl)}" data-m25-confirmed="${confirmed?"1":"0"}" data-m25-source="${esc(source.homeUrl||"")}">${confirmed?"Ler agora":"Abrir busca"} ↗</button>
@@ -5515,8 +5557,9 @@ async function findMangaAcrossSourcesV24(media){
  if(token!==S.mangaMatchToken)return;
 
  // IMPORTANT: selected count is also the searched count. No hidden 15-source search.
+ const sourcePriority=s=>(verifiedMangaDirect(s,aliases)?2000:0)+(s._installed?500:0)+mangaSourceHistoryScore(s)+(mangaSourceHealth()[s.homeUrl]?.okAt?20:0);
  const candidates=[...all]
-  .sort((a,b)=>(mangaSourceHistoryScore(b)+(mangaSourceHealth()[b.homeUrl]?.okAt?20:0))-(mangaSourceHistoryScore(a)+(mangaSourceHealth()[a.homeUrl]?.okAt?20:0)))
+  .sort((a,b)=>sourcePriority(b)-sourcePriority(a)||(a.name||"").localeCompare(b.name||""))
   .slice(0,sourceCount);
 
  if(!candidates.length){
@@ -5552,11 +5595,11 @@ async function findMangaAcrossSourcesV24(media){
   while(cursor<candidates.length&&token===S.mangaMatchToken){
    const s=candidates[cursor++];
    try{
-    let items=await searchOneInstalledSource(s,title,false,media,aliases);
-    if(!items?.length)items=await smartMangaDirectCandidates(s,title,media); // only validated exceptions
+     let items=await smartMangaDirectCandidates(s,title,media,aliases); // links fornecidos e validados primeiro
+     if(!items?.length)items=await searchOneInstalledSource(s,title,false,media,aliases);
     const ranked=(items||[]).map(x=>({x,sim:Math.max(...aliases.map(a=>titleSimilarity(x.title,a)),0)})).sort((a,b)=>b.sim-a.sim);
     const best=ranked[0];
-    if(best&&best.x?.url&&best.sim>=30){
+    if(best&&best.x?.url&&(best.x._verifiedKnown||best.sim>=30)){
      results.set(s.homeUrl,best.x);states.set(s.homeUrl,"ok");rememberMangaAlias(media,best.x.title,title)
     }else states.set(s.homeUrl,"fail")
    }catch{states.set(s.homeUrl,"fail")}
@@ -5571,9 +5614,9 @@ async function findMangaAcrossSourcesV24(media){
 }
 
 async function mangaPage(){
- S.currentPage="manga";if(S.mangaTab==="extensions")S.mangaTab="explore";setActiveNav("manga");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
+ S.currentPage="manga";setActiveNav("manga");unlockMobileDocument();scrollPageTop();toggleCategoryMega(false);
  $("#page").classList.remove("searchPage","mangaPageModern","musicPageModern","booksPageModern");$("#page").classList.add("mangaPageV24");$("#hero").classList.add("hidden");$("#main").classList.add("hidden");$("#page").classList.remove("hidden");$("#pageTitle").textContent="Mangás";
- $("#pageBody").innerHTML=`<div class="m24Shell"><div class="m24Header"><div class="m24HeaderText"><div class="m24Eyebrow">MANGÁS</div><h2>Encontre e abra na fonte original</h2><p>O ResenhaFlix procura as melhores fontes em português e, quando consegue confirmar o resultado, abre diretamente na página daquele mangá.</p></div><div class="m24Tabs" id="mangaTabs"><button type="button" data-manga-tab="explore">Explorar</button><button type="button" data-manga-tab="library">Biblioteca</button></div></div><div class="m24Search"><input id="mangaTitleSearch" placeholder="Pesquisar mangá em português ou inglês…" autocomplete="off" value="${esc(S.mangaQuery)}"><select id="mangaSourceLimit">${[5,8,10,12,15].map(n=>`<option value="${n}" ${Number(S.mangaSourceLimit)===n?"selected":""}>Buscar em ${n}</option>`).join("")}</select><button type="button" id="mangaSearchBtn">Buscar</button></div><div class="m24Hint">A quantidade escolhida agora é exata: 5 significa somente 5 fontes. O ResenhaFlix prioriza aliases PT-BR, sinônimos e nomes aprendidos para encontrar versões como “The Infinite Mage” → “Mago do Infinito”.</div><div id="mangaContent"><div class="loading">Carregando…</div></div></div>`;
+ $("#pageBody").innerHTML=`<div class="m24Shell"><div class="m24Header"><div class="m24HeaderText"><div class="m24Eyebrow">MANGÁS</div><h2>Encontre e abra na fonte original</h2><p>O ResenhaFlix procura as melhores fontes em português e, quando consegue confirmar o resultado, abre diretamente na página daquele mangá.</p></div><div class="m24Tabs" id="mangaTabs"><button type="button" data-manga-tab="explore">Explorar</button><button type="button" data-manga-tab="library">Biblioteca</button><button type="button" data-manga-tab="extensions">Extensões</button></div></div><div class="m24Search"><input id="mangaTitleSearch" placeholder="Pesquisar mangá em português ou inglês…" autocomplete="off" value="${esc(S.mangaQuery)}"><select id="mangaSourceLimit">${[5,8,10,12,15].map(n=>`<option value="${n}" ${Number(S.mangaSourceLimit)===n?"selected":""}>Buscar em ${n}</option>`).join("")}</select><button type="button" id="mangaSearchBtn">Buscar</button></div><div class="m24Hint">Fontes instaladas têm prioridade. Sem instalações, a busca usa o catálogo PT-BR dos repositórios configurados. Aliases e nomes alternativos encontram versões como “The Infinite Mage” → “Mago do Infinito”.</div><div id="mangaContent"><div class="loading">Carregando…</div></div></div>`;
  const input=$("#mangaTitleSearch");let timer;const sync=()=>{$$("#mangaTabs [data-manga-tab]").forEach(b=>b.classList.toggle("active",b.dataset.mangaTab===S.mangaTab))};const go=()=>{S.mangaQuery=input.value.trim();S.mangaTab="explore";sync();renderMangaExplore()};
  input.oninput=()=>{clearTimeout(timer);timer=setTimeout(go,520)};input.onkeydown=e=>{if(e.key==="Enter"){clearTimeout(timer);go();input.blur()}};$("#mangaSearchBtn").onclick=go;$("#mangaSourceLimit").onchange=e=>{S.mangaSourceLimit=Math.max(5,Math.min(15,Number(e.target.value)||10));localStorage.setItem("rf24_manga_source_limit",String(S.mangaSourceLimit))};$$("#mangaTabs [data-manga-tab]").forEach(b=>b.onclick=()=>{S.mangaTab=b.dataset.mangaTab;sync();renderMangaCurrentTab()});sync();renderMangaCurrentTab()
 }

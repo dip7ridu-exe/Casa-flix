@@ -1,4 +1,4 @@
-import os, re, json, time, hmac, hashlib, base64, asyncio
+import os, re, json, time, hmac, hashlib, base64, asyncio, unicodedata
 from urllib.parse import urljoin, urlparse, urlencode
 
 import httpx
@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from pydantic import BaseModel
 
-app=FastAPI(title="ResenhaFlix Manga Bridge v16")
+app=FastAPI(title="ResenhaFlix Manga Bridge v30")
 origin=os.getenv("ALLOWED_ORIGIN","*")
 secret=os.getenv("BRIDGE_SECRET","resenhaflix-change-this").encode()
 
@@ -96,6 +96,12 @@ def source_dict(source):
 def adapter_name(source):
     p=(source.pkg or "").lower()
     h=host(source.homeUrl)
+    if p.endswith(".lycantoons") or h=="lycantoons.com":
+        return "lycantoons"
+    if p.endswith(".mangasbrasuka") or h=="mangasbrasuka.com.br":
+        return "mangasbrasuka"
+    if p.endswith(".borutoexplorer") or h=="leitor.borutoexplorer.com.br":
+        return "madara"
     if p.endswith(".saikaiscan") or "housesaikai" in h or source.name.lower()=="saikai scan":
         return "saikai"
     if p.endswith(".lermangas"):
@@ -103,6 +109,27 @@ def adapter_name(source):
     if p.endswith(".mangotoons"):
         return "login-required"
     return "auto"
+
+async def get_json(url,source,timeout=8):
+    headers={
+      "Accept":"application/json, text/plain, */*",
+      "Origin":source.homeUrl,
+      "Referer":source.homeUrl.rstrip("/")+"/",
+    }
+    r=await client.get(url,headers=headers,timeout=timeout)
+    if r.status_code>=400:raise HTTPException(502,f"Fonte HTTP {r.status_code}")
+    return r.json()
+
+async def post_json(url,data,source,timeout=8):
+    headers={
+      "Accept":"application/json, text/plain, */*",
+      "Content-Type":"application/json",
+      "Origin":source.homeUrl,
+      "Referer":source.homeUrl.rstrip("/")+"/",
+    }
+    r=await client.post(url,json=data,headers=headers,timeout=timeout)
+    if r.status_code>=400:raise HTTPException(502,f"Fonte HTTP {r.status_code}")
+    return r.json()
 
 # ---------- signed image proxy ----------
 def sign_image(url,referer):
@@ -231,7 +258,9 @@ async def madara_pages(source,url,request):
             raw=image_attr(img);u=urljoin(final,raw)
             if not u or u in seen:continue
             low=u.lower()
-            if any(x in low for x in ("logo","avatar","icon","banner","ads")):continue
+            if any(x in low for x in ("logo","avatar","icon","banner")):continue
+            # Do not use a plain "ads" substring: every WordPress /uploads/ URL contains it.
+            if re.search(r"/(?:ads?|adverts?|advertisements?)(?:/|[-_.])",urlparse(u).path.lower()):continue
             seen.add(u);pages.append({"image":proxied_image(request,u,final),"original":u})
         if pages:break
     return pages
@@ -305,6 +334,114 @@ async def saikai_pages(source,url,request):
         pages.append({"image":proxied_image(request,u,source.homeUrl),"original":u})
     return pages
 
+# ---------- LycanToons Next.js JSON API ----------
+LYCAN_VERIFIED_SERIES=[
+  ({"the infinite mage","infinite mage","mago do infinito","mago infinito"},"Mago do Infinito","mago-do-infinito"),
+  ({"eleceed","veletric"},"Veletric - Eleceed","veletric"),
+  ({"the stellar swordmaster","stellar swordmaster","mestre espadachim criado pelas estrelas"},"Mestre Espadachim Criado Pelas Estrelas","mestre-espadachim-criado-pelas-estrelas"),
+]
+
+def normalized_title(value):
+    value=unicodedata.normalize("NFD",str(value or "").lower())
+    value="".join(ch for ch in value if unicodedata.category(ch)!="Mn")
+    return re.sub(r"[^a-z0-9]+"," ",value).strip()
+
+def lycan_verified_items(source,query):
+    q=normalized_title(query);out=[]
+    for aliases,title,slug in LYCAN_VERIFIED_SERIES:
+        if q in {normalized_title(x) for x in aliases}:
+            out.append({"title":title,"url":source_base(source)+"/series/"+slug,"thumbnail":"","source":source_dict(source),"adapter":"lycantoons-verified","slug":slug})
+    return out
+
+def lycan_item(obj,source):
+    slug=str(obj.get("slug") or "").strip("/")
+    title=str(obj.get("title") or "").strip()
+    if not slug or not title:return None
+    return {
+      "title":title,
+      "url":source_base(source)+"/series/"+slug,
+      "thumbnail":str(obj.get("coverUrl") or obj.get("cover_url") or ""),
+      "source":source_dict(source),"adapter":"lycantoons","slug":slug,
+    }
+
+async def lycan_search(source,query):
+    payload={"limit":20,"page":1,"search":query,"seriesType":"","status":"","tags":[]}
+    try:
+        data=await post_json(source_base(source)+"/api/series",payload,source,9)
+        raw=data.get("series") or data.get("data") or data.get("items") or []
+        items=[item for obj in raw if (item:=lycan_item(obj,source))]
+        if items:return items
+    except Exception:
+        pass
+    # Cloudflare may reject server-side clients; keep user-verified routes available.
+    return lycan_verified_items(source,query)
+
+async def lycan_popular(source):
+    data=await get_json(source_base(source)+"/api/metrics/popular?limit=20&page=1",source,9)
+    raw=data.get("data") or data.get("series") or data.get("items") or []
+    return [item for obj in raw if (item:=lycan_item(obj,source))]
+
+# ---------- Mangas Brasuka Next.js API/RSC ----------
+def brasuka_item(obj,source):
+    slug=str(obj.get("slug") or "").strip("/")
+    title=str(obj.get("title") or "").strip()
+    if not slug or not title:return None
+    kind=str(obj.get("type") or "manhwa").lower()
+    if kind not in ("manga","manhwa","manhua","webtoon"):kind="manhwa"
+    return {
+      "title":title,
+      "url":source_base(source)+f"/{kind}/{slug}",
+      "thumbnail":str(obj.get("coverUrl") or obj.get("cover_url") or ""),
+      "source":source_dict(source),"adapter":"mangasbrasuka","slug":slug,
+    }
+
+async def brasuka_search(source,query):
+    data=await get_json(source_base(source)+"/api/search?"+urlencode({"q":query}),source,8)
+    raw=data.get("items") or data.get("series") or data.get("data") or []
+    return [item for obj in raw if (item:=brasuka_item(obj,source))]
+
+def parse_brasuka_rsc_chapters(html,final):
+    path=urlparse(final).path.rstrip("/").split("/")
+    if len(path)<2:return []
+    category,slug=path[-2],path[-1]
+    out=[];seen=set()
+    pattern=r'\{\\"id\\":\\"([^"\\]+)\\",\\"number\\":\\"([^"\\]+)\\",\\"title\\":\\"([^"\\]*)\\"'
+    for match in re.finditer(pattern,html):
+        _,number,title=match.groups()
+        key=str(number).strip()
+        if not key or key in seen:continue
+        seen.add(key)
+        suffix="" if not title or title=="$undefined" or title==key else f" — {title}"
+        out.append({"name":f"Capítulo {key}{suffix}","number":chapter_number(key),"url":source_base_url(final)+f"/{category}/{slug}/{key}"})
+    return out
+
+def source_base_url(url):
+    parsed=urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}"
+
+async def brasuka_details(source,url):
+    html,final=await get_html(url,source.homeUrl,9)
+    soup=BeautifulSoup(html,"html.parser")
+    title=text(soup.select_one("h1")) or "Mangá"
+    cover=""
+    meta=soup.select_one("meta[property='og:image'],meta[name='twitter:image']")
+    if meta:cover=urljoin(final,meta.get("content","").strip())
+    if not cover:
+        cover=urljoin(final,image_attr(soup.select_one("main img[alt],main img")))
+    desc=""
+    description=soup.select_one("meta[name='description'],meta[property='og:description']")
+    if description:desc=(description.get("content") or "").strip()
+    chapters=parse_brasuka_rsc_chapters(html,final)
+    if not chapters:
+        seen=set()
+        for a in soup.select("a[href]"):
+            u=urljoin(final,a.get("href",""));name=text(a)
+            if not u or not name or u in seen or chapter_number(name) is None:continue
+            if not u.rstrip("/").startswith(final.rstrip("/")+"/"):continue
+            seen.add(u);chapters.append({"name":name,"number":chapter_number(name),"url":u})
+    chapters.sort(key=lambda x:(x["number"] is None,x["number"] if x["number"] is not None else 999999))
+    return {"title":title,"cover":cover,"description":desc,"url":final,"chapters":chapters,"source":source_dict(source),"adapter":"mangasbrasuka"}
+
 # ---------- Generic fallback ----------
 GENERIC_CARD_SELECTORS=[
  ".bs .bsx",".listupd .bs",".manga__item",".page-item-detail",
@@ -362,6 +499,10 @@ async def search_source(source,query,popular=False):
     try:
         if adapter=="saikai":
             items=await (saikai_popular(source) if popular else saikai_search(source,query))
+        elif adapter=="lycantoons":
+            items=await (lycan_popular(source) if popular else lycan_search(source,query))
+        elif adapter=="mangasbrasuka":
+            items=await (generic_search(source,query) if popular else brasuka_search(source,query))
         elif adapter=="madara":
             items=await (madara_popular(source) if popular else madara_search(source,query))
         else:
@@ -375,7 +516,7 @@ async def search_source(source,query,popular=False):
 
 @app.get("/api/health")
 async def health():
-    return {"ok":True,"name":"ResenhaFlix Manga Bridge v16","adapters":["madara","saikai","generic"]}
+    return {"ok":True,"name":"ResenhaFlix Manga Bridge v30","adapters":["madara","saikai","lycantoons","mangasbrasuka","generic"]}
 
 @app.post("/api/search")
 async def search(body:SearchBody):
@@ -405,6 +546,7 @@ async def manga(body:UrlBody):
     adapter=adapter_name(body.source)
     if adapter=="saikai":return await saikai_details(body.source,body.url)
     if adapter=="madara":return await madara_details(body.source,body.url)
+    if adapter=="mangasbrasuka":return await brasuka_details(body.source,body.url)
     # auto: Madara parser is more complete; generic is fallback.
     try:
         d=await madara_details(body.source,body.url)

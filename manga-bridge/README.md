@@ -1,10 +1,12 @@
-# ResenhaFlix Manga Bridge V16
+# ResenhaFlix Manga Bridge V30
 
 O Bridge é recomendado para conseguir ler dentro do ResenhaFlix quando as fontes bloqueiam CORS.
 
 Adaptadores incluídos:
 - Madara / WordPress (inclui busca AJAX, capítulos AJAX e leitor de páginas);
 - Saikai Scan (API usada pela extensão atual);
+- LycanToons (API JSON `/api/series`);
+- Mangás Brasuka (busca JSON e capítulos serializados pelo Next.js);
 - parser HTML genérico.
 
 Fontes que exigem login, captcha, WebView ou lógica Kotlin específica podem continuar incompatíveis até receberem um adaptador próprio.
