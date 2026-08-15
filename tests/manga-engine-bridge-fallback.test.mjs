@@ -19,7 +19,7 @@ globalThis.fetch = async input => {
   const url = new URL(String(input));
   if (url.hostname === "bridge-offline.test" && url.pathname === "/api/health" && bridgeHealthy) {
     bridgeHealthy = false;
-    return json({ ok: true, version: "33.0.0", sources: 4 });
+    return json({ ok: true, version: "34.0.0", sources: 5 });
   }
   if (url.hostname === "bridge-offline.test") throw new TypeError("Failed to fetch");
   if (url.hostname === "api.mangadex.org" && url.pathname === "/manga") return json({
@@ -42,7 +42,7 @@ globalThis.fetch = async input => {
   throw new Error(`Unexpected fetch ${url}`);
 };
 
-await import("../manga-hakuneko.js?bridge-fallback-v33");
+await import("../manga-hakuneko.js?bridge-fallback-v34");
 
 const api = window.ResenhaMangaEngine;
 assert.equal(await api.bridge.check(), "ready");
@@ -52,4 +52,4 @@ assert.equal(results[0].title, "Fallback direto");
 assert.equal(api.state.bridgeStatus, "offline");
 assert.match(api.state.bridgeHealth.error, /nao respondeu/i);
 
-console.log("manga engine v33: offline bridge falls back to direct MangaDex");
+console.log("manga engine v34: offline bridge falls back to direct MangaDex");

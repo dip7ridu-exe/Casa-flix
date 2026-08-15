@@ -2558,7 +2558,7 @@ input::placeholder,textarea::placeholder{color:#898294;opacity:1}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
-/* ResenhaFlix v33 — carrosséis touch e navegação móvel compacta */
+/* ResenhaFlix v34 — carrosséis touch, navegação móvel e Manga Engine atualizados */
 .sectionHeadText{min-width:0;flex:1}
 .carouselControls,.globalSearchActions{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-left:auto}
 .carouselArrow{
@@ -2657,7 +2657,7 @@ input::placeholder,textarea::placeholder{color:#898294;opacity:1}
 }
 
 </style>
-  <link rel="stylesheet" href="./manga-hakuneko.css?v=33">
+<link rel="stylesheet" href="./manga-hakuneko.css?v=34">
 </head>
 <body>
 <header class="top" id="top">
@@ -6954,13 +6954,13 @@ $("#installAppBtn").onclick=async()=>{
 };
 window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;$("#installAppBtn").style.display="none";toast("ResenhaFlix instalado como aplicativo.")});
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.warn("Service Worker",e)));
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=34",{updateViaCache:"none"}).catch(e=>console.warn("Service Worker",e)));
 }
 home();
 </script>
 <!-- ResenhaFlix v12 — fontes progressivas/cache + tela Mangás/Keiyoushi -->
 <!-- ResenhaFlix v28 — manga exato/rápido, livros PT-BR e detalhes estilo Netflix -->
-<!-- ResenhaFlix v33 — Manga Bridge resiliente, fontes PT-BR e CBZ -->
-  <script src="./manga-hakuneko.js?v=33"></script>
+<!-- ResenhaFlix v34 — Manga Bridge automática, conectores HakuNeko e leitor mobile -->
+  <script src="./manga-hakuneko.js?v=34"></script>
 </body>
 </html>
